@@ -1883,10 +1883,10 @@ pre .javascript .function {
   height: auto;
   border: 1px solid #eee;
   opacity: 1;
-  border-radius: 50%;
-  transition: 2s all;
+  border-radius: 60%;
+  transition: 2.5s all;
 }
-.site-author-image {
+.site-author-image:hover {
   -webkit-transform: rotate(360deg);
   -moz-transform: rotate(360deg);
   -ms-transform: rotate(360deg);
@@ -1895,6 +1895,12 @@ pre .javascript .function {
 }
 .site-author-image {
   border-radius: 100%;
+}
+.site-author-image {
+  -webkit-transition: -webkit-transform 1s ease-out;
+  -moz-transition: -moz-transform 1s ease-out;
+  -ms-transition: -ms-transform 1s ease-out;
+  transition: transform 1s ease-out;
 }
 img:hover {
   -webkit-transform: rotateZ(360deg);
@@ -1988,7 +1994,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #528603;
+  background: #ffffc1;
 }
 .links-of-blogroll {
   font-size: 13px;
