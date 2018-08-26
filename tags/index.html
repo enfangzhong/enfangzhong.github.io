@@ -199,7 +199,7 @@ function setSidebarMarginTop (headerOffset) {
     return $('.header-inner').height() + CONFIG.sidebar.offset;
   }
   window.onload=function(){
-    var subtitle = "";
+    var subtitle = "不怕万人阻挡，只怕自己投降。W你如何回忆，决定你是一个怎样的人！W人生当苦无妨，良人当归即可。W世间文字八万个，唯有情字最杀人。W逝者如斯乎，不舍昼夜。";
      var mytitle = subtitle.split("W");
      var max = mytitle.length-1;
      var index = GetRandomNum(0,max);
@@ -223,6 +223,10 @@ function setSidebarMarginTop (headerOffset) {
       </a>
     </div>
     
+  
+    <p style="color:#777;font-family:STXingkai" id="helloTitle" class="site-subtitle"></p>
+  
+
   </div>
 
   <div class="site-nav-toggle">
