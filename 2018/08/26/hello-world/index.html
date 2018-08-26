@@ -16,6 +16,11 @@
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
 <head>
+  
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
@@ -259,14 +264,6 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
@@ -302,6 +299,14 @@ function setSidebarMarginTop (headerOffset) {
           <li class="menu-item menu-item-sitemap">
     <a href="/sitemap.xml" rel="section">
       <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
   </li>
         
         
@@ -363,7 +368,7 @@ function setSidebarMarginTop (headerOffset) {
     <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2018/08/26/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="钟恩芳">
+      <meta itemprop="name" content="酱油哥">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
@@ -472,14 +477,14 @@ function setSidebarMarginTop (headerOffset) {
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.png" alt="钟恩芳 微信支付"/>
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="酱油哥 微信支付"/>
         <p>微信支付</p>
       </div>
     
 
     
       <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.png" alt="钟恩芳 支付宝"/>
+        <img id="alipay_qr" src="/images/alipay.png" alt="酱油哥 支付宝"/>
         <p>支付宝</p>
       </div>
     
@@ -492,6 +497,20 @@ function setSidebarMarginTop (headerOffset) {
       </div>
     
 
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>酱油哥</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://enfangzhong.github.io/2018/08/26/hello-world/" title="Hello World">http://enfangzhong.github.io/2018/08/26/hello-world/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
     
 
     <footer class="post-footer">
@@ -574,9 +593,9 @@ function setSidebarMarginTop (headerOffset) {
             
               <img class="site-author-image" itemprop="image"
                 src="/images/avatar.jpg"
-                alt="钟恩芳" />
+                alt="酱油哥" />
             
-              <p class="site-author-name" itemprop="name">钟恩芳</p>
+              <p class="site-author-name" itemprop="name">酱油哥</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -737,7 +756,7 @@ function setSidebarMarginTop (headerOffset) {
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">钟恩芳</span>
+  <span class="author" itemprop="copyrightHolder">酱油哥</span>
 
   
 
@@ -808,11 +827,16 @@ function setSidebarMarginTop (headerOffset) {
 
 
 
+  
 
 
 
 
 
+
+
+  
+  
 
 
 
@@ -833,6 +857,21 @@ function setSidebarMarginTop (headerOffset) {
   
   
     <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
   
 
 
@@ -909,6 +948,13 @@ function setSidebarMarginTop (headerOffset) {
   
 
   
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
 
 </body>
 </html>

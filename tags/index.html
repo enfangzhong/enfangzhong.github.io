@@ -16,6 +16,11 @@
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
 <head>
+  
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
@@ -256,14 +261,6 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-tags menu-item-active">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
@@ -299,6 +296,14 @@ function setSidebarMarginTop (headerOffset) {
           <li class="menu-item menu-item-sitemap">
     <a href="/sitemap.xml" rel="section">
       <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
   </li>
         
         
@@ -468,9 +473,9 @@ function setSidebarMarginTop (headerOffset) {
             
               <img class="site-author-image" itemprop="image"
                 src="/images/avatar.jpg"
-                alt="钟恩芳" />
+                alt="酱油哥" />
             
-              <p class="site-author-name" itemprop="name">钟恩芳</p>
+              <p class="site-author-name" itemprop="name">酱油哥</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -615,7 +620,7 @@ function setSidebarMarginTop (headerOffset) {
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">钟恩芳</span>
+  <span class="author" itemprop="copyrightHolder">酱油哥</span>
 
   
 
@@ -686,11 +691,16 @@ function setSidebarMarginTop (headerOffset) {
 
 
 
+  
 
 
 
 
 
+
+
+  
+  
 
 
 
@@ -711,6 +721,21 @@ function setSidebarMarginTop (headerOffset) {
   
   
     <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
   
 
 
@@ -787,6 +812,13 @@ function setSidebarMarginTop (headerOffset) {
   
 
   
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
 
 </body>
 </html>
