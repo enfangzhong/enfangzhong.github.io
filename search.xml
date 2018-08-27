@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[markdown的使用方法]]></title>
+    <url>%2F2018%2F08%2F26%2F%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2F</url>
+    <content type="text"><![CDATA[markDown的使用方法第一步：下载markdown进入markdown官网，选择download，进行下载。 列表1 列表2 a 子列表1 b 子列表2 列表3 博采众长斜体字体加粗 分割线 &lt;html&gt;&lt;/html&gt; 123456&lt;html&gt; &lt;head&gt; &lt;title&gt;markdown使用&lt;/tile&gt; &lt;head&gt; &lt;body&gt;&lt;body&gt;&lt;/html&gt; 引用]]></content>
+      <categories>
+        <category>搭建博客</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+        <tag>git</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2018%2F08%2F26%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. 酱油哥Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+  </entry>
+</search>
