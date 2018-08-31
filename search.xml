@@ -32,7 +32,7 @@
   <entry>
     <title><![CDATA[markdown的使用方法]]></title>
     <url>%2F2018%2F08%2F27%2Fmarkdown%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[markDown的使用方法第一步：下载markdown进入markdown官网，选择download，进行下载。 列表1 列表2 a 子列表1 b 子列表2 列表3 博采众长斜体字体加粗 分割线 &lt;html&gt;&lt;/html&gt; 123456&lt;html&gt; &lt;head&gt; &lt;title&gt;markdown使用&lt;/tile&gt; &lt;head&gt; &lt;body&gt;&lt;body&gt;&lt;/html&gt; 引用]]></content>
+    <content type="text"><![CDATA[markDown的使用方法第一步：下载markdown进入markdown官网，选择download，进行下载。 列表1 列表2 a 子列表1 b 子列表2 列表3 链接举例酱油哥博客斜体字体加粗 分割线 &lt;html&gt;&lt;/html&gt; 123456&lt;html&gt; &lt;head&gt; &lt;title&gt;markdown使用&lt;/tile&gt; &lt;head&gt; &lt;body&gt;&lt;body&gt;&lt;/html&gt; 引用]]></content>
       <categories>
         <category>搭建博客</category>
       </categories>
