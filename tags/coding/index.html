@@ -96,7 +96,7 @@
     root: '/',
     scheme: 'Pisces',
     version: '6.3.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -224,7 +224,7 @@ function setSidebarMarginTop (headerOffset) {
     return $('.header-inner').height() + CONFIG.sidebar.offset;
   }
   window.onload=function(){
-    var subtitle = "不怕万人阻挡，只怕自己投降。W你如何回忆，决定你是一个怎样的人！W人生当苦无妨，良人当归即可。W世间文字八万个，唯有情字最杀人。W逝者如斯乎，不舍昼夜。";
+    var subtitle = "喜欢一个人，始于颜值，敬于才华，合于性格，久于善良，终于人品。W我真的好想你，在每一个雨季，你选择遗忘的，是我最不舍的。W不怕万人阻挡，只怕自己投降。W成熟是给你陌生人看的，逗比是给朋友看的，幼稚是给喜欢的人看的。W人生当苦无妨，良人当归即可。W逝者如斯乎，不舍昼夜。";
      var mytitle = subtitle.split("W");
      var max = mytitle.length-1;
      var index = GetRandomNum(0,max);
@@ -535,9 +535,7 @@ function setSidebarMarginTop (headerOffset) {
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">1</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -668,6 +666,13 @@ function setSidebarMarginTop (headerOffset) {
       
 
       
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
 
     </div>
   </aside>
@@ -768,11 +773,6 @@ setInterval("createtime()",250);
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     
