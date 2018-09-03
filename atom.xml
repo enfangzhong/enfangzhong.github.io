@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://enfangzhong.github.io/"/>
-  <updated>2018-09-03T05:31:53.456Z</updated>
+  <updated>2018-09-03T06:59:33.019Z</updated>
   <id>http://enfangzhong.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux系统SSH出现encountered 1 errors错误怎么办？</title>
+    <link href="http://enfangzhong.github.io/2018/09/03/Linux%E7%B3%BB%E7%BB%9FSSH%E5%87%BA%E7%8E%B0encountered%201%20errors%E9%94%99%E8%AF%AF%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/"/>
+    <id>http://enfangzhong.github.io/2018/09/03/Linux系统SSH出现encountered 1 errors错误怎么办？/</id>
+    <published>2018-09-03T07:03:11.000Z</published>
+    <updated>2018-09-03T06:59:33.019Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Linux系统SSH出现encountered-1-errors错误怎么办"><a href="#Linux系统SSH出现encountered-1-errors错误怎么办" class="headerlink" title="Linux系统SSH出现encountered 1 errors错误怎么办"></a>Linux系统SSH出现encountered 1 errors错误怎么办</h1><p>一些Linux用户在使用SSH服务器时，发现自己的SSH服务器出现了encountered 1 errors during the transfer，这个问题该怎么解决呢?现在就让小编来教你解决的方法吧。</p><p><strong>解决方法：</strong>(以下方法简单排序，从简单到复杂)</p><p>　　法一：在SSH Secure File Transfer(上传文件那个)，打开“Operation”菜单，打开“File Transfer Mode”子菜单，再选择“Binary”，OK!</p><p>　　法二：把服务器上同名文件删掉再传</p><p>　　法三：如果文件在桌面上，将要上传的文件复制到其它分区，再上传!(我是这种方式解决的)</p><p>　　这就是解决Linux系统SSH服务器出现encountered 1 errors during the transfer问题的方法了，有需要的用户快来试试这些方法吧。</p><p> <strong>欢迎访问我的博客</strong><br><a href="https://enfangzhong.github.io/">Git托管博客效果</a> </p><p><a href="http://enfang.coding.me/" target="_blank" rel="noopener">Coding托管博客效果</a></p><p><a href="https://itjyg.gitee.io" target="_blank" rel="noopener">码云托管博客效果</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Linux系统SSH出现encountered-1-errors错误怎么办&quot;&gt;&lt;a href=&quot;#Linux系统SSH出现encountered-1-errors错误怎么办&quot; class=&quot;headerlink&quot; title=&quot;Linux系统SSH出现encoun
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://enfangzhong.github.io/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://enfangzhong.github.io/tags/Linux/"/>
+    
+      <category term="SSH" scheme="http://enfangzhong.github.io/tags/SSH/"/>
+    
+  </entry>
   
   <entry>
     <title>Java开发中的23种设计模式详解</title>
