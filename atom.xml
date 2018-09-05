@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://enfangzhong.github.io/"/>
-  <updated>2018-09-05T02:40:36.094Z</updated>
+  <updated>2018-09-05T06:40:26.242Z</updated>
   <id>http://enfangzhong.github.io/</id>
   
   <author>
@@ -15,6 +15,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JaveEE请求转发和重定向的区别</title>
+    <link href="http://enfangzhong.github.io/2018/09/05/JaveEE%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://enfangzhong.github.io/2018/09/05/JaveEE请求转发和重定向的区别/</id>
+    <published>2018-09-05T06:32:29.000Z</published>
+    <updated>2018-09-05T06:40:26.242Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一、请求转发和重定向"><a href="#一、请求转发和重定向" class="headerlink" title="一、请求转发和重定向"></a>一、请求转发和重定向</h2><h3 id="请求转发："><a href="#请求转发：" class="headerlink" title="请求转发："></a>请求转发：</h3><p>request.getRequestDispatcher(URL地址).forward(request, response)</p><p>处理流程：</p><ul><li>客户端发送请求，Servlet做出业务逻辑处理。</li><li>Servlet调用forword()方法，服务器Servlet把目标资源返回给客户端浏览器。</li></ul><h3 id="重定向："><a href="#重定向：" class="headerlink" title="重定向："></a>重定向：</h3><p>response.sendRedirect(URL地址)</p><p>处理流程：</p><ul><li>客户端发送请求，Servlet做出业务逻辑处理。</li><li>Servlet调用response.sendReadirect()方法，把要访问的目标资源作为response响应头信息发给客户端浏览器。</li><li>客户端浏览器重新访问服务器资源xxx.jsp，服务器再次对客户端浏览器做出响应。<br><img src="/JaveEE请求转发和重定向的区别/20180905023610242.png" alt=""><br>重定向<br>以上两种情况，你都需要考虑Servlet处理完后，数据如何在jsp页面上呈现。图例是请求、响应的流程，没有标明数据如何处理、展现。</li></ul><h2 id="二、转发和重定向的路径问题"><a href="#二、转发和重定向的路径问题" class="headerlink" title="二、转发和重定向的路径问题"></a>二、转发和重定向的路径问题</h2><p>1）使用相对路径在重定向和转发中没有区别<br>2）重定向和请求转发使用绝对路径时，根/路径代表了不同含义<br>重定向response.sendRedirect(“xxx”)是服务器向客户端发送一个请求头信息，由客户端再请求一次服务器。/指的Tomcat的根目录,写绝对路径应该写成”/当前Web程序根名称/资源名” 。如”/WebModule/login.jsp”,”/bbs/servlet/LoginServlet”<br>转发是在服务器内部进行的，写绝对路径/开头指的是当前的Web应用程序。绝对路径写法就是是”/login.jsp”或”/servlet/LoginServlet”。</p><p><strong>总结：</strong>以上要注意是区分是从服务器外的请求，还在是内部转发，从服务器外的请求，从Tomcat根写起(就是要包括当前Web的根)；是服务器内部的转发，很简单了，因为在当前服务器内，/写起指的就是当前Web的根目录。</p><h2 id="三、转发和重定向的区别"><a href="#三、转发和重定向的区别" class="headerlink" title="三、转发和重定向的区别"></a>三、转发和重定向的区别</h2><ul><li><p>request.getRequestDispatcher()是容器中控制权的转向，在客户端浏览器地址栏中不会显示出转向后的地址；服务器内部转发，整个过程处于同一个请求当中。<br>response.sendRedirect()则是完全的跳转，浏览器将会得到跳转的地址，并重新发送请求链接。这样，从浏览器的地址栏中可以看到跳转后的链接地址。不在同一个请求。重定向，实际上客户端会向服务器端发送两个请求。<br>所以转发中数据的存取可以用request作用域：request.setAttribute(), request.getAttribute()，重定向是取不到request中的数据的。只能用session。</p></li><li><p>forward()更加高效，在可以满足需要时，尽量使用RequestDispatcher.forward()方法。（思考一下为什么？）</p></li><li><p>RequestDispatcher是通过调用HttpServletRequest对象的getRequestDispatcher()方法得到的，是属于请求对象的方法。<br>sendRedirect()是HttpServletResponse对象的方法，即响应对象的方法，既然调用了响应对象的方法，那就表明整个请求过程已经结束了，服务器开始向客户端返回执行的结果。</p></li><li><p>重定向可以跨域访问，而转发是在web服务器内部进行的，不能跨域访问。</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;一、请求转发和重定向&quot;&gt;&lt;a href=&quot;#一、请求转发和重定向&quot; class=&quot;headerlink&quot; title=&quot;一、请求转发和重定向&quot;&gt;&lt;/a&gt;一、请求转发和重定向&lt;/h2&gt;&lt;h3 id=&quot;请求转发：&quot;&gt;&lt;a href=&quot;#请求转发：&quot; class=&quot;he
+      
+    
+    </summary>
+    
+      <category term="JaveEE" scheme="http://enfangzhong.github.io/categories/JaveEE/"/>
+    
+      <category term="java编程" scheme="http://enfangzhong.github.io/categories/JaveEE/java%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="请求转发" scheme="http://enfangzhong.github.io/categories/JaveEE/java%E7%BC%96%E7%A8%8B/%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91/"/>
+    
+      <category term="重定向" scheme="http://enfangzhong.github.io/categories/JaveEE/java%E7%BC%96%E7%A8%8B/%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91/%E9%87%8D%E5%AE%9A%E5%90%91/"/>
+    
+    
+      <category term="JaveEE" scheme="http://enfangzhong.github.io/tags/JaveEE/"/>
+    
+      <category term="java框架" scheme="http://enfangzhong.github.io/tags/java%E6%A1%86%E6%9E%B6/"/>
+    
+      <category term="java编程" scheme="http://enfangzhong.github.io/tags/java%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>Redis</title>
@@ -97,11 +132,11 @@
       <category term="java编程" scheme="http://enfangzhong.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/java%E7%BC%96%E7%A8%8B/"/>
     
     
-      <category term="设计模式" scheme="http://enfangzhong.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
       <category term="java框架" scheme="http://enfangzhong.github.io/tags/java%E6%A1%86%E6%9E%B6/"/>
     
       <category term="java编程" scheme="http://enfangzhong.github.io/tags/java%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="设计模式" scheme="http://enfangzhong.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
