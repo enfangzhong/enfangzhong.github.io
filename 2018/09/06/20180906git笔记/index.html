@@ -141,7 +141,9 @@
 <meta property="og:image" content="http://enfangzhong.github.io/20180906111628/20180906013006354.png">
 <meta property="og:image" content="http://enfangzhong.github.io/20180906111628/20180906013104230.png">
 <meta property="og:image" content="http://enfangzhong.github.io/20180906111628/20180906013153959.png">
-<meta property="og:updated_time" content="2018-09-06T06:20:33.681Z">
+<meta property="og:image" content="http://enfangzhong.github.io/20180906git笔记/20180906023141140.png">
+<meta property="og:image" content="http://enfangzhong.github.io/20180906git笔记/20180906030018530.png">
+<meta property="og:updated_time" content="2018-09-06T07:01:08.218Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="20180906111628">
 <meta name="twitter:description" content="初始化一个Git仓库使用git init命令。 添加文件到Git仓库分两步：  使用命令git add ，注意，可反复多次使用，添加多个文件； 使用命令git commit -m ，完成。  查看git仓库状态要随时掌握工作区的状态，使用git status命令。 如果git status告诉你有文件被修改过，用git diff可以查看修改内容。 版本回退HEAD指向的版本就是当前版本，因此，Gi">
@@ -462,7 +464,7 @@ function setSidebarMarginTop (headerOffset) {
                 
               
 
-              <time title="创建时间：2018-09-06 11:16:28 / 修改时间：14:20:33" itemprop="dateCreated datePublished" datetime="2018-09-06T11:16:28+08:00">2018-09-06</time>
+              <time title="创建时间：2018-09-06 11:16:28 / 修改时间：15:01:08" itemprop="dateCreated datePublished" datetime="2018-09-06T11:16:28+08:00">2018-09-06</time>
             
 
             
@@ -503,7 +505,7 @@ function setSidebarMarginTop (headerOffset) {
             <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
             </span>
             <span class="post-meta-divider">|</span>
-<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 1,428</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 1,583</span>
 
 <span class="post-meta-divider">|</span>
 <span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 6分钟</span>
@@ -592,6 +594,21 @@ function setSidebarMarginTop (headerOffset) {
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br><span class="line">gitee    git@gitee.com:liaoxuefeng/learngit.git (fetch)</span><br><span class="line">gitee    git@gitee.com:liaoxuefeng/learngit.git (push)</span><br><span class="line">github    git@github.com:michaelliao/learngit.git (fetch)</span><br><span class="line">github    git@github.com:michaelliao/learngit.git (push)</span><br></pre></td></tr></table></figure>
 <p>如果要推送到GitHub，使用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push github master</span><br></pre></td></tr></table></figure></p>
 <p>如果要推送到码云，使用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push gitee master</span><br></pre></td></tr></table></figure></p>
+<h2 id="为开源项目贡献代码"><a href="#为开源项目贡献代码" class="headerlink" title="为开源项目贡献代码"></a>为开源项目贡献代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:enfangzhong/bootstrap.git</span><br></pre></td></tr></table></figure>
+<p>添加推特公司bootstrap项目远程仓库<br>git remote add upstream <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:twbs/bootstrap.git</p>
+<p>查看建立连接的远程仓库<br><img src="/20180906git笔记/20180906023141140.png" alt=""></p>
+<p>1、首先拉取推特公司最新代码<br>git pull upstream master</p>
+<p>2、自己创建分支<br>git checkout -b feature/add_sth</p>
+<p>然后去修改你自己代码</p>
+<p>git status查看状态</p>
+<p>git add ./</p>
+<p>git commit -m “add sth”</p>
+<p>3.切换到主分支，继续拉取网上最新代码</p>
+<p>git checkout master<br>git pull upstream master</p>
+<p>4.切换到分支，进行测试，<br>git checkout feature/add_sth</p>
+<p>5.合并分支<br>git rebase master</p>
+<p>git push origin feature/add_sth</p>
+<p><img src="/20180906git笔记/20180906030018530.png" alt=""></p>
 
       
     </div>
@@ -672,6 +689,10 @@ function setSidebarMarginTop (headerOffset) {
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/09/06/20180906142543/" rel="prev" title="20180906142543">
+                20180906142543 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -747,7 +768,7 @@ function setSidebarMarginTop (headerOffset) {
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -936,7 +957,7 @@ function setSidebarMarginTop (headerOffset) {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化一个Git仓库"><span class="nav-number">1.</span> <span class="nav-text">初始化一个Git仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加文件到Git仓库"><span class="nav-number">2.</span> <span class="nav-text">添加文件到Git仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看git仓库状态"><span class="nav-number">3.</span> <span class="nav-text">查看git仓库状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本回退"><span class="nav-number">4.</span> <span class="nav-text">版本回退</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#撤销修改"><span class="nav-number">5.</span> <span class="nav-text">撤销修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程仓库"><span class="nav-number">6.</span> <span class="nav-text">远程仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程仓库克隆"><span class="nav-number">7.</span> <span class="nav-text">远程仓库克隆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分支管理（重要）"><span class="nav-number">8.</span> <span class="nav-text">分支管理（重要）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化一个Git仓库"><span class="nav-number">1.</span> <span class="nav-text">初始化一个Git仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加文件到Git仓库"><span class="nav-number">2.</span> <span class="nav-text">添加文件到Git仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看git仓库状态"><span class="nav-number">3.</span> <span class="nav-text">查看git仓库状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本回退"><span class="nav-number">4.</span> <span class="nav-text">版本回退</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#撤销修改"><span class="nav-number">5.</span> <span class="nav-text">撤销修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程仓库"><span class="nav-number">6.</span> <span class="nav-text">远程仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程仓库克隆"><span class="nav-number">7.</span> <span class="nav-text">远程仓库克隆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分支管理（重要）"><span class="nav-number">8.</span> <span class="nav-text">分支管理（重要）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为开源项目贡献代码"><span class="nav-number">9.</span> <span class="nav-text">为开源项目贡献代码</span></a></li></ol></div>
             
 
           </div>
@@ -998,7 +1019,7 @@ function setSidebarMarginTop (headerOffset) {
 <font color=MediumPurple face=STLiti>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共10.5k字|</span>
+  <span class="post-count">博客全站共10.7k字|</span>
 </div>
 </font>
 
