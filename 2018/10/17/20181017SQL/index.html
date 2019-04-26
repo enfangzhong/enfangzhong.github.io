@@ -133,21 +133,21 @@
 <meta name="keywords" content="SQL内连接,左外连接,右外连接,交叉连接">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL内连接、左外连接、右外连接、交叉连接区别">
-<meta property="og:url" content="http://enfangzhong.github.io/2018/10/17/2018-10-17SQL/index.html">
+<meta property="og:url" content="http://enfangzhong.github.io/2018/10/17/20181017SQL/index.html">
 <meta property="og:site_name" content="酱油哥博客">
 <meta property="og:description" content="内连接、左外连接、右外连接、交叉连接区别在之前，我对MSSQL中的内连接和外连接所得出的数据集不是很清楚。这几天重新温习了一下SQL的书本，现在的思路应该是很清楚了，现在把自己的理解发出来给大家温习下。希望和我一样对SQL的连接语句不太理解的朋友能够有所帮助。（发这么菜的教程，各位大大们别笑话偶了，呵:D ） 有两个表A和表B。表A结构如下： Aid：int；标识种子，主键，自增ID Aname：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://enfangzhong.github.io/2018-10-17SQL/20181017111507739.png">
-<meta property="og:image" content="http://enfangzhong.github.io/2018-10-17SQL/20181017111601913.png">
-<meta property="og:image" content="http://enfangzhong.github.io/2018-10-17SQL/20181017111618065.png">
-<meta property="og:image" content="http://enfangzhong.github.io/2018-10-17SQL/20181017111637904.png">
-<meta property="og:image" content="http://enfangzhong.github.io/2018-10-17SQL/20181017111658117.png">
-<meta property="og:image" content="http://enfangzhong.github.io/2018-10-17SQL/20181017111728233.png">
-<meta property="og:updated_time" content="2018-10-17T15:17:37.124Z">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/10/17/20181017SQL/images/20181017SQL/20181017111507739.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/10/17/20181017SQL/images/20181017SQL/20181017111601913.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/10/17/20181017SQL/images/20181017SQL/20181017111618065.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/10/17/20181017SQL/images/20181017SQL/20181017111637904.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/10/17/20181017SQL/images/20181017SQL/20181017111658117.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/10/17/20181017SQL/images/20181017SQL/20181017111728233.png">
+<meta property="og:updated_time" content="2019-04-26T22:48:11.228Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL内连接、左外连接、右外连接、交叉连接区别">
 <meta name="twitter:description" content="内连接、左外连接、右外连接、交叉连接区别在之前，我对MSSQL中的内连接和外连接所得出的数据集不是很清楚。这几天重新温习了一下SQL的书本，现在的思路应该是很清楚了，现在把自己的理解发出来给大家温习下。希望和我一样对SQL的连接语句不太理解的朋友能够有所帮助。（发这么菜的教程，各位大大们别笑话偶了，呵:D ） 有两个表A和表B。表A结构如下： Aid：int；标识种子，主键，自增ID Aname：">
-<meta name="twitter:image" content="http://enfangzhong.github.io/2018-10-17SQL/20181017111507739.png">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2018/10/17/20181017SQL/images/20181017SQL/20181017111507739.png">
 
 
 
@@ -156,7 +156,7 @@
 
 
 
-  <link rel="canonical" href="http://enfangzhong.github.io/2018/10/17/2018-10-17SQL/"/>
+  <link rel="canonical" href="http://enfangzhong.github.io/2018/10/17/20181017SQL/"/>
 
 
 
@@ -422,7 +422,7 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2018/10/17/2018-10-17SQL/">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2018/10/17/20181017SQL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="酱油哥">
@@ -464,12 +464,24 @@ function setSidebarMarginTop (headerOffset) {
                 
               
 
-              <time title="创建时间：2018-10-17 23:08:51 / 修改时间：23:17:37" itemprop="dateCreated datePublished" datetime="2018-10-17T23:08:51+08:00">2018-10-17</time>
+              <time title="创建时间：2018-10-17 23:08:51" itemprop="dateCreated datePublished" datetime="2018-10-17T23:08:51+08:00">2018-10-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-27 06:48:11" itemprop="dateModified" datetime="2019-04-27T06:48:11+08:00">2019-04-27</time>
               
             
           </span>
@@ -511,8 +523,8 @@ function setSidebarMarginTop (headerOffset) {
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/10/17/2018-10-17SQL/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/17/2018-10-17SQL/" itemprop="commentCount"></span>
+                <a href="/2018/10/17/20181017SQL/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/17/20181017SQL/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -555,16 +567,16 @@ function setSidebarMarginTop (headerOffset) {
 
       
         <h2 id="内连接、左外连接、右外连接、交叉连接区别"><a href="#内连接、左外连接、右外连接、交叉连接区别" class="headerlink" title="内连接、左外连接、右外连接、交叉连接区别"></a>内连接、左外连接、右外连接、交叉连接区别</h2><p>在之前，我对MSSQL中的内连接和外连接所得出的数据集不是很清楚。这几天重新温习了一下SQL的书本，现在的思路应该是很清楚了，现在把自己的理解发出来给大家温习下。希望和我一样对SQL的连接语句不太理解的朋友能够有所帮助。（发这么菜的教程，各位大大们别笑话偶了，呵:D ） 有两个表A和表B。表A结构如下： Aid：int；标识种子，主键，自增ID Aname：varchar 数据情况，即用select * from A出来的记录情况如下图1所示：</p>
-<p><img src="/2018-10-17SQL/20181017111507739.png" alt=""><br>图1:A表数据</p>
-<p>表B结构如下： Bid：int；标识种子，主键，自增ID Bnameid：int 数据情况，即用select * from B出来的记录情况如下图2所示：<br> <img src="/2018-10-17SQL/20181017111601913.png" alt=""></p>
+<p><img src="/2018/10/17/20181017SQL/images/20181017SQL/20181017111507739.png" alt=""><br>图1:A表数据</p>
+<p>表B结构如下： Bid：int；标识种子，主键，自增ID Bnameid：int 数据情况，即用select * from B出来的记录情况如下图2所示：<br> <img src="/2018/10/17/20181017SQL/images/20181017SQL/20181017111601913.png" alt=""></p>
 <p>图2:B表数据</p>
-<p>为了把Bid和Aid加以区分，不让大家有误解，所以把Bid的起始种子设置为100。有SQL基本知识的人都知道，两个表要做连接，就必须有个连接字段，从上表中的数据可以看出，在A表中的Aid和B表中的Bnameid就是两个连接字段。下图3说明了连接的所有记录集之间的关系：<br> <img src="/2018-10-17SQL/20181017111618065.png" alt=""><br>图3:连接关系图 </p>
-<p>现在我们对内连接和外连接一一讲解。 1.内连接：利用内连接可获取两表的公共部分的记录，即图3的记录集C 语句如下：Select <em> from A JOIN B ON A.Aid=B.Bnameid 运行结果如下图4所示：其实select </em> from A,B where A.Aid=B.Bnameid与Select * from A JOIN B ON A.Aid=B.Bnameid的运行结果是一样的。<br> <img src="/2018-10-17SQL/20181017111637904.png" alt=""><br>图4:内连接数据</p>
-<p> 2.外连接：外连接分为两种，一种是左连接（Left JOIN）和右连接（Right JOIN）<br> (1)左连接（Left JOIN）：即图3公共部分记录集C＋表A记录集A1。<br> 语句如下：select * from A Left JOIN B ON A.Aid=B.Bnameid<br>运行结果如下图5所示：<br> <img src="/2018-10-17SQL/20181017111658117.png" alt=""></p>
+<p>为了把Bid和Aid加以区分，不让大家有误解，所以把Bid的起始种子设置为100。有SQL基本知识的人都知道，两个表要做连接，就必须有个连接字段，从上表中的数据可以看出，在A表中的Aid和B表中的Bnameid就是两个连接字段。下图3说明了连接的所有记录集之间的关系：<br> <img src="/2018/10/17/20181017SQL/images/20181017SQL/20181017111618065.png" alt=""><br>图3:连接关系图 </p>
+<p>现在我们对内连接和外连接一一讲解。 1.内连接：利用内连接可获取两表的公共部分的记录，即图3的记录集C 语句如下：Select <em> from A JOIN B ON A.Aid=B.Bnameid 运行结果如下图4所示：其实select </em> from A,B where A.Aid=B.Bnameid与Select * from A JOIN B ON A.Aid=B.Bnameid的运行结果是一样的。<br> <img src="/2018/10/17/20181017SQL/images/20181017SQL/20181017111637904.png" alt=""><br>图4:内连接数据</p>
+<p> 2.外连接：外连接分为两种，一种是左连接（Left JOIN）和右连接（Right JOIN）<br> (1)左连接（Left JOIN）：即图3公共部分记录集C＋表A记录集A1。<br> 语句如下：select * from A Left JOIN B ON A.Aid=B.Bnameid<br>运行结果如下图5所示：<br> <img src="/2018/10/17/20181017SQL/images/20181017SQL/20181017111658117.png" alt=""></p>
 <p>图5:左连接数据</p>
 <p>说明：在语句中，A在B的左边，并且是Left Join，所以其运算方式为：A左连接B的记录=图3公共部分记录集C＋表A记录集A1<br>在图3中即记录集C中的存在的Aid为：2 3 6 7 8<br>图1中即表A所有记录集A中存在的Aid为：1 2 3 4 5 6 7 8 9<br>表A记录集A1中存在的Aid=(图1中即A表中所有Aid)-(图3中即记录集C中存在的Aid)，最终得出为：1 4 5 9<br>由此得出图5中A左连接B的记录=图3公共部分记录集C＋表A记录集A1, 最终得出的结果图5中可以看出Bnameid及Bid非NULL的记录都为图3公共部分记录集C中的记录；Bnameid及Bid为NULL的Aid为1 4 5 9的四笔记录就是表A记录集A1中存在的Aid。</p>
 <p>(2)右连接（Right JOIN）：即图3公共部分记录集C＋表B记录集B1。</p>
-<p>语句如下：select * from A Right JOIN B ON A.Aid=B.Bnameid   运行结果如下图6所示：<br> <img src="/2018-10-17SQL/20181017111728233.png" alt=""><br>图6:右连接数据 </p>
+<p>语句如下：select * from A Right JOIN B ON A.Aid=B.Bnameid   运行结果如下图6所示：<br> <img src="/2018/10/17/20181017SQL/images/20181017SQL/20181017111728233.png" alt=""><br>图6:右连接数据 </p>
 <p>说明： 在语句中，A在B的左边，并且是Right Join，所以其运算方式为：A右连接B的记录=图3公共部分记录集C＋表B记录集B1<br>在图3中即记录集C中的存在的Aid为：2 3 6 7 8<br>图2中即表B所有记录集B中存在的Bnameid为：2 3 6 7 8 11<br>表B记录集B1中存在的Bnameid=(图2中即B表中所有Bnameid)-(图3中即记录集C中存在的Aid)，最终得出为：11<br>由此得出图6中A右连接B的记录=图3公共部分记录集C＋表B记录集B1, 最终得出的结果图6中可以看出Aid及Aname非NULL的记录都为图3公共部分记录集C中的记录；Aid及Aname为NULL的Aid为11的记录就是表B记录集B1中存在的Bnameid。    </p>
 <p>交叉连接：两张表联合没有条件情况下，条数 = 图1 * 图2</p>
 <p>交叉连接不带WHERE子句，它返回被连接的两个表所有数据行的笛卡尔积，返回结果集合中的数据行数等于第一个表中符合查询条件的数据行数乘以第二个表中符合查询条件的数据行数。</p>
@@ -618,7 +630,7 @@ function setSidebarMarginTop (headerOffset) {
     <strong>本文作者： </strong>酱油哥</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://enfangzhong.github.io/2018/10/17/2018-10-17SQL/" title="SQL内连接、左外连接、右外连接、交叉连接区别">http://enfangzhong.github.io/2018/10/17/2018-10-17SQL/</a>
+    <a href="http://enfangzhong.github.io/2018/10/17/20181017SQL/" title="SQL内连接、左外连接、右外连接、交叉连接区别">http://enfangzhong.github.io/2018/10/17/20181017SQL/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
