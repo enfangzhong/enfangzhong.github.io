@@ -574,15 +574,15 @@ function setSidebarMarginTop (headerOffset) {
 </ul>
 <h2 id="查看git仓库状态"><a href="#查看git仓库状态" class="headerlink" title="查看git仓库状态"></a>查看git仓库状态</h2><p>要随时掌握工作区的状态，使用git status命令。</p>
 <p>如果git status告诉你有文件被修改过，用git diff可以查看修改内容。</p>
-<h2 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h2><p>HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset –hard commit_id。</p>
+<h2 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h2><p>HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset —hard commit_id。</p>
 <ul>
-<li><p>穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。<br>如：git reset –hard HEAD^</p>
+<li><p>穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。<br>如：git reset —hard HEAD^</p>
 </li>
-<li><p>要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。<br>如：git reset –hard commit_id</p>
+<li><p>要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。<br>如：git reset —hard commit_id</p>
 </li>
 </ul>
-<p>git diff HEAD – readme.txt：<br>查看工作区和版本库里面最新版本的区别</p>
-<h2 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h2><p>git checkout – readme.txt<br>把readme.txt文件在工作区的修改全部撤销</p>
+<p>git diff HEAD — readme.txt：<br>查看工作区和版本库里面最新版本的区别</p>
+<h2 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h2><p>git checkout — readme.txt<br>把readme.txt文件在工作区的修改全部撤销</p>
 <ul>
 <li><p>一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；</p>
 </li>
@@ -592,12 +592,12 @@ function setSidebarMarginTop (headerOffset) {
 <p>就是让这个文件回到最近一次<code>git commit</code>或<code>git add</code>时的状态</p>
 <p>git reset HEAD <file><br>可以把暂存区的修改撤销掉（unstage），重新放回工作区</file></p>
 <ul>
-<li>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout – file。</li>
+<li>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout — file。</li>
 <li>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD <file>，就回到了场景1，第二步按场景1操作。</file></li>
 <li>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</li>
 </ul>
-<p>git rm用于删除一个文件。如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，你会丢失最近一次提交后你修改的内容。<br>git rm –cached <file>…</file></p>
-<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><p>创建SSH Key：<br>$ ssh-keygen -t rsa -C “<a href="mailto:youremail@example.com" target="_blank" rel="noopener">youremail@example.com</a>“<br>github添加SHH</p>
+<p>git rm用于删除一个文件。如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，你会丢失最近一次提交后你修改的内容。<br>git rm —cached <file>…</file></p>
+<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><p>创建SSH Key：<br>$ ssh-keygen -t rsa -C “youremail@example.com”<br>github添加SHH</p>
 <p>本地仓库进行远程同步<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:michaelliao/learngit.git</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
 <p>第一次push加上-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来</p>
@@ -633,7 +633,7 @@ function setSidebarMarginTop (headerOffset) {
 <p>如果要推送到GitHub，使用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push github master</span><br></pre></td></tr></table></figure></p>
 <p>如果要推送到码云，使用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push gitee master</span><br></pre></td></tr></table></figure></p>
 <h2 id="为开源项目贡献代码"><a href="#为开源项目贡献代码" class="headerlink" title="为开源项目贡献代码"></a>为开源项目贡献代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:enfangzhong/bootstrap.git</span><br></pre></td></tr></table></figure>
-<p>添加推特公司bootstrap项目远程仓库<br>git remote add upstream <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:twbs/bootstrap.git</p>
+<p>添加推特公司bootstrap项目远程仓库<br>git remote add upstream git@github.com:twbs/bootstrap.git</p>
 <p>查看建立连接的远程仓库<br><img src="/20180906git笔记/20180906023141140.png" alt=""></p>
 <p>1、首先拉取推特公司最新代码<br>git pull upstream master</p>
 <p>2、自己创建分支<br>git checkout -b feature/add_sth</p>
@@ -725,8 +725,8 @@ function setSidebarMarginTop (headerOffset) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/05/JaveEE请求转发和重定向的区别/" rel="next" title="JaveEE请求转发和重定向的区别">
-                <i class="fa fa-chevron-left"></i> JaveEE请求转发和重定向的区别
+              <a href="/2018/09/06/20180906git笔记/" rel="next" title="20180906-Git笔记">
+                <i class="fa fa-chevron-left"></i> 20180906-Git笔记
               </a>
             
           </div>
@@ -735,8 +735,8 @@ function setSidebarMarginTop (headerOffset) {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/06/20180906git笔记/" rel="prev" title="20180906-Git笔记">
-                20180906-Git笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/12/Hexo博客添加在线联系功能/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

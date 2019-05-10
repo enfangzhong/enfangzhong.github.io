@@ -613,9 +613,7 @@ function setSidebarMarginTop (headerOffset) {
 </li>
 </ol>
 <blockquote>
-<p>  /sbin/iptables -I INPUT -p tcp –dport 6379 -j ACCEPT</p>
-</blockquote>
-<blockquote>
+<p>  /sbin/iptables -I INPUT -p tcp —dport 6379 -j ACCEPT</p>
 <p>  /etc/rc.d/init.d/iptables save</p>
 </blockquote>
 <p><img src="/2018/09/05/Redis not only sql/images/../images/20180905redis/37168456521de2f12b6616af58929fc4.png" alt=""></p>
@@ -626,8 +624,6 @@ function setSidebarMarginTop (headerOffset) {
 <p><img src="/2018/09/05/Redis not only sql/images/../images/20180905redis/c7bdc26e311ca4aad1c8f0dbbde470cf.png" alt=""></p>
 <h1 id="使用java去操作Redis"><a href="#使用java去操作Redis" class="headerlink" title="使用java去操作Redis"></a>使用java去操作Redis</h1><h1 id="Redis的常用命令"><a href="#Redis的常用命令" class="headerlink" title="Redis的常用命令"></a>Redis的常用命令</h1><blockquote>
 <p>  redis是一种高级的key-value的存储系统</p>
-</blockquote>
-<blockquote>
 <p>  其中的key是字符串类型，尽可能满足如下几点：</p>
 </blockquote>
 <ol>
@@ -673,15 +669,11 @@ function setSidebarMarginTop (headerOffset) {
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/f235bea179383cbf7acba3331c2539bc.png" alt=""></p>
 <blockquote>
 <p>  4）<strong>incr key</strong>：将指定的key的value原子性的递增1.如果该key不存在，其初始值<br>  为0，在incr之后其值为1。如果value的值不能转成整型，如hello，该操作将执<br>  行失败并返回相应的错误信息。</p>
-</blockquote>
-<blockquote>
 <p>  5）<strong>decr key</strong>：将指定的key的value原子性的递减1.如果该key不存在，其初始值<br>  为0，在incr之后其值为-1。如果value的值不能转成整型，如hello，该操作将执<br>  行失败并返回相应的错误信息。</p>
 </blockquote>
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/550c428204f4d04aa54544d301edf00d.png" alt=""></p>
 <blockquote>
 <p>  6）<strong>incrby key increment</strong>：将指定的key的value原子性增加increment，如果该<br>  key不存在，器初始值为0，在incrby之后，该值为increment。如果该值不能转成<br>  整型，如hello则失败并返回错误信息</p>
-</blockquote>
-<blockquote>
 <p>  7）<strong>decrby key decrement</strong>：将指定的key的value原子性减少decrement，如果<br>  该key不存在，器初始值为0，在decrby之后，该值为decrement。如果该值不能<br>  转成整型，如hello则失败并返回错误信息</p>
 </blockquote>
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/09a5661b72a8d30fe1aaa56947a0ba24.png" alt=""></p>
@@ -712,16 +704,12 @@ function setSidebarMarginTop (headerOffset) {
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/f4168cd95ab247bffb96c7f4e53ca49c.png" alt=""></p>
 <blockquote>
 <p>  6）<strong>lpop key</strong>：返回并弹出指定的key关联的链表中的第一个元素，即头部元素。</p>
-</blockquote>
-<blockquote>
 <p>  7）<strong>rpop key</strong>：从尾部弹出元素。</p>
 </blockquote>
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/55bf55e5817df95473e372562a0c6f6d.png" alt=""></p>
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/8ed2b9e5d38588b65001722cba9e596f.png" alt=""></p>
 <blockquote>
 <p>  8）<strong>rpoplpush resource destination</strong>：将链表中的尾部元素弹出并添加到头部</p>
-</blockquote>
-<blockquote>
 <p>  9）<strong>llen key</strong>：返回指定的key关联的链表中的元素的数量。</p>
 </blockquote>
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/d828c877fc1d70d29c2e2874af7d3fb7.png" alt=""></p>
@@ -739,25 +727,17 @@ function setSidebarMarginTop (headerOffset) {
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/d3fbb6c9ed79291ca94214f2a67d00ff.png" alt=""></p>
 <h3 id="存储sets类型"><a href="#存储sets类型" class="headerlink" title="存储sets类型"></a>存储sets类型</h3><blockquote>
 <p>  在Redis中，我们可以将Set类型看作为没有排序的字符集合，和List类型一样，我<br>  们也可以在该类型的数据值上执行添加、删除或判断某一元素是否存在等操作。需要<br>  说明的是，这些操作的时间是常量时间。Set可包含的最大元素数是4294967295。</p>
-</blockquote>
-<blockquote>
 <p>  和List类型不同的是，Set集合中不允许出现重复的元素。和List类型相比，Set类<br>  型在功能上还存在着一个非常重要的特性，即在服务器端完成多个Sets之间的聚合计<br>  算操作，如unions、intersections和differences。由于这些操作均在服务端完成，<br>  因此效率极高，而且也节省了大量的网络IO开销</p>
 </blockquote>
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/a95668510b8f0b7d098dc493b9a06fd0.png" alt=""></p>
 <blockquote>
 <p>  1）sadd key value1、value2…：向set中添加数据，如果该key的值已有则不会<br>  重复添加</p>
-</blockquote>
-<blockquote>
 <p>  2）smembers key：获取set中所有的成员</p>
-</blockquote>
-<blockquote>
 <p>  3）scard key：获取set中成员的数量</p>
 </blockquote>
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/a41c3bb595584719ad1f9a1f02ff08cd.png" alt=""></p>
 <blockquote>
 <p>  4）sismember key member：判断参数中指定的成员是否在该set中，1表示存<br>  在，0表示不存在或者该key本身就不存在</p>
-</blockquote>
-<blockquote>
 <p>  5）srem key member1、member2…：删除set中指定的成员</p>
 </blockquote>
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/1701297c2cd81dc7d0bda3721f10a301.png" alt=""></p>
@@ -773,8 +753,6 @@ function setSidebarMarginTop (headerOffset) {
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/b600dad7d4568d70d774422aef6d32d1.png" alt=""></p>
 <blockquote>
 <p>  9）sinter key[key1,key2…]：返回交集。</p>
-</blockquote>
-<blockquote>
 <p>  10）sinterstore destination key1 key2：将返回的交集存储在destination上</p>
 </blockquote>
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/9a48658e5c6f7fe08177669386a8e7f1.png" alt=""></p>
@@ -788,40 +766,22 @@ function setSidebarMarginTop (headerOffset) {
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/994d5312aeb7e2fab285748c1ed4dab6.png" alt=""></p>
 <h3 id="存储sortedset"><a href="#存储sortedset" class="headerlink" title="存储sortedset"></a>存储sortedset</h3><blockquote>
 <p>  Sorted-Sets和Sets类型极为相似，它们都是字符串的集合，都不允许重复的成员出<br>  现在一个Set中。它们之间的主要差别是Sorted-Sets中的每一个成员都会有一个分<br>  数(score)与之关联，Redis正是通过分数来为集合中的成员进行从小到大的排序。然<br>  而需要额外指出的是，尽管Sorted-Sets中的成员必须是唯一的，但是分数(score)<br>  却是可以重复的。</p>
-</blockquote>
-<blockquote>
 <p>  在Sorted-Set中添加、删除或更新一个成员都是非常快速的操作，其时间复杂度为<br>  集合中成员数量的对数。由于Sorted-Sets中的成员在集合中的位置是有序的，因此，<br>  即便是访问位于集合中部的成员也仍然是非常高效的。事实上，Redis所具有的这一<br>  特征在很多其它类型的数据库中是很难实现的，换句话说，在该点上要想达到和Redis<br>  同样的高效，在其它数据库中进行建模是非常困难的。</p>
-</blockquote>
-<blockquote>
 <p>  例如：游戏排名、微博热点话题等使用场景。</p>
 </blockquote>
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/a95668510b8f0b7d098dc493b9a06fd0.png" alt=""></p>
 <blockquote>
 <p>  1）<strong>zadd key score member score2 member2 …</strong> ：将所有成员以及该成员的<br>  分数存放到sorted-set中</p>
-</blockquote>
-<blockquote>
 <p>  2）<strong>zcard key</strong>：获取集合中的成员数量</p>
 </blockquote>
 <p><img src="/2018/09/05/Redis not only sql/images/20180905redis/a9531d6a0b55abcb785b42e3e226a429.png" alt=""></p>
 <blockquote>
 <p>  3）<strong>zcount key min max</strong>：获取分数在[min,max]之间的成员</p>
-</blockquote>
-<blockquote>
 <p>  zincrby key increment member：设置指定成员的增加的分数。</p>
-</blockquote>
-<blockquote>
 <p>  zrange key start end<br>  [withscores]：获取集合中脚标为start-end的成员，[withscores]参数表明返回的成员包含其分数。</p>
-</blockquote>
-<blockquote>
 <p>  zrangebyscore key min max [withscores] [limit offset<br>  count]：返回分数在[min,max]的成员并按照分数从低到高排序。[withscores]：显示分数；[limit<br>  offset count]：offset，表明从脚标为offset的元素开始并返回count个成员。</p>
-</blockquote>
-<blockquote>
 <p>  zrank key member：返回成员在集合中的位置。</p>
-</blockquote>
-<blockquote>
 <p>  zrem key member[member…]：移除集合中指定的成员，可以指定多个成员。</p>
-</blockquote>
-<blockquote>
 <p>  zscore key member：返回指定成员的分数</p>
 </blockquote>
 <h3 id="存储hash"><a href="#存储hash" class="headerlink" title="存储hash"></a>存储hash</h3><blockquote>
@@ -843,11 +803,11 @@ function setSidebarMarginTop (headerOffset) {
 <ol>
 <li><p>nosql</p>
 </li>
-<li><p>redis安装—-linux（重点）</p>
+<li><p>redis安装——linux（重点）</p>
 </li>
 <li><p>jedis（重点）</p>
 </li>
-<li><p>redis的数据操作类型 5中 (了解) — string和hash</p>
+<li><p>redis的数据操作类型 5中 (了解) —- string和hash</p>
 </li>
 <li><p>redis的其他</p>
 </li>

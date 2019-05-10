@@ -170,7 +170,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13821160-d23d01f413a344d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13821160-2740c90b17518171.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13821160-686751f431a93f56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-05-10T10:36:43.149Z">
+<meta property="og:updated_time" content="2019-05-10T11:11:51.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习笔记_01线性回归和逻辑回归">
 <meta name="twitter:description" content="机器学习笔记_01线性回归和逻辑回归[TOC] 一、什么是机器学习利用大量的数据样本，使得计算机通过不断的学习获得一个模型，用来对新的未知数据做预测。  有监督学习（分类、回归）  同时将数据样本和标签输入给模型，模型学习到数据和标签的映射关系，从而对新数据进行预测。   无监督学习（聚类）只有数据，没有标签，模型通过总结规律，从数据中挖掘出信息。  强化学习强化学习会在没有任何标签的情况下，通过">
@@ -491,7 +491,7 @@ function setSidebarMarginTop (headerOffset) {
                 
               
 
-              <time title="创建时间：2019-05-10 17:03:11 / 修改时间：18:36:43" itemprop="dateCreated datePublished" datetime="2019-05-10T17:03:11+08:00">2019-05-10</time>
+              <time title="创建时间：2019-05-10 17:03:11 / 修改时间：19:11:51" itemprop="dateCreated datePublished" datetime="2019-05-10T17:03:11+08:00">2019-05-10</time>
             
 
             
@@ -550,7 +550,7 @@ function setSidebarMarginTop (headerOffset) {
             <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
             </span>
             <span class="post-meta-divider">|</span>
-<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 3,213</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 3,205</span>
 
 <span class="post-meta-divider">|</span>
 <span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 12分钟</span>
@@ -651,7 +651,7 @@ function setSidebarMarginTop (headerOffset) {
 <p><strong>sigmoid函数：</strong><br>$g(z)=\frac{1}{1+e^{-z}}$</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/13821160-94308262a2bd4d59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>① 可以对$(-\infty,+\infty)$结果，映射到(0,1) 之间，作为概率。</p>
-<p>② $x&lt;0,$ sigmoid(x)$&lt;\frac{1}{2} ; x&gt;0,$ sigmoid $(x)&gt;\frac{1}{2}$，可以将$ \frac{1}{2} $作为决策边界。</p>
+<p>② $x<0,$ sigmoid(x)$<\frac{1}{2}="" ;="" x="">0,$ sigmoid $(x)&gt;\frac{1}{2}$，可以将$ \frac{1}{2} $作为决策边界。</0,$></p>
 <p>③ 数学特性好，求导容易：$g^{\prime}(z)=g(z) \cdot(1-g(z))$</p>
 <h5 id="逻辑回归的决策函数"><a href="#逻辑回归的决策函数" class="headerlink" title="逻辑回归的决策函数"></a><strong>逻辑回归的决策函数</strong></h5><p>将线性回归决策函数通过sigmoid函数，获得逻辑回归的决策函数：$h_{\theta}(x)=g\left(\theta_{0}+\theta_{1} x_{1}+\theta_{2} x_{2}\right)=\frac{1}{1+e^{-\theta^T {x}}}$</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/13821160-88532ed9a1685b87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
