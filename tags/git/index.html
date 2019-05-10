@@ -133,7 +133,7 @@
 <meta name="keywords" content="酱油哥 酱油哥博客">
 <meta property="og:type" content="website">
 <meta property="og:title" content="酱油哥博客">
-<meta property="og:url" content="http://enfangzhong.github.io/tags/git/index.html">
+<meta property="og:url" content="http://enfangzhong.github.io/tags/Git/index.html">
 <meta property="og:site_name" content="酱油哥博客">
 <meta property="og:description" content="你若晴天，我便安好。">
 <meta property="og:locale" content="zh-CN">
@@ -148,7 +148,7 @@
 
 
 
-  <link rel="canonical" href="http://enfangzhong.github.io/tags/git/"/>
+  <link rel="canonical" href="http://enfangzhong.github.io/tags/Git/"/>
 
 
 
@@ -158,7 +158,7 @@
   };
 </script>
 
-  <title>标签: git | 酱油哥博客</title>
+  <title>标签: Git | 酱油哥博客</title>
   
 
 
@@ -436,7 +436,7 @@ function setSidebarMarginTop (headerOffset) {
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>git<small>标签</small>
+        <h1>Git<small>标签</small>
         </h1>
       </div>
 
@@ -448,9 +448,9 @@ function setSidebarMarginTop (headerOffset) {
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2018/08/30/hexo博客同时部署发布托管到github和coding/" itemprop="url">
+            <a class="post-title-link" href="/2018/09/06/20180906111628/" itemprop="url">
               
-                <span itemprop="name">将hexo博客同时部署发布托管到github和coding</span>
+                <span itemprop="name">20180906111628</span>
               
             </a>
         
@@ -458,9 +458,9 @@ function setSidebarMarginTop (headerOffset) {
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-30T00:12:11+08:00"
-              content="2018-08-30" >
-          08-30
+              datetime="2018-09-06T11:16:28+08:00"
+              content="2018-09-06" >
+          09-06
         </time>
       </div>
 
@@ -476,37 +476,9 @@ function setSidebarMarginTop (headerOffset) {
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2018/08/29/Hexo博客添加在线联系功能/" itemprop="url">
+            <a class="post-title-link" href="/2018/09/06/20180906git笔记/" itemprop="url">
               
-                <span itemprop="name">Hexo博客添加在线联系功能</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-29T21:03:11+08:00"
-              content="2018-08-29" >
-          08-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/27/markdown的使用方法/" itemprop="url">
-              
-                <span itemprop="name">markdown的使用方法</span>
+                <span itemprop="name">20180906-Git笔记</span>
               
             </a>
         
@@ -514,37 +486,9 @@ function setSidebarMarginTop (headerOffset) {
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-27T21:03:11+08:00"
-              content="2018-08-27" >
-          08-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/26/hexo+github搭建个人博客及美化更新/" itemprop="url">
-              
-                <span itemprop="name">hexo+github搭建个人博客及美化</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-26T21:03:11+08:00"
-              content="2018-08-26" >
-          08-26
+              datetime="2018-09-06T11:16:28+08:00"
+              content="2018-09-06" >
+          09-06
         </time>
       </div>
 
@@ -1329,6 +1273,89 @@ setInterval("createtime()",250);
 
           if ('auto' === 'auto') {
             input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+</body>
+</html>
+input', inputEventFunction);
           } else {
             $('.search-icon').click(inputEventFunction);
             input.addEventListener('keypress', function (event) {

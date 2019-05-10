@@ -3,7 +3,7 @@
  var titleTime;
  document.addEventListener('visibilitychange', function () {
      if (document.hidden) {
-         $('[rel="icon"]').attr('href', "/images/TEP.ico");
+         $('[rel="icon"]').attr('href', "/images/hert.png");
          document.title = '别走! ╭(°A°`)╮ ';
          clearTimeout(titleTime);
      }
