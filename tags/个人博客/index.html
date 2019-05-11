@@ -532,9 +532,9 @@ function setSidebarMarginTop (headerOffset) {
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2018/08/26/Hexo个人博客_主题优化篇/" itemprop="url">
+            <a class="post-title-link" href="/2018/08/26/Hexo个人博客_hexo+github搭建个人博客及美化更新/" itemprop="url">
               
-                <span itemprop="name">Hexo个人博客_主题优化篇</span>
+                <span itemprop="name">hexo+github搭建个人博客及美化</span>
               
             </a>
         
@@ -560,9 +560,9 @@ function setSidebarMarginTop (headerOffset) {
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2018/08/26/Hexo个人博客_hexo+github搭建个人博客及美化更新/" itemprop="url">
+            <a class="post-title-link" href="/2018/08/26/Hexo个人博客_主题优化篇/" itemprop="url">
               
-                <span itemprop="name">hexo+github搭建个人博客及美化</span>
+                <span itemprop="name">Hexo个人博客_主题优化篇</span>
               
             </a>
         
@@ -1430,25 +1430,9 @@ setInterval("createtime()",250);
             });
           } else {
             
-              var newcounter = new Counter();
-              /* Set ACL */
-              var acl = new AV.ACL();
-              acl.setPublicReadAccess(true);
-              acl.setPublicWriteAccess(true);
-              newcounter.setACL(acl);
-              /* End Set ACL */
-              newcounter.set("title", title);
-              newcounter.set("url", url);
-              newcounter.set("time", 1);
-              newcounter.save(null, {
-                success: function(newcounter) {
-                  var $element = $(document.getElementById(url));
-                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-                },
-                error: function(newcounter, error) {
-                  console.log('Failed to create');
-                }
-              });
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
             
           }
         },
