@@ -10,22 +10,22 @@ const ap = new APlayer({
         cover: 'http://p1.music.126.net/W_5XiCv3rGS1-J7EXpHSCQ==/18885211718782327.jpg?param=130y130',
       },
 	  {
-        name: '惊蛰',
-        artist: '音阙诗听/王梓钰',
-        url: 'http://www.ytmp3.cn/down/48755.mp3',
-        cover: 'http://p1.music.126.net/5MmXpaP9r88tNzExPGMI8Q==/109951163370350985.jpg?param=130y130',
-      },
-	  {
-        name: '惊蛰',
-        artist: '音阙诗听/王梓钰',
-        url: 'http://www.ytmp3.cn/down/48755.mp3',
-        cover: 'http://p1.music.126.net/5MmXpaP9r88tNzExPGMI8Q==/109951163370350985.jpg?param=130y130',
-      },
-      {
         name: '这些民谣 - 一次听个够',
         artist: '翁大涵',
         url: 'http://www.ytmp3.cn/down/60222.mp3',
         cover: 'http://img.ytmp3.cn/image/10.jpg?param=130y130',
+      },
+	  {
+        name: 'Something Just Like This',
+        artist: 'The Chainsmokers',
+        url: 'http://www.ytmp3.cn/down/50463.mp3',
+        cover: 'http://p2.music.126.net/ggnyubDdMxrhpqYvpZbhEQ==/3302932937412681.jpg?param=130y130',
+      },
+      {
+        name: 'Good Time',
+        artist: 'Owl City&Carly Rae Jepsen',
+        url: 'http://www.ytmp3.cn/down/34148.mp3',
+        cover: 'http://p1.music.126.net/c5NVKUIAUcyN4BQUDbGnEg==/109951163221157827.jpg?param=130y130',
       }
     ]
 });
