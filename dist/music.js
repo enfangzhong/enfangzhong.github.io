@@ -4,10 +4,10 @@ const ap = new APlayer({
     autoplay: false,
     audio: [
 	{
-        name: "canon in d",
+        name: "Dream It Possible-Delacey",
         artist: 'Brian Crain',
-        url: 'http://pd2tflnys.bkt.clouddn.com/Brian%20Crain%20-%20canon%20in%20d.mp3',
-        cover: 'http://p1.music.126.net/QGb9Vtyw7qHS00uEvPfM6g==/843325418547559.jpg?param=130y130',
+        url: 'https://music.163.com/song?id=27566697&userid=397350552',
+        cover: 'http://p2.music.126.net/PNRvAXY7IeXMtHN8gE5n4Q==/6665239488419620.jpg?param=130y130',
       },
 	  {
         name: "Apologize",
