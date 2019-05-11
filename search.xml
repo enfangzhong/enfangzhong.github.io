@@ -80,7 +80,7 @@
   </entry>
   <entry>
     <title><![CDATA[将hexo博客同时部署发布托管到github和coding]]></title>
-    <url>%2F2018%2F08%2F30%2Fhexo%E5%8D%9A%E5%AE%A2%E5%90%8C%E6%97%B6%E9%83%A8%E7%BD%B2%E5%8F%91%E5%B8%83%E6%89%98%E7%AE%A1%E5%88%B0github%E5%92%8Ccoding%2F</url>
+    <url>%2F2018%2F08%2F30%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_%E5%90%8C%E6%97%B6%E9%83%A8%E7%BD%B2%E5%8F%91%E5%B8%83%E6%89%98%E7%AE%A1%E5%88%B0github%E5%92%8Ccoding%2F</url>
     <content type="text"><![CDATA[前言之前我们把hexo托管在github，但是毕竟github是国外的，访问速度上还是有点慢，所以想也部署一套在国内的托管平台，之前查资料听说gitcafe,但是听说gitcafe已经被coding收购了，所以就决定部署到coding。 查询了多方资料，终于鼓捣出了本地一次部署，同时更新到github以及coding。 正文_config.yml配置想要同时部署到2个平台，就要修改博客根目录下面的_config.yml文件中的deploy如下根据Hexo官方文档需要修改成下面的形式123456deploy: type: git message: [message] repo: github: &lt;repository url&gt;,[branch] gitcafe: &lt;repository url&gt;,[branch] 所以我的是这样：12345deploy: type: git repo: github: git@github.com:enfang/enfang.github.io.git,master coding: git@git.coding.net:enfang/enfang.git,master 我这边提交采用的SSH密钥，这个方法有个好处，提交的时候不用输入用户名和密码。如果你习惯用http的方式，只要将地址改成相应的http地址即可。 coding上创建一个新项目这里只介绍coding上面如何创建项目，以及把本地hexo部署到coding上面，还不懂如何创建hexo的请看我之前的系类文章。首先我们创建一个项目，创建后进入项目的代码模块，获取到这个项目的ssh地址，我的是https://git.coding.net/enfang/enfang.git 同步本地hexo到coding上把获取到了ssh配置在上面的_config.yml文件中的deploy下，如果是第一次使用coding的话，需要设置SSH公钥，生成的方法可以参考coding帮助中心如果你看过我第一篇文章里面介绍过秘钥生成。coding上的第一篇文章github上的第一篇文章 我这里直接使用之前部署github时已经生成的公钥。 本地打开 id_rsa.pub 文件，复制其中全部内容，填写到SSH_RSA公钥key下的一栏，公钥名称可以随意起名字。完成后点击“添加”，然后输入密码或动态码即可添加完成。 添加后，测试公钥是否添加成功，在git bash命令输入：1ssh -T git@git.coding.net 如果得到下面提示就表示公钥添加成功了：1Coding.net Tips : [Hello ! You&apos;ve conected to Coding.net by SSH successfully! ] 最后使用部署命令就能把博客同步到coding上面： hexo deploy -g pages服务方式部署部署博客方式有两种，第一种就是pages服务的方式，也推荐这种方式，因为可以绑定域名，而第二种演示的方式必须升级会员才能绑定自定义域名。pages方式也很简单就是在source/需要创建一个空白文件，至于原因，是因为 coding.net需要这个文件来作为以静态文件部署的标志。就是说看到这个Staticfile就知道按照静态文件来发布。12cd source/touch Staticfile #名字必须是Staticfile 分支选择master，因为前面配置的分支是master,因此开启之后，也需要是master。然后看起之后就可访问了。 注意： 如果你的项目名称跟你coding的用户名一样，比如我的用户是叫enfang,博客项目名也叫enfang那直接访问 enfang.coding.me就能访问博客，否则就要带上项目名：enfang.coding.me/项目名 才能访问推荐项目名跟用户名一样，这样就可以省略项目名了 总结到此为止，终于可以实现一次部署，github和coding两个网站同时更新。访问速度也是唰唰唰的快，忙乎了两天终于搭好了独立博客。希望对还在搭建hexo独立博客的小伙伴有帮助。本人博客效果效果展示 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
       <categories>
         <category>搭建个人博客</category>
@@ -94,7 +94,7 @@
   </entry>
   <entry>
     <title><![CDATA[Hexo博客添加在线联系功能]]></title>
-    <url>%2F2018%2F08%2F29%2FHexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E5%9C%A8%E7%BA%BF%E8%81%94%E7%B3%BB%E5%8A%9F%E8%83%BD%2F</url>
+    <url>%2F2018%2F08%2F29%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_%E6%B7%BB%E5%8A%A0%E5%9C%A8%E7%BA%BF%E8%81%94%E7%B3%BB%E5%8A%9F%E8%83%BD%2F</url>
     <content type="text"><![CDATA[Hexo博客添加在线联系功能Hexo博客如何添加在线联系功能呢,发现了一个不错的网站可以提供在线联系的服务，当有用户在网页上给你留言后会通过邮件或者微信通知你，可以及时的解答用户的疑问。 最终的效果可以参考我博客的右下角,有个聊天的按钮,效果如下所示:配置方法如下:首先到DaoVoice上注册一个账号,注册完成后会得到一个app_id，获取appid的步骤如下图所示:以next主题为例,打开/themes/next/layout/_partials/head.swig文件添加如下123456789&#123;% if theme.daovoice %&#125; &lt;script&gt; (function(i,s,o,g,r,a,m)&#123;i[&quot;DaoVoiceObject&quot;]=r;i[r]=i[r]||function()&#123;(i[r].q=i[r].q||[]).push(arguments)&#125;,i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset=&quot;utf-8&quot;;m.parentNode.insertBefore(a,m)&#125;)(window,document,&quot;script&quot;,(&apos;https:&apos; == document.location.protocol ? &apos;https:&apos; : &apos;http:&apos;) + &quot;//widget.daovoice.io/widget/0f81ff2f.js&quot;,&quot;daovoice&quot;) daovoice(&apos;init&apos;, &#123; app_id: &quot;&#123;&#123;theme.daovoice_app_id&#125;&#125;&quot; &#125;); daovoice(&apos;update&apos;); &lt;/script&gt;&#123;% endif %&#125; 接着打开主题配置文件_config.yml，添加如下代码：123# Online contact daovoice: truedaovoice_app_id: 这里输入前面获取的app_id 最后执行hexo clean &amp;&amp; hexo g &amp;&amp; hexo s就能看到效果了。 需要注意的是,next主题下聊天的按钮会和其他按钮重叠到一起，可以到聊天设置，修改下按钮的位置: 最后到右上角选择管理员，微信绑定,可以绑定你的微信号，关注公众号后打开小程序，就可以实时收发消息，有新的消息也会通过微信通知，设置页面如下:效果展示: 酱油哥博客 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
       <categories>
         <category>搭建个人博客</category>
@@ -108,7 +108,7 @@
   </entry>
   <entry>
     <title><![CDATA[markdown的使用方法]]></title>
-    <url>%2F2018%2F08%2F27%2Fmarkdown%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%2F</url>
+    <url>%2F2018%2F08%2F27%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_markdown%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%2F</url>
     <content type="text"><![CDATA[markDown的使用方法第一步：下载markdown进入markdown官网，选择download，进行下载。 列表1 列表2 a 子列表1 b 子列表2 列表3 链接举例酱油哥博客斜体字体加粗 分割线 &lt;html&gt;&lt;/html&gt; 123456&lt;html&gt; &lt;head&gt; &lt;title&gt;markdown使用&lt;/tile&gt; &lt;head&gt; &lt;body&gt;&lt;body&gt;&lt;/html&gt; 引用 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
       <categories>
         <category>搭建个人博客</category>
@@ -121,8 +121,21 @@
   </entry>
   <entry>
     <title><![CDATA[hexo+github搭建个人博客及美化]]></title>
-    <url>%2F2018%2F08%2F26%2Fhexo%2Bgithub%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0%2F</url>
+    <url>%2F2018%2F08%2F26%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_hexo%2Bgithub%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0%2F</url>
     <content type="text"><![CDATA[使用Hexo+Github一步步搭建属于自己的博客（基础篇） 1、准备工作安装Node.js和配置好Node.js环境，打开cmd命令行，输入：1node -v 安装Git和配置好Git环境，安装成功的象征就是在电脑上任何位置鼠标右键能够出现如下两个选择Git GUI Here和Git Bash Here。查看git是否安装成功，在cmd命令行中输入：1git --version 2、Github账户注册和新建项目，项目必须要遵守格式：账户名.github.io，不然接下来会有很多麻烦。并且需要勾选Initialize this repository with a README在建好的项目右侧有个settings按钮，点击它，向下拉到GitHub Pages，你会看到那边有个网址，访问它，你将会惊奇的发现该项目已经被部署到网络上，能够通过外网来访问它。3、安装Hexo，在自己认为合适的地方创个文件夹，我是在D盘建了一个blog文件夹。然后通过命令行进入到该文件夹里面12d:cd blog 命令行中输入npm install hexo -g，开始安装Hexo，等待安装完毕后进行下一步输入hexo init，初始化该文件夹（有点漫长的等待。。。）输入npm install，安装所需要的组件输入hexo g，首次体验Hexo输入hexo s，开启服务器，访问该网址，正式体验Hexo问题：假如页面一直无法跳转，那么可能端口被占用了。此时我们ctrl+c停止服务器，接着输入“hexo server -p 端口号”来改变端口号，如何在浏览器中输入：localhost:端口号，你就可以在本地查看部署好的个人博客项目了。4、将本地博客部署到github网站上去。将Hexo与Github page联系起来，设置Git的user name和email 设置Git的user name和email a 在博客blog目录下，右键选Git Baes Here,命令行中输入，其中的name和email替换成你自己的用户名和邮箱 12$ git config --global user.name &quot;Name&quot;$ git config --global user.email &quot;email@example.com&quot; 输入输入cd ~/.ssh,检查是否由.ssh的文件夹 输入ssh-keygen -t rsa -C “929762930@qq.com”，连续三个回车，生成密钥，最后得到了两个文件：id_rsa和id_rsa.pub（默认存储路径是：C:\Users\Administrator.ssh）。 登录Github，点击头像下的settings，添加ssh。新建一个new ssh key，将id_rsa.pub文件里的内容复制上去输入ssh -T git@github.com，测试添加ssh是否成功。如果看到Hi后面是你的用户名，就说明成功了5、配置Deployment，在其文件夹中，找到_config.yml文件，修改repo值（在末尾）1234deploy: type: git repo: git@github.com:enfangzhong/enfangzhong.github.io.git branch: master repo值是你在github项目里的ssh（右下角）6、新建一篇博客，在cmd执行命令：hexo new post “博客名”1hexo new post &quot;你好，酱油哥&quot; 这时候在文件夹_posts目录下将会看到已经创建的文件在生成以及部署文章之前，需要安装一个扩展：npm install hexo-deployer-git —save使用编辑器编好文章，那么就可以使用命令：hexo d -g，生成以及部署了部署成功后访问你的地址：http://用户名.github.io。那么将看到生成的文章好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧主题优化展示: 酱油哥 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
+      <categories>
+        <category>搭建个人博客</category>
+      </categories>
+      <tags>
+        <tag>个人博客</tag>
+        <tag>github博客</tag>
+        <tag>hexo博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hexo个人博客_主题优化篇]]></title>
+    <url>%2F2018%2F08%2F26%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%E7%AF%87%2F</url>
+    <content type="text"><![CDATA[Hexo个人博客_主题优化篇 1、Hexo访问统计功能Hexo Next 解决 Busuanzi 统计浏览失效1node -v 好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧主题优化展示: 酱油哥 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
       <categories>
         <category>搭建个人博客</category>
       </categories>

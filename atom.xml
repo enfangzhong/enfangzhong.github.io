@@ -192,8 +192,8 @@
   
   <entry>
     <title>将hexo博客同时部署发布托管到github和coding</title>
-    <link href="http://enfangzhong.github.io/2018/08/30/hexo%E5%8D%9A%E5%AE%A2%E5%90%8C%E6%97%B6%E9%83%A8%E7%BD%B2%E5%8F%91%E5%B8%83%E6%89%98%E7%AE%A1%E5%88%B0github%E5%92%8Ccoding/"/>
-    <id>http://enfangzhong.github.io/2018/08/30/hexo博客同时部署发布托管到github和coding/</id>
+    <link href="http://enfangzhong.github.io/2018/08/30/Hexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_%E5%90%8C%E6%97%B6%E9%83%A8%E7%BD%B2%E5%8F%91%E5%B8%83%E6%89%98%E7%AE%A1%E5%88%B0github%E5%92%8Ccoding/"/>
+    <id>http://enfangzhong.github.io/2018/08/30/Hexo个人博客_同时部署发布托管到github和coding/</id>
     <published>2018-08-29T16:12:11.000Z</published>
     <updated>2019-05-10T12:20:01.736Z</updated>
     
@@ -223,8 +223,8 @@
   
   <entry>
     <title>Hexo博客添加在线联系功能</title>
-    <link href="http://enfangzhong.github.io/2018/08/29/Hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E5%9C%A8%E7%BA%BF%E8%81%94%E7%B3%BB%E5%8A%9F%E8%83%BD/"/>
-    <id>http://enfangzhong.github.io/2018/08/29/Hexo博客添加在线联系功能/</id>
+    <link href="http://enfangzhong.github.io/2018/08/29/Hexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_%E6%B7%BB%E5%8A%A0%E5%9C%A8%E7%BA%BF%E8%81%94%E7%B3%BB%E5%8A%9F%E8%83%BD/"/>
+    <id>http://enfangzhong.github.io/2018/08/29/Hexo个人博客_添加在线联系功能/</id>
     <published>2018-08-29T13:03:11.000Z</published>
     <updated>2019-05-10T12:19:28.127Z</updated>
     
@@ -254,8 +254,8 @@
   
   <entry>
     <title>markdown的使用方法</title>
-    <link href="http://enfangzhong.github.io/2018/08/27/markdown%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"/>
-    <id>http://enfangzhong.github.io/2018/08/27/markdown的使用方法/</id>
+    <link href="http://enfangzhong.github.io/2018/08/27/Hexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_markdown%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"/>
+    <id>http://enfangzhong.github.io/2018/08/27/Hexo个人博客_markdown的使用方法/</id>
     <published>2018-08-27T13:03:11.000Z</published>
     <updated>2019-05-10T12:22:03.283Z</updated>
     
@@ -283,8 +283,8 @@
   
   <entry>
     <title>hexo+github搭建个人博客及美化</title>
-    <link href="http://enfangzhong.github.io/2018/08/26/hexo+github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0/"/>
-    <id>http://enfangzhong.github.io/2018/08/26/hexo+github搭建个人博客及美化更新/</id>
+    <link href="http://enfangzhong.github.io/2018/08/26/Hexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_hexo+github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0/"/>
+    <id>http://enfangzhong.github.io/2018/08/26/Hexo个人博客_hexo+github搭建个人博客及美化更新/</id>
     <published>2018-08-26T13:03:11.000Z</published>
     <updated>2019-05-10T12:18:41.466Z</updated>
     
@@ -296,6 +296,36 @@
       
         &lt;p&gt;使用Hexo+Github一步步搭建属于自己的博客（基础篇）&lt;/p&gt;
 &lt;h2 id=&quot;1、准备工作&quot;&gt;&lt;a href=&quot;#1、准备工作&quot; class=&quot;headerlink&quot; title=&quot;1、准备工作&quot;&gt;&lt;/a&gt;1、准备工作&lt;/h2&gt;&lt;h3 id=&quot;安装Node-js和配
+      
+    
+    </summary>
+    
+      <category term="搭建个人博客" scheme="http://enfangzhong.github.io/categories/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    
+    
+      <category term="个人博客" scheme="http://enfangzhong.github.io/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="github博客" scheme="http://enfangzhong.github.io/tags/github%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="hexo博客" scheme="http://enfangzhong.github.io/tags/hexo%E5%8D%9A%E5%AE%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo个人博客_主题优化篇</title>
+    <link href="http://enfangzhong.github.io/2018/08/26/Hexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%E7%AF%87/"/>
+    <id>http://enfangzhong.github.io/2018/08/26/Hexo个人博客_主题优化篇/</id>
+    <published>2018-08-26T13:03:11.000Z</published>
+    <updated>2019-05-11T09:06:11.890Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hexo个人博客_主题优化篇</p><h3 id="1、Hexo访问统计功能"><a href="#1、Hexo访问统计功能" class="headerlink" title="1、Hexo访问统计功能"></a>1、Hexo访问统计功能</h3><h4 id="Hexo-Next-解决-Busuanzi-统计浏览失效"><a href="#Hexo-Next-解决-Busuanzi-统计浏览失效" class="headerlink" title="Hexo Next 解决 Busuanzi 统计浏览失效"></a>Hexo Next 解决 Busuanzi 统计浏览失效</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure><h3 id="好了，到此为止，最基本的也是最全面的hexo-github搭建博客完结。接下来进入主题优化吧"><a href="#好了，到此为止，最基本的也是最全面的hexo-github搭建博客完结。接下来进入主题优化吧" class="headerlink" title="好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧"></a>好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧</h3><p>主题优化展示: <a href="https://enfangzhong.github.io/">酱油哥</a></p><p><strong>欢迎访问我的博客</strong><br><a href="https://enfangzhong.github.io/">Git托管博客效果</a> </p><p><a href="http://enfang.coding.me/" target="_blank" rel="noopener">Coding托管博客效果</a></p><p><a href="https://itjyg.gitee.io" target="_blank" rel="noopener">码云托管博客效果</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Hexo个人博客_主题优化篇&lt;/p&gt;
+&lt;h3 id=&quot;1、Hexo访问统计功能&quot;&gt;&lt;a href=&quot;#1、Hexo访问统计功能&quot; class=&quot;headerlink&quot; title=&quot;1、Hexo访问统计功能&quot;&gt;&lt;/a&gt;1、Hexo访问统计功能&lt;/h3&gt;&lt;h4 id=&quot;Hex
       
     
     </summary>
