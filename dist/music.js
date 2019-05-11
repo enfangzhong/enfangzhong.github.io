@@ -13,7 +13,7 @@ const ap = new APlayer({
         name: '这些民谣 - 一次听个够',
         artist: '翁大涵',
         url: 'http://www.ytmp3.cn/down/60222.mp3',
-        cover: 'http://img.ytmp3.cn/image/10.jpg?param=130y130',
+        cover: 'http://p2.music.126.net/Wx5GNJEpay2JbfVUJc4Aew==/109951163094853876.jpg?param=130y130',
       },
 	  {
         name: 'Something Just Like This',
