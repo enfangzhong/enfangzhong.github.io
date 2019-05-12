@@ -77,7 +77,8 @@ function startHeartAnimation() {
 			$ele.html('');
 			var timer = setInterval(function() {
 				var current = str.substr(progress, 1);
-				if (current == '<') {="" progress="str.indexOf('">', progress) + 1;
+				if (current == '<') {
+					progress = str.indexOf('>', progress) + 1;
 				} else {
 					progress++;
 				}
@@ -109,7 +110,7 @@ function timeElapse(date){
 	if (seconds < 10) {
 		seconds = "0" + seconds;
 	}
-	var result = "<span class="\" digit\""="">" + days + "</span> days <span class="\" digit\""="">" + hours + "</span> hours <span class="\" digit\""="">" + minutes + "</span> minutes <span class="\" digit\""="">" + seconds + "</span> seconds"; 
+	var result = "<span class=\"digit\">" + days + "</span> days <span class=\"digit\">" + hours + "</span> hours <span class=\"digit\">" + minutes + "</span> minutes <span class=\"digit\">" + seconds + "</span> seconds"; 
 	$("#elapseClock").html(result);
 }
 
@@ -132,4 +133,4 @@ function adjustCodePosition() {
 
 function showLoveU() {
 	$('#loveu').fadeIn(3000);
-}</')>
+}
