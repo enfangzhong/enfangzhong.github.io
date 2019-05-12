@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+
+  <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+  
+
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/favicon-32x32-next.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "9494e80d"
+    });
+  daovoice('update');
+  </script>
+
+  <meta name="description" content="Redis简介关于关系型数据库和nosql数据库   关系型数据库是基于关系表的数据库，最终会将数据持久化到磁盘上，而nosql数据  库是基于特殊的结构，并将数据存储到内存的数据库。从性能上而言，nosql数据库  要优于关系型数据库，从安全性上而言关系型数据库要优于nosql数据库，所以在实  际开发中一个项目中nosql和关系型数据库会一起使用，达到性能和安全性的双保证。  为什么要使用Re">
+<meta name="keywords" content="Redis,非关系型数据库,数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis学习笔记">
+<meta property="og:url" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/index.html">
+<meta property="og:site_name" content="酱油哥博客">
+<meta property="og:description" content="Redis简介关于关系型数据库和nosql数据库   关系型数据库是基于关系表的数据库，最终会将数据持久化到磁盘上，而nosql数据  库是基于特殊的结构，并将数据存储到内存的数据库。从性能上而言，nosql数据库  要优于关系型数据库，从安全性上而言关系型数据库要优于nosql数据库，所以在实  际开发中一个项目中nosql和关系型数据库会一起使用，达到性能和安全性的双保证。  为什么要使用Re">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/37168456521de2f12b6616af58929fc4.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/c7bdc26e311ca4aad1c8f0dbbde470cf.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/d719e7ea50fbb0ddd14a95366cb28382.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/122f9d8b0eb285eb9b9adcce1830fb55.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/f235bea179383cbf7acba3331c2539bc.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/550c428204f4d04aa54544d301edf00d.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/09a5661b72a8d30fe1aaa56947a0ba24.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/ad6001d7f725828dd13223f512d98ea4.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/c817bb72ebb9a912fc98728fd2555703.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/f4168cd95ab247bffb96c7f4e53ca49c.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/55bf55e5817df95473e372562a0c6f6d.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/8ed2b9e5d38588b65001722cba9e596f.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/d828c877fc1d70d29c2e2874af7d3fb7.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/e12c33b42ab106d631e248ee90c0bb05.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/3bdb15c54c9a766fb7a9607efea446b3.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/d3fbb6c9ed79291ca94214f2a67d00ff.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/a41c3bb595584719ad1f9a1f02ff08cd.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/1701297c2cd81dc7d0bda3721f10a301.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/0b16524ef5e1db1fa4dba8226512454b.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/ffa48e0a498de079ab56848dda375900.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/b600dad7d4568d70d774422aef6d32d1.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/9a48658e5c6f7fe08177669386a8e7f1.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/8847e09f463cee91443b06034ad63748.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/994d5312aeb7e2fab285748c1ed4dab6.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/a9531d6a0b55abcb785b42e3e226a429.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/e8320268e156af3a42887d284af00fb1.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/be52e27b0b7cb4e15cf9e125a268316f.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/347c176b3e916155debc4cd8494d9e42.png">
+<meta property="og:updated_time" content="2019-05-10T13:39:05.599Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis学习笔记">
+<meta name="twitter:description" content="Redis简介关于关系型数据库和nosql数据库   关系型数据库是基于关系表的数据库，最终会将数据持久化到磁盘上，而nosql数据  库是基于特殊的结构，并将数据存储到内存的数据库。从性能上而言，nosql数据库  要优于关系型数据库，从安全性上而言关系型数据库要优于nosql数据库，所以在实  际开发中一个项目中nosql和关系型数据库会一起使用，达到性能和安全性的双保证。  为什么要使用Re">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/37168456521de2f12b6616af58929fc4.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="酱油哥博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Redis学习笔记 | 酱油哥博客</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+<a href="https://github.com/enfangzhong"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script>
+ function GetRandomNum(Min,Max)
+  {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return(Min + Math.round(Rand * Range));
+  }
+function setSidebarMarginTop (headerOffset) {
+    return $('#sidebar').css({ 'margin-top': headerOffset });
+  }
+ function getHeaderOffset () {
+    return $('.header-inner').height() + CONFIG.sidebar.offset;
+  }
+  window.onload=function(){
+    var subtitle = "喜欢一个人，始于颜值，敬于才华，合于性格，久于善良，终于人品。W我真的好想你，在每一个雨季，你选择遗忘的，是我最不舍的。W不怕万人阻挡，只怕自己投降。W成熟是给你陌生人看的，逗比是给朋友看的，幼稚是给喜欢的人看的。W人生当苦无妨，良人当归即可。W逝者如斯乎，不舍昼夜。";
+     var mytitle = subtitle.split("W");
+     var max = mytitle.length-1;
+     var index = GetRandomNum(0,max);
+     var text = mytitle[index];
+     $("#helloTitle").html(text);
+     var headOffset = getHeaderOffset();
+     setSidebarMarginTop(headOffset);
+     //动态subtitle设置
+  }
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">酱油哥博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  
+    <p style="color:#black;font-size:18px;font-family:STXingkai" id="helloTitle" class="site-subtitle"></p>
+  
+
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+    <a href="/schedule/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />日程表</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-love">
+    <a href="/love/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />love</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+    <a href="/404/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />公益 404</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="酱油哥">
+      <meta itemprop="description" content="你若晴天，我便安好。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="酱油哥博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Redis学习笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-05 10:32:35" itemprop="dateCreated datePublished" datetime="2018-09-05T10:32:35+08:00">2018-09-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-10 21:39:05" itemprop="dateModified" datetime="2019-05-10T21:39:05+08:00">2019-05-10</time>
+              
+            
+          </span>
+
+
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaWeb/" itemprop="url" rel="index"><span itemprop="name">JavaWeb</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/05/Redis学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/09/05/Redis学习笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+            <span class="post-meta-divider">|</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 2,980</span>
+
+<span class="post-meta-divider">|</span>
+<span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 11分钟</span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Redis简介"><a href="#Redis简介" class="headerlink" title="Redis简介"></a>Redis简介</h1><h3 id="关于关系型数据库和nosql数据库"><a href="#关于关系型数据库和nosql数据库" class="headerlink" title="关于关系型数据库和nosql数据库"></a>关于关系型数据库和nosql数据库</h3><blockquote>
+<p>  关系型数据库是基于关系表的数据库，最终会将数据持久化到磁盘上，而nosql数据<br>  库是基于特殊的结构，并将数据存储到内存的数据库。从性能上而言，nosql数据库<br>  要优于关系型数据库，从安全性上而言关系型数据库要优于nosql数据库，所以在实<br>  际开发中一个项目中nosql和关系型数据库会一起使用，达到性能和安全性的双保证。</p>
+</blockquote>
+<h3 id="为什么要使用Redis"><a href="#为什么要使用Redis" class="headerlink" title="为什么要使用Redis"></a>为什么要使用Redis</h3><h3 id="redis在Linux上的安装"><a href="#redis在Linux上的安装" class="headerlink" title="redis在Linux上的安装"></a>redis在Linux上的安装</h3><ol>
+<li><p>安装redis编译的c环境，yum install gcc-c++</p>
+</li>
+<li><p>将redis-2.6.16.tar.gz上传到Linux系统中</p>
+</li>
+<li><p>解压到/usr/local下 tar -xvf redis-2.6.16.tar.gz -C /usr/local</p>
+</li>
+<li><p>进入redis-2.6.16目录 使用make命令编译redis</p>
+</li>
+<li><p>在redis-2.6.16目录中 使用make PREFIX=/usr/local/redis install命令安装<br>redis到/usr/local/redis中</p>
+</li>
+<li><p>拷贝redis-2.6.16中的redis.conf到安装目录redis中</p>
+</li>
+<li><p>启动redis 在bin下执行命令redis-server redis.conf</p>
+</li>
+<li><p>如需远程连接redis，需配置redis端口6379在linux防火墙中开发</p>
+</li>
+</ol>
+<blockquote>
+<p>  /sbin/iptables -I INPUT -p tcp —dport 6379 -j ACCEPT</p>
+<p>  /etc/rc.d/init.d/iptables save</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/37168456521de2f12b6616af58929fc4.png" alt=""></p>
+<p>启动后看到如上欢迎页面，但此窗口不能关闭，窗口关闭就认为redis也关闭了(类<br>似Tomcat通过bin下的startup.bat的方式)</p>
+<p>解决方案：可以通过修改配置文件 配置redis后台启动，即服务器启动了但不会<br>穿件控制台窗口</p>
+<p>将redis.conf文件中的daemonize从false修改成true表示后台启动</p>
+<p>使用命令查看6379端口是否启动ps -ef | grep redis</p>
+<p><img src="/2018/09/05/Redis学习笔记/c7bdc26e311ca4aad1c8f0dbbde470cf.png" alt=""></p>
+<h1 id="使用java去操作Redis"><a href="#使用java去操作Redis" class="headerlink" title="使用java去操作Redis"></a>使用java去操作Redis</h1><h1 id="Redis的常用命令"><a href="#Redis的常用命令" class="headerlink" title="Redis的常用命令"></a>Redis的常用命令</h1><blockquote>
+<p>  redis是一种高级的key-value的存储系统</p>
+<p>  其中的key是字符串类型，尽可能满足如下几点：</p>
+</blockquote>
+<ol>
+<li><p>key不要太长，最好不要操作1024个字节，这不仅会消耗内存还会降低查找 效率</p>
+</li>
+<li><p>key不要太短，如果太短会降低key的可读性</p>
+</li>
+<li><p>在项目中，key最好有一个统一的命名规范（根据企业的需求）</p>
+</li>
+</ol>
+<blockquote>
+<p>  其中value 支持五种数据类型：</p>
+</blockquote>
+<ol>
+<li><p>字符串型 string</p>
+</li>
+<li><p>字符串列表 lists</p>
+</li>
+<li><p>字符串集合 sets</p>
+</li>
+<li><p>有序字符串集合 sorted sets</p>
+</li>
+<li><p>哈希类型 hashs</p>
+</li>
+</ol>
+<blockquote>
+<p>  我们对Redis的学习，主要是对数据的存储，下面将来学习各种Redis的数据类型的<br>  存储操作：</p>
+</blockquote>
+<h3 id="存储字符串string"><a href="#存储字符串string" class="headerlink" title="存储字符串string"></a>存储字符串string</h3><blockquote>
+<p>  字符串类型是Redis中最为基础的数据存储类型，它在Redis中是二进制安全的，这<br>  便意味着该类型可以接受任何格式的数据，如JPEG图像数据或Json对象描述信息等。<br>  在Redis中字符串类型的Value最多可以容纳的数据长度是512M</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/d719e7ea50fbb0ddd14a95366cb28382.png" alt=""></p>
+<ol>
+<li><p><strong>set key value</strong>：设定key持有指定的字符串value，如果该key存在则进行覆盖<br>操作。总是返回”OK”</p>
+</li>
+<li><p><strong>get key</strong>：获取key的value。如果与该key关联的value不是String类型，redis<br>将返回错误信息，因为get命令只能用于获取String value；如果该key不存在，返<br>回null。</p>
+</li>
+</ol>
+<p><img src="/2018/09/05/Redis学习笔记/122f9d8b0eb285eb9b9adcce1830fb55.png" alt=""></p>
+<ol>
+<li><strong>getset key value</strong>：先获取该key的值，然后在设置该key的值。</li>
+</ol>
+<p><img src="/2018/09/05/Redis学习笔记/f235bea179383cbf7acba3331c2539bc.png" alt=""></p>
+<blockquote>
+<p>  4）<strong>incr key</strong>：将指定的key的value原子性的递增1.如果该key不存在，其初始值<br>  为0，在incr之后其值为1。如果value的值不能转成整型，如hello，该操作将执<br>  行失败并返回相应的错误信息。</p>
+<p>  5）<strong>decr key</strong>：将指定的key的value原子性的递减1.如果该key不存在，其初始值<br>  为0，在incr之后其值为-1。如果value的值不能转成整型，如hello，该操作将执<br>  行失败并返回相应的错误信息。</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/550c428204f4d04aa54544d301edf00d.png" alt=""></p>
+<blockquote>
+<p>  6）<strong>incrby key increment</strong>：将指定的key的value原子性增加increment，如果该<br>  key不存在，器初始值为0，在incrby之后，该值为increment。如果该值不能转成<br>  整型，如hello则失败并返回错误信息</p>
+<p>  7）<strong>decrby key decrement</strong>：将指定的key的value原子性减少decrement，如果<br>  该key不存在，器初始值为0，在decrby之后，该值为decrement。如果该值不能<br>  转成整型，如hello则失败并返回错误信息</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/09a5661b72a8d30fe1aaa56947a0ba24.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/ad6001d7f725828dd13223f512d98ea4.png" alt=""></p>
+<blockquote>
+<p>  8）<strong>append key value</strong>：如果该key存在，则在原有的value后追加该值；如果该<br>  key 不存在，则重新创建一个key/value</p>
+</blockquote>
+<h3 id="存储lists类型"><a href="#存储lists类型" class="headerlink" title="存储lists类型"></a>存储lists类型</h3><blockquote>
+<p>  在Redis中，List类型是按照插入顺序排序的字符串链表。和数据结构中的普通链表<br>  一样，我们可以在其头部(left)和尾部(right)添加新的元素。在插入时，如果该键并不<br>  存在，Redis将为该键创建一个新的链表。与此相反，如果链表中所有的元素均被移<br>  除，那么该键也将会被从数据库中删除。List中可以包含的最大元素数量是<br>  4294967295。</p>
+</blockquote>
+<p>从元素插入和删除的效率视角来看，如果我们是在链表的两头插入或删除元素，这将<br>会是非常高效的操作，即使链表中已经存储了百万条记录，该操作也可以在常量时间<br>内完成。然而需要说明的是，如果元素插入或删除操作是作用于链表中间，那将会是<br>非常低效的。相信对于有良好数据结构基础的开发者而言，这一点并不难理解。</p>
+<p><img src="/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png" alt=""></p>
+<ol>
+<li><p><strong>lpush key value1 value2…</strong>：在指定的key所关联的list的头部插入所有的<br>values，如果该key不存在，该命令在插入的之前创建一个与该key关联的空链<br>表，之后再向该链表的头部插入数据。插入成功，返回元素的个数。</p>
+</li>
+<li><p><strong>rpush key value1、value2…</strong>：在该list的尾部添加元素</p>
+</li>
+<li><p><strong>lrange key start end</strong>：获取链表中从start到end的元素的值，start、end可<br>为负数，若为-1则表示链表尾部的元素，-2则表示倒数第二个，依次类推…</p>
+</li>
+</ol>
+<p><img src="/2018/09/05/Redis学习笔记/c817bb72ebb9a912fc98728fd2555703.png" alt=""></p>
+<ol>
+<li><strong>lpushx key value</strong>：仅当参数中指定的key存在时（如果与key管理的list中没<br>有值时，则该key是不存在的）在指定的key所关联的list的头部插入value。</li>
+</ol>
+<blockquote>
+<p>  5）<strong>rpushx key value</strong>：在该list的尾部添加元素</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/f4168cd95ab247bffb96c7f4e53ca49c.png" alt=""></p>
+<blockquote>
+<p>  6）<strong>lpop key</strong>：返回并弹出指定的key关联的链表中的第一个元素，即头部元素。</p>
+<p>  7）<strong>rpop key</strong>：从尾部弹出元素。</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/55bf55e5817df95473e372562a0c6f6d.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/8ed2b9e5d38588b65001722cba9e596f.png" alt=""></p>
+<blockquote>
+<p>  8）<strong>rpoplpush resource destination</strong>：将链表中的尾部元素弹出并添加到头部</p>
+<p>  9）<strong>llen key</strong>：返回指定的key关联的链表中的元素的数量。</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/d828c877fc1d70d29c2e2874af7d3fb7.png" alt=""></p>
+<blockquote>
+<p>  10）<strong>lset key index<br>  value</strong>：设置链表中的index的脚标的元素值，0代表链表的头元<br>  素，-1代表链表的尾元素。</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/e12c33b42ab106d631e248ee90c0bb05.png" alt=""></p>
+<blockquote>
+<p>  11）<strong>lrem key count<br>  value</strong>：删除count个值为value的元素，如果count大于0，从头向尾遍历并删除count个值为value的元素，如果count小于0，则从尾向头遍历并删除。如果count等于0，则删除链表中所有等于value的元素。</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/3bdb15c54c9a766fb7a9607efea446b3.png" alt=""></p>
+<blockquote>
+<p>  12）<strong>linsert key before|after pivot<br>  value</strong>：在pivot元素前或者后插入value这个 元素。</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/d3fbb6c9ed79291ca94214f2a67d00ff.png" alt=""></p>
+<h3 id="存储sets类型"><a href="#存储sets类型" class="headerlink" title="存储sets类型"></a>存储sets类型</h3><blockquote>
+<p>  在Redis中，我们可以将Set类型看作为没有排序的字符集合，和List类型一样，我<br>  们也可以在该类型的数据值上执行添加、删除或判断某一元素是否存在等操作。需要<br>  说明的是，这些操作的时间是常量时间。Set可包含的最大元素数是4294967295。</p>
+<p>  和List类型不同的是，Set集合中不允许出现重复的元素。和List类型相比，Set类<br>  型在功能上还存在着一个非常重要的特性，即在服务器端完成多个Sets之间的聚合计<br>  算操作，如unions、intersections和differences。由于这些操作均在服务端完成，<br>  因此效率极高，而且也节省了大量的网络IO开销</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png" alt=""></p>
+<blockquote>
+<p>  1）sadd key value1、value2…：向set中添加数据，如果该key的值已有则不会<br>  重复添加</p>
+<p>  2）smembers key：获取set中所有的成员</p>
+<p>  3）scard key：获取set中成员的数量</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/a41c3bb595584719ad1f9a1f02ff08cd.png" alt=""></p>
+<blockquote>
+<p>  4）sismember key member：判断参数中指定的成员是否在该set中，1表示存<br>  在，0表示不存在或者该key本身就不存在</p>
+<p>  5）srem key member1、member2…：删除set中指定的成员</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/1701297c2cd81dc7d0bda3721f10a301.png" alt=""></p>
+<p>6）srandmember key：随机返回set中的一个成员</p>
+<p><img src="/2018/09/05/Redis学习笔记/0b16524ef5e1db1fa4dba8226512454b.png" alt=""></p>
+<blockquote>
+<p>  7）sdiff sdiff key1 key2：返回key1与key2中相差的成员，而且与key的顺序有<br>  关。即返回差集。</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/ffa48e0a498de079ab56848dda375900.png" alt=""></p>
+<blockquote>
+<p>  8）sdiffstore destination key1 key2：将key1、key2相差的成员存储在<br>  destination上</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/b600dad7d4568d70d774422aef6d32d1.png" alt=""></p>
+<blockquote>
+<p>  9）sinter key[key1,key2…]：返回交集。</p>
+<p>  10）sinterstore destination key1 key2：将返回的交集存储在destination上</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/9a48658e5c6f7fe08177669386a8e7f1.png" alt=""></p>
+<blockquote>
+<p>  11）sunion key1、key2：返回并集。</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/8847e09f463cee91443b06034ad63748.png" alt=""></p>
+<blockquote>
+<p>  12）sunionstore destination key1 key2：将返回的并集存储在destination上</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/994d5312aeb7e2fab285748c1ed4dab6.png" alt=""></p>
+<h3 id="存储sortedset"><a href="#存储sortedset" class="headerlink" title="存储sortedset"></a>存储sortedset</h3><blockquote>
+<p>  Sorted-Sets和Sets类型极为相似，它们都是字符串的集合，都不允许重复的成员出<br>  现在一个Set中。它们之间的主要差别是Sorted-Sets中的每一个成员都会有一个分<br>  数(score)与之关联，Redis正是通过分数来为集合中的成员进行从小到大的排序。然<br>  而需要额外指出的是，尽管Sorted-Sets中的成员必须是唯一的，但是分数(score)<br>  却是可以重复的。</p>
+<p>  在Sorted-Set中添加、删除或更新一个成员都是非常快速的操作，其时间复杂度为<br>  集合中成员数量的对数。由于Sorted-Sets中的成员在集合中的位置是有序的，因此，<br>  即便是访问位于集合中部的成员也仍然是非常高效的。事实上，Redis所具有的这一<br>  特征在很多其它类型的数据库中是很难实现的，换句话说，在该点上要想达到和Redis<br>  同样的高效，在其它数据库中进行建模是非常困难的。</p>
+<p>  例如：游戏排名、微博热点话题等使用场景。</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png" alt=""></p>
+<blockquote>
+<p>  1）<strong>zadd key score member score2 member2 …</strong> ：将所有成员以及该成员的<br>  分数存放到sorted-set中</p>
+<p>  2）<strong>zcard key</strong>：获取集合中的成员数量</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/a9531d6a0b55abcb785b42e3e226a429.png" alt=""></p>
+<blockquote>
+<p>  3）<strong>zcount key min max</strong>：获取分数在[min,max]之间的成员</p>
+<p>  zincrby key increment member：设置指定成员的增加的分数。</p>
+<p>  zrange key start end<br>  [withscores]：获取集合中脚标为start-end的成员，[withscores]参数表明返回的成员包含其分数。</p>
+<p>  zrangebyscore key min max [withscores] [limit offset<br>  count]：返回分数在[min,max]的成员并按照分数从低到高排序。[withscores]：显示分数；[limit<br>  offset count]：offset，表明从脚标为offset的元素开始并返回count个成员。</p>
+<p>  zrank key member：返回成员在集合中的位置。</p>
+<p>  zrem key member[member…]：移除集合中指定的成员，可以指定多个成员。</p>
+<p>  zscore key member：返回指定成员的分数</p>
+</blockquote>
+<h3 id="存储hash"><a href="#存储hash" class="headerlink" title="存储hash"></a>存储hash</h3><blockquote>
+<p>  Redis中的Hashes类型可以看成具有String Key和String Value的map容器。所<br>  以该类型非常适合于存储值对象的信息。如Username、Password和Age等。如果<br>  Hash中包含很少的字段，那么该类型的数据也将仅占用很少的磁盘空间。每一个Hash<br>  可以存储4294967295个键值对。</p>
+</blockquote>
+<p><img src="/2018/09/05/Redis学习笔记/e8320268e156af3a42887d284af00fb1.png" alt=""></p>
+<p></p>
+<p>1）<strong>hset key field value</strong>：为指定的key设定field/value对（键值对）。</p>
+<p>2）<strong>hgetall key：</strong>获取key中的所有filed-vaule</p>
+<p><img src="/2018/09/05/Redis学习笔记/be52e27b0b7cb4e15cf9e125a268316f.png" alt=""></p>
+<p>3）<strong>hget key field</strong>：返回指定的key中的field的值</p>
+<p><img src="/2018/09/05/Redis学习笔记/347c176b3e916155debc4cd8494d9e42.png" alt=""></p>
+<p>4）<strong>hmset key fields</strong>：设置key中的多个filed/value</p>
+<p>5）<strong>hmget key fileds</strong>：获取key中的多个filed的值</p>
+<p>6）<strong>hexists key field</strong>：判断指定的key中的filed是否存在</p>
+<p>7）<strong>hlen key</strong>：获取key所包含的field的数量</p>
+<p>8）<strong>hincrby key field increment</strong>：设置key中filed的值增加increment，如：age<br>增加20</p>
+<h1 id="Redis的通用操作-见文档"><a href="#Redis的通用操作-见文档" class="headerlink" title="Redis的通用操作(见文档)"></a>Redis的通用操作(见文档)</h1><h1 id="Redis的特性-见文档"><a href="#Redis的特性-见文档" class="headerlink" title="Redis的特性(见文档)"></a>Redis的特性(见文档)</h1><h1 id="Redis的事务-见文档"><a href="#Redis的事务-见文档" class="headerlink" title="Redis的事务(见文档)"></a>Redis的事务(见文档)</h1><h1 id="Redis的持久化-见文档"><a href="#Redis的持久化-见文档" class="headerlink" title="Redis的持久化(见文档)"></a>Redis的持久化(见文档)</h1><p>总结：</p>
+<ol>
+<li><p>nosql</p>
+</li>
+<li><p>redis安装——linux（重点）</p>
+</li>
+<li><p>jedis（重点）</p>
+</li>
+<li><p>redis的数据操作类型 5中 (了解) —- string和hash</p>
+</li>
+<li><p>redis的其他</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="酱油哥 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="酱油哥 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>酱油哥</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://enfangzhong.github.io/2018/09/05/Redis学习笔记/" title="Redis学习笔记">http://enfangzhong.github.io/2018/09/05/Redis学习笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
+          
+            <a href="/tags/非关系型数据库/" rel="tag"><i class="fa fa-tag"></i> 非关系型数据库</a>
+          
+            <a href="/tags/数据库/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/03/Java开发中的23种设计模式详解/" rel="next" title="Java开发中的23种设计模式详解">
+                <i class="fa fa-chevron-left"></i> Java开发中的23种设计模式详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/05/JaveEE请求转发和重定向的区别/" rel="prev" title="JaveEE请求转发和重定向的区别">
+                JaveEE请求转发和重定向的区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="酱油哥" />
+            
+              <p class="site-author-name" itemprop="name">酱油哥</p>
+              <p class="site-description motion-element" itemprop="description">你若晴天，我便安好。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/enfangzhong" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://blog.csdn.net/qintian888" target="_blank" title="CSDN"><i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/5604852325" target="_blank" title="weibo"><i class="fa fa-fw fa-weibo"></i>weibo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/itjygfly" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/enfangzhong" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:enfangzhong@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lruihao.cn/" title="博采众长" target="_blank">博采众长</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leridy.pw/" title="乐余地" target="_blank">乐余地</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tmy123.com/" title="同盟源" target="_blank">同盟源</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          <marquee>
+	<a href="/links.html">
+	<font size="4" face="STXingkai">
+		<font color="#FF0000">欢</font>
+		<font color="#E80017">迎</font>
+		<font color="#D1002E">点</font>
+		<font color="#BA0045">我</font>
+		<font color="#A3005C">互</font>
+		<font color="#A00073">换</font>
+		<font color="#A0008A">友</font>
+		<font color="#A000A1">链</font>
+		<font color="#A000B8">哦</font>
+		<font color="#A000CF">~</font>
+		<font color="#A000E6">~</font>
+	</font>
+	</a>
+</marquee>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis简介"><span class="nav-number">1.</span> <span class="nav-text">Redis简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于关系型数据库和nosql数据库"><span class="nav-number">1.0.1.</span> <span class="nav-text">关于关系型数据库和nosql数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要使用Redis"><span class="nav-number">1.0.2.</span> <span class="nav-text">为什么要使用Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis在Linux上的安装"><span class="nav-number">1.0.3.</span> <span class="nav-text">redis在Linux上的安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用java去操作Redis"><span class="nav-number">2.</span> <span class="nav-text">使用java去操作Redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的常用命令"><span class="nav-number">3.</span> <span class="nav-text">Redis的常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储字符串string"><span class="nav-number">3.0.1.</span> <span class="nav-text">存储字符串string</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储lists类型"><span class="nav-number">3.0.2.</span> <span class="nav-text">存储lists类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储sets类型"><span class="nav-number">3.0.3.</span> <span class="nav-text">存储sets类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储sortedset"><span class="nav-number">3.0.4.</span> <span class="nav-text">存储sortedset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储hash"><span class="nav-number">3.0.5.</span> <span class="nav-text">存储hash</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的通用操作-见文档"><span class="nav-number">4.</span> <span class="nav-text">Redis的通用操作(见文档)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的特性-见文档"><span class="nav-number">5.</span> <span class="nav-text">Redis的特性(见文档)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的事务-见文档"><span class="nav-number">6.</span> <span class="nav-text">Redis的事务(见文档)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的持久化-见文档"><span class="nav-number">7.</span> <span class="nav-text">Redis的持久化(见文档)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+
+      
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GiT撤销/">GiT撤销</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JaveEE/">JaveEE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL内连接/">SQL内连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github博客/">github博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo博客/">hexo博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java框架/">java框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java编程/">java编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人博客/">个人博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉连接/">交叉连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客优化/">博客优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/右外连接/">右外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/左外连接/">左外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性回归/">线性回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逻辑回归/">逻辑回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/非关系型数据库/">非关系型数据库</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">酱油哥</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">GitHub</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!--
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+-->
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">Enfang</a> v6.3.0</div>
+
+
+
+
+
+<font color=MediumPurple face=STLiti>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共14.8k字|</span>
+</div>
+</font>
+
+<font color=MediumPurple face=STLiti><span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span></font>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("05/28/2018 20:01:01");//此处为建站时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已苟活："+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      访问用户：<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      访问次数：<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'SACSC0biGE5t01ErmVSxYvVt-gzGzoHsz',
+        appKey: 'td1GAOLqHNMnQ4BtJENstUVW',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!填写邮箱能很快收到我的回复喔！老铁，你不想说两句吗？',
+        avatar:'wavatar',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+</body>
+</html>
