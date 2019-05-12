@@ -44,7 +44,7 @@
     <url>%2F2018%2F09%2F05%2FJaveEE%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%8C%BA%E5%88%AB%2F</url>
     <content type="text"><![CDATA[一、请求转发和重定向请求转发：request.getRequestDispatcher(URL地址).forward(request, response) 处理流程： 客户端发送请求，Servlet做出业务逻辑处理。 Servlet调用forword()方法，服务器Servlet把目标资源返回给客户端浏览器。 重定向：response.sendRedirect(URL地址) 处理流程： 客户端发送请求，Servlet做出业务逻辑处理。 Servlet调用response.sendReadirect()方法，把要访问的目标资源作为response响应头信息发给客户端浏览器。 客户端浏览器重新访问服务器资源xxx.jsp，服务器再次对客户端浏览器做出响应。重定向以上两种情况，你都需要考虑Servlet处理完后，数据如何在jsp页面上呈现。图例是请求、响应的流程，没有标明数据如何处理、展现。 二、转发和重定向的路径问题1）使用相对路径在重定向和转发中没有区别2）重定向和请求转发使用绝对路径时，根/路径代表了不同含义重定向response.sendRedirect(“xxx”)是服务器向客户端发送一个请求头信息，由客户端再请求一次服务器。/指的Tomcat的根目录,写绝对路径应该写成”/当前Web程序根名称/资源名” 。如”/WebModule/login.jsp”,”/bbs/servlet/LoginServlet”转发是在服务器内部进行的，写绝对路径/开头指的是当前的Web应用程序。绝对路径写法就是是”/login.jsp”或”/servlet/LoginServlet”。 总结：以上要注意是区分是从服务器外的请求，还在是内部转发，从服务器外的请求，从Tomcat根写起(就是要包括当前Web的根)；是服务器内部的转发，很简单了，因为在当前服务器内，/写起指的就是当前Web的根目录。 三、转发和重定向的区别 request.getRequestDispatcher()是容器中控制权的转向，在客户端浏览器地址栏中不会显示出转向后的地址；服务器内部转发，整个过程处于同一个请求当中。response.sendRedirect()则是完全的跳转，浏览器将会得到跳转的地址，并重新发送请求链接。这样，从浏览器的地址栏中可以看到跳转后的链接地址。不在同一个请求。重定向，实际上客户端会向服务器端发送两个请求。所以转发中数据的存取可以用request作用域：request.setAttribute(), request.getAttribute()，重定向是取不到request中的数据的。只能用session。 forward()更加高效，在可以满足需要时，尽量使用RequestDispatcher.forward()方法。（思考一下为什么？） RequestDispatcher是通过调用HttpServletRequest对象的getRequestDispatcher()方法得到的，是属于请求对象的方法。sendRedirect()是HttpServletResponse对象的方法，即响应对象的方法，既然调用了响应对象的方法，那就表明整个请求过程已经结束了，服务器开始向客户端返回执行的结果。 重定向可以跨域访问，而转发是在web服务器内部进行的，不能跨域访问。]]></content>
       <categories>
-        <category>JaveWeb</category>
+        <category>JavaWeb</category>
       </categories>
       <tags>
         <tag>JaveEE</tag>
