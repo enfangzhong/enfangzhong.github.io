@@ -129,17 +129,18 @@
   daovoice('update');
   </script>
 
-  <meta name="description" content="你若晴天，我便安好。">
-<meta name="keywords" content="AnFrank AnFrank&#39;s blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="AnFrank">
-<meta property="og:url" content="http://enfangzhong.github.io/categories/机器学习/index.html">
+  <meta name="description" content="机器学习笔记_02决策树与随机森林[TOC] 从LR到决策树1、总体流程与核心问题首先，在了解树模型之前，自然想到线性模型和树模型有什么区别呢？其中最重要的是，树形模型是一个一个特征进行处理，之前线性模型是所有特征给予权重相加得到一个新的值。决策树与逻辑回归的分类区别也在于此，逻辑回归是将所有特征通过sigmoid函数变换为概率后，通过大于某一概率阈值的划分为一类，小于某一概率阈值的为另一类；而决">
+<meta name="keywords" content="机器学习,决策树,随机森林,信息增益,信息增益率,基尼指数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习笔记_02决策树与随机森林">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/05/13/机器学习笔记_02决策树与随机森林/index.html">
 <meta property="og:site_name" content="AnFrank">
-<meta property="og:description" content="你若晴天，我便安好。">
+<meta property="og:description" content="机器学习笔记_02决策树与随机森林[TOC] 从LR到决策树1、总体流程与核心问题首先，在了解树模型之前，自然想到线性模型和树模型有什么区别呢？其中最重要的是，树形模型是一个一个特征进行处理，之前线性模型是所有特征给予权重相加得到一个新的值。决策树与逻辑回归的分类区别也在于此，逻辑回归是将所有特征通过sigmoid函数变换为概率后，通过大于某一概率阈值的划分为一类，小于某一概率阈值的为另一类；而决">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-13T02:20:00.439Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AnFrank">
-<meta name="twitter:description" content="你若晴天，我便安好。">
+<meta name="twitter:title" content="机器学习笔记_02决策树与随机森林">
+<meta name="twitter:description" content="机器学习笔记_02决策树与随机森林[TOC] 从LR到决策树1、总体流程与核心问题首先，在了解树模型之前，自然想到线性模型和树模型有什么区别呢？其中最重要的是，树形模型是一个一个特征进行处理，之前线性模型是所有特征给予权重相加得到一个新的值。决策树与逻辑回归的分类区别也在于此，逻辑回归是将所有特征通过sigmoid函数变换为概率后，通过大于某一概率阈值的划分为一类，小于某一概率阈值的为另一类；而决">
 
 
 
@@ -148,7 +149,7 @@
 
 
 
-  <link rel="canonical" href="http://enfangzhong.github.io/categories/机器学习/"/>
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/05/13/机器学习笔记_02决策树与随机森林/"/>
 
 
 
@@ -158,7 +159,7 @@
   };
 </script>
 
-  <title>分类: 机器学习 | AnFrank</title>
+  <title>机器学习笔记_02决策树与随机森林 | AnFrank</title>
   
 
 
@@ -211,7 +212,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
 <a href="https://github.com/enfangzhong"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
@@ -296,7 +297,7 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
   </li>
@@ -424,131 +425,293 @@ function setSidebarMarginTop (headerOffset) {
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>机器学习<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/05/13/机器学习笔记_02决策树与随机森林/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnFrank">
+      <meta itemprop="description" content="你若晴天，我便安好。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AnFrank">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/05/13/机器学习笔记_02决策树与随机森林/" itemprop="url">
-              
-                <span itemprop="name">机器学习笔记_02决策树与随机森林</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">机器学习笔记_02决策树与随机森林
+              
+            
+          </h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-05-13T17:03:11+08:00"
-              content="2019-05-13" >
-          05-13
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
 
-    </header>
-  </article>
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-13 17:03:11 / 修改时间：10:20:00" itemprop="dateCreated datePublished" datetime="2019-05-13T17:03:11+08:00">2019-05-13</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/13/机器学习笔记_02决策树与随机森林/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/05/13/机器学习笔记_02决策树与随机森林/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+            <span class="post-meta-divider">|</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 2,549</span>
+
+<span class="post-meta-divider">|</span>
+<span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 9分钟</span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/10/机器学习笔记_01线性回归和逻辑回归/" itemprop="url">
-              
-                <span itemprop="name">机器学习笔记_01线性回归和逻辑回归</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-05-10T17:03:11+08:00"
-              content="2019-05-10" >
-          05-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
+        <h1 id="机器学习笔记-02决策树与随机森林"><a href="#机器学习笔记-02决策树与随机森林" class="headerlink" title="机器学习笔记_02决策树与随机森林"></a>机器学习笔记_02决策树与随机森林</h1><p>[TOC]</p>
+<h1 id="从LR到决策树"><a href="#从LR到决策树" class="headerlink" title="从LR到决策树"></a>从LR到决策树</h1><h2 id="1、总体流程与核心问题"><a href="#1、总体流程与核心问题" class="headerlink" title="1、总体流程与核心问题"></a>1、总体流程与核心问题</h2><p>首先，在了解树模型之前，自然想到线性模型和树模型有什么区别呢？其中最重要的是，树形模型是一个一个特征进行处理，之前线性模型是所有特征给予权重相加得到一个新的值。决策树与逻辑回归的分类区别也在于此，逻辑回归是将所有特征通过sigmoid函数变换为概率后，通过大于某一概率阈值的划分为一类，小于某一概率阈值的为另一类；而决策树是对每一个特征做一个划分。另外逻辑回归只能找到线性分割（输入特征x与logit之间是线性的，除非对x进行多维映射），而决策树可以找到非线性分割。</p>
+<p><strong>而树形模型更加接近人的思维方式，可以产生可视化的分类规则，产生的模型具有可解释性（可以抽取规则）。</strong>树模型拟合出来的函数其实是分区间的阶梯函数。</p>
+<p><strong>决策树学习：采用自顶向下的递归的方法，基本思想是以信息熵为度量构造一棵熵值下降最快的树，到叶子节点处熵值为0（叶节点中的实例都属于一类）。</strong></p>
+<p>  其次，需要了解几个重要的基本概念：根节点（最重要的特征）；父节点与子节点是一对，先有父节点，才会有子节点；叶节点（最终标签）。</p>
+<h2 id="2、熵、信息增益、信息增益率"><a href="#2、熵、信息增益、信息增益率" class="headerlink" title="2、熵、信息增益、信息增益率"></a>2、熵、信息增益、信息增益率</h2><h3 id="信息熵-Information-Entropy"><a href="#信息熵-Information-Entropy" class="headerlink" title="信息熵(Information Entropy)"></a>信息熵(Information Entropy)</h3><p>　　信息熵是用来评估样本集合的纯度的一个参数，就是说，给出一个样本集合，这个样本集合中的样本可能属于好多不同的类别，也可能只属于一个类别，那么如果属于好多不同的类别的话，我们就说这个样本是不纯的，如果只属于一个类别，那么，我们就说这个样本是纯洁的。<br>　　而信息熵这个东西就是来计算一个样本集合中的数据是纯洁的还是不纯洁的。下面上公式：<br>　　 $Ent(D)=-\sum_{k=1}^{\left|y\right|}p_{k}log_{2}p_{k}$<br>　　下面解释一下公式的意思，其实很好理解，计算一个集合的纯度，就是把集合中每一个类别所占的比例$p_k$（k从1到 $\left | y \right |$，其中 $\left | y \right |$ 表示类别的个数）乘上它的对数，然后加到一起，然后经过计算之后，可以得到一个数据集的信息熵，然后根据信息熵，可以判断这个数据集是否纯粹。信息熵越小的话，表明这个数据集越纯粹。信息熵的最小值为0，此时数据集D中只含有一个类别。</p>
+<h3 id="信息增益-Information-Gain"><a href="#信息增益-Information-Gain" class="headerlink" title="信息增益(Information Gain)"></a>信息增益(Information Gain)</h3><p>　　下面来介绍信息增益，所谓的信息增益，是要针对于具体的属性来讲的，比如说，数据集D中含有两个类别，分别是好人和坏人，那么，随便选择一个属性吧，比如说性别，性别这个属性中包含两个值，男人和女人，如果用男人和女人来划分数据集D的话，会得到两个集合，分别是$D_{man}$和$D_{woman}$。划分后的两个集合中各自有 好人和坏人，所以可以分别计算划分后两个集合的纯度，计算之后，把这两个集合的信息熵求加权平均$\frac{D_{man}}{D} Ent(D_{man})+\frac{D_{woman}}{D} Ent(D_{woman})$，跟之前没有划分的时候的信息熵$Ent(D)$相比较，用后者减去前者，得到的就是属性-性别对样本集D划分所得到的信息增益。可以通俗理解为，信息增益就是纯度提升值，用属性对原数据集进行划分后，得到的信息熵的差就是纯度的提升值。信息增益的公式如下： </p>
+<p>$Gain(D,a)=Ent(D)-\sum_{v=1}^{V}\frac{\left | D^{v} \right |}{\left | D \right |}Ent(D^{v})$　　<br>　　先解释一下上式中的参数，D是数据集，a是选择的属性，a中一共有V个取值，用这个V取值去划分数据集D，分别得到数据集$D_1$到$D_V$，分别求这V个数据集的信息熵，并将其求加权平均。两者的差得到的就是信息增益。<br>　　那么这个信息增益有什么用呢？有用，可以根据信息增益值的大小来判断是否要用这个属性a去划分数据集D，如果得到的信息增益比较大，那么就说明这个属性是用来划分数据集D比较好的属性，否则则认为该属性不适合用来划分数据集D。这样有助于去构建决策树。<br>　　著名的<strong>算法ID3</strong>就是<strong>采用信息增益</strong>来作为判断是否用该属性划分数据集的标准。</p>
+<h3 id="信息增益率-Information-Gain-Ratio"><a href="#信息增益率-Information-Gain-Ratio" class="headerlink" title="信息增益率(Information Gain Ratio)"></a>信息增益率(Information Gain Ratio)</h3><p>　　为什么要提出信息增益率这种评判划分属性的方法？信息增益不是就很好吗？其实不然，用信息增益作为评判划分属性的方法其实是有一定的缺陷的，书上说，信息增益准则对那些属性的取值比较多的属性有所偏好，也就是说，采用信息增益作为判定方法，会倾向于去选择属性取值比较多的属性。那么，选择取值多的属性为什么就不好了呢？举个比较极端的例子，如果将身份证号作为一个属性，那么，其实每个人的身份证号都是不相同的，也就是说，有多少个人，就有多少种取值，它的取值很多吧，让我们继续看，如果用身份证号这个属性去划分原数据集D，那么，原数据集D中有多少个样本，就会被划分为多少个子集，每个子集只有一个人，这种极端情况下，因为一个人只可能属于一种类别，好人，或者坏人，那么此时每个子集的信息熵就是0了，就是说此时每个子集都特别纯。这样的话，会导致信息增益公式的第二项$\sum_{v=1}^{V}\frac{\left | D^{v} \right |}{\left | D \right |}Ent(D^{v})$整体为0，这样导致的结果是，信息增益计算出来的特别大，然后决策树会用身份证号这个属性来划分原数据集D，其实这种划分毫无意义。因此，为了改变这种不良偏好带来的不利影响，提出了采用信息增益率作为评判划分属性的方法。<br>　　公式如下：<br>　　 $Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}$<br>　　其中$IV(a)$的计算方式如下：<br>　　 $IV(a)=-\sum_{v=1}^{V}\frac{\left | D^v \right |}{\left | D \right |}log_2\frac{\left | D^v \right |}{\left | D \right |}$<br>　　$IV(a)$被称为是的“固有值”，这个$IV(a)$的公式是不是很熟悉啊，简直和信息熵的计算公式一毛一样，就是看属性a的纯度，如果a只含有少量的取值的话，那么a的纯度就比较高，否则的话，a的取值越多，a的纯度越低，$IV(a)$的值也就越大，因此，最后得到的信息增益率就越低。<br>　　采用信息增益率可以解决ID3算法中存在的问题(ID3会对那些属性的取值比较多的属性有所偏好，如西瓜的颜色有10种)，因此将采用信息增益率作为判定划分属性好坏的方法称为C4.5。<br>　　需要注意的是，<em>增益率准则对属性取值较少的时候会有偏好</em>，为了解决这个问题，C4.5并不是直接选择增益率最大的属性作为划分属性，而是之前先通过一遍筛选，先把信息增益低于平均水平的属性剔除掉，之后从剩下的属性中选择信息增益率最高的，这样的话，相当于两方面都得到了兼顾。 （结合信息增益与信息增益率使用）</p>
+<p>采用信息增益率可以解决ID3算法中存在的问题，因此将采用信息增益率作为判定划分属性好坏的方法称为C4.5。需要注意的是，增益率准则对属性取值较少的时候会有偏好，为了解决这个问题，C4.5并不是直接选择增益率最大的属性作为划分属性，而是之前先通过一遍筛选，先把信息增益低于平均水平的属性剔除掉，之后从剩下的属性中选择信息增益率最高的，这样的话，相当于两方面都得到了兼顾。 </p>
+<h3 id="基尼指数-gini-index-CART中使用"><a href="#基尼指数-gini-index-CART中使用" class="headerlink" title="基尼指数(gini index):CART中使用"></a>基尼指数(gini index):CART中使用</h3><p>定义：</p>
+<ul>
+<li>是一种不等性度量；</li>
+<li>通常用来度量收入不平衡，可以用来度量任何不均匀分布；</li>
+<li>是介于0~1之间的数，0-完全相等，1-完全不相等；</li>
+<li>总体内包含的类别越杂乱，基尼指数就越大</li>
+</ul>
+<h4 id="基尼不纯度指标"><a href="#基尼不纯度指标" class="headerlink" title="基尼不纯度指标"></a>基尼不纯度指标</h4><p>在CART算法中, 基尼不纯度表示一个随机选中的样本在子集中被分错的可能性。基尼不纯度为这个样本被选中的概率乘以它被分错的概率。当一个节点中所有样本都是一个类时，基尼不纯度为零。<br>假设y的可能取值为{1, 2, …, m},令fifi是样本被赋予i的概率，则基尼指数可以通过如下计算： </p>
+<p>$\begin{aligned} \operatorname{Gini}(D) &amp;=\sum_{k=1}^{|\mathcal{Y}|} \sum_{k^{\prime} \neq k} p_{k} p_{k^{\prime}} \\ &amp;=1-\sum_{k=1}^{|\mathcal{Y}|} p_{k}^{2} \end{aligned}$</p>
+<p>反映了从D中随机抽取两个样例，其类别标签不一致的概率。</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="AnFrank 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="AnFrank 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AnFrank</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://enfangzhong.github.io/2019/05/13/机器学习笔记_02决策树与随机森林/" title="机器学习笔记_02决策树与随机森林">http://enfangzhong.github.io/2019/05/13/机器学习笔记_02决策树与随机森林/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+            <a href="/tags/决策树/" rel="tag"><i class="fa fa-tag"></i> 决策树</a>
+          
+            <a href="/tags/随机森林/" rel="tag"><i class="fa fa-tag"></i> 随机森林</a>
+          
+            <a href="/tags/信息增益/" rel="tag"><i class="fa fa-tag"></i> 信息增益</a>
+          
+            <a href="/tags/信息增益率/" rel="tag"><i class="fa fa-tag"></i> 信息增益率</a>
+          
+            <a href="/tags/基尼指数/" rel="tag"><i class="fa fa-tag"></i> 基尼指数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/10/机器学习笔记_01线性回归和逻辑回归/" rel="next" title="机器学习笔记_01线性回归和逻辑回归">
+                <i class="fa fa-chevron-left"></i> 机器学习笔记_01线性回归和逻辑回归
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -569,8 +732,17 @@ function setSidebarMarginTop (headerOffset) {
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -776,6 +948,22 @@ function setSidebarMarginTop (headerOffset) {
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#机器学习笔记-02决策树与随机森林"><span class="nav-number">1.</span> <span class="nav-text">机器学习笔记_02决策树与随机森林</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从LR到决策树"><span class="nav-number">2.</span> <span class="nav-text">从LR到决策树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、总体流程与核心问题"><span class="nav-number">2.1.</span> <span class="nav-text">1、总体流程与核心问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、熵、信息增益、信息增益率"><span class="nav-number">2.2.</span> <span class="nav-text">2、熵、信息增益、信息增益率</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息熵-Information-Entropy"><span class="nav-number">2.2.1.</span> <span class="nav-text">信息熵(Information Entropy)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息增益-Information-Gain"><span class="nav-number">2.2.2.</span> <span class="nav-text">信息增益(Information Gain)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息增益率-Information-Gain-Ratio"><span class="nav-number">2.2.3.</span> <span class="nav-text">信息增益率(Information Gain Ratio)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基尼指数-gini-index-CART中使用"><span class="nav-number">2.2.4.</span> <span class="nav-text">基尼指数(gini index):CART中使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基尼不纯度指标"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">基尼不纯度指标</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -983,6 +1171,10 @@ setInterval("createtime()",250);
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
@@ -1369,6 +1561,30 @@ setInterval("createtime()",250);
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 
