@@ -8,7 +8,7 @@
          clearTimeout(titleTime);
      }
      else {
-         $('[rel="icon"]').attr('href', "/images/favicon-32x32-next.png");
+         $('[rel="icon"]').attr('href', "/images/hert.png");
          document.title = '真乖hhh (ฅ>ω<*ฅ)' + OriginTitle;
          titleTime = setTimeout(function () {
              document.title = OriginTitle;
