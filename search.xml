@@ -148,9 +148,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hexo+github搭建个人博客及美化]]></title>
-    <url>%2F2018%2F08%2F26%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_hexo%2Bgithub%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0%2F</url>
-    <content type="text"><![CDATA[使用Hexo+Github一步步搭建属于自己的博客（基础篇） 1、准备工作安装Node.js和配置好Node.js环境，打开cmd命令行，输入：1node -v 安装Git和配置好Git环境，安装成功的象征就是在电脑上任何位置鼠标右键能够出现如下两个选择Git GUI Here和Git Bash Here。查看git是否安装成功，在cmd命令行中输入：1git --version 2、Github账户注册和新建项目，项目必须要遵守格式：账户名.github.io，不然接下来会有很多麻烦。并且需要勾选Initialize this repository with a README在建好的项目右侧有个settings按钮，点击它，向下拉到GitHub Pages，你会看到那边有个网址，访问它，你将会惊奇的发现该项目已经被部署到网络上，能够通过外网来访问它。3、安装Hexo，在自己认为合适的地方创个文件夹，我是在D盘建了一个blog文件夹。然后通过命令行进入到该文件夹里面12d:cd blog 命令行中输入npm install hexo -g，开始安装Hexo，等待安装完毕后进行下一步输入hexo init，初始化该文件夹（有点漫长的等待。。。）输入npm install，安装所需要的组件输入hexo g，首次体验Hexo输入hexo s，开启服务器，访问该网址，正式体验Hexo问题：假如页面一直无法跳转，那么可能端口被占用了。此时我们ctrl+c停止服务器，接着输入“hexo server -p 端口号”来改变端口号，如何在浏览器中输入：localhost:端口号，你就可以在本地查看部署好的个人博客项目了。4、将本地博客部署到github网站上去。将Hexo与Github page联系起来，设置Git的user name和email 设置Git的user name和email a 在博客blog目录下，右键选Git Baes Here,命令行中输入，其中的name和email替换成你自己的用户名和邮箱 12$ git config --global user.name &quot;Name&quot;$ git config --global user.email &quot;email@example.com&quot; 输入输入cd ~/.ssh,检查是否由.ssh的文件夹 输入ssh-keygen -t rsa -C “929762930@qq.com”，连续三个回车，生成密钥，最后得到了两个文件：id_rsa和id_rsa.pub（默认存储路径是：C:\Users\Administrator.ssh）。 登录Github，点击头像下的settings，添加ssh。新建一个new ssh key，将id_rsa.pub文件里的内容复制上去输入ssh -T git@github.com，测试添加ssh是否成功。如果看到Hi后面是你的用户名，就说明成功了5、配置Deployment，在其文件夹中，找到_config.yml文件，修改repo值（在末尾）1234deploy: type: git repo: git@github.com:enfangzhong/enfangzhong.github.io.git branch: master repo值是你在github项目里的ssh（右下角）6、新建一篇博客，在cmd执行命令：hexo new post “博客名”1hexo new post &quot;你好，酱油哥&quot; 这时候在文件夹_posts目录下将会看到已经创建的文件在生成以及部署文章之前，需要安装一个扩展：npm install hexo-deployer-git —save使用编辑器编好文章，那么就可以使用命令：hexo d -g，生成以及部署了部署成功后访问你的地址：http://用户名.github.io。那么将看到生成的文章好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧主题优化展示: 酱油哥 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
+    <title><![CDATA[Hexo个人博客_主题优化篇]]></title>
+    <url>%2F2018%2F08%2F26%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%E7%AF%87%2F</url>
+    <content type="text"><![CDATA[Hexo个人博客_主题优化篇 1、Hexo访问统计功能Hexo Next 解决 Busuanzi 统计浏览失效1node -v 好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧主题优化展示: 酱油哥 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
       <categories>
         <category>搭建个人博客</category>
       </categories>
@@ -161,9 +161,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hexo个人博客_主题优化篇]]></title>
-    <url>%2F2018%2F08%2F26%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%E7%AF%87%2F</url>
-    <content type="text"><![CDATA[Hexo个人博客_主题优化篇 1、Hexo访问统计功能Hexo Next 解决 Busuanzi 统计浏览失效1node -v 好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧主题优化展示: 酱油哥 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
+    <title><![CDATA[hexo+github搭建个人博客及美化]]></title>
+    <url>%2F2018%2F08%2F26%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_hexo%2Bgithub%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0%2F</url>
+    <content type="text"><![CDATA[使用Hexo+Github一步步搭建属于自己的博客（基础篇） 1、准备工作安装Node.js和配置好Node.js环境，打开cmd命令行，输入：1node -v 安装Git和配置好Git环境，安装成功的象征就是在电脑上任何位置鼠标右键能够出现如下两个选择Git GUI Here和Git Bash Here。查看git是否安装成功，在cmd命令行中输入：1git --version 2、Github账户注册和新建项目，项目必须要遵守格式：账户名.github.io，不然接下来会有很多麻烦。并且需要勾选Initialize this repository with a README在建好的项目右侧有个settings按钮，点击它，向下拉到GitHub Pages，你会看到那边有个网址，访问它，你将会惊奇的发现该项目已经被部署到网络上，能够通过外网来访问它。3、安装Hexo，在自己认为合适的地方创个文件夹，我是在D盘建了一个blog文件夹。然后通过命令行进入到该文件夹里面12d:cd blog 命令行中输入npm install hexo -g，开始安装Hexo，等待安装完毕后进行下一步输入hexo init，初始化该文件夹（有点漫长的等待。。。）输入npm install，安装所需要的组件输入hexo g，首次体验Hexo输入hexo s，开启服务器，访问该网址，正式体验Hexo问题：假如页面一直无法跳转，那么可能端口被占用了。此时我们ctrl+c停止服务器，接着输入“hexo server -p 端口号”来改变端口号，如何在浏览器中输入：localhost:端口号，你就可以在本地查看部署好的个人博客项目了。4、将本地博客部署到github网站上去。将Hexo与Github page联系起来，设置Git的user name和email 设置Git的user name和email a 在博客blog目录下，右键选Git Baes Here,命令行中输入，其中的name和email替换成你自己的用户名和邮箱 12$ git config --global user.name &quot;Name&quot;$ git config --global user.email &quot;email@example.com&quot; 输入输入cd ~/.ssh,检查是否由.ssh的文件夹 输入ssh-keygen -t rsa -C “929762930@qq.com”，连续三个回车，生成密钥，最后得到了两个文件：id_rsa和id_rsa.pub（默认存储路径是：C:\Users\Administrator.ssh）。 登录Github，点击头像下的settings，添加ssh。新建一个new ssh key，将id_rsa.pub文件里的内容复制上去输入ssh -T git@github.com，测试添加ssh是否成功。如果看到Hi后面是你的用户名，就说明成功了5、配置Deployment，在其文件夹中，找到_config.yml文件，修改repo值（在末尾）1234deploy: type: git repo: git@github.com:enfangzhong/enfangzhong.github.io.git branch: master repo值是你在github项目里的ssh（右下角）6、新建一篇博客，在cmd执行命令：hexo new post “博客名”1hexo new post &quot;你好，酱油哥&quot; 这时候在文件夹_posts目录下将会看到已经创建的文件在生成以及部署文章之前，需要安装一个扩展：npm install hexo-deployer-git —save使用编辑器编好文章，那么就可以使用命令：hexo d -g，生成以及部署了部署成功后访问你的地址：http://用户名.github.io。那么将看到生成的文章好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧主题优化展示: 酱油哥 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
       <categories>
         <category>搭建个人博客</category>
       </categories>

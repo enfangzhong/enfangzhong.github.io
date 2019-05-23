@@ -15,6 +15,12 @@ const ap = new APlayer({
         url: 'http://www.ytmp3.cn/down/60222.mp3',
         cover: 'http://p2.music.126.net/Wx5GNJEpay2JbfVUJc4Aew==/109951163094853876.jpg?param=130y130',
       },
+      {
+        name: '你的酒馆对我打了烊',
+        artist: '陈雪凝',
+        url: 'http://www.ytmp3.cn/down/59770.mp3',
+        cover: 'http://p1.music.126.net/LiRR__0pJHSivqBHZzbMUw==/109951163816225567.jpg?param=130y130',
+      },
 	  {
         name: 'Something Just Like This',
         artist: 'The Chainsmokers',
