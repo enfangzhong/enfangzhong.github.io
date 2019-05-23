@@ -2002,7 +2002,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #f4e344;
+  background: #ff5df4;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3144,11 +3144,4 @@ pre {
 code,
 pre {
   border: 1px solid #d6d6d6;
-}
-.post {
-  margin-top: 60px;
-  margin-bottom: 60px;
-  padding: 25px;
-  -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
-  -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
 }
