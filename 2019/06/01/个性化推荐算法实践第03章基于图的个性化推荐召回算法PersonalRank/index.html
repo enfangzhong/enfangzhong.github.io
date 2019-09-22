@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+
+  <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+  
+
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/favicon-32x32-next.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "9494e80d"
+    });
+  daovoice('update');
+  </script>
+
+  <meta name="description" content="[TOC] 个性化推荐算法实践第03章基于图推荐的个性化推荐召回算法基于随机游走的Personal Rank本章节重点介绍一种基于图的个性化推荐召回算法personal rank。从personal rank算法的理论知识与数学原理进行介绍。并结合公开数据集，代码实战personal rank算法的基础版本与矩阵升级版本。 基于图的推荐—基于随机游走的personal rank算法实现 博客第一部">
+<meta name="keywords" content="个性化推荐算法,基于随机游走的Personal Rank">
+<meta property="og:type" content="article">
+<meta property="og:title" content="个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/index.html">
+<meta property="og:site_name" content="AnFrank">
+<meta property="og:description" content="[TOC] 个性化推荐算法实践第03章基于图推荐的个性化推荐召回算法基于随机游走的Personal Rank本章节重点介绍一种基于图的个性化推荐召回算法personal rank。从personal rank算法的理论知识与数学原理进行介绍。并结合公开数据集，代码实战personal rank算法的基础版本与矩阵升级版本。 基于图的推荐—基于随机游走的personal rank算法实现 博客第一部">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726845935.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726875995.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564727091910.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729370493.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729376053.png">
+<meta property="og:updated_time" content="2019-09-22T07:40:26.446Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank">
+<meta name="twitter:description" content="[TOC] 个性化推荐算法实践第03章基于图推荐的个性化推荐召回算法基于随机游走的Personal Rank本章节重点介绍一种基于图的个性化推荐召回算法personal rank。从personal rank算法的理论知识与数学原理进行介绍。并结合公开数据集，代码实战personal rank算法的基础版本与矩阵升级版本。 基于图的推荐—基于随机游走的personal rank算法实现 博客第一部">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726845935.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AnFrank" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank | AnFrank</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+<a href="https://github.com/enfangzhong"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script>
+ function GetRandomNum(Min,Max)
+  {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return(Min + Math.round(Rand * Range));
+  }
+function setSidebarMarginTop (headerOffset) {
+    return $('#sidebar').css({ 'margin-top': headerOffset });
+  }
+ function getHeaderOffset () {
+    return $('.header-inner').height() + CONFIG.sidebar.offset;
+  }
+  window.onload=function(){
+    var subtitle = "喜欢一个人，始于颜值，敬于才华，合于性格，久于善良，终于人品。W我真的好想你，在每一个雨季，你选择遗忘的，是我最不舍的。W不怕万人阻挡，只怕自己投降。W成熟是给你陌生人看的，逗比是给朋友看的，幼稚是给喜欢的人看的。W人生当苦无妨，良人当归即可。W逝者如斯乎，不舍昼夜。";
+     var mytitle = subtitle.split("W");
+     var max = mytitle.length-1;
+     var index = GetRandomNum(0,max);
+     var text = mytitle[index];
+     $("#helloTitle").html(text);
+     var headOffset = getHeaderOffset();
+     setSidebarMarginTop(headOffset);
+     //动态subtitle设置
+  }
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AnFrank</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  
+    <p style="color:#black;font-size:18px;font-family:STXingkai" id="helloTitle" class="site-subtitle"></p>
+  
+
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+    <a href="/schedule/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />日程表</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-love">
+    <a href="/love/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />love</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-loveshow">
+    <a href="/loveshow/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />loveshow</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+    <a href="/404/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />公益 404</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnFrank">
+      <meta itemprop="description" content="你若晴天，我便安好。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AnFrank">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-01 13:03:11" itemprop="dateCreated datePublished" datetime="2019-06-01T13:03:11+08:00">2019-06-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-09-22 15:40:26" itemprop="dateModified" datetime="2019-09-22T15:40:26+08:00">2019-09-22</time>
+              
+            
+          </span>
+
+
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/个性化推荐算法/" itemprop="url" rel="index"><span itemprop="name">个性化推荐算法</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/个性化推荐算法/基于随机游走的Personal-Rank/" itemprop="url" rel="index"><span itemprop="name">基于随机游走的Personal Rank</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+            <span class="post-meta-divider">|</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 3,053</span>
+
+<span class="post-meta-divider">|</span>
+<span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 11分钟</span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="个性化推荐算法实践第03章基于图推荐的个性化推荐召回算法基于随机游走的Personal-Rank"><a href="#个性化推荐算法实践第03章基于图推荐的个性化推荐召回算法基于随机游走的Personal-Rank" class="headerlink" title="个性化推荐算法实践第03章基于图推荐的个性化推荐召回算法基于随机游走的Personal Rank"></a>个性化推荐算法实践第03章基于图推荐的个性化推荐召回算法基于随机游走的Personal Rank</h1><p>本章节重点介绍一种基于图的个性化推荐召回算法personal rank。从personal rank算法的理论知识与数学原理进行介绍。并结合公开数据集，代码实战personal rank算法的基础版本与矩阵升级版本。</p>
+<p><strong>基于图的推荐—基于随机游走的personal rank算法实现</strong></p>
+<p>博客第一部分：理论部分主要介绍该算法的背景、物理意义、数学公式推导，以及结合在大数据量实际推荐系统开发工作中为了满足训练速度等方面的要求，对数学公式的矩阵化升级。</p>
+<p>博客第二大部分：主要介绍结合第一大部分的数学公式与虚拟log数据为大家编程实战该算法。</p>
+<h3 id="1、个性化召回算法Personal-Rank背景与物理意义"><a href="#1、个性化召回算法Personal-Rank背景与物理意义" class="headerlink" title="1、个性化召回算法Personal Rank背景与物理意义"></a>1、个性化召回算法Personal Rank背景与物理意义</h3><p>1、首先介绍基于图的个性化召回算法—personal rank的背景。</p>
+<p>（1）用户行为很容易表示为图</p>
+<p>图这种数据结构有两个基本的概念—顶点和边。</p>
+<p>在实际的个性化推荐系统中，无论是信息流场景、电商场景或者是O2O场景，用户无论是点击、购买、分享、评论等等的行为都是在user和item两个顶点之间搭起了一条连接边，构成了图的基本要素。</p>
+<p>实际上这里user与item构成的图是二分图，后面会介绍二分图的概念以及结合具体的例子展示如何将用户行为转换为图。</p>
+<p>（2）图推荐在个性化推荐领域效果显著</p>
+<p>2、二分图<br>二分图又称为二部图，是图论中的一种特殊模型。设G=(V,E)是一个无向图，如果顶点V可分割为两个互不相交的子集（A,B），并且图中的每条边（i,j）所关联的两个顶点 i 和 j 分别属于这两个不同的顶点集（i in A, j in B）,则称图G为一个二分图。</p>
+<p>（如果有一种无向图，它的定点可以分成两个独立的集合，并且互不相交，且所有的边关联顶点，都从属于这个集合。那么这样的图可以称为二分图。）</p>
+<p>则，推荐系统中，user、item恰好满足两种独立的集合，并且用户行为总是从user顶点到item顶点集合，所以由推荐系统中user和item之间构成的图就是二分图。</p>
+<p>接下来结合具体实例讲解如何将用户的行为转化为二分图。</p>
+<p>假设某推荐系统中有4个用户：A B C D，以及从日志（log）中发现对如下item有过行为：</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726845935.png" alt="1564726845935"></p>
+<p>即：user A 对 item a、b、d有过行为，userB 对 item a、c有过行为，userC对 item b、e有过行为，userD 对 item c、d有过行为。</p>
+<p>首先将user、item分成两组不相交的集合，如下：</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726875995.png" alt="1564726875995"></p>
+<p>然后，将所有user 对 item 有过行为的进行连线，就可以得到二分图，如下：</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564727091910.png" alt="1564727091910"></p>
+<p>此时问题也就抽象出来了，对于userA 来说，item c 和item e哪个更值得推荐？</p>
+<p>这里共有5个item，其中userA 已经对item a、b、d有过行为，这里行为是指信息流产品中的点击或者电商产品中的购买等表示user对item喜欢的这种操作。</p>
+<p>那么personal rank恰恰是这么一种算法，它能够结合用户行为构成的二分图，对于固定用户对item集合的重要程度给出排序，也就是说将user A 没有对item c 和item e有过行为，但是personal rank算法可以给出item c 和item e对于user A来说，哪个更值得推荐。</p>
+<p>下面从物理意义的角度来分析一下，从二分图上如何分析出来item集合对user的重要程度。</p>
+<p>3、物理意义<br>（1）两个顶点之间连通的路径数</p>
+<p>如果要比较两个item顶点对固定user的重要程度，只需分别看一下user到两个item顶点的路径数，路径数越多的顶点越重要。</p>
+<p>（2）两个顶点之间连通的路径长度</p>
+<p>同样路径数的情况下，总路径长度越短的顶点越重要。</p>
+<p>（3）两个顶点之间连通路径经过顶点的出度</p>
+<p>这里解释一下出度的概念：出度是指顶点对外连接边的数目。如user A对item a、b、d有过行为，即为有条连接边，则A的出度为3。如果前两项都相同，则两个item对固定user 的重要程度则比较经过顶点所有的出度和，如果出度和越小则越重要。</p>
+<p>结合刚才所举的具体二分图的例子，给大家介绍—对于user A来说，item c 和item e哪个更值得推荐？</p>
+<h3 id="2、Personal-Rank算法example解析"><a href="#2、Personal-Rank算法example解析" class="headerlink" title="2、Personal Rank算法example解析"></a>2、Personal Rank算法example解析</h3><p> 例子分析</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729370493.png" alt="1564729370493"></p>
+<p>1.分别有几条路径连通？</p>
+<p>首先看A-c 之间有几条路径连通：分别是A-a-B-c，A-d-D-c 两条路径连通。</p>
+<p>再来看A-e 之间有几条路径连通：A-b-C-e一条路径</p>
+<p>从这一角度出发，可以知道 c 比 e 重要。</p>
+<p>2.连通路径的长度分别是多少？</p>
+<p>首先看A-c 之间有几条路径连通：分别是A-a-B-c，A-d-D-c ，长度都为3</p>
+<p>再来看A-e 之间有几条路径连通：A-b-C-e长度为3</p>
+<p>3.连通路径的经过顶点出度分别是多少?</p>
+<p>首先看A-a-B-c这条路径：A出度是3，a出度是2，B出度是2，c出度是2</p>
+<p>再看A-d-D-c这条路径：A出度是3，d出度是2，D出度是2，c出度是2</p>
+<p>再看A-b-C-e这条路劲：A出度是3，b出度是2，C出度是2，e出度是1</p>
+<p>实例中这里我们物理意义得到的结果。接下来使用程序来完成person Rank算法的时候同样可以得到相同的结论。</p>
+<p>虽然 e 的出度和更小，但是由于1中 c 有两条路径，且1的优先级更高，所以还是应该推荐 c。</p>
+<h3 id="3、Personal-Rank算法公式解析"><a href="#3、Personal-Rank算法公式解析" class="headerlink" title="3、Personal Rank算法公式解析"></a>3、Personal Rank算法公式解析</h3><p>personal rank是可以通过用户行为划分二分图为固定user得到item重要程度排序的一种算法。</p>
+<p>1.算法的文字阐述</p>
+<p>随机游走算法PersonalRank实现基于图的推荐对用户A进行个性化推荐，从用户A节点开始在用户-物品二分图random walk，以alpha的概率从A的出边中，等概率选择一条游走过去，到达该顶点后（举例顶点a），由alpha的概率继续从顶点a的出边中，等概率选择一条继续游走到下一个节点，或者（1-alpha）的概率回到顶点A，多次迭代。直到各顶点对于用户A的重要度收敛。</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729376053.png" alt="1564729376053"></p>
+<p>后续我们在实现person rank算法的时候用不同的alpha值来做实验，熟悉是Google的pageRank算法的童鞋们可以发现PageRank与person rank算法有极大的相似性。只不过PageRank算法没有固定的起点。</p>
+<p>2.算法的数学公式</p>
+<script type="math/tex; mode=display">
+PR(v)=\left\{\begin{matrix}
+\alpha * \sum_{v^{\sim} \in i n(v)} \frac{P R\left(v^{\sim}\right)}{\left|o u t\left(v^{\sim}\right)\right|} \ldots\left(v !=v_{A}\right) & \\ 
+(1-\alpha)+\alpha * \sum_{v^{\sim} \in i n(v)} \frac{P R\left(v^{\sim}\right)}{\left|o u t\left(v^{\sim}\right)\right|} \cdots\left(v=v_{A}\right) & 
+\end{matrix}\right.</script><p>把不同item对user的重要程度描述为PR值。</p>
+<p>为了便于理解，同样适用A作为固定起点。user A的PR值初始化为1，其余节点的PR值初始化为0。</p>
+<p>这里使用 a 节点和 A 节点阐述公式的上半部分和公式的下半部分：</p>
+<p>首先看公式的上部分，根据person rank的算法描述，节点a只可能是节点A与节点B,以alpha概率从他们的出边中等概率的选择了与节点a相互连的这条边。</p>
+<p>具体来看，从user A出发有3条边，以3条边中等概率的选择了节点a连接的这条边，以1/3的概率选择连接节点a；user B以1/2的概率选择了连接节点a。</p>
+<p>结合阐述看一下公式的上半部分：对于不是A节点的PR值，也就是 a 的PR值，那么首先要找到连接该顶点节点，同时分别计算他们PR值得几分之几贡献到要求节点的PR值。那么A将自己PR值得1/3贡献给了 a ，B将自己PR值得1/2贡献给了 a，分别求和，乘alpha，得到 a 的PR值。</p>
+<p>接下来看下半部分：如果要求A节点本身的PR值，首先知道任意节点都会以（1-alpha）的概率回到本身，那么对于一些本来就与A节点相连的节点，比如这里的 a 节点或者 b 节点，它们除了以（1-alpha）的概率直接回到A以外；还可以以alpha的概率从自己的出边中等概率的选择与A相邻的这条边，比如这里的 a 节点，可以以1/2的概率选择回到A节点，所以就构成了下半部分的前后两个部分。</p>
+<p>经过分析可以发现，personal rank算法求item对固定user的PR值，需要每次迭代在全图范围内迭代，时间复杂度在工业界实际算法落地的时候是不能接受的，所以要让尽可能多的user并行迭代。结合之前许多其他算法训练的工业界实现，很容易想到矩阵化实现，下面看personal rank算法的矩阵化实现。</p>
+<p>3.算法抽象—矩阵式</p>
+<p>$r=(1-\alpha) r_{0}+\alpha M^{T} r$</p>
+<p>$M_{i j}=\frac{1}{|o u t(i)|} j \in \operatorname{out}(i) e l s e 0$</p>
+<p>假设这里共有m个user，n个item。</p>
+<p>R矩阵是m+n行，1列矩阵，表示其余顶点对该固定顶点的PR值。当然得到了这个，就得到了固定顶点下，其余所有顶点的重要程度排序，这里只需要排出m个user节点。只看n个item节点对该固定顶点的排序。也就得到了该固定顶点下推荐的item。</p>
+<p>r0 是m+n行，1列的矩阵，负责选取某一节点是固定节点，它的数值只有1行唯一，其余行全为0。唯一的行，即为选取了该行对应的顶点为固定顶点。那么得到的就是该固定顶点下，其余节点对该固定节点的重要程度的排序。</p>
+<p>M 是 m+n行 * m+n列的矩阵，也就是行包含了所有的节点，列也包含了所有的节点。 它是转移矩阵，数值定义如下：1.第一行第二列的数值距离，如果第一行对应的数值顶点由出边连接到了第二列的顶点，那么该值就为第一行顶点的出度的倒数；如果没有连接边，那么就是0。</p>
+<p>我们很容易联想到，第一个式子包含了刚才所说的非矩阵化的personal rank的公式的上下两部分。</p>
+<script type="math/tex; mode=display">
+\left(E-\alpha M^{T}\right) * r=(1-\alpha) r_{0}</script><p>上述公式是本部分中第一个公式，移项、合并同类项之后得到的。</p>
+<script type="math/tex; mode=display">
+r=\left(E-\alpha M^{T}\right)^{-1}(1-\alpha) r_{0}</script><p>该公式是上一公式两个同时乘以$\left(E-\alpha M^{T}\right)$转置的之后得到的。</p>
+<p>刚才说过，r0是m+n行，1列的矩阵，它能够选取固定的顶点，得到固定顶点的推荐结果。如果将r0变为（m+n）*（m+n）的矩阵，也就得到了所有顶点的推荐结果。</p>
+<p>由于得到的推荐结果是考虑顶点之间的PR值的顺序关系，并非一个绝对数值，所以可以将$(1-\alpha) $舍去。所以$\left(E-\alpha M^{T}\right)^{-1}$即为所有顶点的推荐结果。每一列表示该顶点下，其余顶点对于该顶点的PR值。</p>
+<p>但是，需要注意的是，每一个user能够行为的item毕竟是少数，所以这里的M矩阵是稀疏矩阵，$\left(E-\alpha M^{T}\right)^{-1}$同样也是稀疏矩阵。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="AnFrank 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="AnFrank 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AnFrank</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/" title="个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank">http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/个性化推荐算法/" rel="tag"><i class="fa fa-tag"></i> 个性化推荐算法</a>
+          
+            <a href="/tags/基于随机游走的Personal-Rank/" rel="tag"><i class="fa fa-tag"></i> 基于随机游走的Personal Rank</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/01/个性化推荐算法实践第02章基于邻域的个性化召回算法LFM/" rel="next" title="个性化推荐算法实践第02章基于邻域的个性化召回算法LFM">
+                <i class="fa fa-chevron-left"></i> 个性化推荐算法实践第02章基于邻域的个性化召回算法LFM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/" rel="prev" title="个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec">
+                个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="AnFrank" />
+            
+              <p class="site-author-name" itemprop="name">AnFrank</p>
+              <p class="site-description motion-element" itemprop="description">你若晴天，我便安好。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/enfangzhong" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://blog.csdn.net/qintian888" target="_blank" title="CSDN"><i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/5604852325" target="_blank" title="weibo"><i class="fa fa-fw fa-weibo"></i>weibo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/itjygfly" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/enfangzhong" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:enfangzhong@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lruihao.cn/" title="博采众长" target="_blank">博采众长</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leridy.pw/" title="乐余地" target="_blank">乐余地</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tmy123.com/" title="同盟源" target="_blank">同盟源</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          <marquee>
+	<a href="/links.html">
+	<font size="4" face="STXingkai">
+		<font color="#FF0000">欢</font>
+		<font color="#E80017">迎</font>
+		<font color="#D1002E">点</font>
+		<font color="#BA0045">我</font>
+		<font color="#A3005C">互</font>
+		<font color="#A00073">换</font>
+		<font color="#A0008A">友</font>
+		<font color="#A000A1">链</font>
+		<font color="#A000B8">哦</font>
+		<font color="#A000CF">~</font>
+		<font color="#A000E6">~</font>
+	</font>
+	</a>
+</marquee>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#个性化推荐算法实践第03章基于图推荐的个性化推荐召回算法基于随机游走的Personal-Rank"><span class="nav-number">1.</span> <span class="nav-text">个性化推荐算法实践第03章基于图推荐的个性化推荐召回算法基于随机游走的Personal Rank</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、个性化召回算法Personal-Rank背景与物理意义"><span class="nav-number">1.0.1.</span> <span class="nav-text">1、个性化召回算法Personal Rank背景与物理意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、Personal-Rank算法example解析"><span class="nav-number">1.0.2.</span> <span class="nav-text">2、Personal Rank算法example解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Personal-Rank算法公式解析"><span class="nav-number">1.0.3.</span> <span class="nav-text">3、Personal Rank算法公式解析</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+
+      
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GiT撤销/">GiT撤销</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JaveEE/">JaveEE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LFM（latent-factor-model）算法/">LFM（latent factor model）算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Learn-To-Rank/">Learn To Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL内连接/">SQL内连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WideAndDeep/">WideAndDeep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github博客/">github博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo博客/">hexo博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/item2vec/">item2vec</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java框架/">java框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java编程/">java编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人博客/">个人博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法/">个性化推荐算法</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法-Content-Based-基于内容的推荐/">个性化推荐算法 - Content Based - 基于内容的推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法实践总结/">个性化推荐算法实践总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉连接/">交叉连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益/">信息增益</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益率/">信息增益率</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/决策树/">决策树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客优化/">博客优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/右外连接/">右外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基于随机游走的Personal-Rank/">基于随机游走的Personal Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基尼指数/">基尼指数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/左外连接/">左外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序模型总结/">排序模型总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序员表白源码/">程序员表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性回归/">线性回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/表白源码/">表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/评估指标/">评估指标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逻辑回归/">逻辑回归</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随机森林/">随机森林</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/隐语义模型/">隐语义模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/非关系型数据库/">非关系型数据库</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnFrank</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">GitHub</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!--
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+-->
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">Enfang</a> v6.3.0</div>
+
+
+
+
+
+<font color=MediumPurple face=STLiti>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共50.4k字|</span>
+</div>
+</font>
+
+<font color=MediumPurple face=STLiti><span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span></font>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("05/28/2018 20:01:01");//此处为建站时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已苟活："+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      访问用户：<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      访问次数：<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'SACSC0biGE5t01ErmVSxYvVt-gzGzoHsz',
+        appKey: 'td1GAOLqHNMnQ4BtJENstUVW',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!填写邮箱能很快收到我的回复喔！老铁，你不想说两句吗？',
+        avatar:'wavatar',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+</body>
+</html>

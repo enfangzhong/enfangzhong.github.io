@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+
+  <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+  
+
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/favicon-32x32-next.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "9494e80d"
+    });
+  daovoice('update');
+  </script>
+
+  <meta name="description" content="[TOC] 个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep欢迎来到本次个性化推荐算法实战课程，本课程是有问答专区，如果你有问题可以在问答专区提问，我会在每天固定时间解答，课程结合问答专区能够让您更快的掌握知识。 开始本章节的课程之前，我们首先来回顾一下上一章节的内容，上一章节我们重点讲述了树模型GBDT的数学原理，以及在测试数据集上代码实战了GBDT模型的训练，并且介绍了G">
+<meta name="keywords" content="个性化推荐算法,逻辑回归,WideAndDeep,神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/index.html">
+<meta property="og:site_name" content="AnFrank">
+<meta property="og:description" content="[TOC] 个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep欢迎来到本次个性化推荐算法实战课程，本课程是有问答专区，如果你有问题可以在问答专区提问，我会在每天固定时间解答，课程结合问答专区能够让您更快的掌握知识。 开始本章节的课程之前，我们首先来回顾一下上一章节的内容，上一章节我们重点讲述了树模型GBDT的数学原理，以及在测试数据集上代码实战了GBDT模型的训练，并且介绍了G">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1566904703475.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567153841330.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567157137223.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567182098732.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567185943400.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567188315016.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567191012618.png">
+<meta property="og:updated_time" content="2019-09-22T07:47:12.421Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep">
+<meta name="twitter:description" content="[TOC] 个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep欢迎来到本次个性化推荐算法实战课程，本课程是有问答专区，如果你有问题可以在问答专区提问，我会在每天固定时间解答，课程结合问答专区能够让您更快的掌握知识。 开始本章节的课程之前，我们首先来回顾一下上一章节的内容，上一章节我们重点讲述了树模型GBDT的数学原理，以及在测试数据集上代码实战了GBDT模型的训练，并且介绍了G">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1566904703475.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AnFrank" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep | AnFrank</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+<a href="https://github.com/enfangzhong"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script>
+ function GetRandomNum(Min,Max)
+  {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return(Min + Math.round(Rand * Range));
+  }
+function setSidebarMarginTop (headerOffset) {
+    return $('#sidebar').css({ 'margin-top': headerOffset });
+  }
+ function getHeaderOffset () {
+    return $('.header-inner').height() + CONFIG.sidebar.offset;
+  }
+  window.onload=function(){
+    var subtitle = "喜欢一个人，始于颜值，敬于才华，合于性格，久于善良，终于人品。W我真的好想你，在每一个雨季，你选择遗忘的，是我最不舍的。W不怕万人阻挡，只怕自己投降。W成熟是给你陌生人看的，逗比是给朋友看的，幼稚是给喜欢的人看的。W人生当苦无妨，良人当归即可。W逝者如斯乎，不舍昼夜。";
+     var mytitle = subtitle.split("W");
+     var max = mytitle.length-1;
+     var index = GetRandomNum(0,max);
+     var text = mytitle[index];
+     $("#helloTitle").html(text);
+     var headOffset = getHeaderOffset();
+     setSidebarMarginTop(headOffset);
+     //动态subtitle设置
+  }
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AnFrank</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  
+    <p style="color:#black;font-size:18px;font-family:STXingkai" id="helloTitle" class="site-subtitle"></p>
+  
+
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+    <a href="/schedule/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />日程表</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-love">
+    <a href="/love/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />love</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-loveshow">
+    <a href="/loveshow/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />loveshow</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+    <a href="/404/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />公益 404</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnFrank">
+      <meta itemprop="description" content="你若晴天，我便安好。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AnFrank">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-01 20:03:11" itemprop="dateCreated datePublished" datetime="2019-06-01T20:03:11+08:00">2019-06-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-09-22 15:47:12" itemprop="dateModified" datetime="2019-09-22T15:47:12+08:00">2019-09-22</time>
+              
+            
+          </span>
+
+
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/个性化推荐算法/" itemprop="url" rel="index"><span itemprop="name">个性化推荐算法</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/个性化推荐算法/WideAndDeep/" itemprop="url" rel="index"><span itemprop="name">WideAndDeep</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/个性化推荐算法/WideAndDeep/逻辑回归/" itemprop="url" rel="index"><span itemprop="name">逻辑回归</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/个性化推荐算法/WideAndDeep/逻辑回归/神经网络/" itemprop="url" rel="index"><span itemprop="name">神经网络</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+            <span class="post-meta-divider">|</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 9,570</span>
+
+<span class="post-meta-divider">|</span>
+<span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 35分钟</span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep"><a href="#个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep" class="headerlink" title="个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep"></a>个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep</h1><p>欢迎来到本次个性化推荐算法实战课程，本课程是有问答专区，如果你有问题可以在问答专区提问，我会在每天固定时间解答，课程结合问答专区能够让您更快的掌握知识。</p>
+<p>开始本章节的课程之前，我们首先来回顾一下上一章节的内容，上一章节我们重点讲述了树模型GBDT的数学原理，以及在测试数据集上代码实战了GBDT模型的训练，并且介绍了GBDT与逻辑回归的混合模型，那么本章节我们将重点介绍深度学习，在点击率预估方面的实战，分别介绍WD模型的数学原理，以及在测试数据集上代码实战WD模型的训练。</p>
+<ul>
+<li><p>背景介绍之深度学习</p>
+</li>
+<li><p>DNN网络结构与数学原理</p>
+</li>
+<li><p>WD(wide and deep)网络结构与数学原理</p>
+</li>
+</ul>
+<p>下面我们首先来看一下本章节的内容大纲。1、背景知识介绍之深度学习，由于本章节所介绍的内容与之前我们所学习的浅层模型有较大的不同，所以我们首先介绍一下背景知识，什么是深度学习？2、DNN网络结构与数学原理，介绍完什么是深度学习，我们便选取一种具有代表性的网络DNN，来从它的数学原理如何进行参数学习来详解一下。3、WD网络结构与数学原理，WD模型便是我们所说的，使用深度学习来完成点击率预估实战所采用的模型，wd模型实际上是DNN与逻辑回归的混合模型，但是与之前我们所介绍过的GBDT与逻辑回归的混合模型不同，WD呢是联合训练的，所以我们要学习一下它的网络结构，并且详细的了解一下它的数学原理是如何做到联合训练的。</p>
+<h3 id="一、背景介绍之什么是深度学习"><a href="#一、背景介绍之什么是深度学习" class="headerlink" title="一、背景介绍之什么是深度学习"></a>一、背景介绍之什么是深度学习</h3><h5 id="1-1什么是神经元"><a href="#1-1什么是神经元" class="headerlink" title="1.1什么是神经元?"></a>1.1什么是神经元?</h5><p>下面开始本小节的内容，本小节将重点介绍背景知识，什么是深度学习？深度学习，实际上是利用神经网络学习出一种非线性函数，该函数的输入是我们从训练数据中提取的特征，该函数的输出是训练数据所对应的label，那么说到这里，问题的核心就变成了什么是神经网络，在介绍神经网络之前，我们首先介绍一下它的组成成分，神经元，什么是神经元呢？下面来看一下，这里所说的神经元呢，实际上是指的是人工神经元，与我们生物上神经元的概念呢有所不同。但是呢，我们通过这个网络结构呢，实际上能够联想一下我们生物上的神经元，与该结构有极大的相似性。</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1566904703475.png" alt="1566904703475"></p>
+<p>下面我们来看一下该结构，这里有几路输入，每一路输入了对应的输入的参数。也就是说我们最终的加权和是什么呢？我这里简单的写一下，加权和=$w_1<em>x_1+w_2</em>x_2+w_3<em>x_3+…+w_n</em>x_n$。加权和之后呢，还要做一下激活函数，这里的激活函数呢，主要是去线性化。常用的激活函数呢，我们在介绍逻辑回归模型的时候，也曾介绍过一种阶跃函数，大家应该还记得。这里的整体的网络结构呢与我们的逻辑回归模型的有一定的相似性。</p>
+<h5 id="1-2激活函数"><a href="#1-2激活函数" class="headerlink" title="1.2激活函数"></a>1.2激活函数</h5><p>那么下面我们来看一下常用的激活函数有哪一些呢？</p>
+<h6 id="1-2-1阶跃函数-sigmod"><a href="#1-2-1阶跃函数-sigmod" class="headerlink" title="1.2.1阶跃函数 sigmod"></a>1.2.1阶跃函数 sigmod</h6><p>第1种呢是我们比较熟悉的阶跃函数，该函数我们曾在逻辑回归里介绍过，该函数的取值范围呢是[0~1]，在x等于0时的函数值是0.5，他有一个特点那便是在x大于0的时候，很快函数值就趋向于1。x小于0的时候，函数值非常快的就趋向于0。</p>
+<h6 id="1-2-2双曲正切"><a href="#1-2-2双曲正切" class="headerlink" title="1.2.2双曲正切"></a>1.2.2双曲正切</h6><p>第2种呢，是双曲正切，该函数的图像呢与阶跃函数几乎是一样的，只不过呢，它的取值范围呢是[-1,+1]，而且呢，该函数在取值为中间值变为最大值，以及取值为中间值变为最小值的速度呢，要比阶跃函数要快一些。</p>
+<h6 id="1-2-3修正线性单元"><a href="#1-2-3修正线性单元" class="headerlink" title="1.2.3修正线性单元"></a>1.2.3修正线性单元</h6><p>第3种，修正线性单元，当输入大于零时，该函数的输出的是输入的本身，当输入小于零时，该函数的输出呢是0。在神经网络的参数学习中呢，如果我们采用之前讲述过的随机梯度下降的方法，修正线性单元函数能够更快的达到收敛。</p>
+<h5 id="1-3-什么是神经网络？"><a href="#1-3-什么是神经网络？" class="headerlink" title="1.3 什么是神经网络？"></a>1.3 什么是神经网络？</h5><p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567153841330.png" alt="1567153841330"></p>
+<p>好了介绍完了激活函数，下面我们来学习一下什么是神经网络。神经网络呢是由许多神经元组成的，我们先来简单的看一下网络结构，网络结构呢分为输入层，隐层以及输出层。</p>
+<p>输出层呢，可以是一个也可以是多个。像我们做点击率预估呢，那便是一个。如果我们做分类呢是多分类的话，显然就是多个。有几个分类呢，也就有几个输出。输入指的是什么呢？输入指的是我们提取的特征，输入层呢，与隐层之间的采用的是全连接，也就是说我这里的隐层1与我输入层的每一个输入，都有参数相连。这里的隐层2呢，对于输入层的每一个输入呢，也都是有参数相连的。这里参数相连去加权求和之后呢，同样需要有激活函数来去线性化。</p>
+<p>我们发现如果输入层与隐层不是全连接的话，而是一一连接的话，那么该网络也便回退到了我们之前讲述过的逻辑回归模型。为什么呢？很好理解，如果是一一连接的话，很像我们之前讲述过的w1与x1相乘，w2与x2相乘。</p>
+<p>这样全连接呢，实际上相当于我们在逻辑回归模型里所做的特征交叉，但是呢，这里交叉的力度呢，会更强一点。</p>
+<p>举个例子，如果我们这里只有三个输入特征，且并非全连接。对该隐层的第1个节点，我们让三个输入特征的前两个与它连接，实际上这就相当于完成了我们之前所做的两维特征的特征交叉。</p>
+<p>而这里呢，由于每一个节点与之输入层都是全连接的，所以参数的规模呢要比之前大了非常多。我们来看一下一共有多少个参数呢？比如说我们的输入层一共有三个节点，隐层也是有三个节点，那么隐层的每一个节点，显然啦，与输入层之间的都是全连接，也就是都是三个参数，以及每一个隐层的节点呢，都需要一个偏执，所以这里总的参数呢，是3×3+3=12。而相同情景下逻辑回归的参数呢，只有三个，所以从参数量级上呢，神经网络还是要大很多的。</p>
+<p>如果按当时我们训练逻辑回归模型所举的例子，输入特征100多维这里就按100维来算的话，隐层的节点如果有n个。那么这里的总参数便是（100n+n）也就是101n，而我们知道逻辑回归当中的这种情形下只有100个参数，所以呢，总体来讲参数的量级上呢，差了n倍，这个n呢是隐层的节点数目，也就是说隐藏的节点数目越多的话，参数的量级差距越大，神经网络能够学习到的隐含特征的也就越丰富。</p>
+<h5 id="1-3深度学习与传统的机器学习有哪些流程的异同呢？"><a href="#1-3深度学习与传统的机器学习有哪些流程的异同呢？" class="headerlink" title="1.3深度学习与传统的机器学习有哪些流程的异同呢？"></a>1.3深度学习与传统的机器学习有哪些流程的异同呢？</h5><p>DL  DIFFS  ML</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567157137223.png" alt="1567157137223"></p>
+<p>介绍完了神经网络，下面我们来看一下深度学习与传统的机器学习有哪些流程的异同呢？首先呢，我们来看一下传统的机器学习。这里以我们所学习过的逻辑回归模型的训练为例，我们拿到训练数据之后呢，需要做特征工程，这里的特征工程呢，是指我们要挑选相应的特征，我们要做特征的离散化。归一化甚至呢，我们要区分连续特征以及离散特征不同的处理，最终呢，我们还要做特征的交叉等等，我们把特征工程处理好了之后呢，我们便得到了训练样本，训练样本呢，在传入的模型当中呢，去进行权重的学习，也就是参数的学习，最终呢，我们得到模型来完成结果的预测。</p>
+<p>但是在深入学习中呢，我们只需要对输入的训练样本呢进行基础特征的抽取，而不再需要做繁琐的特征工程，繁琐的特征工程呢，相当于交由我们模型当中的多维参数来帮我们学习，这里呢，神经网络呢，就学习了这些复杂特征，进而呢在隐层之间呢，我们学习模型的参数，得到模型之后呢，我们便用来预测结果。好了本小节就全部结束了，本小节重点介绍了背景知识之什么是深度学习，下一小节我们将选取一种经典的深度神经网络DNN来介绍它的网络结构与数学原理。</p>
+<h3 id="二、DNN网络结构与反向传播算法"><a href="#二、DNN网络结构与反向传播算法" class="headerlink" title="二、DNN网络结构与反向传播算法"></a>二、DNN网络结构与反向传播算法</h3><h5 id="2-1DNN网络结构"><a href="#2-1DNN网络结构" class="headerlink" title="2.1DNN网络结构"></a>2.1DNN网络结构</h5><p>开始本小节的课程之前，我们首先来回顾一下上一小节的内容，上一小节我们重点介绍的背景知识，什么是深度学习，那么本小节我们叫重点介绍，DNN网络结构以及DNN网络结构参数学习的数学原理，下面开始本小节的内容，下面我们来看一下DNN网络结构，DNN呢，实际上是深度神经网络与我们之前介绍过的，神经网络的结构呢，有相似性，也有不同的地方相似的地方呢。</p>
+<p>相似的地方就是这里也分为三个大部分，第1大部分呢便是输入层，这是我们特征。多了的地方，第2大部分呢是隐层是我们基础特征的抽象到高阶特征，然后高阶特征之间参数不停的学习的过程。第3部分呢便是输出层，这里可以是一个节点，像我们在点击率预估问题中呢，便是一个输出，也可以是多个输出，像我们在多分类问题当中呢，便是多个输出。</p>
+<p>但是这里与我们之前讲过的神经网络有不同的地方呢，便是我们的隐层呢，这里可以是多层，每一层的节点呢可以变得不同，好了这便是DNN网络结构。当然这里输入层与隐层，隐层与隐层，隐层与输出层之间的也都是全连接。</p>
+<h5 id="2-2-DNN模型参数"><a href="#2-2-DNN模型参数" class="headerlink" title="2.2 DNN模型参数"></a>2.2 DNN模型参数</h5><h6 id="2-2-1-隐层的层数，每个隐层神经元的个数，以及激活函数"><a href="#2-2-1-隐层的层数，每个隐层神经元的个数，以及激活函数" class="headerlink" title="2.2.1 隐层的层数，每个隐层神经元的个数，以及激活函数"></a>2.2.1 隐层的层数，每个隐层神经元的个数，以及激活函数</h6><p>好了，下面让我们来看一下DNN模型当中有哪些重要的参数是值得我们注意的。首先呢，便是隐层的层数，每个隐层神经元的个数，以及激活函数。隐层的层数以及每个隐层神经元的个数呢，决定了网络的参数的量级，这里上一小节呢，我们曾经简单的举例过，三个维度特征的输入以及单隐层，三个隐层节点的话，它的参数呢是3×3+3，那么很明显我们这里可以以此类推，如果隐层与隐层之间的计算方式呢，也是这么计算，模型的参数的量级呢，是由隐层的层数以及每个隐层神经元的个数来决定的。当然了，还与我们输入特征的维度有直接的关系。激活函数的上一小节我们曾经介绍过三种，这里我们说过激活函数呢是决定我们参数收敛的快慢的。</p>
+<h6 id="2-2-2-输入输出层的向量维度"><a href="#2-2-2-输入输出层的向量维度" class="headerlink" title="2.2.2 输入输出层的向量维度"></a>2.2.2 输入输出层的向量维度</h6><p>输入输出层的向量维度，如果是单维度的输出的话，像我们点击率预估这种问题就需要单维度的输出。如果是多维度的输出，像多分类问题呢，就需要多维度的输出。输入层的向量呢，是我们选定好基础特征之后呢，在完成，像字符串的哈希，然后做一个简单的Embedding或者说是我们这里将连续值呢进行分段离散等等的操作之后呢，我们得到的一个输入层的向量。</p>
+<h6 id="2-2-3-不同层之间神经元的连接权重与偏移值B"><a href="#2-2-3-不同层之间神经元的连接权重与偏移值B" class="headerlink" title="2.2.3 不同层之间神经元的连接权重与偏移值B"></a>2.2.3 不同层之间神经元的连接权重与偏移值B</h6><p>我们需要学习的参数是什么呢？就是不同层之间神经元的连接权重，这里可能是输入层与隐层，隐层与隐层，隐层与输出层之间的连接权重，以及呢每一个节点上的偏移值，这是我们模型需要学习的参数。</p>
+<h5 id="2-3-前向传播"><a href="#2-3-前向传播" class="headerlink" title="2.3 前向传播"></a>2.3 前向传播</h5><p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567182098732.png" alt="1567182098732"></p>
+<p>下面我们来了解一下DNN模型的函数表达式，我们只要了解了网络的任何一个节点的输出值也便得到了模型的输出，因为模型的输出实际上就是输出层节点的输出值。</p>
+<p>$a_{j}^{t}=f\left(\sum_{k} w_{j k}^{t} a_{k}^{t-1}+b_{j}^{t}\right)$<br>$z_{j}^{t}=\sum_{k} w_{j k}^{t} a_{k}^{t-1}+b_{j}^{t}$</p>
+<p>下面我们来一起看一下公式，下面来解释一下公式，借助于一个简单的网络。t是指的这里的网络中的第t层，t-1呢是t层前面的一层。比如这一层，我们定义为第t层，那么这一层的前一层显然就是t-1层。</p>
+<p>如果大家不好理解的话，可以想象一下，当t为0时也便是输入层。当t为1时，便是第一个隐层，当t为大T，便是输出层，这样也许就会好理解一点。a是指的每一个节点的激活值，这里的j表示的是第t个层上我们的这个第j个节点的激活值，这里我们可以把j想象成为1 2…..的节点。如果是1的话，那么便表示第t层上第1个节点的激活值，如果是2的话，并表示第t层上第2个节点的激活值。这里的w是指的第（t-1）层上第k个的节点指向第t层上j这个节点。这里的a同样是激活值，它表示的是第（t-1）层上第k个节点的激活值，b表示第t层上第j个节点的偏移值。如果这里我们求的是第1个节点的激活值的话，那么显然这里也便是第1个节点的偏移值好了。</p>
+<p>下面我们以第t层上第1个节点的激活值求值来举例说明一下这个公式。这里呢，如果我们要求第t层上第1个节点的激活值，那么显然我们要依赖于第（t-1）层上，每一个节点的激活值。那么公式应该如下$w_{11}^{t}<em>a_{1}^{t-1}+w_{12}^{t}</em>a_{2}^{t-1}+w_{13}^{t}*a_{3}^{t-1}+b_{1}^t$，最终呢，我们还要加一个$b_{1}^t$偏执，这个偏执得到的加权求和呢。我们再过一下激活函数f，也便得到了我们的激活值。我们把加权求和没有经过激活函数的部分呢定义为$z_{j}^t$。$a_{j}^t$实际上也就是f(z)。</p>
+<p>好了，经过我们的讲述呢，我们发现当模型的w与b，也就是所有的参数固定之后呢，我们输入层的特征输入之后，我们第1层的激活值是由我们的输入与w、d参数得到的。第2层呢是由我们第一隐层的激活值呢，与w、b参数达到的，我们这个过程呢是逐步向前去传播。我们把模型根据输入得到输出的过程呢，叫做前向传播。</p>
+<h5 id="2-4-反向传播"><a href="#2-4-反向传播" class="headerlink" title="2.4 反向传播"></a>2.4 反向传播</h5><p>下面我们来学习一下DNN模型是如何学习我们的参数w与b的。</p>
+<h6 id="2-4-1-Our-Target"><a href="#2-4-1-Our-Target" class="headerlink" title="2.4.1 Our Target"></a>2.4.1 Our Target</h6><p>$\frac{\partial L}{\partial w_{j k}^{t}} \quad \frac{\partial L}{\partial b_{j}^{t}}$</p>
+<p>我们的目标是什么呢？我们的目标很简单，目标是求得损失函数，对模型中任意两层上两个节点连接的偏导，以及求得损失函数，对任意层上节点的偏置的偏导，如果我们得到了这两个偏导的话，我们发现我们就能将模型中的任意一个参数呢进行梯度下降，这样呢，经过数次迭代，我们最终就能将模型完成收敛，也便学习到了我们需要学的w与b。</p>
+<h6 id="2-4-2-What-We-Have"><a href="#2-4-2-What-We-Have" class="headerlink" title="2.4.2 What We Have"></a>2.4.2 What We Have</h6><p>$\frac{\partial L}{\partial a_{j}^{T}} \quad \frac{\partial L}{\partial z_{j}^{T}}$</p>
+<p>我们现在已知的是什么呢？我们现在已经知道了，是损失函数对于输出层节点激活值的偏导，这里的T表示的是输出层，为什么说我们已知道了，我们来详细的写一下公式，假使我们这里的loss函数呢是平方损失函数$(y-a_{j}^{T})^2$。对于每一个样本，我们的损失函数呢是这样的。我们发现以loss函数对于我们这里的输出层的输出激活值，去取偏导的话，很明显的，我们是能够得到答案的，也便是$-2（y-a_{j}^{T}）$。同样的这里我们知道了，loss函数对于最后一层节点输出激活值的偏导，也便知道了，我们这里的loss函数对于$z_{j}^T$的偏导，我们来推导一下。用一个链导法则。</p>
+<p>$\frac{\partial L}{\partial a_{j}^{T}} \quad \frac{\partial a}{\partial z_{j}^{T}}$</p>
+<p>a = f(z)</p>
+<p>前一部分呢，是我们已经得到答案的，而后一部分呢，我们又曾经说过a呢，实际上等于我们的f（z）, 这里的f是激活函数，所以这一部分呢也很容易求的，所以我们说了我们知道了loss函数，对于最后一层节点激活值的偏导也便知道了loss函数对于z的偏导。</p>
+<h6 id="2-4-3反向传播的推导"><a href="#2-4-3反向传播的推导" class="headerlink" title="2.4.3反向传播的推导"></a>2.4.3反向传播的推导</h6><script type="math/tex; mode=display">
+\frac{\partial L}{\partial b_{j}^{t}   }  =  \frac{\partial L}{\partial z_{j}^{t}  } * \frac{\partial z_{j}^{t}  }{\partial b_{j}^{t}   }=\frac{\partial L}{\partial z_{j}^{t}   }</script><p>$z_{j}^{t}=\sum_{k} \mathcal{W}_{j k}^{t} a_{k}^{t-1}+b_{j}^{t}$</p>
+<p>$\frac{\partial L}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} <em> \frac{\partial z_{j}^{t}}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} </em> a_{k}^{t-1}$</p>
+<p>下面我们来看一下是如何一步一步，通过我们已知的这些东西去进行推导的来看推导，这里我们的目标之一呢是求的loss函数，对于任意节点的偏移，它的偏导，好了这里我们应用一下链导法则，首先呢，我们对loss函数呢，求z值的偏导，既然呢对z值呢，求我们偏移的偏导。</p>
+<p>大家应该对这个公式有印象，这个公式是前面我们说的前项传播的公式，所以这里我们看到z值对于b值的偏导呢，实际上是1，因为呢，在z对b偏转的过程中呢，前面这一部分呢相当于是常数。</p>
+<p>$\frac{\partial L}{\partial b_{j}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} * \frac{\partial z_{j}^{t}}{\partial b_{j}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} $ </p>
+<p>$\frac{\partial L}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} <em> \frac{\partial z_{j}^{t}}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} </em> a_{k}^{t-1}$<br>好了我们再来看一下，loss函数对于任意的网络中的w值，求偏导的整体过程，同样这里我们也采用链导法则，首先呢是loss函数对于z的偏导。z对于w的偏导。</p>
+<p>$z_{j}^{t}=\sum_{k} \mathcal{W}_{j k}^{t} a_{k}^{t-1}+b_{j}^{t}$</p>
+<p>我们看到z对于任意的w的偏导呢，显然呢，是这里的上一层k节点的激活值$a_{k}^{t-1}$，所以我们看到经过我们的推导呢，我们这里只需要知道loss函数对于任意节点的z值，它的的偏导我们也便得到了最终想要的答案，但是我们这里已知的是我们的loss函数对于我们输出节点的z值，所以说如果我们可以利用倒数第2层节点z值与输出层节点z值之间的关系，逐渐的将loss函数对于输入层节点的z值的偏导，传递的倒数第2层，进而呢由倒数第2层传递到倒数第3层，这样逐一的反向传播，我们便可以得到loss函数对于任意节点z值的偏导，继而我们便得到了loss函数，对于模型参数的偏导，也便完成了我们这里的学习。</p>
+<h6 id="2-4-4-反向传播的核心部分"><a href="#2-4-4-反向传播的核心部分" class="headerlink" title="2.4.4 反向传播的核心部分"></a>2.4.4 反向传播的核心部分</h6><p>$\frac{\partial L}{\partial z_{j}^{t-1}}=\sum_{k} \frac{\partial L}{\partial z_{k}^{t}} \frac{\partial z_{k}^{t}}{\partial z_{j}^{t-1}}$<br>$z_{k}^{t}=\sum_{j} w_{k j}^{t} a_{j}^{t-1}+b_{k}^{t}$</p>
+<p>$\frac{\partial z_{k}^{t}}{\partial z_{j}^{t-1}}=\frac{\partial z_{k}^{t}}{\partial a_{j}^{t-1}} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}=w_{k j}^{t} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}$</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567185943400.png" alt="1567185943400"></p>
+<p>好了下面我们来看推导的最核心的部分，我们说过现在问题的核心呢，变成了如何由损失函数对于输出层节点的。向前传播到倒数第2层，进而传播到倒数第3层，那么这里我们用一个普遍的公式，便是我们知道了第t层的z值的偏导，怎么由第t层z值的偏导呢去推导出第（t-1）层z值的偏导，如果我们知道了这个式子，问题也便解决了，普遍情况下的链导法的是损失函数对$z_k^t$求导，$z_k^t$对$z_j^{t-1}$求导即可。</p>
+<p>为什么这里还有一个累加呢？我们借助于简单的网络来说明一下，我们看到这里上一层的任意节点，对下一层的每一个节点都有贡献，都有函数关系，所以我们在$z_k^t$对$z_j^{t-1}$，求偏导时，我们需要每一个节点都算一下偏导，所以这里出现了累加，好了我们将前向传播的式子呢，jk对调一下，我们之前讲前向传播时是求的第t层上第j个节点的a值或者z值。这里呢，我们是求第t层上第k个节点的z值，实际上我们只是把jk对调了一下即可。好了，我们这里呢，损失函数对第t层的z的偏导我们是知道的，因为呢，我们是从最后的T也就是输出层。往前传播的这里只需要求后一部分即可，我们采用链导法的，借助于激活值，我们看到呢后一部分是直接能够得到答案的，因为我们说过a等于f(z)，这里的f是激活函数。</p>
+<p>同样呢，我们根据这个式子$\frac{\partial z_{k}^{t}}{\partial z_{j}^{t-1}}=\frac{\partial z_{k}^{t}}{\partial a_{j}^{t-1}} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}=w_{k j}^{t} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}$。前一部分呢，也是能够得到答案的，是这里的$w_{kj}^{t}$，既然这样的话，我们的整体流程也便窜了起来，由于我们这里损失函数对于z值偏等的过程中呢，是从后向前求的，所以我们这里的整体流程呢被称为反向传播。</p>
+<h6 id="2-4-5方向传播的流程"><a href="#2-4-5方向传播的流程" class="headerlink" title="2.4.5方向传播的流程"></a>2.4.5方向传播的流程</h6><ul>
+<li>对应输入x，设置合理的输入向量</li>
+<li>前向传播逐层逐个神经元求解加权和与激活值</li>
+<li>对于输出层求解输出层损失函数对于z值的偏导</li>
+<li>反向传播逐层求解损失函数对z值的偏导</li>
+<li>得到损失函数对于任意节点z值的偏导，也变得到了w与b的梯度</li>
+</ul>
+<p>好了，下面我们来看一下整体的反向传播流程是怎么样的，第1步对于从样本中获取的输入呢，我们经过哈希或Embedding等过程呢，设置好合理的输入向量维度，我们根据初始化的模型的参数w与b，逐层的前向传播，这样我们就得到了任意节点的加权和、z值与激活值a值。 然后我们对于输出层求解输出层损失函数对于z值的偏导，这我们是能够得到的，继而反向传播逐层求解损失函数对z值的偏导，这里我们是根据损失函数对$z^t$的偏导与损失函数对于$z^{t-1}$偏导之间的关系反向传播逐层得到的。最终呢，我们得到了损失函数，对于任意节点z值的偏导，也变得到了w与b的梯度，这里我们在推导的时候曾经详细的讲述过。</p>
+<p>好了，我们得到了梯度之后呢，便完成了第1轮的迭代，之后呢，我们再逐次将反向传播的过程呢，不停的去进行，直到我们的参数收敛，模型也变训练好了。好了，本小节就到这里，本小节主要讲述了dnn的网络结构以及DNN模型求解的数学原理，下一小节我们将介绍wd模型的网络结构与数学原理。</p>
+<h3 id="三、wide-and-deep的网络结构以及数学原理介绍"><a href="#三、wide-and-deep的网络结构以及数学原理介绍" class="headerlink" title="三、wide and deep的网络结构以及数学原理介绍"></a>三、wide and deep的网络结构以及数学原理介绍</h3><h5 id=""><a href="#" class="headerlink" title=" "></a> </h5><p>开始本小节的课程之前，我们首先来回顾一下上一小节的内容，上一小节我们重点介绍了dnn的网络结构以及数学原理，那么本小节我们将重点介绍wd的网络结构以及数学原理下面开始本小节的内容，下面来看一下本小节的内容会从哪几个方面展开。</p>
+<p>1、wd的物理意义，首先会给大家介绍一下wd为什么会优于我们之前单独介绍过的逻辑回归模型，以及上一小节介绍过的深度神经网络。</p>
+<p>2、wd的网络结构，会向大家展示一下wd模型是如果构造的。</p>
+<p>3、wd的数学原理，我们会一起看一下反向传播算法在wd上是如何进行的。</p>
+<h5 id="3-1-wd的物理意义"><a href="#3-1-wd的物理意义" class="headerlink" title="3.1 wd的物理意义"></a>3.1 wd的物理意义</h5><h6 id="论文：wide-amp-deep-learning-for-recommender-systems"><a href="#论文：wide-amp-deep-learning-for-recommender-systems" class="headerlink" title="论文：wide &amp; deep learning for recommender systems"></a>论文：wide &amp; deep learning for recommender systems</h6><p>好了下面我们来看一下wd的物理意义。wd出自于谷歌的论文，这篇论文我会在附件中提供给大家，如果大家需要可以读一下这篇论文呢，详述了wd的优点以及wd的网络结构，包括5个在wd上做的一些实验的结果好了下面我们来介绍一下wd为什么会优于我们之前单独介绍过的逻辑回归模型以及深度神经网络模型。</p>
+<h6 id="Generalization-and-memorization-泛化与记忆"><a href="#Generalization-and-memorization-泛化与记忆" class="headerlink" title="Generalization and memorization 泛化与记忆"></a>Generalization and memorization 泛化与记忆</h6><p>首先呢，我们推荐系统当中呢有两个概念，泛化以及记忆，这里的泛化是指的我们推荐的多样性。记忆就比如说某人啊来到我们的推荐系统，一直点击宫斗类型的电视剧，那么这是我们的推荐系统也会一直给他推荐宫斗类型的电视剧，此过程我们称之为记忆，但是呢，这个人也有可能会喜欢历史类型的电视剧的多样性为泛化。我们如何将历史类型的电视剧的特征与该用户的特征在排序时呢，给他学到一个较高的参数呢，如果我们单纯的用逻辑回归的话，我们就需要组合特征，但是组合特征也有一个问题，如果我们的训练数据中没有该用户行为过历史题材电视剧的样本的话，我们的模型也是学不到组合特征对应的参数的，但是呢，深度神经网络DNN是可以的，我们曾经说过，深度神经网络呢可以将我们传入的基础特征进行高维的组合，在隐层当中呢，学出一些高维的特征，但是单独的深度神经网络也有一个问题，如果某用户的行为数据呢并不是十分的充分，那么我们学习的深度神经网络呢，可能会对该用户进行过于的泛化。推荐的结果呢，大多数是他不喜欢的好了，wd的便是能够结合逻辑回归的记忆能力，以及我们深度神经网络的泛化能力，很好的平衡了这两点。</p>
+<h5 id="3-2-wd网络结构"><a href="#3-2-wd网络结构" class="headerlink" title="3.2 wd网络结构"></a>3.2 wd网络结构</h5><p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567188315016.png" alt="1567188315016"></p>
+<p>下面我们来一起看一下wd的网络结构，wd的网络结构呢分为两大部分，一部分的是wide部分，这一部分和我们之前介绍过的逻辑回归模型呢，有极大的相似性，比如我们这里输入三个特征，那么它同样呢是将这三个特征呢与对应的参数组合$w1<em>x1+w2</em>x2+w3*x3$，第2部分呢是deep部分，deep部分与我们曾经介绍过的深度神经网络呢，几乎是一样的，这里也分为输入层以及隐藏，当然了，我们这里也是全连接的。</p>
+<p>这里唯一与之前所介绍过的有所不同的是，wd模型的输出呢是将(wide侧的参数与特征的加权和)与(deep侧最后一个隐层的输出)，做相加在一起经过激活函数，最终得到我们模型的输出。</p>
+<p>这样的结构呢，能够保证我们在每一次反向传播的过程中呢，不仅更新地deep侧的参数，同时呢也会更新wide侧的参数，这样也就保证了我们所说的联合训练。通常情况下，我们将离散特征以及离散特征的组合特征放入到wide侧，而我们将连续特征的放入到我们的深度神经网络侧，对于一些字符型的特征，我们通常是先做一下哈希，再做一下Embedding，然后传入到deep侧。</p>
+<h5 id="3-3-模型的输出"><a href="#3-3-模型的输出" class="headerlink" title="3.3  模型的输出"></a>3.3  模型的输出</h5><p>好了，下面我们来一起看一下模型的输出。模型的输出，包含两部分。</p>
+<p>第1部分的是我们的wide侧的输出，这里的x便是我们wide输入的特征，这里的cross便是特征的组合。</p>
+<p>第2部分同样的我们这里的deep侧。倒数第2层节点的激活值也就是最后一个隐层的激活值，与我们输出节点与deep侧相连的w的乘积，再加上偏执。</p>
+<p>最终2部分的加和呢，要过一下我们的激活函数，这里的激活函数呢是阶跃函数，但是在deep侧的隐层之间的参数学习是我们采用的激活函数是<strong>修正线性单元</strong>。</p>
+<h5 id="3-4-WD-model的反向传播"><a href="#3-4-WD-model的反向传播" class="headerlink" title="3.4 WD model的反向传播"></a>3.4 WD model的反向传播</h5><p>大家一定要注意一下，好了下面我们来看一下反向传播是如何在wd上进行的。</p>
+<h6 id="wide参数的学习过程"><a href="#wide参数的学习过程" class="headerlink" title="wide参数的学习过程"></a>wide参数的学习过程</h6><p>$\frac{\partial L}{\partial w_{w i d e j}}=\frac{\partial L}{\partial a^{T}} \frac{\partial a^{T}}{\partial z^{T}} \frac{\partial z^{T}}{\partial w_{w i d e j}}=\frac{\partial L}{\partial a^{T}} \sigma^{\prime}\left(z^{T}\right) x_{w i d e j}$</p>
+<p>首先呢，我们先来看一下wide参数的学习过程，我们这里采用梯度下降的学习方法，所以呢，我们这里只需要求得，损失函数对于w和任意参数的偏导，也便能够进行参数学习，我们来看一下公式推导，这里采用链导法则。损失函数对w偏导，实际上也就是损失函数对输出层激活值的偏导在乘以激活值，对z值的偏导，在乘z值对参数w的偏大。</p>
+<p>损失函数对输出层激活值的偏导，无论我们是采用平方分式函数，还是我们采用对数损失函数，我们曾经都详细的讲过，这一部分的值应该是多少，这里不太赘述。</p>
+<p>激活函数的导数计算：我们知道a等于f（z），这里的f就是激活函数，所以呢，这一部分也便是激活函数的导数。我们把$\sigma^{\prime}\left(z^{T}\right) $放进去即可，</p>
+<p>最后一部分的，由于我们输出层的输出。实际上我们说过是有两部分的由wide侧以及deep侧，显然呢，我们这里对于wide侧的参数的偏导与deep侧没有关系，也便是我们这里deep侧参数对应的特征。好了，该部分的推导那就讲到这里。</p>
+<h6 id="WD-model的反向传播"><a href="#WD-model的反向传播" class="headerlink" title="WD model的反向传播"></a>WD model的反向传播</h6><p>$\frac{\partial L}{\partial z_{j}^{t-1}}=\sum_{k} \frac{\partial L}{\partial z_{k}^{t}} \frac{\partial z_{k}^{t}}{\partial a_{j}^{t-1}} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}=\sum_{k} \frac{\partial L}{\partial z_{k}^{t}} w_{d e e p kj}^{t} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}$<br>$z_{k}^{t}=\sum_{j} w_{d e e p k j}^{t} a_{j}^{t-1}+b_{k}^{t} \rightarrow t \neq T \quad z_{k}^{t}=\left(\sum_{j} w_{d e e p kj}^{t} a_{j}^{t-1}+b_{k}^{t}\right)+w_{\text {wide}} * X \rightarrow t=T$</p>
+<p>下面我们来看一下deep侧参数的学习过程，与我们之前讲述过的dnn网络的反向传播是一样的，我们这里的核心呢都是损失函数，对于输出层z值的偏导，逐渐的前向传播，我们逐渐的得到，损失函数对倒数第2层z值的偏导逐次向前，这里唯一不同的是什么呢？</p>
+<p>不同的是我们这里的前向传播的过程呢，如果当我们是最后一层时，我们这里会多出了一些wide侧的特征。</p>
+<p>下面来看一下公式推导，这里我们在求上一层损失函数，对z值的偏导时，为什么这里会有一个累加呢？我们在上一小节曾经介绍过，这是因为（t+1）层上任意节点的激活值，都曾经被t层上第j节点贡献过，所以呢，我们需要累加。</p>
+<p>好了，我们看到这3部分。</p>
+<p>第1部分的，损失函数对于上一层节点的z值的偏导，这里我们是知道的，因为在最开始的时候呢，我们是知道，对输出层z值的偏导逐渐的向前传播，也便知道了t层。</p>
+<p>第2部分，中间这一部分呢，根据下面我们两个式子，这两个式子我们分别发现的，虽然带我们的输出层的，我们有wide侧的特征，但是呢，并不影响我们这里求偏导，因为对于我们这里的偏导，wide侧的部分相当于常数，所以我们还是得到了相同的答案。</p>
+<p>第3部分，最后一部分呢也是我们刚才说过的，a=f(z)。相当于呢，我们是激活函数的导数，也没有问题。我们得到了损失函数，对于任意层结点的z值的偏导。</p>
+<p>$\frac{\partial L}{\partial b_{j}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} * \frac{\partial z_{j}^{t}}{\partial b_{j}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} $</p>
+<p>$ \frac{\partial L}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} <em> \frac{\partial z_{j}^{t}}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} </em> a_{k}^{t-1}$</p>
+<p>根据上一小节我们讲过的，此时我们便得到了损失函数，对于deep侧对于每一个偏执以及每一个w的偏导，这样我们便能够进行我们的梯度下降，进行参数学习了。好了，这就是wd模型的反向传播。</p>
+<h5 id="3-5server架构"><a href="#3-5server架构" class="headerlink" title="3.5server架构"></a>3.5server架构</h5><p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567191012618.png" alt="1567191012618"></p>
+<p>下面我们来看一下，我们得到了最终的模型之后呢，我们是如何与推荐引擎呢进行交互的，这里由于我们采用的是TensorFlow呢，实现我们的wd模型，这里我们必须搭一个TensorFlow serving来提供我们的深度学习的rank服务。</p>
+<p>此时呢，推荐引擎呢，需要发动请求到rank server，rank server与TensorFlow serving呢，进行一次交互，将请求呢透传的TensorFlow serving，TensorFlow serving得到的结果呢，返回给我们这里的rank server。rank server再将结果呢透回给我们这里的推荐引擎，来完成每一个item对该user的得分，进而完成排序，我们之前讲述过的浅层模型是rank server可以直接将我们得到的模型文件的load的内存当中，然后利用API呢，去提供打分。</p>
+<p>好了，本小节的内容就到这里，本小节重点介绍了wd的网络结构以及数学原理，那么下一小节我们将代码实在wd模型。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="AnFrank 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="AnFrank 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AnFrank</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/" title="个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep">http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/个性化推荐算法/" rel="tag"><i class="fa fa-tag"></i> 个性化推荐算法</a>
+          
+            <a href="/tags/逻辑回归/" rel="tag"><i class="fa fa-tag"></i> 逻辑回归</a>
+          
+            <a href="/tags/WideAndDeep/" rel="tag"><i class="fa fa-tag"></i> WideAndDeep</a>
+          
+            <a href="/tags/神经网络/" rel="tag"><i class="fa fa-tag"></i> 神经网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/01/个性化推荐算法实践第07章综述学习排序/" rel="next" title="个性化推荐算法实践第07章综述学习排序">
+                <i class="fa fa-chevron-left"></i> 个性化推荐算法实践第07章综述学习排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/01/个性化推荐算法实践第11章排序模型总结与回顾/" rel="prev" title="个性化推荐算法实践第11章排序模型总结与回顾">
+                个性化推荐算法实践第11章排序模型总结与回顾 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="AnFrank" />
+            
+              <p class="site-author-name" itemprop="name">AnFrank</p>
+              <p class="site-description motion-element" itemprop="description">你若晴天，我便安好。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/enfangzhong" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://blog.csdn.net/qintian888" target="_blank" title="CSDN"><i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/5604852325" target="_blank" title="weibo"><i class="fa fa-fw fa-weibo"></i>weibo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/itjygfly" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/enfangzhong" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:enfangzhong@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lruihao.cn/" title="博采众长" target="_blank">博采众长</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leridy.pw/" title="乐余地" target="_blank">乐余地</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tmy123.com/" title="同盟源" target="_blank">同盟源</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          <marquee>
+	<a href="/links.html">
+	<font size="4" face="STXingkai">
+		<font color="#FF0000">欢</font>
+		<font color="#E80017">迎</font>
+		<font color="#D1002E">点</font>
+		<font color="#BA0045">我</font>
+		<font color="#A3005C">互</font>
+		<font color="#A00073">换</font>
+		<font color="#A0008A">友</font>
+		<font color="#A000A1">链</font>
+		<font color="#A000B8">哦</font>
+		<font color="#A000CF">~</font>
+		<font color="#A000E6">~</font>
+	</font>
+	</a>
+</marquee>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep"><span class="nav-number">1.</span> <span class="nav-text">个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、背景介绍之什么是深度学习"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、背景介绍之什么是深度学习</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1什么是神经元"><span class="nav-number">1.0.1.0.1.</span> <span class="nav-text">1.1什么是神经元?</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2激活函数"><span class="nav-number">1.0.1.0.2.</span> <span class="nav-text">1.2激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-2-1阶跃函数-sigmod"><span class="nav-number">1.0.1.0.2.1.</span> <span class="nav-text">1.2.1阶跃函数 sigmod</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-2-2双曲正切"><span class="nav-number">1.0.1.0.2.2.</span> <span class="nav-text">1.2.2双曲正切</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-2-3修正线性单元"><span class="nav-number">1.0.1.0.2.3.</span> <span class="nav-text">1.2.3修正线性单元</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-什么是神经网络？"><span class="nav-number">1.0.1.0.3.</span> <span class="nav-text">1.3 什么是神经网络？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3深度学习与传统的机器学习有哪些流程的异同呢？"><span class="nav-number">1.0.1.0.4.</span> <span class="nav-text">1.3深度学习与传统的机器学习有哪些流程的异同呢？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、DNN网络结构与反向传播算法"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、DNN网络结构与反向传播算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1DNN网络结构"><span class="nav-number">1.0.2.0.1.</span> <span class="nav-text">2.1DNN网络结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-DNN模型参数"><span class="nav-number">1.0.2.0.2.</span> <span class="nav-text">2.2 DNN模型参数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-1-隐层的层数，每个隐层神经元的个数，以及激活函数"><span class="nav-number">1.0.2.0.2.1.</span> <span class="nav-text">2.2.1 隐层的层数，每个隐层神经元的个数，以及激活函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-2-输入输出层的向量维度"><span class="nav-number">1.0.2.0.2.2.</span> <span class="nav-text">2.2.2 输入输出层的向量维度</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-3-不同层之间神经元的连接权重与偏移值B"><span class="nav-number">1.0.2.0.2.3.</span> <span class="nav-text">2.2.3 不同层之间神经元的连接权重与偏移值B</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-前向传播"><span class="nav-number">1.0.2.0.3.</span> <span class="nav-text">2.3 前向传播</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-反向传播"><span class="nav-number">1.0.2.0.4.</span> <span class="nav-text">2.4 反向传播</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-4-1-Our-Target"><span class="nav-number">1.0.2.0.4.1.</span> <span class="nav-text">2.4.1 Our Target</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-4-2-What-We-Have"><span class="nav-number">1.0.2.0.4.2.</span> <span class="nav-text">2.4.2 What We Have</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-4-3反向传播的推导"><span class="nav-number">1.0.2.0.4.3.</span> <span class="nav-text">2.4.3反向传播的推导</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-4-4-反向传播的核心部分"><span class="nav-number">1.0.2.0.4.4.</span> <span class="nav-text">2.4.4 反向传播的核心部分</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-4-5方向传播的流程"><span class="nav-number">1.0.2.0.4.5.</span> <span class="nav-text">2.4.5方向传播的流程</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、wide-and-deep的网络结构以及数学原理介绍"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、wide and deep的网络结构以及数学原理介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#"><span class="nav-number">1.0.3.0.1.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-wd的物理意义"><span class="nav-number">1.0.3.0.2.</span> <span class="nav-text">3.1 wd的物理意义</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#论文：wide-amp-deep-learning-for-recommender-systems"><span class="nav-number">1.0.3.0.2.1.</span> <span class="nav-text">论文：wide &amp; deep learning for recommender systems</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Generalization-and-memorization-泛化与记忆"><span class="nav-number">1.0.3.0.2.2.</span> <span class="nav-text">Generalization and memorization 泛化与记忆</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-wd网络结构"><span class="nav-number">1.0.3.0.3.</span> <span class="nav-text">3.2 wd网络结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-模型的输出"><span class="nav-number">1.0.3.0.4.</span> <span class="nav-text">3.3  模型的输出</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-WD-model的反向传播"><span class="nav-number">1.0.3.0.5.</span> <span class="nav-text">3.4 WD model的反向传播</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#wide参数的学习过程"><span class="nav-number">1.0.3.0.5.1.</span> <span class="nav-text">wide参数的学习过程</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#WD-model的反向传播"><span class="nav-number">1.0.3.0.5.2.</span> <span class="nav-text">WD model的反向传播</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-5server架构"><span class="nav-number">1.0.3.0.6.</span> <span class="nav-text">3.5server架构</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+
+      
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GiT撤销/">GiT撤销</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JaveEE/">JaveEE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LFM（latent-factor-model）算法/">LFM（latent factor model）算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Learn-To-Rank/">Learn To Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL内连接/">SQL内连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WideAndDeep/">WideAndDeep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github博客/">github博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo博客/">hexo博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/item2vec/">item2vec</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java框架/">java框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java编程/">java编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人博客/">个人博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法/">个性化推荐算法</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法-Content-Based-基于内容的推荐/">个性化推荐算法 - Content Based - 基于内容的推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法实践总结/">个性化推荐算法实践总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉连接/">交叉连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益/">信息增益</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益率/">信息增益率</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/决策树/">决策树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客优化/">博客优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/右外连接/">右外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基于随机游走的Personal-Rank/">基于随机游走的Personal Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基尼指数/">基尼指数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/左外连接/">左外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序模型总结/">排序模型总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序员表白源码/">程序员表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性回归/">线性回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/表白源码/">表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/评估指标/">评估指标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逻辑回归/">逻辑回归</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随机森林/">随机森林</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/隐语义模型/">隐语义模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/非关系型数据库/">非关系型数据库</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnFrank</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">GitHub</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!--
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+-->
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">Enfang</a> v6.3.0</div>
+
+
+
+
+
+<font color=MediumPurple face=STLiti>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共50.4k字|</span>
+</div>
+</font>
+
+<font color=MediumPurple face=STLiti><span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span></font>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("05/28/2018 20:01:01");//此处为建站时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已苟活："+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      访问用户：<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      访问次数：<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'SACSC0biGE5t01ErmVSxYvVt-gzGzoHsz',
+        appKey: 'td1GAOLqHNMnQ4BtJENstUVW',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!填写邮箱能很快收到我的回复喔！老铁，你不想说两句吗？',
+        avatar:'wavatar',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+</body>
+</html>
