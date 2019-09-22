@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+
+  <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+  
+
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/favicon-32x32-next.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "9494e80d"
+    });
+  daovoice('update');
+  </script>
+
+  <meta name="description" content="[TOC] 个性化推荐算法实践第11章排序模型总结与回顾 model在测试数据集效果回顾1、逻辑回归模型、gbdt模型、gbdt模型与逻辑回归混合模型以及wd模型在测试数据集上的效果进行一下简单的回顾   LTR中特征维度浅析 2、我们会对工业界实际项目中建立排序模型所使用的特征进行一下简单的浅析。  工业界Rank技术展望3、对工业界的排序技术进行一下展望   一、model在测试数据集效果回顾">
+<meta name="keywords" content="AnFrank AnFrank&#39;s blog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AnFrank">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/index.html">
+<meta property="og:site_name" content="AnFrank">
+<meta property="og:description" content="[TOC] 个性化推荐算法实践第11章排序模型总结与回顾 model在测试数据集效果回顾1、逻辑回归模型、gbdt模型、gbdt模型与逻辑回归混合模型以及wd模型在测试数据集上的效果进行一下简单的回顾   LTR中特征维度浅析 2、我们会对工业界实际项目中建立排序模型所使用的特征进行一下简单的浅析。  工业界Rank技术展望3、对工业界的排序技术进行一下展望   一、model在测试数据集效果回顾">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/1566837900314.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/1566838660693.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/1566839442552.png">
+<meta property="og:updated_time" content="2019-09-22T07:04:16.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AnFrank">
+<meta name="twitter:description" content="[TOC] 个性化推荐算法实践第11章排序模型总结与回顾 model在测试数据集效果回顾1、逻辑回归模型、gbdt模型、gbdt模型与逻辑回归混合模型以及wd模型在测试数据集上的效果进行一下简单的回顾   LTR中特征维度浅析 2、我们会对工业界实际项目中建立排序模型所使用的特征进行一下简单的浅析。  工业界Rank技术展望3、对工业界的排序技术进行一下展望   一、model在测试数据集效果回顾">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/1566837900314.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AnFrank" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | AnFrank</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+<a href="https://github.com/enfangzhong"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script>
+ function GetRandomNum(Min,Max)
+  {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return(Min + Math.round(Rand * Range));
+  }
+function setSidebarMarginTop (headerOffset) {
+    return $('#sidebar').css({ 'margin-top': headerOffset });
+  }
+ function getHeaderOffset () {
+    return $('.header-inner').height() + CONFIG.sidebar.offset;
+  }
+  window.onload=function(){
+    var subtitle = "喜欢一个人，始于颜值，敬于才华，合于性格，久于善良，终于人品。W我真的好想你，在每一个雨季，你选择遗忘的，是我最不舍的。W不怕万人阻挡，只怕自己投降。W成熟是给你陌生人看的，逗比是给朋友看的，幼稚是给喜欢的人看的。W人生当苦无妨，良人当归即可。W逝者如斯乎，不舍昼夜。";
+     var mytitle = subtitle.split("W");
+     var max = mytitle.length-1;
+     var index = GetRandomNum(0,max);
+     var text = mytitle[index];
+     $("#helloTitle").html(text);
+     var headOffset = getHeaderOffset();
+     setSidebarMarginTop(headOffset);
+     //动态subtitle设置
+  }
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AnFrank</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  
+    <p style="color:#black;font-size:18px;font-family:STXingkai" id="helloTitle" class="site-subtitle"></p>
+  
+
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+    <a href="/schedule/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />日程表</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-love">
+    <a href="/love/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />love</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-loveshow">
+    <a href="/loveshow/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />loveshow</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+    <a href="/404/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />公益 404</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnFrank">
+      <meta itemprop="description" content="你若晴天，我便安好。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AnFrank">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-22 15:05:10 / 修改时间：15:04:16" itemprop="dateCreated datePublished" datetime="2019-09-22T15:05:10+08:00">2019-09-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+
+          
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+            <span class="post-meta-divider">|</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 2,713</span>
+
+<span class="post-meta-divider">|</span>
+<span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 9分钟</span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="个性化推荐算法实践第11章排序模型总结与回顾"><a href="#个性化推荐算法实践第11章排序模型总结与回顾" class="headerlink" title="个性化推荐算法实践第11章排序模型总结与回顾"></a>个性化推荐算法实践第11章排序模型总结与回顾</h1><ul>
+<li>model在测试数据集效果回顾<br>1、逻辑回归模型、gbdt模型、gbdt模型与逻辑回归混合模型以及wd模型在测试数据集上的效果进行一下简单的回顾</li>
+</ul>
+<ul>
+<li><p>LTR中特征维度浅析</p>
+<p>2、我们会对工业界实际项目中建立排序模型所使用的特征进行一下简单的浅析。</p>
+</li>
+<li><p>工业界Rank技术展望<br>3、对工业界的排序技术进行一下展望</p>
+</li>
+</ul>
+<h3 id="一、model在测试数据集效果回顾"><a href="#一、model在测试数据集效果回顾" class="headerlink" title="一、model在测试数据集效果回顾"></a>一、model在测试数据集效果回顾</h3><h5 id="1、效果回顾"><a href="#1、效果回顾" class="headerlink" title="1、效果回顾"></a>1、效果回顾</h5><p><img src="/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/1566837900314.png" alt="1566837900314"></p>
+<p>下面首先来回顾一下各模型在测试数据集上的表现。由于我们各Rank模型在线上实际使用时呢是对item进行打分，然后呢不同的item按照这个得分的展现给用户，所以呢我们这里更加关心的是模型对于我们item预测得分序的关系，所以呢也就是AUC我们这里从我们模型交叉验证得到的AUC以及模型在测试数据集表现的AUC两点的进行一下回顾。</p>
+<p>我们在排序部分的重点介绍了四种模型分别是逻辑回归、GBDT、GBDT与逻辑回归的混合模型以及我们基于深度学习的WD模型。</p>
+<p>首先呢从我们的模型交叉验证的效果来看一下GBDT与逻辑回归的混合模型的表现要好于GBDT。GBDT要好于我们的逻辑回归模型，由于我们的WD并没有采用我行交叉验证的方式呢，去评估，所以这里没有数据。好了，我们再来看一下训练好的模型呢，在测试数据集上的表现也就是看一下模型的泛化能力。这里同样的GBDT与逻辑回归的混合模型的是要好GBDT，GBDT是要比逻辑回归好，这里要注意一下，在实际的我们的项目中WD模型实际上是表现的最好，但是在这里限于我们的样本的数量了只有3万等等的一些限制。WD表现的要略低于GBDT。不过没有关系，如果大家有机会在实际项目海量的数据集当中了去实践一下，不同的Rank模型的话，大家一定能得到下面的结论，WD模型的表现是要好于GBDT与逻辑回归的混合模型。混合模型是要好于GBDT模型。GBDT是要好于我们的逻辑回归模型。但我实际工作中零一搭建个性化排序系统时得到的结论也是这样的。</p>
+<h5 id="2、离线评估"><a href="#2、离线评估" class="headerlink" title="2、离线评估"></a>2、离线评估</h5><h6 id="模型交叉验证-model-cv"><a href="#模型交叉验证-model-cv" class="headerlink" title="模型交叉验证(model cv)"></a>模型交叉验证(model cv)</h6><p>在我们训练不同的排序模型，将不同的模型放到线上时，我们如何来评价离线的准入以及在线的收益呢？下面来看一下排序模型的评估，首先来看一下离线评估，第一点的，我们需要看一下模型交叉验证得到的指标，这些指标的，包括我们课上重点提到的AUC，以及准确召回等等的一些指标，这些指标我们需要明确它的物理意义，这样才能够帮助我们清晰地判断模型的效果。</p>
+<h6 id="model-test-data-performance"><a href="#model-test-data-performance" class="headerlink" title="model test data performance"></a>model test data performance</h6><p>最终的我们还需要判断一下模型的泛化能力，也就是模型在测试数据集上的表现，比如模型在测试数据集上得到的AUC,得到的准确率等等，我们结合着不同的业务场景的也会有一些独自的评判标准，比如我们在信息流场景当中呢，我们可能更关注的是session的平均点击位置，这里简单的解释一下。我们每一个session展示了，比如说三条数据。</p>
+<p><img src="/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/1566838660693.png" alt="1566838660693"></p>
+<p>在我们的测试数据上的原有的情况下，比如我们点击了这3条，经过我们训练模型对于这三个数据得重新打分之后呢，我们能否将已经击的这个第二条呢？学习到第一的位置，这样我们的平均点击位置的就更靠前了，这样的效果也就说明了是更好的。当然了，不同的业务场景还有一些其他的指标。</p>
+<h5 id="3、在线评估"><a href="#3、在线评估" class="headerlink" title="3、在线评估"></a>3、在线评估</h5><h6 id="业务指标"><a href="#业务指标" class="headerlink" title="业务指标"></a>业务指标</h6><p>下面我们来看一下在线指标，首先呢是业务指标。比如说点击率，购买率，平均阅读时长，总的交易额度等等，我们根据不同的业务场景的制订了评价的指标，最终的结果呢也已在线AB测试得到的业务指标的生效为准。</p>
+<h6 id="平均点击位置"><a href="#平均点击位置" class="headerlink" title="平均点击位置"></a>平均点击位置</h6><p>离线的评价指标的只是我们能否准入的一个衡量的标准，并不能决定我们在线实际效果的好坏，当然了这里还有一些辅助的评价指标，比如像之前我们介绍的平均点击位置。当然呢在线评估时，我们首先来看一下业务指标，其次呢是我们的辅助评价指标。好啦，在线离线的评估呢，我们已经说完了。</p>
+<h3 id="二、LTR中特征维度浅析"><a href="#二、LTR中特征维度浅析" class="headerlink" title="二、LTR中特征维度浅析"></a>二、LTR中特征维度浅析</h3><h6 id="1、特征维度"><a href="#1、特征维度" class="headerlink" title="1、特征维度"></a>1、特征维度</h6><ul>
+<li>特征维度</li>
+</ul>
+<p><img src="/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/1566839442552.png" alt="1566839442552"></p>
+<p>下面来看一下特征了有哪一些？我们的构建排序模型是常用的特征的有以下几个方面，我们来简单的介绍一下，用户侧的特征包含了用户的静态的属性，比如说年龄，性别，地域，还有一些简单的统计特征，比如该用户在我们平台上浏览过多少个商品？点击过多少个商品的购买过多少个商品的，购买过多少个商品啊？近30天浏览了多少商品的这种长短时的统计，最后还有一些用户侧的高维的特征，我们基于它的浏览点击购买历史的给他打上一些标签，比如说呢，她就喜欢某某品牌的香水某某品牌的鞋子等等。刚刚介绍用户特征侧时是以电商场景举例。对于其他的产品道理也是一样的，比如说信息流。我们只需要统计一下用户发现喜欢财经呢，还是喜欢体育，是喜欢娱乐呢？还是喜欢科技，甚至呢我们还可以给他打上标签儿，是科比的标签的还是鹿晗的标签等等？道理都是一样的。</p>
+<p>商品侧的特征基础的特征包含商品的名称，商品的上线日期啊等等统计的特征的包含商品被购买的次数。商品的点击率呀，商品的购买率啊等等。一些高维的标签，那比如说这个商品的，他是深受90后欢迎啊，深受年轻女性的欢迎啊，我们的上下文的特征的有，当前是星期几呀？现在是几点呀？用户请求我们服务时所处的地理位置信息等等。用户和item的关系。比如说这个商品呢，是该用户两个月之前加入到购物车里头，一个月之前点击过的呀，半年之前购买过呀，等等的一些信息，还有我们的统计登录信息，比如说呢商品的上架的时间呢与购买率间的关系，比如说近一个月之内上架的商品打开的购买率是多少？近两个月等等我们统计出来显然的又增加了一维特征。好了我们曾经无数次说过特征与样本是决定我们最终这个整体表现的天花板，而我们采用不同的模型的只能去逼近这个天花板。像我刚才介绍这些不同维度特征时呢，我们是用电商场景举例的，但是呢实际的项目中呢，假如没有做过电商的场景，可以根据特征的大体由这五个维度来想到一些电商场景下应该有哪些特征？大家在自己的项目当中呢，或者自己解决实际问题过程中的，也一定要结合的实际去构造我们需要的特征。</p>
+<h6 id="2、特征的数目"><a href="#2、特征的数目" class="headerlink" title="2、特征的数目"></a>2、特征的数目</h6><ul>
+<li>特征的数目</li>
+</ul>
+<p>我们说过为了防止过拟合，那我们尽量要将特征与样本的数目来维持在1：100。举例，比如说我们这里有1000个训练样本，那么这里我选择了十个特征，这是没有问题的，但是呢，有的同学说我没有找到十个特征，我只找到了八个那也是没有问题的。</p>
+<p>可能最终我们学习出来的效果不会很好。但是有的同学说我找到了50个特征，那么显然呢，这个模型呢就会过拟合。他在测试数据集上的表现的就会比较差，就是说它的泛化能力就不会很强。</p>
+<h3 id="三、工业界Rank技术展望"><a href="#三、工业界Rank技术展望" class="headerlink" title="三、工业界Rank技术展望"></a>三、工业界Rank技术展望</h3><h6 id="1、多目标学习"><a href="#1、多目标学习" class="headerlink" title="1、多目标学习"></a>1、多目标学习</h6><p>我们知道了在信息流场景中的我们既想用户拿多点击，也就是点击率预估模型也想用户停留的阅读时长的要长一点。这样呢就是两个目标。之前的可能有很多方式呢，比如说训练两个模型，一个呢是点击率预估模型，一个是平均阅读时长预估模型，然后乘起来，比如说那像电商场景中的我们既想用户呢，他得购买率也就是说最终的转化率呢要高又想拿我们懂得交易额度也能高。有人呢对这种多目标问题的提出了一种将不同的目标的融合到一个网络里进行学习的方法。</p>
+<h6 id="2、强化学习"><a href="#2、强化学习" class="headerlink" title="2、强化学习"></a>2、强化学习</h6><p>我们知道强化学习的是成功保证历史最大回报率的一种办法，现在呢这种算法呢，在游戏里应用的比较广泛也比较成熟，但排序的领域也有一些落地与尝试。希望大家的能够对这些较新的技术进行不断的追求，不断的学习。不断的探究，不断的尝试。那么本章节的内容到这里就全部结束了，本章节的重点是对之前多讲述过的排序部分的内容进行了总结回顾，下一章节我们将会对个性化推荐算法课程的内容来进行一下总结。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="AnFrank 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="AnFrank 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AnFrank</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://enfangzhong.github.io/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/" title="">http://enfangzhong.github.io/2019/09/22/个性化推荐算法实践第11章排序模型总结与回顾/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/22/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="AnFrank" />
+            
+              <p class="site-author-name" itemprop="name">AnFrank</p>
+              <p class="site-description motion-element" itemprop="description">你若晴天，我便安好。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/enfangzhong" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://blog.csdn.net/qintian888" target="_blank" title="CSDN"><i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/5604852325" target="_blank" title="weibo"><i class="fa fa-fw fa-weibo"></i>weibo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/itjygfly" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/enfangzhong" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:enfangzhong@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lruihao.cn/" title="博采众长" target="_blank">博采众长</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leridy.pw/" title="乐余地" target="_blank">乐余地</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tmy123.com/" title="同盟源" target="_blank">同盟源</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          <marquee>
+	<a href="/links.html">
+	<font size="4" face="STXingkai">
+		<font color="#FF0000">欢</font>
+		<font color="#E80017">迎</font>
+		<font color="#D1002E">点</font>
+		<font color="#BA0045">我</font>
+		<font color="#A3005C">互</font>
+		<font color="#A00073">换</font>
+		<font color="#A0008A">友</font>
+		<font color="#A000A1">链</font>
+		<font color="#A000B8">哦</font>
+		<font color="#A000CF">~</font>
+		<font color="#A000E6">~</font>
+	</font>
+	</a>
+</marquee>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#个性化推荐算法实践第11章排序模型总结与回顾"><span class="nav-number">1.</span> <span class="nav-text">个性化推荐算法实践第11章排序模型总结与回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、model在测试数据集效果回顾"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、model在测试数据集效果回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、效果回顾"><span class="nav-number">1.0.1.0.1.</span> <span class="nav-text">1、效果回顾</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、离线评估"><span class="nav-number">1.0.1.0.2.</span> <span class="nav-text">2、离线评估</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#模型交叉验证-model-cv"><span class="nav-number">1.0.1.0.2.1.</span> <span class="nav-text">模型交叉验证(model cv)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#model-test-data-performance"><span class="nav-number">1.0.1.0.2.2.</span> <span class="nav-text">model test data performance</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、在线评估"><span class="nav-number">1.0.1.0.3.</span> <span class="nav-text">3、在线评估</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#业务指标"><span class="nav-number">1.0.1.0.3.1.</span> <span class="nav-text">业务指标</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#平均点击位置"><span class="nav-number">1.0.1.0.3.2.</span> <span class="nav-text">平均点击位置</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、LTR中特征维度浅析"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、LTR中特征维度浅析</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1、特征维度"><span class="nav-number">1.0.2.0.0.1.</span> <span class="nav-text">1、特征维度</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2、特征的数目"><span class="nav-number">1.0.2.0.0.2.</span> <span class="nav-text">2、特征的数目</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、工业界Rank技术展望"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、工业界Rank技术展望</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1、多目标学习"><span class="nav-number">1.0.3.0.0.1.</span> <span class="nav-text">1、多目标学习</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2、强化学习"><span class="nav-number">1.0.3.0.0.2.</span> <span class="nav-text">2、强化学习</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+
+      
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GiT撤销/">GiT撤销</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JaveEE/">JaveEE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL内连接/">SQL内连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github博客/">github博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo博客/">hexo博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java框架/">java框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java编程/">java编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人博客/">个人博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉连接/">交叉连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益/">信息增益</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益率/">信息增益率</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/决策树/">决策树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客优化/">博客优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/右外连接/">右外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基尼指数/">基尼指数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/左外连接/">左外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序员表白源码/">程序员表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性回归/">线性回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/表白源码/">表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逻辑回归/">逻辑回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随机森林/">随机森林</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/非关系型数据库/">非关系型数据库</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnFrank</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">GitHub</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!--
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+-->
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">Enfang</a> v6.3.0</div>
+
+
+
+
+
+<font color=MediumPurple face=STLiti>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共77.8k字|</span>
+</div>
+</font>
+
+<font color=MediumPurple face=STLiti><span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span></font>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("05/28/2018 20:01:01");//此处为建站时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已苟活："+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      访问用户：<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      访问次数：<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'SACSC0biGE5t01ErmVSxYvVt-gzGzoHsz',
+        appKey: 'td1GAOLqHNMnQ4BtJENstUVW',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!填写邮箱能很快收到我的回复喔！老铁，你不想说两句吗？',
+        avatar:'wavatar',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+</body>
+</html>
