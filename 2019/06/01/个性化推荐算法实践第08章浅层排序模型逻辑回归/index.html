@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+
+  <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+  
+
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/favicon-32x32-next.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "9494e80d"
+    });
+  daovoice('update');
+  </script>
+
+  <meta name="description" content="[TOC] 个性化推荐算法实践第08章浅层排序模型逻辑回归本章节重点介绍点击率预估模型，逻辑回归模型，以及选取实例数据集，从特征选择到模型训练、模型评估等几个方面来代码实战逻辑回归模型。 本章节重点介绍一种排序模型，逻辑回归模型。从逻辑回归模型的背景知识与数学原理进行介绍。并介绍样本选择与特征选择相关知识。最后结合公开数据集。代码实战训练可用的逻辑回归模型。 逻辑回归模型的背景介绍一、LR（log">
+<meta name="keywords" content="个性化推荐算法,逻辑回归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="个性化推荐算法实践第08章浅层排序模型逻辑回归">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/index.html">
+<meta property="og:site_name" content="AnFrank">
+<meta property="og:description" content="[TOC] 个性化推荐算法实践第08章浅层排序模型逻辑回归本章节重点介绍点击率预估模型，逻辑回归模型，以及选取实例数据集，从特征选择到模型训练、模型评估等几个方面来代码实战逻辑回归模型。 本章节重点介绍一种排序模型，逻辑回归模型。从逻辑回归模型的背景知识与数学原理进行介绍。并介绍样本选择与特征选择相关知识。最后结合公开数据集。代码实战训练可用的逻辑回归模型。 逻辑回归模型的背景介绍一、LR（log">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1565107327628.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135721017.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135751384.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135782966.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/20190409210625322.png">
+<meta property="og:updated_time" content="2019-09-26T03:57:19.847Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="个性化推荐算法实践第08章浅层排序模型逻辑回归">
+<meta name="twitter:description" content="[TOC] 个性化推荐算法实践第08章浅层排序模型逻辑回归本章节重点介绍点击率预估模型，逻辑回归模型，以及选取实例数据集，从特征选择到模型训练、模型评估等几个方面来代码实战逻辑回归模型。 本章节重点介绍一种排序模型，逻辑回归模型。从逻辑回归模型的背景知识与数学原理进行介绍。并介绍样本选择与特征选择相关知识。最后结合公开数据集。代码实战训练可用的逻辑回归模型。 逻辑回归模型的背景介绍一、LR（log">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1565107327628.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AnFrank" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>个性化推荐算法实践第08章浅层排序模型逻辑回归 | AnFrank</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+<a href="https://github.com/enfangzhong"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script>
+ function GetRandomNum(Min,Max)
+  {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return(Min + Math.round(Rand * Range));
+  }
+function setSidebarMarginTop (headerOffset) {
+    return $('#sidebar').css({ 'margin-top': headerOffset });
+  }
+ function getHeaderOffset () {
+    return $('.header-inner').height() + CONFIG.sidebar.offset;
+  }
+  window.onload=function(){
+    var subtitle = "喜欢一个人，始于颜值，敬于才华，合于性格，久于善良，终于人品。W我真的好想你，在每一个雨季，你选择遗忘的，是我最不舍的。W不怕万人阻挡，只怕自己投降。W成熟是给你陌生人看的，逗比是给朋友看的，幼稚是给喜欢的人看的。W人生当苦无妨，良人当归即可。W逝者如斯乎，不舍昼夜。";
+     var mytitle = subtitle.split("W");
+     var max = mytitle.length-1;
+     var index = GetRandomNum(0,max);
+     var text = mytitle[index];
+     $("#helloTitle").html(text);
+     var headOffset = getHeaderOffset();
+     setSidebarMarginTop(headOffset);
+     //动态subtitle设置
+  }
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AnFrank</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  
+    <p style="color:#black;font-size:18px;font-family:STXingkai" id="helloTitle" class="site-subtitle"></p>
+  
+
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+    <a href="/schedule/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />日程表</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-love">
+    <a href="/love/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />love</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-loveshow">
+    <a href="/loveshow/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />loveshow</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+    <a href="/404/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />公益 404</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnFrank">
+      <meta itemprop="description" content="你若晴天，我便安好。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AnFrank">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">个性化推荐算法实践第08章浅层排序模型逻辑回归
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-01 18:03:11" itemprop="dateCreated datePublished" datetime="2019-06-01T18:03:11+08:00">2019-06-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-09-26 11:57:19" itemprop="dateModified" datetime="2019-09-26T11:57:19+08:00">2019-09-26</time>
+              
+            
+          </span>
+
+
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/个性化推荐算法/" itemprop="url" rel="index"><span itemprop="name">个性化推荐算法</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/个性化推荐算法/逻辑回归/" itemprop="url" rel="index"><span itemprop="name">逻辑回归</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+            <span class="post-meta-divider">|</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 7,288</span>
+
+<span class="post-meta-divider">|</span>
+<span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 25分钟</span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="个性化推荐算法实践第08章浅层排序模型逻辑回归"><a href="#个性化推荐算法实践第08章浅层排序模型逻辑回归" class="headerlink" title="个性化推荐算法实践第08章浅层排序模型逻辑回归"></a>个性化推荐算法实践第08章浅层排序模型逻辑回归</h1><p>本章节重点介绍点击率预估模型，逻辑回归模型，以及选取实例数据集，从特征选择到模型训练、模型评估等几个方面来代码实战逻辑回归模型。</p>
+<p>本章节重点介绍一种排序模型，逻辑回归模型。从逻辑回归模型的背景知识与数学原理进行介绍。并介绍样本选择与特征选择相关知识。最后结合公开数据集。代码实战训练可用的逻辑回归模型。</p>
+<h3 id="逻辑回归模型的背景介绍"><a href="#逻辑回归模型的背景介绍" class="headerlink" title="逻辑回归模型的背景介绍"></a>逻辑回归模型的背景介绍</h3><h4 id="一、LR（logistic-regression逻辑回归）背景知识介绍"><a href="#一、LR（logistic-regression逻辑回归）背景知识介绍" class="headerlink" title="一、LR（logistic regression逻辑回归）背景知识介绍"></a>一、LR（logistic regression逻辑回归）背景知识介绍</h4><p>将会介绍什么是点击率预估、什么是分类模型以及LR模型的基本使用流程、LR模型的基本训练流程，从这几个方面介绍LR的背景知识。</p>
+<h5 id="1-点击率预估与分类模型"><a href="#1-点击率预估与分类模型" class="headerlink" title="1. 点击率预估与分类模型"></a>1. 点击率预估与分类模型</h5><p>什么是点击率预估呢？</p>
+<p>相信点击率的概念大家都知道，在系统中，点击率 = 点击的数目 / 总展现的数目，而点击率预估就是针对特定的用户在当前上下文结合用户当前的特征给出的item可能被点击的概率，预估方法可以是一些简单的规则也可以是使用模型，目的就是得到不同的item在此时应该被展现的顺序关系。</p>
+<p>点击率预估在推荐、搜索、广告领域都被广泛使用。</p>
+<p>那么什么是分类模型呢？</p>
+<p>用一个简单的例子进行讲解：假如去菜市场买牛肉，这个牛肉可以称之为新鲜或者不新鲜，我们之前的判断就是根据这个肉的时间。假如有一个模型可以再牛肉到来的时候就给出标签，是新鲜或者不新鲜，那么这样的一个模型就是一个分类模型，而且是一个二分类，因为这里的label只有新鲜或者不新鲜。</p>
+<p>当然，这个分类模型也可以是多分类，如果说这个label有很多个，那么便是多分类。我们这里讲的点击率预估实际也是一个二分类问题，因为，点了样本就是1，没点就是0。就在这两类之间，我们会给出每一个样本预估出它倾向1的概率，基于次概率的大小决定了此item的展现顺序。</p>
+<h5 id="2-什么是LR？"><a href="#2-什么是LR？" class="headerlink" title="2. 什么是LR？"></a>2. 什么是LR？</h5><p>假设二维空间中有一些数据点，我们想用一条直线来拟合这些数据点经过的路径，这便是回归。但是，LR是一个分类模型，需要在样本进入模型之后给出分类标签。</p>
+<p>所以LR对于回归得到的数值会进行一个处理，使之变成0,1这样的标签。这个梳理就是将得到的数值输入到一个函数中，这个函数就是单位阶跃函数，后面会详细讲解这个函数。</p>
+<p>这里说的二维空间是只有一个特征的，用在之前讲解的牛肉是不是新鲜这个案例里，这个特征就是时间。那么如果扩展到三维空间中，可以再加入一个特征，比如说这个牛肉的含水量。那么这个时候，可能就不是用一条直线，而是用一个面来拟合整体样本经过的路径。</p>
+<h5 id="3-sigmoid函数：单位阶跃函数"><a href="#3-sigmoid函数：单位阶跃函数" class="headerlink" title="3. sigmoid函数：单位阶跃函数"></a>3. sigmoid函数：单位阶跃函数</h5><p>这个函数有一个特点，那就是输入为0的时候，值为0.5，但是输入&gt;0 的部分，很快便逼近于1，输入 &lt; 0 的部分，很快便逼近于0，所以称之为阶跃函数。</p>
+<p>这样的函数，很少有在中间的部分，所以可以很容易的分辨出是1还是0，正好符合0、1分类模型的要求。</p>
+<h5 id="4-LR模型的工作流程"><a href="#4-LR模型的工作流程" class="headerlink" title="4. LR模型的工作流程"></a>4. LR模型的工作流程</h5><p>前面介绍过LR模型的主体流程是：首先对数据进行一个拟合，不管是二维空间里 y = k <em> x + b 这样的直线，还是三维空间里y = a1 </em> x1 + b2 <em> x2 + c 这样的平面，亦或是更高维度我们需要学习更多的参数。像y = k </em> x + b 中的k、b，像三维空间里我们用平面 y = a1 <em> x1 + b2 </em> x2 + c 这里面的a1、b2、c这样的参数都是我们需要学习的。学习完这些参数之后，也就得到了模型。得到模型之后，用参数与输入的特征进行相乘，同时将得到的数值放入前面介绍过的单位阶跃函数中得到类别。</p>
+<p>下面用具体的例子，详细介绍一下具体的工作流程：</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1565107327628.png" alt="1565107327628"></p>
+<p>这里是三个训练数据，训练数据的label就是女朋友是不是开心。我们看到这是一个二分类问题，女朋友开心，label就是1；女朋友不开心，那么label就是0。同时这里每一个训练样本都有三个特征，分别是买礼物、说早安、陪吃饭。</p>
+<p>样本1 是买了礼物，说了早安，陪了吃饭，那么女朋友是开心的。</p>
+<p>样本2 是没有买礼物，没有说早安，陪了吃饭，女朋友是不开心的。</p>
+<p>样本3 是买了礼物，说了早安，，没有陪吃饭，女朋友是开心的。</p>
+<p>这里的目标是通过这三个样本，学习出一个LR的模型，然后能够通过这个模型，帮助我们预测女朋友是否开心。我们需要学习的参数是什么呢？很明显就是 a <em> x1 + b </em> x2 + c * x3，这里的a、b、c这三个参数，在得到了这三个参数之后，在接下来的某一天，我们将买没买礼物，说没说早安，有没有陪吃饭带入到这个公式中，也便能够自己知道女朋友是否开心。</p>
+<p>以上就是LR模型的工作流程</p>
+<h5 id="5-LR模型的整体训练流程"><a href="#5-LR模型的整体训练流程" class="headerlink" title="5. LR模型的整体训练流程"></a>5. LR模型的整体训练流程</h5><p>（1）从log中获取训练样本与特征</p>
+<p>在工业界中，样本与特征都不会是处理好的，我们需要自己从日志中，根据需要去提取。比如在推荐系统中，我们可能有展示日志，有点击日志，有基于<em>点击</em>统计User Profile,也有入库时就获得的item info信息。首先，我们需要判断，哪些展现，哪些点击是需要的，也就是样本选择。因为，有很多样本含有脏数据，我们需要去除掉。</p>
+<p>其次，我们需要判断我们需要的是用户的哪些特征。比如说用户的年龄、性别，或者是item的哪些特征，比如item的种类、item的title、item的时长等等。这就是特征选择。</p>
+<p>（2）模型的参数学习</p>
+<p>获取了样本与特征之后，需要决定模型学习的学习率，是否正则化，以及选用哪一种正则化的方式，同样还有学习的方法等等参数设定。</p>
+<p>得到了模型之后，同样需要进行离线评估。</p>
+<p>这里面包含了模型本身的指标，还有模型应用到测试集中的指标，来看一下我们的模型是否可用。如果模型可用，需要将模型实例化。</p>
+<p>（3）模型预测</p>
+<p>这里的预测包含可能是将已经实例化的模型录入到内存中提供服务，也可能是基于已经实例化好的模型再搭建一个模型的服务。</p>
+<p>预测部分需要将待预测的数据集带入到训练格式去抽取特征，抽取完特征的待预测的样本放入到模型中便能得到预测的结果。</p>
+<h5 id="6-LR模型的优缺点"><a href="#6-LR模型的优缺点" class="headerlink" title="6. LR模型的优缺点"></a>6. LR模型的优缺点</h5><p>优点：易于理解，计算代价小</p>
+<p>这个易于理解是指，我们在建模过程中我们把则认为对结果又影响的特征罗列出来就可以，比如说我们认为哪些因素会影响女朋友开心或不开心呢，那就是买没买礼物，说没说早安，有没有陪吃饭，有没有送回寝室…然后学习这些因素的权重就可以。</p>
+<p>在推荐系统中，我们预估这个item能不能被user点击。同样也可以选取一些关键的特征，比如说item的历史点击率，item所属的类型，然后用户喜欢看的类型，这个item的长度等等。</p>
+<p>由于LR模型是一个浅层模型，而且需要学习的参数的数目与特征的维度是一一对应的，比如说有100维的特征，那么就需要学习100个参数，所以计算代价是比较小的。</p>
+<p>缺点：<strong>容易欠拟合</strong>，<strong>需要特征工程来补足模型容易欠拟合的缺点</strong></p>
+<p><strong>欠拟合</strong>是一个专业术语，解释一下：</p>
+<p>欠拟合表示模型没有从训练数据中学习到所有的规律。我们以女朋友是否开心为例，比如说陪吃饭，以及买礼物都不能单独的影响女朋友是否开心，也许这里需要一个交叉特征，比如陪吃饭和买礼物放在一起的一个特征。当这两样同时做了，女朋友才会开心，如果没做或者是只做了一样，女朋友都是不会开心的。</p>
+<p>那么在这种情况下，我们发现，由于LR不能主动的去想学习这些交叉特征，所以需要我们大量的构造特征。这也就是说，特征工程来补足模型容易欠拟合的缺点。</p>
+<h4 id="二、LR算法数学原理解析"><a href="#二、LR算法数学原理解析" class="headerlink" title="二、LR算法数学原理解析"></a>二、LR算法数学原理解析</h4><p>将会介绍LR模型的函数表达式、损失函数以及梯度，并且介绍什么是正则化。（LR模型参数迭代的数学原理）</p>
+<p>逻辑回归模型的数学原理</p>
+<h5 id="1、单位阶跃函数（sigmoid）"><a href="#1、单位阶跃函数（sigmoid）" class="headerlink" title="1、单位阶跃函数（sigmoid）"></a>1、单位阶跃函数（sigmoid）</h5><p>单位阶跃函数及其导数</p>
+<p>单位阶跃函数的函数表达式：</p>
+<script type="math/tex; mode=display">
+f(x)=\frac{1}{1+\exp (-x)}</script><p>当 x = 0 时，f(x) = 0.5 ; 当  x = 10 时，f(x) 接近于1 ，这也就是之前说过的，当x &gt; 0 的时候，会非常快速的接近于1 ；当x &lt; 0 的时候，会非常快速的接近于0 。这完全符合LR模型，对0-1分类时的要求。</p>
+<p>下面再来看一下单位阶跃函数的导数：</p>
+<script type="math/tex; mode=display">
+f^{\prime}(x)=\frac{\exp (-x)}{(1+\exp (-x))^{2}}</script><p>经过简单转换，上述式子转换为：</p>
+<script type="math/tex; mode=display">
+f^{\prime}(x)=\frac{1}{1+\exp (-x)} * \frac{1+\exp (-x)-1}{1+\exp (-x)}</script><p>也就是 f(x) 的导数 = f(x) * (1 - f(x))</p>
+<h5 id="2、LR模型的函数表达式"><a href="#2、LR模型的函数表达式" class="headerlink" title="2、LR模型的函数表达式"></a>2、LR模型的函数表达式</h5><p>LR模型分为两个步骤：</p>
+<ol>
+<li>拟合数据点；</li>
+</ol>
+<p>公式：</p>
+<script type="math/tex; mode=display">
+w=w_{1} \times x_{1}+w_{2} \times x_{2}+\ldots+w_{n} \times x_{n}</script><p>这里的w1，w2…是需要学习的参数，这里的x1，x2…是选取的特征。</p>
+<p>用上一部分中的例子来分析，x1可能是陪吃饭，x2可能是送礼物等。</p>
+<ol>
+<li>将第一步回归得到的数值带入到阶跃函数中，进而得到分类。</li>
+</ol>
+<script type="math/tex; mode=display">
+y=\operatorname{sigmoid}(w)</script><p>也就是女朋友是否开心的倾向性，或者说item是否被用户点击的倾向性。</p>
+<p>LR模型的函数表达式就介绍到这里，之前介绍个性化召回算法LFM的时候，曾经介绍过一种最优化的方法来学习参数—梯度下降。</p>
+<p>梯度下降需要首先设定损失函数，进而得到梯度，完成参数的迭代。</p>
+<p>下面看一下LR模型的损失函数。</p>
+<h5 id="3、LR模型的损失函数"><a href="#3、LR模型的损失函数" class="headerlink" title="3、LR模型的损失函数"></a>3、LR模型的损失函数</h5><script type="math/tex; mode=display">
+\operatorname{loss}=\log \prod_{i=1}^{n} p\left(y_{i} | x_{i}\right)</script><p>这个损失函数采用的是log损失函数，与之前介绍word2vec算法的损失函数是一致的。</p>
+<p>这里没有用平方损失函数的原因是：这里LR模型需要两个步骤，第二步是将第一步拟合的值带入到单位阶跃函数中，如果此时使用平方损失函数的话，损失函数并不是下凸的，而且有很多个波谷，我们在梯度下降的过程中，很容易学习到并不是最低点的波谷，也就是不能学习到最小化的loss function。所以这里采用log 损失函数。</p>
+<p>下面解释一下公式：</p>
+<p>i ：样本的数目。也就是说这里有n个样本。那么对于第1个样本呢，该模型下希望预测的概率最准。</p>
+<p>p：概率，也就是本来是1的label，希望也是1；如果是0，预测成0</p>
+<p>为了统一得到最大化的概率，当label是0的时候，我们就预测（1-这个条件概率），那么整体对于这个损失函数，我们直接最大化这个损失函数，便能够将参数学习到。</p>
+<p>下面看一下条件概率：</p>
+<script type="math/tex; mode=display">
+p\left(y_{i} | x_{i}\right)=h_{w}\left(x_{i}\right)^{y_{i}}\left(1-h_{w}\left(x_{i}\right)\right)^{1-y_{i}}</script><p>这个条件概率就是刚才解释过的，如果这里y = 0，我们看到是后面这一部分起作用，那么也就是我们说的来预测（1-这个概率）。这里的w就是上一篇文章介绍的LR函数表达式的第一部分，也就是所有的参数与特征相乘得到的结果。</p>
+<p>下面看一下，将条件概率带入到损失函数中，得到的：</p>
+<script type="math/tex; mode=display">
+\operatorname{loss}=-\left(y_{i} \log h_{w}\left(x_{i}\right)+\left(1-y_{i}\right) \log \left(1-h_{w}\left(x_{i}\right)\right)\right)</script><p>来看单一样本，这里不再关心 n 个样本。</p>
+<p>我们来看单一样本，单一样本这里我们知道$h_{w}\left(x_{i}\right)^{y_{i}}$被log一下，$y^i$是可以提到前面去的；同时，相乘被log一下就变成了相加，就得到了上面式子。</p>
+<p>之前说过，loss函数需要最大化，那么这里加了一个负号，所以上面式子中的 loss 需要最小化，也就是使用梯度下降法就可以。</p>
+<p>这里再次重申，这里$x_i$表示，第 i 个样本对应的所有特征；这里$y_i$ 是第 i 个样本对应的label。如果想表示第 i 个样本的第一个特征，会在$x_i$的右上角标明$x_{i}^1$,以示区分。</p>
+<h5 id="4、梯度"><a href="#4、梯度" class="headerlink" title="4、梯度"></a>4、梯度</h5><p>下面看一下loss损失函数对于参数w的梯度：</p>
+<p>首先，这里选取参数的某一个，这里选择特征$x_j$对应的参数$w_j$来进行演示求偏导，这里应用链导法则（也便等于loss函数对于LR模型输出的偏导）：</p>
+<script type="math/tex; mode=display">
+\frac{\partial \operatorname{loss}}{\partial w_{j}}=\frac{\partial  \operatorname{loss}}{\partial h_{w}\left(x_{i}\right)} \frac{\partial h_{w}\left(x_{i}\right)}{\partial w} \frac{\partial w}{\partial w_{j}}</script><p>这里$h_{w}\left(x_{i}\right)$表示：第 i 个样本的输入到 LR 模型中，我们给出的输出。它的公式是$f(x)=\frac{1}{1+\exp (-w)}$。这里的W表示为$w=w_{1} \times x_{1}+w_{2} \times x_{2}+\ldots+w_{n} \times x_{n}$，那么这里$\frac{\partial w}{\partial w_{j}}$就是$x_j$。也就是第i个样本的第j维度的特征。</p>
+<p>损失函数</p>
+<script type="math/tex; mode=display">
+\operatorname{loss}=-\left(y_{i} \log h_{w}\left(x_{i}\right)+\left(1-y_{i}\right) \log \left(1-h_{w}\left(x_{i}\right)\right)\right)</script><p>损失函数求导</p>
+<p>看一下第一部分：</p>
+<script type="math/tex; mode=display">
+\frac{\partial \operatorname{loss} }{\partial h_{w}\left(x_{i}\right)}=-\left(\frac{y_{i}}{h_{w}\left(x_{i}\right)}+\frac{y_{i}-1}{1-h_{w}\left(x_{i}\right)}\right)</script><p>看一下剩余部分：</p>
+<p>根据sigmod阶跃函数f(x) 的导数 = f(x) * (1 - f(x))。$\frac{\partial w}{\partial w_{j}}$就是$x_{i}^j$。</p>
+<script type="math/tex; mode=display">
+\frac{\partial h_{w}\left(x_{i}\right)}{\partial w} \frac{\partial w}{\partial w_{j}}=h_{w}\left(x_{i}\right)\left(1-h_{w}\left(x_{i}\right)\right) x_{i}^{j}</script><p>带入梯度公式，得到：</p>
+<script type="math/tex; mode=display">
+\frac{\partial l o s s}{\partial w_{j}}=\left(h_{w}\left(x_{i}\right)-y_{i}\right) x_{i}^{j}</script><p>那么 i 样本对应的梯度已经得到了，如果这里有n个样本的话。同理，对每一个样本求得梯度，然后去 1/n ，就得到了平均梯度。</p>
+<p>得到平均梯度之后，用梯度下降对这一维度的特征进行更新：</p>
+<script type="math/tex; mode=display">
+w_{j}=w_{j}-\alpha \frac{\partial loss}{\partial w_{j}}</script><p>当然，要对所有维度的特征都进行更新，即w1, w2…同样也是按照这种方式来进行更新迭代的，这里$\alpha$是指学习率。</p>
+<p>四、正则化</p>
+<ol>
+<li>什么是过拟合？</li>
+</ol>
+<p>过拟合就是模型对于训练数据过分的学习，对训练数据完美的适配。有时候训练数据并不能反应事情的本质。</p>
+<p>eg.也许女朋友不开心是因为考试挂科了，假如给与我们的训练数据中，全都没有挂科，那么我们后面如何买礼物，如何陪吃饭，我们都会发现，女朋友都会不开心。我们便无法学习到真正事物的本质。也就是我们所说的泛化能力减弱。</p>
+<p>完全为防止过拟合，就提出了正则化的概念。</p>
+<p>常用的正则化方法有两种：L1、L2</p>
+<p>首先看一下<strong>L1正则化</strong>的公式：</p>
+<script type="math/tex; mode=display">
+\operatorname{loss}_{-} n e w=\operatorname{loss} +\alpha \sum_{i=1}^{n}\left|w_{i}\right|</script><p>L1正则化的公式，是在原来的损失函数的基础上，将所有权值的绝对值求和，这种方式下，使模型的参数变得稀疏，会产生一部分为0的参数。物理意义上说，就是起作用的特征变少了，模型变得简单了。这样也就不容易过拟合了。</p>
+<p>下面看一下<strong>L2正则化</strong>的公式：</p>
+<script type="math/tex; mode=display">
+\operatorname{loss}_{-} n e w=\operatorname{loss}+\alpha|w|^{2}</script><p>是在原来损失函数的基础上，加上每一个权重的平方和。因为要最小化损失函数，所以这里倾向于将每一个权重学的比较小。试想一下，如果某一个权重比较大的话，面对数据分布变化的特质数据会产生结果上的非常大的扰动。这也不利于模型的泛化能力。$\alpha$是指正则化参数。</p>
+<h4 id="三、样本选择与特征构建"><a href="#三、样本选择与特征构建" class="headerlink" title="三、样本选择与特征构建"></a>三、样本选择与特征构建</h4><p>将会介绍模型训练中非常重要的一步，那就是<strong>样本的选择、特征的选择</strong>与处理。<br>我们知道样本与特征决定了模型表现的天花板，而选择什么样的模型只是来逼近这个天花板。</p>
+<p>回忆一下，8-1中给出的实例，当时用了3个样本，3个特征来演示LR模型的工作原理。但是，可能会有疑问，为什么只有3个样本？在实际的项目中，可能会有非常多的样本，其中有些样本是可以用的，有些样本是不可以用的，到底哪些可以用，哪些不可以用。包括我们有很多的特征，依据什么规则来判断是否对最终的结果有效都是下面要介绍的内容。</p>
+<h4 id="3-1、样本选择"><a href="#3-1、样本选择" class="headerlink" title="3.1、样本选择"></a>3.1、样本选择</h4><p>下面首先看一下样本方面的知识。</p>
+<p>在点击率预估过程中，需要的样本是带有label的，也就是点击或者未点击，这是大前提。也就是说，每个用户的每次刷新，我们都能对应上item是否被点击。这么多的样本都是我们训练时候的有效样本么？</p>
+<p>当然不是！</p>
+<p>下面首先看一下样本的选择规则。</p>
+<h5 id="1、样本选择规则"><a href="#1、样本选择规则" class="headerlink" title="1、样本选择规则"></a>1、样本选择规则</h5><p>这里面主要包含两个因素，1. 采样比例； 2. 采样率。</p>
+<p>①采样比例</p>
+<p> 正负样本需要维持一个正常的比例，正常的比例需要符合产品的实际形式。比如说某个产品，用户三次到来就会产生一次购买，那么我们的正负样本就是1:2的比例。</p>
+<p>当然，模型训练还有很多的采样规则，比如说在某些模型训练的时候，我们需要确保userid的样本达到平均水平，比如说最少要20个。这个时候，就需要做样本增强。对于该userid下的样本，我们需要给他一个特定的权重，来确保它虽然样本少，但是也能达到最低要求。</p>
+<p>②采样率</p>
+<p>当模型没有办法用所有的训练数据的时候，必须设定一定的采样率。常用的随机采样的方法就是其中的一种。</p>
+<h5 id="2、样本过滤规则"><a href="#2、样本过滤规则" class="headerlink" title="2、样本过滤规则"></a>2、样本过滤规则</h5><p>样本过滤规则有两个大方面：</p>
+<ol>
+<li>结合业务情况</li>
+</ol>
+<p>比如在样本选取时，需要去除爬虫带来的虚假请求，测试人员构造的测试 id 数据，作弊数据等等。还需要根据特定场景下模型的目标来保证样本选取的有效性。</p>
+<ol>
+<li>异常点的过滤</li>
+</ol>
+<p>常用的方法有基于统计的方法。举个例子，比如说，某个特征，就以某item被评论的数目这个特征为例，99%的评论数目都均匀的分布在0-5000之间，而top 1% 有几十万、几百万这种数量级的评分。对于这种数据，我们选取一个阈值，大于这个阈值的直接去掉，为什么呢？因为这会给我们在特征归一化的过程中，造成极大的样本分布不均。</p>
+<p>还有就是基于距离的方法。比如说，某一样本数据与其余样本点的之间的距离，有80%都超过了我们所设定的阈值，这个样本就需要被过滤掉。</p>
+<p>3.例子</p>
+<p>下面以具体的实例来说明如何选取有效的数据来保证模型训练的目标。</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135721017.png" alt="1569135721017"></p>
+<p>这是某个推荐系统展现给用户的推荐列表，用户依次看到的是itemid1 、itemid2 ….itemid5，同时用户对着5个item分别做了不同的处理，用户点击了itemid1和itemid4，并没有点击itemid2、itemid3、itemid5。这时，我们在构建训练样本的时候，是不是这5个样本都需要呢？</p>
+<p>答案是<strong>否定的</strong>。</p>
+<p>这里我们只需要前四个。为什么不要第5个呢？下面解释一下原因呢：</p>
+<p>我们模型的最终学习目的是希望用户能够在最开始的位置发生点击，而不用下拉。所以，目标是将最终的推荐列表学习成1,1,0,0,0的形式。在这里我们发现，逆序对是0,0,然后1。对于最后的这个0，我们有两方面的原因不选择它作为训练样本，第一方面，我们不能确定用户是否真的看到了这个数据，对于以上的4条，我们可以确定用户真的看到了，因为最后的点击发生在第四条，用户想要点击到第4条，就需要下拉看到第4条数据；第二个原因，是因为这个数据对我们学习的目标是没有帮助的，如果选取还会增加负样本所占的比例。</p>
+<p>结合刚才的分析，最终在这一次展现当中，我们得到了4条样本。</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135751384.png" alt="1569135751384"></p>
+<p>他们分别是位于位置1、位置2、位置3、位置4的样本，我们对每一条样本选取了一些特征，打上label。同时并没有选取位置5的数据。</p>
+<h4 id="3-2、特征方面"><a href="#3-2、特征方面" class="headerlink" title="3.2、特征方面"></a>3.2、特征方面</h4><p>首先对特征进行一个概述，特征如果按照数值类型可以分为连续值类型和离散值类型。举个例子，连续值类型，像item的平均观看时长可能是3.75分钟，4.28分钟等等。所以说，是不可穷举的。而离散值类型是可以穷举的，比如说某人的学历，就是小学、初中、高中、大学、研究生、博士等。</p>
+<p>同样，按照统计的力度同样可以分为低纬度和高纬度，低纬度的特征包含像人的年龄、性别，高纬度的特征像这个人他过去30天喜欢什么样的电影，这个人历史上喜欢什么类型的电影等等。</p>
+<p>根据数值变化的幅度，可以将特征分为稳定特征和动态特征，稳定特征就想item的历史点击率，而动态特征就想item的天级别的点击率。</p>
+<p>特征的概述就概述到这里。</p>
+<p>下面看一下如何做特征选择。</p>
+<h5 id="1-特征的统计和分析"><a href="#1-特征的统计和分析" class="headerlink" title="1. 特征的统计和分析"></a>1. 特征的统计和分析</h5><p>首先需要知道特征的获取难度，比如说，我们想使用用户的年龄和性别这两个特征，我们发现用户画像中并没有这两个维度。如果需要的话，我们需要根据用户的行为建立一个模型，预估这两个特征。显然成本是较大的，就需要放弃。</p>
+<p>第二个是需要看一下覆盖率，同样是用户的年龄和性别这两个特征进行举例。如果说发现能够获取到，但是在整体的覆盖率上不足1%，我们也是不能够用的。</p>
+<p>下一个就是特征的准确率，我们发现视频的平均播放时长都只有几毫秒，显然这是违背常识的，那么这个特征也是不能够使用的。</p>
+<p>在我们初步分析了哪些特征可以使用之后，我们到底选取什么样的特征来完成训练呢？</p>
+<h5 id="2-特征的选择"><a href="#2-特征的选择" class="headerlink" title="2. 特征的选择"></a>2. 特征的选择</h5><p>主要分为两个大方面：</p>
+<p>（1）根据自己的建模常识，也就是说我们想预估一个目标的话，我们知道哪些特征与这个目标是紧密相连的。比如我们想预估这个item的点击率，那么很明显这个item的类别与这个用户喜欢观看的类别是强相关的特征。还有一些强相关的特征，比如这个item的历史点击率，在我们初步根据自己的常识选取了这么多的特征之后，我们训练出了第一版的模型。</p>
+<p>（2）那么剩下的特征选择第二步就是基于模型的表现。我们训练完了基线版的模型之后，如果不能够满足我们对于目标的需要的话，我们应该不停的增减特征来发现增减特征对模型指标的影响。如果说减掉某个特征，反而指标变好的话，那么很明显这个特征就不应该是我们需要的。</p>
+<p>实际上，在我们选定了特征之后，想要让模型能够识别这些特征，我们需要将特征变成数字。这也就是特征的预处理。</p>
+<h5 id="3-特征的预处理"><a href="#3-特征的预处理" class="headerlink" title="3. 特征的预处理"></a>3. 特征的预处理</h5><p>特征的预处理往往包含三大步骤：</p>
+<p>（1）缺省值的填充</p>
+<p>缺省值是指某些样本里的某些特征是缺失的，我们应该用什么样的规则来填充呢？</p>
+<p>业界常用的规则有：使用这个特征的众数，或者是平均数来填充。</p>
+<p>（2）归一化</p>
+<p>归一化是指将不同维度的数值特征都转化到0,1之间，这样有利于<strong>减少由于不同特征绝对数值的影响</strong>，对模型权重的影响。举个例子：比如说有一个特征是收入，这个收入可能是几千几万的大数据；还有一个特征是工作的时长，这个工作的时长可能每周都在40-60小时之间，这样可以发现数量值是不一样的。我们需要将他们归一化，这个归一化可以使用排序归一化，以及最大值归一化等等。</p>
+<p>排序归一化是指：这一维度的特征按数字进行排序，排序最大的数字将变成1，排序最小的数字变成0。那么举一个例子：如果说一共有10个样本，那么这10个样本之间进行了排序，按照数字的大小，显然最小的对应0.1，第二小的对应0.2，依次类推，最大的变成了1，这样就归一化了0-1之间。如果样本的数目更大，就依此类推。</p>
+<p>最大值归一化是指：我们统计出这一维度特征的最大值，然后让所有数字都除以这个最大值，显然这一维度的特征就会被归一化到0-1之间。</p>
+<p>（3）离散化</p>
+<p>特征的离散化并不是所有模型都需要的，但是逻辑回归LR模型是需要的。</p>
+<p>下面以具体的例子讲解什么是离散化：</p>
+<p>首先以一个连续值举例，这个值表示人平均每周工作的时长，这个人每周工作23小时，我们怎么离散化呢？</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135782966.png" alt="1569135782966"></p>
+<p>首先需要统计一下，我们样本当中这一维度特征的分布，比如我们想四段离散化，这里我们就需要统计一下四分之一分位点。这里就是0-18小时是一个区间，18-25小时是一个区间，25-40小时是一个区间，40-无穷大是另一个区间。那么我们总共有4个区间，这4个区间我们发现23是位于18-25这个区间，那么就离散化成了 [0,1,0,0]。如果这个值不是23，而是60，显然特征就会被离散化成[0,0,0,1]。当然，这里也可以不被4段化，而是5段，我们只需要按相应的去统计就可以了。</p>
+<p>下面再以一个离散值来举例，如果说一个人的国家是中国，系统中只有三个国家，那中国对应的实例化特征就是[1,0,0]，美国便是[0,1,0]。</p>
+<p><img src="/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/20190409210625322.png" alt="img"></p>
+<h3 id="四、代码实战LR之样本选择"><a href="#四、代码实战LR之样本选择" class="headerlink" title="四、代码实战LR之样本选择"></a>四、代码实战LR之样本选择</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="AnFrank 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="AnFrank 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AnFrank</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/" title="个性化推荐算法实践第08章浅层排序模型逻辑回归">http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/个性化推荐算法/" rel="tag"><i class="fa fa-tag"></i> 个性化推荐算法</a>
+          
+            <a href="/tags/逻辑回归/" rel="tag"><i class="fa fa-tag"></i> 逻辑回归</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/01/个性化推荐算法实践第07章综述学习排序/" rel="next" title="个性化推荐算法实践第07章综述学习排序">
+                <i class="fa fa-chevron-left"></i> 个性化推荐算法实践第07章综述学习排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/" rel="prev" title="个性化推荐算法实践第09章浅层排序模型gbdt">
+                个性化推荐算法实践第09章浅层排序模型gbdt <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="AnFrank" />
+            
+              <p class="site-author-name" itemprop="name">AnFrank</p>
+              <p class="site-description motion-element" itemprop="description">你若晴天，我便安好。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/enfangzhong" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://blog.csdn.net/qintian888" target="_blank" title="CSDN"><i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/5604852325" target="_blank" title="weibo"><i class="fa fa-fw fa-weibo"></i>weibo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/itjygfly" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/enfangzhong" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:enfangzhong@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lruihao.cn/" title="博采众长" target="_blank">博采众长</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leridy.pw/" title="乐余地" target="_blank">乐余地</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tmy123.com/" title="同盟源" target="_blank">同盟源</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          <marquee>
+	<a href="/links.html">
+	<font size="4" face="STXingkai">
+		<font color="#FF0000">欢</font>
+		<font color="#E80017">迎</font>
+		<font color="#D1002E">点</font>
+		<font color="#BA0045">我</font>
+		<font color="#A3005C">互</font>
+		<font color="#A00073">换</font>
+		<font color="#A0008A">友</font>
+		<font color="#A000A1">链</font>
+		<font color="#A000B8">哦</font>
+		<font color="#A000CF">~</font>
+		<font color="#A000E6">~</font>
+	</font>
+	</a>
+</marquee>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#个性化推荐算法实践第08章浅层排序模型逻辑回归"><span class="nav-number">1.</span> <span class="nav-text">个性化推荐算法实践第08章浅层排序模型逻辑回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归模型的背景介绍"><span class="nav-number">1.0.1.</span> <span class="nav-text">逻辑回归模型的背景介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、LR（logistic-regression逻辑回归）背景知识介绍"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">一、LR（logistic regression逻辑回归）背景知识介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-点击率预估与分类模型"><span class="nav-number">1.0.1.1.1.</span> <span class="nav-text">1. 点击率预估与分类模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-什么是LR？"><span class="nav-number">1.0.1.1.2.</span> <span class="nav-text">2. 什么是LR？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-sigmoid函数：单位阶跃函数"><span class="nav-number">1.0.1.1.3.</span> <span class="nav-text">3. sigmoid函数：单位阶跃函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-LR模型的工作流程"><span class="nav-number">1.0.1.1.4.</span> <span class="nav-text">4. LR模型的工作流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-LR模型的整体训练流程"><span class="nav-number">1.0.1.1.5.</span> <span class="nav-text">5. LR模型的整体训练流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-LR模型的优缺点"><span class="nav-number">1.0.1.1.6.</span> <span class="nav-text">6. LR模型的优缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、LR算法数学原理解析"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">二、LR算法数学原理解析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、单位阶跃函数（sigmoid）"><span class="nav-number">1.0.1.2.1.</span> <span class="nav-text">1、单位阶跃函数（sigmoid）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、LR模型的函数表达式"><span class="nav-number">1.0.1.2.2.</span> <span class="nav-text">2、LR模型的函数表达式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、LR模型的损失函数"><span class="nav-number">1.0.1.2.3.</span> <span class="nav-text">3、LR模型的损失函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、梯度"><span class="nav-number">1.0.1.2.4.</span> <span class="nav-text">4、梯度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、样本选择与特征构建"><span class="nav-number">1.0.1.3.</span> <span class="nav-text">三、样本选择与特征构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1、样本选择"><span class="nav-number">1.0.1.4.</span> <span class="nav-text">3.1、样本选择</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、样本选择规则"><span class="nav-number">1.0.1.4.1.</span> <span class="nav-text">1、样本选择规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、样本过滤规则"><span class="nav-number">1.0.1.4.2.</span> <span class="nav-text">2、样本过滤规则</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2、特征方面"><span class="nav-number">1.0.1.5.</span> <span class="nav-text">3.2、特征方面</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-特征的统计和分析"><span class="nav-number">1.0.1.5.1.</span> <span class="nav-text">1. 特征的统计和分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-特征的选择"><span class="nav-number">1.0.1.5.2.</span> <span class="nav-text">2. 特征的选择</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-特征的预处理"><span class="nav-number">1.0.1.5.3.</span> <span class="nav-text">3. 特征的预处理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、代码实战LR之样本选择"><span class="nav-number">1.0.2.</span> <span class="nav-text">四、代码实战LR之样本选择</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+
+      
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GBDT/">GBDT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GiT撤销/">GiT撤销</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Item-CF/">Item CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JaveEE/">JaveEE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LFM（latent-factor-model）算法/">LFM（latent factor model）算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Learn-To-Rank/">Learn To Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL内连接/">SQL内连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/User-CF/">User CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WideAndDeep/">WideAndDeep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github博客/">github博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo博客/">hexo博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/item2vec/">item2vec</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java框架/">java框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java编程/">java编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人博客/">个人博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法/">个性化推荐算法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法-Content-Based-基于内容的推荐/">个性化推荐算法 - Content Based - 基于内容的推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法实践总结/">个性化推荐算法实践总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉连接/">交叉连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益/">信息增益</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益率/">信息增益率</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/决策树/">决策树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客优化/">博客优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/右外连接/">右外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基于随机游走的Personal-Rank/">基于随机游走的Personal Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基尼指数/">基尼指数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/左外连接/">左外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序模型总结/">排序模型总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序员表白源码/">程序员表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性回归/">线性回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/表白源码/">表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/评估指标/">评估指标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逻辑回归/">逻辑回归</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随机森林/">随机森林</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/隐语义模型/">隐语义模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/非关系型数据库/">非关系型数据库</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnFrank</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">GitHub</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!--
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+-->
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">Enfang</a> v6.3.0</div>
+
+
+
+
+
+<font color=MediumPurple face=STLiti>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共77.8k字|</span>
+</div>
+</font>
+
+<font color=MediumPurple face=STLiti><span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span></font>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("05/28/2018 20:01:01");//此处为建站时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已苟活："+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      访问用户：<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      访问次数：<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'SACSC0biGE5t01ErmVSxYvVt-gzGzoHsz',
+        appKey: 'td1GAOLqHNMnQ4BtJENstUVW',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!填写邮箱能很快收到我的回复喔！老铁，你不想说两句吗？',
+        avatar:'wavatar',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+</body>
+</html>
