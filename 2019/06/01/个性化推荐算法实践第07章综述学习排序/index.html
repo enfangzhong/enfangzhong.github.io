@@ -34,8 +34,8 @@
   
     
     
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+  <script src="/blog/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/blog/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
 
 
 
@@ -67,21 +67,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.png?v=6.3.0">
+<link href="/blog/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon-32x32-next.png?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=6.3.0">
 
 
-  <link rel="mask-icon" href="/images/favicon-32x32-next.png?v=6.3.0" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/blog/images/favicon-32x32-next.png?v=6.3.0" color="#222">
 
 
 
@@ -94,7 +94,7 @@
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/',
+    root: '/blog/',
     scheme: 'Pisces',
     version: '6.3.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
@@ -137,18 +137,18 @@
 <meta property="og:site_name" content="AnFrank">
 <meta property="og:description" content="[TOC] 个性化推荐算法实践第07章综述学习排序综述学习排序的思路，并介绍工业界排序架构以及本课程重点讲解的学习排序模型。 一、什么是学习排序（Learn To Rank）？说起学习排序，首先介绍一下排序，排序是在搜索场景以及推荐场景中应用的最为广泛的。 传统的排序方法是基于构造相关度函数，使相关度函数对于每一个文档进行打分，得分较高的文档，排的位置就靠前。但是，随着相关度函数中特征的增多，使调">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
-<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992495527.png">
-<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1565100075461.png">
+<meta property="og:image" content="http://enfangzhong.github.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
+<meta property="og:image" content="http://enfangzhong.github.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992495527.png">
+<meta property="og:image" content="http://enfangzhong.github.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1565100075461.png">
 <meta property="og:updated_time" content="2019-09-22T07:49:38.353Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个性化推荐算法实践第07章综述学习排序">
 <meta name="twitter:description" content="[TOC] 个性化推荐算法实践第07章综述学习排序综述学习排序的思路，并介绍工业界排序架构以及本课程重点讲解的学习排序模型。 一、什么是学习排序（Learn To Rank）？说起学习排序，首先介绍一下排序，排序是在搜索场景以及推荐场景中应用的最为广泛的。 传统的排序方法是基于构造相关度函数，使相关度函数对于每一个文档进行打分，得分较高的文档，排的位置就靠前。但是，随着相关度函数中特征的增多，使调">
-<meta name="twitter:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
+<meta name="twitter:image" content="http://enfangzhong.github.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
 
 
 
-  <link rel="alternate" href="/atom.xml" title="AnFrank" type="application/atom+xml">
+  <link rel="alternate" href="/blog/atom.xml" title="AnFrank" type="application/atom+xml">
 
 
 
@@ -253,7 +253,7 @@ function setSidebarMarginTop (headerOffset) {
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/blog/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">AnFrank</span>
         <span class="logo-line-after"><i></i></span>
@@ -286,7 +286,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-home">
-    <a href="/" rel="section">
+    <a href="/blog/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
   </li>
         
@@ -294,7 +294,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section">
+    <a href="/blog/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
   </li>
         
@@ -302,7 +302,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section">
+    <a href="/blog/categories/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
   </li>
         
@@ -310,7 +310,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
+    <a href="/blog/archives/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
   </li>
         
@@ -318,7 +318,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-schedule">
-    <a href="/schedule/" rel="section">
+    <a href="/blog/schedule/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
   </li>
         
@@ -326,7 +326,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-sitemap">
-    <a href="/sitemap.xml" rel="section">
+    <a href="/blog/sitemap.xml" rel="section">
       <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
   </li>
         
@@ -334,7 +334,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
+    <a href="/blog/about/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
   </li>
         
@@ -342,7 +342,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-guestbook">
-    <a href="/guestbook" rel="section">
+    <a href="/blog/guestbook" rel="section">
       <i class="menu-item-icon fa fa-fw fa-comments"></i> <br>留言</a>
   </li>
         
@@ -350,7 +350,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-love">
-    <a href="/love/" rel="section">
+    <a href="/blog/love/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>love</a>
   </li>
         
@@ -358,7 +358,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-loveshow">
-    <a href="/loveshow/" rel="section">
+    <a href="/blog/loveshow/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>loveshow</a>
   </li>
         
@@ -366,7 +366,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-commonweal">
-    <a href="/404/" rel="section">
+    <a href="/blog/404/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>公益 404</a>
   </li>
 
@@ -447,12 +447,12 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
       <meta itemprop="description" content="你若晴天，我便安好。">
-      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -526,14 +526,14 @@ function setSidebarMarginTop (headerOffset) {
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/个性化推荐算法/" itemprop="url" rel="index"><span itemprop="name">个性化推荐算法</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/blog/categories/个性化推荐算法/" itemprop="url" rel="index"><span itemprop="name">个性化推荐算法</span></a></span>
 
                 
                 
                   ，
                 
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/个性化推荐算法/Learn-To-Rank/" itemprop="url" rel="index"><span itemprop="name">Learn To Rank</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/blog/categories/个性化推荐算法/Learn-To-Rank/" itemprop="url" rel="index"><span itemprop="name">Learn To Rank</span></a></span>
 
                 
                 
@@ -548,8 +548,8 @@ function setSidebarMarginTop (headerOffset) {
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/06/01/个性化推荐算法实践第07章综述学习排序/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/06/01/个性化推荐算法实践第07章综述学习排序/" itemprop="commentCount"></span>
+                <a href="/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -599,7 +599,7 @@ function setSidebarMarginTop (headerOffset) {
 <p><strong>那么什么是学习排序呢？</strong></p>
 <p>学习排序：将个性化召回的物品候选集根据物品本身的属性结合用户的属性，上下文等信息给出展现优先级的过程便是学习排序。</p>
 <p>下面用一个例子进行展示：</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png" alt="1564992344840"></p>
+<p><img src="/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png" alt="1564992344840"></p>
 <p>假设这里有一个用户A，基于他的历史行为给出了召回，可能是很多种召回算法，经过合并之后得到的6个item[a,b,c,d,e,f]。经过排序，最终将这6个item的优先级固定为c、a、f、d、b、e。</p>
 <p>得到优先级的过程就是由排序得到的。分别根据item本身的属性，以及user当前的一些上下文和user固定的一些属性，得到此时最佳的顺序应该是将c给展示，这样以保证最后的点击率最高。</p>
 <h3 id="二、排序在个性化推荐系统中的重要作用"><a href="#二、排序在个性化推荐系统中的重要作用" class="headerlink" title="二、排序在个性化推荐系统中的重要作用"></a>二、排序在个性化推荐系统中的重要作用</h3><p>之前介绍过，在个性化的算法中后端的主要流程是：召回—&gt;排序—&gt;策略调整。</p>
@@ -607,7 +607,7 @@ function setSidebarMarginTop (headerOffset) {
 <p>1、排序决定了最终的推荐效果</p>
 <p>用户看到的顺序基本就是由排序这一步骤所决定的，如果用户在前面的位置就能够看到自己感兴趣的物品，那么用户就会在推荐系统总停留较长的时间；反之，如果需要用户几次刷新之后，才能得到自己想要的物品，那么用户下一次将不会在信任推荐效果，导致在推荐系统中停留的时间较短。</p>
 <p>在工业界中，排序这一部分分为三个步骤：</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992495527.png" alt="1564992495527"></p>
+<p><img src="/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992495527.png" alt="1564992495527"></p>
 <p>（1）prerank（预排序）</p>
 <p>也就是排序之前的部分，由于排序的模型由浅层模型切换到深层模型的时候，耗时在不停的增加。比如之前召回可以允许有5000个物品去做浅层模型，比如说逻辑回归，就是训练出一组参数，那么整体的打分过程耗时很短。但是，如果当排序模型切换到深层模型，比如说DNN，那么整体需要请求一次新的深度学习的服务，那么这5000个item去请求的时间显然是不能承受的。所以要先有一个<strong>粗排</strong>。这个粗排会将这5000个召回的物品进行第一次排序，将候选集缩小到一定范围之内。这样使排序模型的总处理时间满足系统的性能要求。粗排往往以一些简单的规则为主，比如说使用<strong>后验CTR</strong>或者说对于新的物品使用入库时的<strong>预估CTR</strong>等等。</p>
 <p>（2）Rank（主排序）</p>
@@ -626,7 +626,7 @@ function setSidebarMarginTop (headerOffset) {
 <h1 id="KDD2018-电商搜索场景中的强化排序学习：形式化、理论分析以及应用http-www-sohu-com-a-244970525-129720"><a href="#KDD2018-电商搜索场景中的强化排序学习：形式化、理论分析以及应用http-www-sohu-com-a-244970525-129720" class="headerlink" title="KDD2018 | 电商搜索场景中的强化排序学习：形式化、理论分析以及应用http://www.sohu.com/a/244970525_129720"></a>KDD2018 | 电商搜索场景中的强化排序学习：形式化、理论分析以及应用<a href="http://www.sohu.com/a/244970525_129720" target="_blank" rel="noopener">http://www.sohu.com/a/244970525_129720</a></h1></blockquote>
 <p>由于单一item在重排模型的耗时要比主模型长很多，所以重排部分只是会影响主排序头部的一些结果，比如说top 50 的结果去进行一个重排。那么既然是这样的话，可以看到，最能影响结果的还是主排序模型。</p>
 <h3 id="三、工业界推荐系统中排序架构解析"><a href="#三、工业界推荐系统中排序架构解析" class="headerlink" title="三、工业界推荐系统中排序架构解析"></a>三、工业界推荐系统中排序架构解析</h3><p>工业界中排序是如何落地的。</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第07章综述学习排序/1565100075461.png" alt="1565100075461"></p>
+<p><img src="/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1565100075461.png" alt="1565100075461"></p>
 <p>算法的后端主流程是：召回之后排序。</p>
 <p>召回完item之后，我们将item集合传给排序部分，排序部分会调用打分框架，得到每一个item在当前上下文下，对当前user的一个得分，进而根据得分决定展现顺序。</p>
 <p>下面看一下打分框架内部的构成：</p>
@@ -657,14 +657,14 @@ function setSidebarMarginTop (headerOffset) {
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.png" alt="AnFrank 微信支付">
+        <img id="wechat_qr" src="/blog/images/wechatpay.png" alt="AnFrank 微信支付">
         <p>微信支付</p>
       </div>
     
 
     
       <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.png" alt="AnFrank 支付宝">
+        <img id="alipay_qr" src="/blog/images/alipay.png" alt="AnFrank 支付宝">
         <p>支付宝</p>
       </div>
     
@@ -697,9 +697,9 @@ function setSidebarMarginTop (headerOffset) {
       
         <div class="post-tags">
           
-            <a href="/tags/个性化推荐算法/" rel="tag"><i class="fa fa-tag"></i> 个性化推荐算法</a>
+            <a href="/blog/tags/个性化推荐算法/" rel="tag"><i class="fa fa-tag"></i> 个性化推荐算法</a>
           
-            <a href="/tags/Learn-To-Rank/" rel="tag"><i class="fa fa-tag"></i> Learn To Rank</a>
+            <a href="/blog/tags/Learn-To-Rank/" rel="tag"><i class="fa fa-tag"></i> Learn To Rank</a>
           
         </div>
       
@@ -712,7 +712,7 @@ function setSidebarMarginTop (headerOffset) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/" rel="next" title="个性化推荐算法实践第06章个性化召回算法总结与评估方法的介绍">
+              <a href="/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/" rel="next" title="个性化推荐算法实践第06章个性化召回算法总结与评估方法的介绍">
                 <i class="fa fa-chevron-left"></i> 个性化推荐算法实践第06章个性化召回算法总结与评估方法的介绍
               </a>
             
@@ -722,7 +722,7 @@ function setSidebarMarginTop (headerOffset) {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/" rel="prev" title="个性化推荐算法实践第08章浅层排序模型逻辑回归">
+              <a href="/blog/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/" rel="prev" title="个性化推荐算法实践第08章浅层排序模型逻辑回归">
                 个性化推荐算法实践第08章浅层排序模型逻辑回归 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -786,7 +786,7 @@ function setSidebarMarginTop (headerOffset) {
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="AnFrank">
+              <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="AnFrank">
             
               <p class="site-author-name" itemprop="name">AnFrank</p>
               <p class="site-description motion-element" itemprop="description">你若晴天，我便安好。</p>
@@ -797,7 +797,7 @@ function setSidebarMarginTop (headerOffset) {
               
                 <div class="site-state-item site-state-posts">
                 
-                  <a href="/archives/">
+                  <a href="/blog/archives/">
                 
                     <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">日志</span>
@@ -809,7 +809,7 @@ function setSidebarMarginTop (headerOffset) {
                 
                 
                 <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
+                  <a href="/blog/categories/index.html">
                     
                     
                       
@@ -864,7 +864,7 @@ function setSidebarMarginTop (headerOffset) {
                 
                 
                 <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
+                  <a href="/blog/tags/index.html">
                     
                     
                       
@@ -961,7 +961,7 @@ function setSidebarMarginTop (headerOffset) {
 
           
             <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
+              <a href="/blog/atom.xml" rel="alternate">
                 <i class="fa fa-rss"></i>
                 RSS
               </a>
@@ -1092,7 +1092,7 @@ function setSidebarMarginTop (headerOffset) {
     <h3 class="widget-title">标签云</h3>
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GBDT/">GBDT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GiT撤销/">GiT撤销</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Item-CF/">Item CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JaveEE/">JaveEE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LFM（latent-factor-model）算法/">LFM（latent factor model）算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Learn-To-Rank/">Learn To Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL内连接/">SQL内连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/User-CF/">User CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WideAndDeep/">WideAndDeep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github博客/">github博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo博客/">hexo博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/item2vec/">item2vec</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java框架/">java框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java编程/">java编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人博客/">个人博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法/">个性化推荐算法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法-Content-Based-基于内容的推荐/">个性化推荐算法 - Content Based - 基于内容的推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法实践总结/">个性化推荐算法实践总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉连接/">交叉连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益/">信息增益</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益率/">信息增益率</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/决策树/">决策树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客优化/">博客优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/右外连接/">右外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基于随机游走的Personal-Rank/">基于随机游走的Personal Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基尼指数/">基尼指数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/左外连接/">左外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序模型总结/">排序模型总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序员表白源码/">程序员表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性回归/">线性回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/表白源码/">表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/评估指标/">评估指标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逻辑回归/">逻辑回归</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随机森林/">随机森林</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/隐语义模型/">隐语义模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/非关系型数据库/">非关系型数据库</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GBDT/">GBDT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GiT撤销/">GiT撤销</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Item-CF/">Item CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JaveEE/">JaveEE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/LFM（latent-factor-model）算法/">LFM（latent factor model）算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Learn-To-Rank/">Learn To Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/SQL内连接/">SQL内连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/User-CF/">User CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/WideAndDeep/">WideAndDeep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/github博客/">github博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/hexo博客/">hexo博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/item2vec/">item2vec</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/java框架/">java框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/java编程/">java编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/个人博客/">个人博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/个性化推荐算法/">个性化推荐算法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/个性化推荐算法-Content-Based-基于内容的推荐/">个性化推荐算法 - Content Based - 基于内容的推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/个性化推荐算法实践总结/">个性化推荐算法实践总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/交叉连接/">交叉连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/信息增益/">信息增益</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/信息增益率/">信息增益率</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/决策树/">决策树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/博客优化/">博客优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/右外连接/">右外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/基于随机游走的Personal-Rank/">基于随机游走的Personal Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/基尼指数/">基尼指数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/左外连接/">左外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/排序模型总结/">排序模型总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/神经网络/">神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/程序员表白源码/">程序员表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/线性回归/">线性回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/表白源码/">表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/评估指标/">评估指标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/逻辑回归/">逻辑回归</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/随机森林/">随机森林</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/隐语义模型/">隐语义模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/非关系型数据库/">非关系型数据库</a><span class="tag-list-count">1</span></li></ul>
         </canvas>
     </div>
 </div>
@@ -1245,49 +1245,49 @@ setInterval("createtime()",250);
 
   
   
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=6.3.0"></script>
 
 
 
@@ -1344,7 +1344,7 @@ setInterval("createtime()",250);
     } else if (/json$/i.test(search_path)) {
       isXml = false;
     }
-    var path = "/" + search_path;
+    var path = "/blog/" + search_path;
     // monitor main search box;
 
     var onPopupClose = function (e) {
