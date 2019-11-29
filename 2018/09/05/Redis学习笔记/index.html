@@ -34,8 +34,8 @@
   
     
     
-  <script src="/blog/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/blog/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
 
 
 
@@ -67,21 +67,21 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/blog/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon-32x32-next.png?v=6.3.0">
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.png?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=6.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
 
 
-  <link rel="mask-icon" href="/blog/images/favicon-32x32-next.png?v=6.3.0" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/favicon-32x32-next.png?v=6.3.0" color="#222">
 
 
 
@@ -94,7 +94,7 @@
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/blog/',
+    root: '/',
     scheme: 'Pisces',
     version: '6.3.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
@@ -133,55 +133,55 @@
 <meta name="keywords" content="Redis,非关系型数据库,数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis学习笔记">
-<meta property="og:url" content="http://anfrank.gitee.io/blog/2018/09/05/Redis学习笔记/index.html">
+<meta property="og:url" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/index.html">
 <meta property="og:site_name" content="AnFrank">
 <meta property="og:description" content="Redis简介关于关系型数据库和nosql数据库   关系型数据库是基于关系表的数据库，最终会将数据持久化到磁盘上，而nosql数据  库是基于特殊的结构，并将数据存储到内存的数据库。从性能上而言，nosql数据库  要优于关系型数据库，从安全性上而言关系型数据库要优于nosql数据库，所以在实  际开发中一个项目中nosql和关系型数据库会一起使用，达到性能和安全性的双保证。  为什么要使用Re">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/37168456521de2f12b6616af58929fc4.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/c7bdc26e311ca4aad1c8f0dbbde470cf.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/d719e7ea50fbb0ddd14a95366cb28382.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/122f9d8b0eb285eb9b9adcce1830fb55.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/f235bea179383cbf7acba3331c2539bc.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/550c428204f4d04aa54544d301edf00d.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/09a5661b72a8d30fe1aaa56947a0ba24.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/ad6001d7f725828dd13223f512d98ea4.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/c817bb72ebb9a912fc98728fd2555703.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/f4168cd95ab247bffb96c7f4e53ca49c.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/55bf55e5817df95473e372562a0c6f6d.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/8ed2b9e5d38588b65001722cba9e596f.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/d828c877fc1d70d29c2e2874af7d3fb7.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/e12c33b42ab106d631e248ee90c0bb05.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/3bdb15c54c9a766fb7a9607efea446b3.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/d3fbb6c9ed79291ca94214f2a67d00ff.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/a41c3bb595584719ad1f9a1f02ff08cd.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/1701297c2cd81dc7d0bda3721f10a301.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/0b16524ef5e1db1fa4dba8226512454b.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/ffa48e0a498de079ab56848dda375900.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/b600dad7d4568d70d774422aef6d32d1.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/9a48658e5c6f7fe08177669386a8e7f1.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/8847e09f463cee91443b06034ad63748.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/994d5312aeb7e2fab285748c1ed4dab6.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/a9531d6a0b55abcb785b42e3e226a429.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/e8320268e156af3a42887d284af00fb1.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/be52e27b0b7cb4e15cf9e125a268316f.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/347c176b3e916155debc4cd8494d9e42.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/37168456521de2f12b6616af58929fc4.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/c7bdc26e311ca4aad1c8f0dbbde470cf.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/d719e7ea50fbb0ddd14a95366cb28382.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/122f9d8b0eb285eb9b9adcce1830fb55.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/f235bea179383cbf7acba3331c2539bc.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/550c428204f4d04aa54544d301edf00d.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/09a5661b72a8d30fe1aaa56947a0ba24.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/ad6001d7f725828dd13223f512d98ea4.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/c817bb72ebb9a912fc98728fd2555703.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/f4168cd95ab247bffb96c7f4e53ca49c.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/55bf55e5817df95473e372562a0c6f6d.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/8ed2b9e5d38588b65001722cba9e596f.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/d828c877fc1d70d29c2e2874af7d3fb7.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/e12c33b42ab106d631e248ee90c0bb05.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/3bdb15c54c9a766fb7a9607efea446b3.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/d3fbb6c9ed79291ca94214f2a67d00ff.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/a41c3bb595584719ad1f9a1f02ff08cd.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/1701297c2cd81dc7d0bda3721f10a301.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/0b16524ef5e1db1fa4dba8226512454b.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/ffa48e0a498de079ab56848dda375900.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/b600dad7d4568d70d774422aef6d32d1.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/9a48658e5c6f7fe08177669386a8e7f1.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/8847e09f463cee91443b06034ad63748.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/994d5312aeb7e2fab285748c1ed4dab6.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/a9531d6a0b55abcb785b42e3e226a429.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/e8320268e156af3a42887d284af00fb1.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/be52e27b0b7cb4e15cf9e125a268316f.png">
+<meta property="og:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/347c176b3e916155debc4cd8494d9e42.png">
 <meta property="og:updated_time" content="2019-05-10T13:39:05.599Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis学习笔记">
 <meta name="twitter:description" content="Redis简介关于关系型数据库和nosql数据库   关系型数据库是基于关系表的数据库，最终会将数据持久化到磁盘上，而nosql数据  库是基于特殊的结构，并将数据存储到内存的数据库。从性能上而言，nosql数据库  要优于关系型数据库，从安全性上而言关系型数据库要优于nosql数据库，所以在实  际开发中一个项目中nosql和关系型数据库会一起使用，达到性能和安全性的双保证。  为什么要使用Re">
-<meta name="twitter:image" content="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/37168456521de2f12b6616af58929fc4.png">
+<meta name="twitter:image" content="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/37168456521de2f12b6616af58929fc4.png">
 
 
 
-  <link rel="alternate" href="/blog/atom.xml" title="AnFrank" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="AnFrank" type="application/atom+xml">
 
 
 
 
-  <link rel="canonical" href="http://anfrank.gitee.io/blog/2018/09/05/Redis学习笔记/">
+  <link rel="canonical" href="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/">
 
 
 
@@ -281,7 +281,7 @@ function setSidebarMarginTop (headerOffset) {
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">AnFrank</span>
         <span class="logo-line-after"><i></i></span>
@@ -314,7 +314,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-home">
-    <a href="/blog/" rel="section">
+    <a href="/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
   </li>
         
@@ -322,7 +322,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-tags">
-    <a href="/blog/tags/" rel="section">
+    <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
   </li>
         
@@ -330,7 +330,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-categories">
-    <a href="/blog/categories/" rel="section">
+    <a href="/categories/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
   </li>
         
@@ -338,7 +338,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-archives">
-    <a href="/blog/archives/" rel="section">
+    <a href="/archives/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
   </li>
         
@@ -346,7 +346,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-schedule">
-    <a href="/blog/schedule/" rel="section">
+    <a href="/schedule/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
   </li>
         
@@ -354,7 +354,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-sitemap">
-    <a href="/blog/sitemap.xml" rel="section">
+    <a href="/sitemap.xml" rel="section">
       <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
   </li>
         
@@ -362,7 +362,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-about">
-    <a href="/blog/about/" rel="section">
+    <a href="/about/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
   </li>
         
@@ -370,7 +370,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-guestbook">
-    <a href="/blog/guestbook" rel="section">
+    <a href="/guestbook" rel="section">
       <i class="menu-item-icon fa fa-fw fa-comments"></i> <br>留言</a>
   </li>
         
@@ -378,7 +378,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-love">
-    <a href="/blog/love/" rel="section">
+    <a href="/love/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>love</a>
   </li>
         
@@ -386,7 +386,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-loveshow">
-    <a href="/blog/loveshow/" rel="section">
+    <a href="/loveshow/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>loveshow</a>
   </li>
         
@@ -394,7 +394,7 @@ function setSidebarMarginTop (headerOffset) {
         
           
           <li class="menu-item menu-item-commonweal">
-    <a href="/blog/404/" rel="section">
+    <a href="/404/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>公益 404</a>
   </li>
 
@@ -475,12 +475,12 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/blog/blog/2018/09/05/Redis学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
       <meta itemprop="description" content="你若晴天，我便安好。">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -554,7 +554,7 @@ function setSidebarMarginTop (headerOffset) {
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/blog/categories/JavaWeb/" itemprop="url" rel="index"><span itemprop="name">JavaWeb</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JavaWeb/" itemprop="url" rel="index"><span itemprop="name">JavaWeb</span></a></span>
 
                 
                 
@@ -569,8 +569,8 @@ function setSidebarMarginTop (headerOffset) {
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2018/09/05/Redis学习笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/2018/09/05/Redis学习笔记/" itemprop="commentCount"></span>
+                <a href="/2018/09/05/Redis学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/09/05/Redis学习笔记/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -636,12 +636,12 @@ function setSidebarMarginTop (headerOffset) {
 <p>  /sbin/iptables -I INPUT -p tcp —dport 6379 -j ACCEPT</p>
 <p>  /etc/rc.d/init.d/iptables save</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/37168456521de2f12b6616af58929fc4.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/37168456521de2f12b6616af58929fc4.png" alt=""></p>
 <p>启动后看到如上欢迎页面，但此窗口不能关闭，窗口关闭就认为redis也关闭了(类<br>似Tomcat通过bin下的startup.bat的方式)</p>
 <p>解决方案：可以通过修改配置文件 配置redis后台启动，即服务器启动了但不会<br>穿件控制台窗口</p>
 <p>将redis.conf文件中的daemonize从false修改成true表示后台启动</p>
 <p>使用命令查看6379端口是否启动ps -ef | grep redis</p>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/c7bdc26e311ca4aad1c8f0dbbde470cf.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/c7bdc26e311ca4aad1c8f0dbbde470cf.png" alt=""></p>
 <h1 id="使用java去操作Redis"><a href="#使用java去操作Redis" class="headerlink" title="使用java去操作Redis"></a>使用java去操作Redis</h1><h1 id="Redis的常用命令"><a href="#Redis的常用命令" class="headerlink" title="Redis的常用命令"></a>Redis的常用命令</h1><blockquote>
 <p>  redis是一种高级的key-value的存储系统</p>
 <p>  其中的key是字符串类型，尽可能满足如下几点：</p>
@@ -675,29 +675,29 @@ function setSidebarMarginTop (headerOffset) {
 <h3 id="存储字符串string"><a href="#存储字符串string" class="headerlink" title="存储字符串string"></a>存储字符串string</h3><blockquote>
 <p>  字符串类型是Redis中最为基础的数据存储类型，它在Redis中是二进制安全的，这<br>  便意味着该类型可以接受任何格式的数据，如JPEG图像数据或Json对象描述信息等。<br>  在Redis中字符串类型的Value最多可以容纳的数据长度是512M</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/d719e7ea50fbb0ddd14a95366cb28382.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/d719e7ea50fbb0ddd14a95366cb28382.png" alt=""></p>
 <ol>
 <li><p><strong>set key value</strong>：设定key持有指定的字符串value，如果该key存在则进行覆盖<br>操作。总是返回”OK”</p>
 </li>
 <li><p><strong>get key</strong>：获取key的value。如果与该key关联的value不是String类型，redis<br>将返回错误信息，因为get命令只能用于获取String value；如果该key不存在，返<br>回null。</p>
 </li>
 </ol>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/122f9d8b0eb285eb9b9adcce1830fb55.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/122f9d8b0eb285eb9b9adcce1830fb55.png" alt=""></p>
 <ol>
 <li><strong>getset key value</strong>：先获取该key的值，然后在设置该key的值。</li>
 </ol>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/f235bea179383cbf7acba3331c2539bc.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/f235bea179383cbf7acba3331c2539bc.png" alt=""></p>
 <blockquote>
 <p>  4）<strong>incr key</strong>：将指定的key的value原子性的递增1.如果该key不存在，其初始值<br>  为0，在incr之后其值为1。如果value的值不能转成整型，如hello，该操作将执<br>  行失败并返回相应的错误信息。</p>
 <p>  5）<strong>decr key</strong>：将指定的key的value原子性的递减1.如果该key不存在，其初始值<br>  为0，在incr之后其值为-1。如果value的值不能转成整型，如hello，该操作将执<br>  行失败并返回相应的错误信息。</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/550c428204f4d04aa54544d301edf00d.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/550c428204f4d04aa54544d301edf00d.png" alt=""></p>
 <blockquote>
 <p>  6）<strong>incrby key increment</strong>：将指定的key的value原子性增加increment，如果该<br>  key不存在，器初始值为0，在incrby之后，该值为increment。如果该值不能转成<br>  整型，如hello则失败并返回错误信息</p>
 <p>  7）<strong>decrby key decrement</strong>：将指定的key的value原子性减少decrement，如果<br>  该key不存在，器初始值为0，在decrby之后，该值为decrement。如果该值不能<br>  转成整型，如hello则失败并返回错误信息</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/09a5661b72a8d30fe1aaa56947a0ba24.png" alt=""></p>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/ad6001d7f725828dd13223f512d98ea4.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/09a5661b72a8d30fe1aaa56947a0ba24.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/ad6001d7f725828dd13223f512d98ea4.png" alt=""></p>
 <blockquote>
 <p>  8）<strong>append key value</strong>：如果该key存在，则在原有的value后追加该值；如果该<br>  key 不存在，则重新创建一个key/value</p>
 </blockquote>
@@ -705,7 +705,7 @@ function setSidebarMarginTop (headerOffset) {
 <p>  在Redis中，List类型是按照插入顺序排序的字符串链表。和数据结构中的普通链表<br>  一样，我们可以在其头部(left)和尾部(right)添加新的元素。在插入时，如果该键并不<br>  存在，Redis将为该键创建一个新的链表。与此相反，如果链表中所有的元素均被移<br>  除，那么该键也将会被从数据库中删除。List中可以包含的最大元素数量是<br>  4294967295。</p>
 </blockquote>
 <p>从元素插入和删除的效率视角来看，如果我们是在链表的两头插入或删除元素，这将<br>会是非常高效的操作，即使链表中已经存储了百万条记录，该操作也可以在常量时间<br>内完成。然而需要说明的是，如果元素插入或删除操作是作用于链表中间，那将会是<br>非常低效的。相信对于有良好数据结构基础的开发者而言，这一点并不难理解。</p>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png" alt=""></p>
 <ol>
 <li><p><strong>lpush key value1 value2…</strong>：在指定的key所关联的list的头部插入所有的<br>values，如果该key不存在，该命令在插入的之前创建一个与该key关联的空链<br>表，之后再向该链表的头部插入数据。插入成功，返回元素的个数。</p>
 </li>
@@ -714,87 +714,87 @@ function setSidebarMarginTop (headerOffset) {
 <li><p><strong>lrange key start end</strong>：获取链表中从start到end的元素的值，start、end可<br>为负数，若为-1则表示链表尾部的元素，-2则表示倒数第二个，依次类推…</p>
 </li>
 </ol>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/c817bb72ebb9a912fc98728fd2555703.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/c817bb72ebb9a912fc98728fd2555703.png" alt=""></p>
 <ol>
 <li><strong>lpushx key value</strong>：仅当参数中指定的key存在时（如果与key管理的list中没<br>有值时，则该key是不存在的）在指定的key所关联的list的头部插入value。</li>
 </ol>
 <blockquote>
 <p>  5）<strong>rpushx key value</strong>：在该list的尾部添加元素</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/f4168cd95ab247bffb96c7f4e53ca49c.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/f4168cd95ab247bffb96c7f4e53ca49c.png" alt=""></p>
 <blockquote>
 <p>  6）<strong>lpop key</strong>：返回并弹出指定的key关联的链表中的第一个元素，即头部元素。</p>
 <p>  7）<strong>rpop key</strong>：从尾部弹出元素。</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/55bf55e5817df95473e372562a0c6f6d.png" alt=""></p>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/8ed2b9e5d38588b65001722cba9e596f.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/55bf55e5817df95473e372562a0c6f6d.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/8ed2b9e5d38588b65001722cba9e596f.png" alt=""></p>
 <blockquote>
 <p>  8）<strong>rpoplpush resource destination</strong>：将链表中的尾部元素弹出并添加到头部</p>
 <p>  9）<strong>llen key</strong>：返回指定的key关联的链表中的元素的数量。</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/d828c877fc1d70d29c2e2874af7d3fb7.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/d828c877fc1d70d29c2e2874af7d3fb7.png" alt=""></p>
 <blockquote>
 <p>  10）<strong>lset key index<br>  value</strong>：设置链表中的index的脚标的元素值，0代表链表的头元<br>  素，-1代表链表的尾元素。</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/e12c33b42ab106d631e248ee90c0bb05.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/e12c33b42ab106d631e248ee90c0bb05.png" alt=""></p>
 <blockquote>
 <p>  11）<strong>lrem key count<br>  value</strong>：删除count个值为value的元素，如果count大于0，从头向尾遍历并删除count个值为value的元素，如果count小于0，则从尾向头遍历并删除。如果count等于0，则删除链表中所有等于value的元素。</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/3bdb15c54c9a766fb7a9607efea446b3.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/3bdb15c54c9a766fb7a9607efea446b3.png" alt=""></p>
 <blockquote>
 <p>  12）<strong>linsert key before|after pivot<br>  value</strong>：在pivot元素前或者后插入value这个 元素。</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/d3fbb6c9ed79291ca94214f2a67d00ff.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/d3fbb6c9ed79291ca94214f2a67d00ff.png" alt=""></p>
 <h3 id="存储sets类型"><a href="#存储sets类型" class="headerlink" title="存储sets类型"></a>存储sets类型</h3><blockquote>
 <p>  在Redis中，我们可以将Set类型看作为没有排序的字符集合，和List类型一样，我<br>  们也可以在该类型的数据值上执行添加、删除或判断某一元素是否存在等操作。需要<br>  说明的是，这些操作的时间是常量时间。Set可包含的最大元素数是4294967295。</p>
 <p>  和List类型不同的是，Set集合中不允许出现重复的元素。和List类型相比，Set类<br>  型在功能上还存在着一个非常重要的特性，即在服务器端完成多个Sets之间的聚合计<br>  算操作，如unions、intersections和differences。由于这些操作均在服务端完成，<br>  因此效率极高，而且也节省了大量的网络IO开销</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png" alt=""></p>
 <blockquote>
 <p>  1）sadd key value1、value2…：向set中添加数据，如果该key的值已有则不会<br>  重复添加</p>
 <p>  2）smembers key：获取set中所有的成员</p>
 <p>  3）scard key：获取set中成员的数量</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/a41c3bb595584719ad1f9a1f02ff08cd.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/a41c3bb595584719ad1f9a1f02ff08cd.png" alt=""></p>
 <blockquote>
 <p>  4）sismember key member：判断参数中指定的成员是否在该set中，1表示存<br>  在，0表示不存在或者该key本身就不存在</p>
 <p>  5）srem key member1、member2…：删除set中指定的成员</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/1701297c2cd81dc7d0bda3721f10a301.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/1701297c2cd81dc7d0bda3721f10a301.png" alt=""></p>
 <p>6）srandmember key：随机返回set中的一个成员</p>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/0b16524ef5e1db1fa4dba8226512454b.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/0b16524ef5e1db1fa4dba8226512454b.png" alt=""></p>
 <blockquote>
 <p>  7）sdiff sdiff key1 key2：返回key1与key2中相差的成员，而且与key的顺序有<br>  关。即返回差集。</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/ffa48e0a498de079ab56848dda375900.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/ffa48e0a498de079ab56848dda375900.png" alt=""></p>
 <blockquote>
 <p>  8）sdiffstore destination key1 key2：将key1、key2相差的成员存储在<br>  destination上</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/b600dad7d4568d70d774422aef6d32d1.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/b600dad7d4568d70d774422aef6d32d1.png" alt=""></p>
 <blockquote>
 <p>  9）sinter key[key1,key2…]：返回交集。</p>
 <p>  10）sinterstore destination key1 key2：将返回的交集存储在destination上</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/9a48658e5c6f7fe08177669386a8e7f1.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/9a48658e5c6f7fe08177669386a8e7f1.png" alt=""></p>
 <blockquote>
 <p>  11）sunion key1、key2：返回并集。</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/8847e09f463cee91443b06034ad63748.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/8847e09f463cee91443b06034ad63748.png" alt=""></p>
 <blockquote>
 <p>  12）sunionstore destination key1 key2：将返回的并集存储在destination上</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/994d5312aeb7e2fab285748c1ed4dab6.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/994d5312aeb7e2fab285748c1ed4dab6.png" alt=""></p>
 <h3 id="存储sortedset"><a href="#存储sortedset" class="headerlink" title="存储sortedset"></a>存储sortedset</h3><blockquote>
 <p>  Sorted-Sets和Sets类型极为相似，它们都是字符串的集合，都不允许重复的成员出<br>  现在一个Set中。它们之间的主要差别是Sorted-Sets中的每一个成员都会有一个分<br>  数(score)与之关联，Redis正是通过分数来为集合中的成员进行从小到大的排序。然<br>  而需要额外指出的是，尽管Sorted-Sets中的成员必须是唯一的，但是分数(score)<br>  却是可以重复的。</p>
 <p>  在Sorted-Set中添加、删除或更新一个成员都是非常快速的操作，其时间复杂度为<br>  集合中成员数量的对数。由于Sorted-Sets中的成员在集合中的位置是有序的，因此，<br>  即便是访问位于集合中部的成员也仍然是非常高效的。事实上，Redis所具有的这一<br>  特征在很多其它类型的数据库中是很难实现的，换句话说，在该点上要想达到和Redis<br>  同样的高效，在其它数据库中进行建模是非常困难的。</p>
 <p>  例如：游戏排名、微博热点话题等使用场景。</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/a95668510b8f0b7d098dc493b9a06fd0.png" alt=""></p>
 <blockquote>
 <p>  1）<strong>zadd key score member score2 member2 …</strong> ：将所有成员以及该成员的<br>  分数存放到sorted-set中</p>
 <p>  2）<strong>zcard key</strong>：获取集合中的成员数量</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/a9531d6a0b55abcb785b42e3e226a429.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/a9531d6a0b55abcb785b42e3e226a429.png" alt=""></p>
 <blockquote>
 <p>  3）<strong>zcount key min max</strong>：获取分数在[min,max]之间的成员</p>
 <p>  zincrby key increment member：设置指定成员的增加的分数。</p>
@@ -807,13 +807,13 @@ function setSidebarMarginTop (headerOffset) {
 <h3 id="存储hash"><a href="#存储hash" class="headerlink" title="存储hash"></a>存储hash</h3><blockquote>
 <p>  Redis中的Hashes类型可以看成具有String Key和String Value的map容器。所<br>  以该类型非常适合于存储值对象的信息。如Username、Password和Age等。如果<br>  Hash中包含很少的字段，那么该类型的数据也将仅占用很少的磁盘空间。每一个Hash<br>  可以存储4294967295个键值对。</p>
 </blockquote>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/e8320268e156af3a42887d284af00fb1.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/e8320268e156af3a42887d284af00fb1.png" alt=""></p>
 <p></p>
 <p>1）<strong>hset key field value</strong>：为指定的key设定field/value对（键值对）。</p>
 <p>2）<strong>hgetall key：</strong>获取key中的所有filed-vaule</p>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/be52e27b0b7cb4e15cf9e125a268316f.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/be52e27b0b7cb4e15cf9e125a268316f.png" alt=""></p>
 <p>3）<strong>hget key field</strong>：返回指定的key中的field的值</p>
-<p><img src="/blog/blog/2018/09/05/Redis学习笔记/347c176b3e916155debc4cd8494d9e42.png" alt=""></p>
+<p><img src="/2018/09/05/Redis学习笔记/347c176b3e916155debc4cd8494d9e42.png" alt=""></p>
 <p>4）<strong>hmset key fields</strong>：设置key中的多个filed/value</p>
 <p>5）<strong>hmget key fileds</strong>：获取key中的多个filed的值</p>
 <p>6）<strong>hexists key field</strong>：判断指定的key中的filed是否存在</p>
@@ -855,14 +855,14 @@ function setSidebarMarginTop (headerOffset) {
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/blog/images/wechatpay.png" alt="AnFrank 微信支付">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="AnFrank 微信支付">
         <p>微信支付</p>
       </div>
     
 
     
       <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/blog/images/alipay.png" alt="AnFrank 支付宝">
+        <img id="alipay_qr" src="/images/alipay.png" alt="AnFrank 支付宝">
         <p>支付宝</p>
       </div>
     
@@ -882,7 +882,7 @@ function setSidebarMarginTop (headerOffset) {
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/blog/2018/09/05/Redis学习笔记/" title="Redis学习笔记">http://anfrank.gitee.io/blog/2018/09/05/Redis学习笔记/</a>
+    <a href="http://anfrank.gitee.io/2018/09/05/Redis学习笔记/" title="Redis学习笔记">http://anfrank.gitee.io/2018/09/05/Redis学习笔记/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
@@ -895,11 +895,11 @@ function setSidebarMarginTop (headerOffset) {
       
         <div class="post-tags">
           
-            <a href="/blog/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
+            <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
           
-            <a href="/blog/tags/非关系型数据库/" rel="tag"><i class="fa fa-tag"></i> 非关系型数据库</a>
+            <a href="/tags/非关系型数据库/" rel="tag"><i class="fa fa-tag"></i> 非关系型数据库</a>
           
-            <a href="/blog/tags/数据库/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+            <a href="/tags/数据库/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
           
         </div>
       
@@ -912,7 +912,7 @@ function setSidebarMarginTop (headerOffset) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/09/03/Java开发中的23种设计模式详解/" rel="next" title="Java开发中的23种设计模式详解">
+              <a href="/2018/09/03/Java开发中的23种设计模式详解/" rel="next" title="Java开发中的23种设计模式详解">
                 <i class="fa fa-chevron-left"></i> Java开发中的23种设计模式详解
               </a>
             
@@ -922,7 +922,7 @@ function setSidebarMarginTop (headerOffset) {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/09/05/JaveEE请求转发和重定向的区别/" rel="prev" title="JaveEE请求转发和重定向的区别">
+              <a href="/2018/09/05/JaveEE请求转发和重定向的区别/" rel="prev" title="JaveEE请求转发和重定向的区别">
                 JaveEE请求转发和重定向的区别 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -986,7 +986,7 @@ function setSidebarMarginTop (headerOffset) {
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/blog/images/avatar.jpg" alt="AnFrank">
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="AnFrank">
             
               <p class="site-author-name" itemprop="name">AnFrank</p>
               <p class="site-description motion-element" itemprop="description">你若晴天，我便安好。</p>
@@ -997,7 +997,7 @@ function setSidebarMarginTop (headerOffset) {
               
                 <div class="site-state-item site-state-posts">
                 
-                  <a href="/blog/archives/">
+                  <a href="/archives/">
                 
                     <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">日志</span>
@@ -1009,7 +1009,7 @@ function setSidebarMarginTop (headerOffset) {
                 
                 
                 <div class="site-state-item site-state-categories">
-                  <a href="/blog/categories/index.html">
+                  <a href="/categories/index.html">
                     
                     
                       
@@ -1064,7 +1064,7 @@ function setSidebarMarginTop (headerOffset) {
                 
                 
                 <div class="site-state-item site-state-tags">
-                  <a href="/blog/tags/index.html">
+                  <a href="/tags/index.html">
                     
                     
                       
@@ -1161,7 +1161,7 @@ function setSidebarMarginTop (headerOffset) {
 
           
             <div class="feed-link motion-element">
-              <a href="/blog/atom.xml" rel="alternate">
+              <a href="/atom.xml" rel="alternate">
                 <i class="fa fa-rss"></i>
                 RSS
               </a>
@@ -1292,7 +1292,7 @@ function setSidebarMarginTop (headerOffset) {
     <h3 class="widget-title">标签云</h3>
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GBDT/">GBDT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/GiT撤销/">GiT撤销</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Item-CF/">Item CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/JaveEE/">JaveEE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/LFM（latent-factor-model）算法/">LFM（latent factor model）算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Learn-To-Rank/">Learn To Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/SQL内连接/">SQL内连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/User-CF/">User CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/WideAndDeep/">WideAndDeep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/github博客/">github博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/hexo博客/">hexo博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/item2vec/">item2vec</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/java框架/">java框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/java编程/">java编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/个人博客/">个人博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/个性化推荐算法/">个性化推荐算法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/个性化推荐算法-Content-Based-基于内容的推荐/">个性化推荐算法 - Content Based - 基于内容的推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/个性化推荐算法实践总结/">个性化推荐算法实践总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/交叉连接/">交叉连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/信息增益/">信息增益</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/信息增益率/">信息增益率</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/决策树/">决策树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/博客优化/">博客优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/右外连接/">右外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/基于随机游走的Personal-Rank/">基于随机游走的Personal Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/基尼指数/">基尼指数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/左外连接/">左外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/排序模型总结/">排序模型总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/神经网络/">神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/程序员表白源码/">程序员表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/线性回归/">线性回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/表白源码/">表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/评估指标/">评估指标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/逻辑回归/">逻辑回归</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/随机森林/">随机森林</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/隐语义模型/">隐语义模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/非关系型数据库/">非关系型数据库</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GBDT/">GBDT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GiT撤销/">GiT撤销</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Item-CF/">Item CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JaveEE/">JaveEE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LFM（latent-factor-model）算法/">LFM（latent factor model）算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Learn-To-Rank/">Learn To Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL内连接/">SQL内连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/User-CF/">User CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WideAndDeep/">WideAndDeep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github博客/">github博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo博客/">hexo博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/item2vec/">item2vec</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java框架/">java框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java编程/">java编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人博客/">个人博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法/">个性化推荐算法</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法-Content-Based-基于内容的推荐/">个性化推荐算法 - Content Based - 基于内容的推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法实践总结/">个性化推荐算法实践总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉连接/">交叉连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益/">信息增益</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益率/">信息增益率</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/决策树/">决策树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客优化/">博客优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/右外连接/">右外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基于随机游走的Personal-Rank/">基于随机游走的Personal Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基尼指数/">基尼指数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/左外连接/">左外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序模型总结/">排序模型总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序员表白源码/">程序员表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性回归/">线性回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/表白源码/">表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/评估指标/">评估指标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逻辑回归/">逻辑回归</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随机森林/">随机森林</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/隐语义模型/">隐语义模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/非关系型数据库/">非关系型数据库</a><span class="tag-list-count">1</span></li></ul>
         </canvas>
     </div>
 </div>
@@ -1445,49 +1445,49 @@ setInterval("createtime()",250);
 
   
   
-    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
-
-
-  
-
-
-  <script type="text/javascript" src="/blog/js/src/utils.js?v=6.3.0"></script>
-
-  <script type="text/javascript" src="/blog/js/src/motion.js?v=6.3.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/blog/js/src/affix.js?v=6.3.0"></script>
-
-  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=6.3.0"></script>
-
-
-
-  
-  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=6.3.0"></script>
-<script type="text/javascript" src="/blog/js/src/post-details.js?v=6.3.0"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=6.3.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
 
 
 
@@ -1544,7 +1544,7 @@ setInterval("createtime()",250);
     } else if (/json$/i.test(search_path)) {
       isXml = false;
     }
-    var path = "/blog/" + search_path;
+    var path = "/" + search_path;
     // monitor main search box;
 
     var onPopupClose = function (e) {
