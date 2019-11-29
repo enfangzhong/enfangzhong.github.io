@@ -133,18 +133,18 @@
 <meta name="keywords" content="个性化推荐算法,评估指标">
 <meta property="og:type" content="article">
 <meta property="og:title" content="个性化推荐算法实践第06章个性化召回算法总结与评估方法的介绍">
-<meta property="og:url" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/index.html">
+<meta property="og:url" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/index.html">
 <meta property="og:site_name" content="AnFrank">
 <meta property="og:description" content="[TOC] 个性化推荐算法实践第06章个性化召回算法总结与评估方法的介绍本章节重点总结前面几章节介绍过的个性化召回算法。并介绍如何从离线与在线两个大方面评估新增一种个性化召回算法时的收益。 一、个性化召回算法的总结这里会将之前介绍过的几种算法进行归类，并简短介绍每一种个性化召回算法的核心原理；同时演示工业界中多种召回算法共存的架构。 下面看一下之前讲过的个性化召回算法的分类：  基于邻域的：CF、">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564988526824.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564988665653.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564989385352.png">
+<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564988526824.png">
+<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564988665653.png">
+<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564989385352.png">
 <meta property="og:updated_time" content="2019-09-22T07:41:44.328Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个性化推荐算法实践第06章个性化召回算法总结与评估方法的介绍">
 <meta name="twitter:description" content="[TOC] 个性化推荐算法实践第06章个性化召回算法总结与评估方法的介绍本章节重点总结前面几章节介绍过的个性化召回算法。并介绍如何从离线与在线两个大方面评估新增一种个性化召回算法时的收益。 一、个性化召回算法的总结这里会将之前介绍过的几种算法进行归类，并简短介绍每一种个性化召回算法的核心原理；同时演示工业界中多种召回算法共存的架构。 下面看一下之前讲过的个性化召回算法的分类：  基于邻域的：CF、">
-<meta name="twitter:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564988526824.png">
+<meta name="twitter:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564988526824.png">
 
 
 
@@ -153,7 +153,7 @@
 
 
 
-  <link rel="canonical" href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/">
+  <link rel="canonical" href="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/">
 
 
 
@@ -447,7 +447,7 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/">
+    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
@@ -612,10 +612,10 @@ function setSidebarMarginTop (headerOffset) {
 <p>item2vec首先根据用户的行为得到由item得到的句柄，根据训练语料得到item embedding的向量，得到这个向量之后就能得到item的相似度矩阵。从而根据用户的历史点击推荐相似的item给用户，也就完成了推荐。</p>
 <p>下面看一下工业界中推荐系统中多种召回并存的架构：</p>
 <p>后端算法的核心逻辑：</p>
-<p><img src="/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564988526824.png" alt="1564988526824"></p>
+<p><img src="/blog/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564988526824.png" alt="1564988526824"></p>
 <p>首先是召回，召回之后是排序，排序之后是策略调整，然后就将结果返回给web层。</p>
 <p>接下来看一下，具体在召回阶段是如何多种算法并存的。</p>
-<p><img src="/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564988665653.png" alt="1564988665653"></p>
+<p><img src="/blog/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564988665653.png" alt="1564988665653"></p>
 <p>比如这里的算法A，召回了两个item，分别是a、b；算法B召回了3个item，分别是a、c、d；同理算法C召回了4个item，分别是e、f、d、c。</p>
 <p>那么每一种算法召回的数目是如何确定的呢？</p>
 <p>这里有两种形式：</p>
@@ -629,7 +629,7 @@ function setSidebarMarginTop (headerOffset) {
 <p>如何在离线进行评价的？</p>
 <p>评价方法：评测新增算法推荐结果在测试集上的表现。</p>
 <p>这里用一个例子来具体说明：</p>
-<p><img src="/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564989385352.png" alt="1564989385352"></p>
+<p><img src="/blog/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/1564989385352.png" alt="1564989385352"></p>
 <p>如果新增了某种个性化召回算法，对于user A我们给出了推荐结果a、b、c。恰巧这里我们获得了user A在测试集上的展现数据，就是a、b、c、m，那么在这里我们发现有3个是重合的，也就是a、b、c，那么这3个就是分母，如果我们在得到了用户A在测试集上的点击数据，这个点击数据恰好是a、c。我们发现这里的推荐结果是a、b、c是分母，然后有两个被点击了，那么a、c就是分子，最后的点击率就是 2/3。</p>
 <p>如果这个数据是高于基线的点击率的话，那么就可以将这种推荐算法放到线上做A/B test(A/B测试)。</p>
 <p>当然了，我们知道线下的评价结果与线上真实环境中的结果是有差异的，但是这种方式是能够给我们一个最基础的、直观的评判，是否可以准入到线上。</p>
@@ -692,7 +692,7 @@ function setSidebarMarginTop (headerOffset) {
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/" title="个性化推荐算法实践第06章个性化召回算法总结与评估方法的介绍">http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/</a>
+    <a href="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/" title="个性化推荐算法实践第06章个性化召回算法总结与评估方法的介绍">http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第06章个性化召回算法总结与回顾/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>

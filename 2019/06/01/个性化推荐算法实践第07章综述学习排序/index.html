@@ -133,18 +133,18 @@
 <meta name="keywords" content="个性化推荐算法,Learn To Rank">
 <meta property="og:type" content="article">
 <meta property="og:title" content="个性化推荐算法实践第07章综述学习排序">
-<meta property="og:url" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/index.html">
+<meta property="og:url" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/index.html">
 <meta property="og:site_name" content="AnFrank">
 <meta property="og:description" content="[TOC] 个性化推荐算法实践第07章综述学习排序综述学习排序的思路，并介绍工业界排序架构以及本课程重点讲解的学习排序模型。 一、什么是学习排序（Learn To Rank）？说起学习排序，首先介绍一下排序，排序是在搜索场景以及推荐场景中应用的最为广泛的。 传统的排序方法是基于构造相关度函数，使相关度函数对于每一个文档进行打分，得分较高的文档，排的位置就靠前。但是，随着相关度函数中特征的增多，使调">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992495527.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1565100075461.png">
+<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
+<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992495527.png">
+<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1565100075461.png">
 <meta property="og:updated_time" content="2019-09-22T07:49:38.353Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个性化推荐算法实践第07章综述学习排序">
 <meta name="twitter:description" content="[TOC] 个性化推荐算法实践第07章综述学习排序综述学习排序的思路，并介绍工业界排序架构以及本课程重点讲解的学习排序模型。 一、什么是学习排序（Learn To Rank）？说起学习排序，首先介绍一下排序，排序是在搜索场景以及推荐场景中应用的最为广泛的。 传统的排序方法是基于构造相关度函数，使相关度函数对于每一个文档进行打分，得分较高的文档，排的位置就靠前。但是，随着相关度函数中特征的增多，使调">
-<meta name="twitter:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
+<meta name="twitter:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
 
 
 
@@ -153,7 +153,7 @@
 
 
 
-  <link rel="canonical" href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/">
+  <link rel="canonical" href="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/">
 
 
 
@@ -447,7 +447,7 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/">
+    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
@@ -599,7 +599,7 @@ function setSidebarMarginTop (headerOffset) {
 <p><strong>那么什么是学习排序呢？</strong></p>
 <p>学习排序：将个性化召回的物品候选集根据物品本身的属性结合用户的属性，上下文等信息给出展现优先级的过程便是学习排序。</p>
 <p>下面用一个例子进行展示：</p>
-<p><img src="/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png" alt="1564992344840"></p>
+<p><img src="/blog/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png" alt="1564992344840"></p>
 <p>假设这里有一个用户A，基于他的历史行为给出了召回，可能是很多种召回算法，经过合并之后得到的6个item[a,b,c,d,e,f]。经过排序，最终将这6个item的优先级固定为c、a、f、d、b、e。</p>
 <p>得到优先级的过程就是由排序得到的。分别根据item本身的属性，以及user当前的一些上下文和user固定的一些属性，得到此时最佳的顺序应该是将c给展示，这样以保证最后的点击率最高。</p>
 <h3 id="二、排序在个性化推荐系统中的重要作用"><a href="#二、排序在个性化推荐系统中的重要作用" class="headerlink" title="二、排序在个性化推荐系统中的重要作用"></a>二、排序在个性化推荐系统中的重要作用</h3><p>之前介绍过，在个性化的算法中后端的主要流程是：召回—&gt;排序—&gt;策略调整。</p>
@@ -607,7 +607,7 @@ function setSidebarMarginTop (headerOffset) {
 <p>1、排序决定了最终的推荐效果</p>
 <p>用户看到的顺序基本就是由排序这一步骤所决定的，如果用户在前面的位置就能够看到自己感兴趣的物品，那么用户就会在推荐系统总停留较长的时间；反之，如果需要用户几次刷新之后，才能得到自己想要的物品，那么用户下一次将不会在信任推荐效果，导致在推荐系统中停留的时间较短。</p>
 <p>在工业界中，排序这一部分分为三个步骤：</p>
-<p><img src="/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992495527.png" alt="1564992495527"></p>
+<p><img src="/blog/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992495527.png" alt="1564992495527"></p>
 <p>（1）prerank（预排序）</p>
 <p>也就是排序之前的部分，由于排序的模型由浅层模型切换到深层模型的时候，耗时在不停的增加。比如之前召回可以允许有5000个物品去做浅层模型，比如说逻辑回归，就是训练出一组参数，那么整体的打分过程耗时很短。但是，如果当排序模型切换到深层模型，比如说DNN，那么整体需要请求一次新的深度学习的服务，那么这5000个item去请求的时间显然是不能承受的。所以要先有一个<strong>粗排</strong>。这个粗排会将这5000个召回的物品进行第一次排序，将候选集缩小到一定范围之内。这样使排序模型的总处理时间满足系统的性能要求。粗排往往以一些简单的规则为主，比如说使用<strong>后验CTR</strong>或者说对于新的物品使用入库时的<strong>预估CTR</strong>等等。</p>
 <p>（2）Rank（主排序）</p>
@@ -626,7 +626,7 @@ function setSidebarMarginTop (headerOffset) {
 <h1 id="KDD2018-电商搜索场景中的强化排序学习：形式化、理论分析以及应用http-www-sohu-com-a-244970525-129720"><a href="#KDD2018-电商搜索场景中的强化排序学习：形式化、理论分析以及应用http-www-sohu-com-a-244970525-129720" class="headerlink" title="KDD2018 | 电商搜索场景中的强化排序学习：形式化、理论分析以及应用http://www.sohu.com/a/244970525_129720"></a>KDD2018 | 电商搜索场景中的强化排序学习：形式化、理论分析以及应用<a href="http://www.sohu.com/a/244970525_129720" target="_blank" rel="noopener">http://www.sohu.com/a/244970525_129720</a></h1></blockquote>
 <p>由于单一item在重排模型的耗时要比主模型长很多，所以重排部分只是会影响主排序头部的一些结果，比如说top 50 的结果去进行一个重排。那么既然是这样的话，可以看到，最能影响结果的还是主排序模型。</p>
 <h3 id="三、工业界推荐系统中排序架构解析"><a href="#三、工业界推荐系统中排序架构解析" class="headerlink" title="三、工业界推荐系统中排序架构解析"></a>三、工业界推荐系统中排序架构解析</h3><p>工业界中排序是如何落地的。</p>
-<p><img src="/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1565100075461.png" alt="1565100075461"></p>
+<p><img src="/blog/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/1565100075461.png" alt="1565100075461"></p>
 <p>算法的后端主流程是：召回之后排序。</p>
 <p>召回完item之后，我们将item集合传给排序部分，排序部分会调用打分框架，得到每一个item在当前上下文下，对当前user的一个得分，进而根据得分决定展现顺序。</p>
 <p>下面看一下打分框架内部的构成：</p>
@@ -684,7 +684,7 @@ function setSidebarMarginTop (headerOffset) {
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/" title="个性化推荐算法实践第07章综述学习排序">http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/</a>
+    <a href="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/" title="个性化推荐算法实践第07章综述学习排序">http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第07章综述学习排序/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>

@@ -133,20 +133,20 @@
 <meta name="keywords" content="个性化推荐算法,基于随机游走的Personal Rank">
 <meta property="og:type" content="article">
 <meta property="og:title" content="个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank">
-<meta property="og:url" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/index.html">
+<meta property="og:url" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/index.html">
 <meta property="og:site_name" content="AnFrank">
 <meta property="og:description" content="[TOC] 个性化推荐算法实践第03章基于图推荐的个性化推荐召回算法基于随机游走的Personal Rank本章节重点介绍一种基于图的个性化推荐召回算法personal rank。从personal rank算法的理论知识与数学原理进行介绍。并结合公开数据集，代码实战personal rank算法的基础版本与矩阵升级版本。 基于图的推荐—基于随机游走的personal rank算法实现 博客第一部">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726845935.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726875995.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564727091910.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729370493.png">
-<meta property="og:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729376053.png">
+<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726845935.png">
+<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726875995.png">
+<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564727091910.png">
+<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729370493.png">
+<meta property="og:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729376053.png">
 <meta property="og:updated_time" content="2019-09-22T07:40:26.446Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank">
 <meta name="twitter:description" content="[TOC] 个性化推荐算法实践第03章基于图推荐的个性化推荐召回算法基于随机游走的Personal Rank本章节重点介绍一种基于图的个性化推荐召回算法personal rank。从personal rank算法的理论知识与数学原理进行介绍。并结合公开数据集，代码实战personal rank算法的基础版本与矩阵升级版本。 基于图的推荐—基于随机游走的personal rank算法实现 博客第一部">
-<meta name="twitter:image" content="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726845935.png">
+<meta name="twitter:image" content="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726845935.png">
 
 
 
@@ -155,7 +155,7 @@
 
 
 
-  <link rel="canonical" href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/">
+  <link rel="canonical" href="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/">
 
 
 
@@ -449,7 +449,7 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/">
+    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
@@ -608,12 +608,12 @@ function setSidebarMarginTop (headerOffset) {
 <p>则，推荐系统中，user、item恰好满足两种独立的集合，并且用户行为总是从user顶点到item顶点集合，所以由推荐系统中user和item之间构成的图就是二分图。</p>
 <p>接下来结合具体实例讲解如何将用户的行为转化为二分图。</p>
 <p>假设某推荐系统中有4个用户：A B C D，以及从日志（log）中发现对如下item有过行为：</p>
-<p><img src="/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726845935.png" alt="1564726845935"></p>
+<p><img src="/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726845935.png" alt="1564726845935"></p>
 <p>即：user A 对 item a、b、d有过行为，userB 对 item a、c有过行为，userC对 item b、e有过行为，userD 对 item c、d有过行为。</p>
 <p>首先将user、item分成两组不相交的集合，如下：</p>
-<p><img src="/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726875995.png" alt="1564726875995"></p>
+<p><img src="/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564726875995.png" alt="1564726875995"></p>
 <p>然后，将所有user 对 item 有过行为的进行连线，就可以得到二分图，如下：</p>
-<p><img src="/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564727091910.png" alt="1564727091910"></p>
+<p><img src="/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564727091910.png" alt="1564727091910"></p>
 <p>此时问题也就抽象出来了，对于userA 来说，item c 和item e哪个更值得推荐？</p>
 <p>这里共有5个item，其中userA 已经对item a、b、d有过行为，这里行为是指信息流产品中的点击或者电商产品中的购买等表示user对item喜欢的这种操作。</p>
 <p>那么personal rank恰恰是这么一种算法，它能够结合用户行为构成的二分图，对于固定用户对item集合的重要程度给出排序，也就是说将user A 没有对item c 和item e有过行为，但是personal rank算法可以给出item c 和item e对于user A来说，哪个更值得推荐。</p>
@@ -626,7 +626,7 @@ function setSidebarMarginTop (headerOffset) {
 <p>这里解释一下出度的概念：出度是指顶点对外连接边的数目。如user A对item a、b、d有过行为，即为有条连接边，则A的出度为3。如果前两项都相同，则两个item对固定user 的重要程度则比较经过顶点所有的出度和，如果出度和越小则越重要。</p>
 <p>结合刚才所举的具体二分图的例子，给大家介绍—对于user A来说，item c 和item e哪个更值得推荐？</p>
 <h3 id="2、Personal-Rank算法example解析"><a href="#2、Personal-Rank算法example解析" class="headerlink" title="2、Personal Rank算法example解析"></a>2、Personal Rank算法example解析</h3><p> 例子分析</p>
-<p><img src="/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729370493.png" alt="1564729370493"></p>
+<p><img src="/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729370493.png" alt="1564729370493"></p>
 <p>1.分别有几条路径连通？</p>
 <p>首先看A-c 之间有几条路径连通：分别是A-a-B-c，A-d-D-c 两条路径连通。</p>
 <p>再来看A-e 之间有几条路径连通：A-b-C-e一条路径</p>
@@ -643,7 +643,7 @@ function setSidebarMarginTop (headerOffset) {
 <h3 id="3、Personal-Rank算法公式解析"><a href="#3、Personal-Rank算法公式解析" class="headerlink" title="3、Personal Rank算法公式解析"></a>3、Personal Rank算法公式解析</h3><p>personal rank是可以通过用户行为划分二分图为固定user得到item重要程度排序的一种算法。</p>
 <p>1.算法的文字阐述</p>
 <p>随机游走算法PersonalRank实现基于图的推荐对用户A进行个性化推荐，从用户A节点开始在用户-物品二分图random walk，以alpha的概率从A的出边中，等概率选择一条游走过去，到达该顶点后（举例顶点a），由alpha的概率继续从顶点a的出边中，等概率选择一条继续游走到下一个节点，或者（1-alpha）的概率回到顶点A，多次迭代。直到各顶点对于用户A的重要度收敛。</p>
-<p><img src="/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729376053.png" alt="1564729376053"></p>
+<p><img src="/blog/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/1564729376053.png" alt="1564729376053"></p>
 <p>后续我们在实现person rank算法的时候用不同的alpha值来做实验，熟悉是Google的pageRank算法的童鞋们可以发现PageRank与person rank算法有极大的相似性。只不过PageRank算法没有固定的起点。</p>
 <p>2.算法的数学公式</p>
 <script type="math/tex; mode=display">
@@ -723,7 +723,7 @@ r=\left(E-\alpha M^{T}\right)^{-1}(1-\alpha) r_{0}</script><p>该公式是上一
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/" title="个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank">http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/</a>
+    <a href="http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/" title="个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank">http://anfrank.gitee.io/blog/2019/06/01/个性化推荐算法实践第03章基于图的个性化推荐召回算法PersonalRank/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
