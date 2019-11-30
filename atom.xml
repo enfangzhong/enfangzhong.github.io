@@ -477,11 +477,11 @@
       <category term="机器学习" scheme="http://anfrank.gitee.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="逻辑回归" scheme="http://anfrank.gitee.io/tags/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"/>
-    
       <category term="机器学习" scheme="http://anfrank.gitee.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
       <category term="线性回归" scheme="http://anfrank.gitee.io/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/"/>
+    
+      <category term="逻辑回归" scheme="http://anfrank.gitee.io/tags/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"/>
     
   </entry>
   
@@ -564,11 +564,11 @@
       <category term="JavaWeb" scheme="http://anfrank.gitee.io/categories/JavaWeb/"/>
     
     
+      <category term="JaveEE" scheme="http://anfrank.gitee.io/tags/JaveEE/"/>
+    
       <category term="java框架" scheme="http://anfrank.gitee.io/tags/java%E6%A1%86%E6%9E%B6/"/>
     
       <category term="java编程" scheme="http://anfrank.gitee.io/tags/java%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="JaveEE" scheme="http://anfrank.gitee.io/tags/JaveEE/"/>
     
   </entry>
   
@@ -622,11 +622,11 @@
       <category term="JavaWeb" scheme="http://anfrank.gitee.io/categories/JavaWeb/"/>
     
     
-      <category term="设计模式" scheme="http://anfrank.gitee.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
       <category term="java框架" scheme="http://anfrank.gitee.io/tags/java%E6%A1%86%E6%9E%B6/"/>
     
       <category term="java编程" scheme="http://anfrank.gitee.io/tags/java%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="设计模式" scheme="http://anfrank.gitee.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
