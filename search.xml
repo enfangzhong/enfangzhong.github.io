@@ -239,9 +239,9 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
+        <tag>JaveEE</tag>
         <tag>java框架</tag>
         <tag>java编程</tag>
-        <tag>JaveEE</tag>
       </tags>
   </entry>
   <entry>
@@ -265,9 +265,9 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>设计模式</tag>
         <tag>java框架</tag>
         <tag>java编程</tag>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -338,18 +338,18 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[个性化推荐算法实践第01章个性化推荐算法综述]]></title>
+    <title><![CDATA[hexo博客模板第01章个性化推荐算法综述]]></title>
     <url>%2F2017%2F09%2F01%2Fhexo%E5%8D%9A%E5%AE%A2%E6%A8%A1%E6%9D%BF%2F</url>
     <content type="text"><![CDATA[[TOC] 一级标题]]></content>
       <categories>
-        <category>个性化推荐算法</category>
-        <category>Item CF</category>
-        <category>User CF</category>
+        <category>hexo博客模板</category>
+        <category>hexo</category>
+        <category>博客模板</category>
       </categories>
       <tags>
-        <tag>个性化推荐算法</tag>
-        <tag>Item CF</tag>
-        <tag>User CF</tag>
+        <tag>hexo博客模板</tag>
+        <tag>hexo</tag>
+        <tag>博客模板</tag>
       </tags>
   </entry>
 </search>
