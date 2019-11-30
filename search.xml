@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[秋招的那些事]]></title>
+    <url>%2F2019%2F11%2F11%2F%E5%AE%9E%E4%B9%A0%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%2F</url>
+    <content type="text"><![CDATA[[TOC] 秋招的那些事一、秋招1.1 提前批博主在秋招之前参与了提前批的神仙打架。根据记忆提前批就面了字节跳动、京东、浦发银行，当时投递的是推荐算法，没有准备好就上战场了。 1.2 秋招每年秋招是9-11月这个阶段，一般互联网公司都集中在9月。10月还存在一些公司鞭尸。毕竟offer收割机都是手握多个offer。 二、实习 2.1 博主研二下期间（3-5月）还在写小paper。花了时间准备一篇专利，只是~~~~~。错过了实习的金三银四。 2.2 搞完论文大概是5月份了吧，当时全身心的投入到了算法与大数据的知识海洋中了，没有参与实习。 2.3 我实习在武汉最湿冷的时候。出不出太阳，全看心情。偶尔昨天气温20度，今天就5度。平时下下小雨。 2.4 南湖大道与雄庄路的十字路口总是那么的拥挤。每天早上循环播放着下一站茶山刘by房东的猫度过。 ​ 北京朋友的朋友圈全是雪雪雪。雪花儿，武汉期待你的到来。 ​ 听说今天北京下雪了。雪花儿，我在武汉等你的到来。 ——————————————————2019/11/30 夜深了，今天暂且写到这咯。]]></content>
+      <categories>
+        <category>秋招</category>
+        <category>实习</category>
+        <category>毕业季</category>
+      </categories>
+      <tags>
+        <tag>秋招</tag>
+        <tag>实习</tag>
+        <tag>毕业季</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[个性化推荐算法实践第12章本课程回顾与总结]]></title>
     <url>%2F2019%2F06%2F01%2F%E4%B8%AA%E6%80%A7%E5%8C%96%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E5%AE%9E%E8%B7%B5%E7%AC%AC12%E7%AB%A0%E6%9C%AC%E8%AF%BE%E7%A8%8B%E5%9B%9E%E9%A1%BE%E4%B8%8E%E6%80%BB%E7%BB%93%2F</url>
     <content type="text"><![CDATA[[TOC] 个性化推荐算法实践第12章本课程回顾与总结 推荐算法实战课程，课程是有问答专区，如果你有问题可以在问答专区提问，我会在每天固定时间解答课程，结合问答专区能够让你更快的掌握知识。 开始本章节的内容之前我们首先来回顾一下上一章节的内容，上一章节我们对之前所讲述过的排序部分的内容进行了总结与回顾。 本章节我们对课程所讲述过的全部内容进行总结与回顾，下面一起来看一下本章节的内容大纲。 一、个性化推荐算法离线架构 个性化推荐算法离线架构，无论是在个性化召回部分还是在个性化排序部分，我们都有一套离线处理，得到我们模型的流程，我们将这套流程的抽象一下给大家解析一下。 二、个性化推荐算法在线架构 无论是在个性化召回部分还是在个性化排序不分，我们都曾经将在线部分的架构呢，给大家讲解过，这里我们一起回顾一下。 三、本课程所讲述过的算法模型的内容回顾 一、个性化推荐算法离线架构下面一起来看一下离线架构。 我们原始的日志呢，包含以下四个部分。 ①用户的点击与用户的展示日志。 ②我们记录用户信息的日志，这里包含用户的静态信息和统计的一些动态的信息，包括用户喜欢什么样的类型的内容等等。 ③item的信息 ④实时流式信息（Streaming）。这里的流式是指包含用户的一些实时行为。比如说用户订阅某个频道、用户将某些物品加入到购物车等等等等。 基于以上的日志，我们首先进行样本的筛选，我们将测试样本有噪声的样本的剔除掉得到我们的样本，得到样本之后呢，我们再进行特征选择。 在个性化召回部分，可能我们只是更多的需要我们的点击与展示数据。但是在我们的个性化排序部分，可能我们还需要用户的信息（user info），项目的信息（item info）以及上下文信息等等的一些信息。 基于我们的特征选择与样本选择之后呢，我们得到了我们的训练数据集以及测试数据，接下来无论是在召回部分还是在排序部分，我们都使用的训练数据集去训练模型，使用我们的测试数据去评估我们模型的表现。如果我们模型的表现达到了我们的要求，我们就将我们得到的模型文件的导出。 这里在个性化召回部分呢，可能是导出的直接用户的推荐结果，也可能是item相似度的列表亦或是我们的深度学习的模型文件。 在排序部分我们得到的模型文件的基本都是模型的实例化本身。像逻辑回归部分呢，其实我们只需要得到不同特征对应的参数即可。 二、个性化推荐算法在线架构1、Recall在线架构 说完了离线架构，下面我们来一起回顾一下在线架构的召回部分，大部分情况下我们召回部分得到的结果呢，是直接写入到KV存储当中了。用户访问我们的Server的时候呢，直接召回到自己对应的推荐结果，我们拿到推荐结果对应的id呢，从我们的Detail Server当中的获取Detail 传给我们的排序部分，但是呢在一些复杂场景情况下，我们比如训练了一些深度学习的模型，那么我们在用户访问我们的Server的时候呢，我们首先得需要拼接一下用户侧（user info）的特征，然后呢访问我们的Server得到用户的向量表示然后再进行召回。 2、Rank在线架构说完了个性化召回的在线架构的，下面我们来一起看一下排序部分在线架构。排序部分在线架构根据我们模型的不同的分为以下几种。 1、如果是像逻辑回归或者是GBDT这种浅层模型。我们这里的Rank Server可以直接将模型加载到内存当中，与我们的推荐引擎的进行服务的交互。用户访问我们的Server的时候，我们首先召回得到我们的候选集列表，对于每一个候选集列表，那我们去KV当中的拼一下我们的特征，就是获得我们用户侧（user info）的特征以及项目侧（item info）的特征包括一些上下文特征等等。我们将拼接的特征的传递给让给Rank Server。Rank Server用模型来进行下预测，将预测的结果呢再传递给我们的推荐引擎。推荐引擎的依据我们每一个item预测的得分的进行一下排序，这个顺序呢就是展示给用户的顺序。 2、如果我们这里采用像WD这样的深度学习模型的话，我们这里的Rank Server需要与我们的TF Server进行交互，这里的Rank Server相当于我们这里的请求的透传，并且返回的结果呢，也透传给我们的推荐引擎。 三、本课程所讲述过的算法模型的内容回顾回顾完了在线架构，我们来一起看一下本课程具体讲解了哪些算法与模型？ 首先来看个性化召回部分，这里我们介绍了基于领域的CF、LFM、Person Rank 、Item2Vec、ContentBased。我们CF是在个性化推荐算法实战入门必修课里介绍的，入门必修课是一门免费的课程大家都可以看到。还有我们基于内容的推荐以及呢，我们这里基于深度学习的推荐Item2Vec。 我们在排序部分的介绍了浅层模型Rank LR（逻辑回归）,浅层模型组合GBDT。介绍了浅层模型不同模型的组合：LR+GBDT的混合模型。最后我们介绍了深度学习模型WD。以上的每一个算法或者模型呢，我们都是从物理意义数学公式推导，代码实战等几个方面来给大家介绍的，那么好了，本章节的内容到这里就全部结束了。本章节重点回顾了我们本次课程所讲述的全部内容。到这里本次个性化推荐算法实战课程的全部内容就结束了，非常感谢大家对于本课程的认真学习。祝大家在本次课程中学习一切顺利。]]></content>
@@ -239,9 +254,9 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>JaveEE</tag>
         <tag>java框架</tag>
         <tag>java编程</tag>
+        <tag>JaveEE</tag>
       </tags>
   </entry>
   <entry>
@@ -265,9 +280,9 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
+        <tag>设计模式</tag>
         <tag>java框架</tag>
         <tag>java编程</tag>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -312,9 +327,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[hexo+github搭建个人博客及美化]]></title>
-    <url>%2F2018%2F08%2F26%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_hexo%2Bgithub%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0%2F</url>
-    <content type="text"><![CDATA[使用Hexo+Github一步步搭建属于自己的博客（基础篇） 1、准备工作安装Node.js和配置好Node.js环境，打开cmd命令行，输入：1node -v 安装Git和配置好Git环境，安装成功的象征就是在电脑上任何位置鼠标右键能够出现如下两个选择Git GUI Here和Git Bash Here。查看git是否安装成功，在cmd命令行中输入：1git --version 2、Github账户注册和新建项目，项目必须要遵守格式：账户名.github.io，不然接下来会有很多麻烦。并且需要勾选Initialize this repository with a README在建好的项目右侧有个settings按钮，点击它，向下拉到GitHub Pages，你会看到那边有个网址，访问它，你将会惊奇的发现该项目已经被部署到网络上，能够通过外网来访问它。3、安装Hexo，在自己认为合适的地方创个文件夹，我是在D盘建了一个blog文件夹。然后通过命令行进入到该文件夹里面12d:cd blog 命令行中输入npm install hexo -g，开始安装Hexo，等待安装完毕后进行下一步输入hexo init，初始化该文件夹（有点漫长的等待。。。）输入npm install，安装所需要的组件输入hexo g，首次体验Hexo输入hexo s，开启服务器，访问该网址，正式体验Hexo问题：假如页面一直无法跳转，那么可能端口被占用了。此时我们ctrl+c停止服务器，接着输入“hexo server -p 端口号”来改变端口号，如何在浏览器中输入：localhost:端口号，你就可以在本地查看部署好的个人博客项目了。4、将本地博客部署到github网站上去。将Hexo与Github page联系起来，设置Git的user name和email 设置Git的user name和email a 在博客blog目录下，右键选Git Baes Here,命令行中输入，其中的name和email替换成你自己的用户名和邮箱 12$ git config --global user.name &quot;Name&quot;$ git config --global user.email &quot;email@example.com&quot; 输入输入cd ~/.ssh,检查是否由.ssh的文件夹 输入ssh-keygen -t rsa -C “929762930@qq.com”，连续三个回车，生成密钥，最后得到了两个文件：id_rsa和id_rsa.pub（默认存储路径是：C:\Users\Administrator.ssh）。 登录Github，点击头像下的settings，添加ssh。新建一个new ssh key，将id_rsa.pub文件里的内容复制上去输入ssh -T git@github.com，测试添加ssh是否成功。如果看到Hi后面是你的用户名，就说明成功了5、配置Deployment，在其文件夹中，找到_config.yml文件，修改repo值（在末尾）1234deploy: type: git repo: git@github.com:enfangzhong/enfangzhong.github.io.git branch: master repo值是你在github项目里的ssh（右下角）6、新建一篇博客，在cmd执行命令：hexo new post “博客名”1hexo new post &quot;你好，酱油哥&quot; 这时候在文件夹_posts目录下将会看到已经创建的文件在生成以及部署文章之前，需要安装一个扩展：npm install hexo-deployer-git —save使用编辑器编好文章，那么就可以使用命令：hexo d -g，生成以及部署了部署成功后访问你的地址：http://用户名.github.io。那么将看到生成的文章好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧主题优化展示: 酱油哥 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
+    <title><![CDATA[Hexo个人博客_主题优化篇]]></title>
+    <url>%2F2018%2F08%2F26%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%E7%AF%87%2F</url>
+    <content type="text"><![CDATA[Hexo个人博客_主题优化篇 1、Hexo访问统计功能Hexo Next 解决 Busuanzi 统计浏览失效1node -v 好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧主题优化展示: 酱油哥 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
       <categories>
         <category>搭建个人博客</category>
       </categories>
@@ -325,9 +340,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hexo个人博客_主题优化篇]]></title>
-    <url>%2F2018%2F08%2F26%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%E7%AF%87%2F</url>
-    <content type="text"><![CDATA[Hexo个人博客_主题优化篇 1、Hexo访问统计功能Hexo Next 解决 Busuanzi 统计浏览失效1node -v 好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧主题优化展示: 酱油哥 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
+    <title><![CDATA[hexo+github搭建个人博客及美化]]></title>
+    <url>%2F2018%2F08%2F26%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2_hexo%2Bgithub%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0%2F</url>
+    <content type="text"><![CDATA[使用Hexo+Github一步步搭建属于自己的博客（基础篇） 1、准备工作安装Node.js和配置好Node.js环境，打开cmd命令行，输入：1node -v 安装Git和配置好Git环境，安装成功的象征就是在电脑上任何位置鼠标右键能够出现如下两个选择Git GUI Here和Git Bash Here。查看git是否安装成功，在cmd命令行中输入：1git --version 2、Github账户注册和新建项目，项目必须要遵守格式：账户名.github.io，不然接下来会有很多麻烦。并且需要勾选Initialize this repository with a README在建好的项目右侧有个settings按钮，点击它，向下拉到GitHub Pages，你会看到那边有个网址，访问它，你将会惊奇的发现该项目已经被部署到网络上，能够通过外网来访问它。3、安装Hexo，在自己认为合适的地方创个文件夹，我是在D盘建了一个blog文件夹。然后通过命令行进入到该文件夹里面12d:cd blog 命令行中输入npm install hexo -g，开始安装Hexo，等待安装完毕后进行下一步输入hexo init，初始化该文件夹（有点漫长的等待。。。）输入npm install，安装所需要的组件输入hexo g，首次体验Hexo输入hexo s，开启服务器，访问该网址，正式体验Hexo问题：假如页面一直无法跳转，那么可能端口被占用了。此时我们ctrl+c停止服务器，接着输入“hexo server -p 端口号”来改变端口号，如何在浏览器中输入：localhost:端口号，你就可以在本地查看部署好的个人博客项目了。4、将本地博客部署到github网站上去。将Hexo与Github page联系起来，设置Git的user name和email 设置Git的user name和email a 在博客blog目录下，右键选Git Baes Here,命令行中输入，其中的name和email替换成你自己的用户名和邮箱 12$ git config --global user.name &quot;Name&quot;$ git config --global user.email &quot;email@example.com&quot; 输入输入cd ~/.ssh,检查是否由.ssh的文件夹 输入ssh-keygen -t rsa -C “929762930@qq.com”，连续三个回车，生成密钥，最后得到了两个文件：id_rsa和id_rsa.pub（默认存储路径是：C:\Users\Administrator.ssh）。 登录Github，点击头像下的settings，添加ssh。新建一个new ssh key，将id_rsa.pub文件里的内容复制上去输入ssh -T git@github.com，测试添加ssh是否成功。如果看到Hi后面是你的用户名，就说明成功了5、配置Deployment，在其文件夹中，找到_config.yml文件，修改repo值（在末尾）1234deploy: type: git repo: git@github.com:enfangzhong/enfangzhong.github.io.git branch: master repo值是你在github项目里的ssh（右下角）6、新建一篇博客，在cmd执行命令：hexo new post “博客名”1hexo new post &quot;你好，酱油哥&quot; 这时候在文件夹_posts目录下将会看到已经创建的文件在生成以及部署文章之前，需要安装一个扩展：npm install hexo-deployer-git —save使用编辑器编好文章，那么就可以使用命令：hexo d -g，生成以及部署了部署成功后访问你的地址：http://用户名.github.io。那么将看到生成的文章好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧主题优化展示: 酱油哥 欢迎访问我的博客Git托管博客效果 Coding托管博客效果 码云托管博客效果]]></content>
       <categories>
         <category>搭建个人博客</category>
       </categories>
