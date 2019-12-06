@@ -66,8 +66,8 @@
       </categories>
       <tags>
         <tag>个性化推荐算法</tag>
-        <tag>WideAndDeep</tag>
         <tag>逻辑回归</tag>
+        <tag>WideAndDeep</tag>
         <tag>神经网络</tag>
       </tags>
   </entry>
@@ -228,8 +228,8 @@
         <category>机器学习</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>逻辑回归</tag>
+        <tag>机器学习</tag>
         <tag>线性回归</tag>
       </tags>
   </entry>
