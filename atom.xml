@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://anfrank.gitee.io/"/>
-  <updated>2019-12-06T05:45:13.958Z</updated>
+  <updated>2019-12-07T17:27:45.813Z</updated>
   <id>http://anfrank.gitee.io/</id>
   
   <author>
@@ -15,6 +15,43 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo添加APlayer音乐播放器功能</title>
+    <link href="http://anfrank.gitee.io/2019/12/08/Hexo%E6%B7%BB%E5%8A%A0APlayer%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8%E5%8A%9F%E8%83%BD/"/>
+    <id>http://anfrank.gitee.io/2019/12/08/Hexo添加APlayer音乐播放器功能/</id>
+    <published>2019-12-07T16:54:11.000Z</published>
+    <updated>2019-12-07T17:27:45.813Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><blockquote><p>为什么会写hexo添加音乐播放器呢？初衷是有粉丝私信总是问我的博客中音乐播放器是怎么添加的。所以还是写一下，毕竟不是一两句话可以描述清楚。</p></blockquote><h1 id="Hexo添加APlayer音乐播放器功能"><a href="#Hexo添加APlayer音乐播放器功能" class="headerlink" title="Hexo添加APlayer音乐播放器功能"></a>Hexo添加APlayer音乐播放器功能</h1><h2 id="一、效果图"><a href="#一、效果图" class="headerlink" title="一、效果图"></a>一、效果图</h2><h2 id="二、引入APlayer音乐播放器"><a href="#二、引入APlayer音乐播放器" class="headerlink" title="二、引入APlayer音乐播放器"></a>二、引入APlayer音乐播放器</h2><h3 id="2-1-下载APlayer源码"><a href="#2-1-下载APlayer源码" class="headerlink" title="2.1 下载APlayer源码"></a>2.1 下载APlayer源码</h3><p><a href="https://github.com/MoePlayer/APlayer" target="_blank" rel="noopener">APlayer源码下载地址：</a><a href="https://github.com/MoePlayer/APlayer" target="_blank" rel="noopener">https://github.com/MoePlayer/APlayer</a></p><h3 id="2-2-将源码放到next主题的source文件夹中"><a href="#2-2-将源码放到next主题的source文件夹中" class="headerlink" title="2.2 将源码放到next主题的source文件夹中"></a>2.2 将源码放到next主题的source文件夹中</h3><p> 下载github压缩包，解压后把dist文件夹复制到\themes\next\source目录中。 </p><p><img src="/2019/12/08/Hexo添加APlayer音乐播放器功能/image-20191208011527449.png" alt="image-20191208011527449"></p><h3 id="2-3-放入自己喜欢的音乐"><a href="#2-3-放入自己喜欢的音乐" class="headerlink" title="2.3 放入自己喜欢的音乐"></a>2.3 放入自己喜欢的音乐</h3><p> 在dist目录里，新建music.js文件，并把如下代码粘贴进去。 </p><p><img src="/2019/12/08/Hexo添加APlayer音乐播放器功能/image-20191208011840592.png" alt="image-20191208011840592"></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">const ap = new APlayer(&#123;</span><br><span class="line">    container: document.getElementById(&apos;aplayer&apos;),</span><br><span class="line">    fixed: true,</span><br><span class="line">    autoplay: false,</span><br><span class="line">    audio: [</span><br><span class="line">&#123;</span><br><span class="line">        name: &quot;平凡之路&quot;,</span><br><span class="line">        artist: &apos;朴树&apos;,</span><br><span class="line">        url: &apos;http://www.ytmp3.cn/down/59211.mp3&apos;,</span><br><span class="line">        cover: &apos;http://p1.music.126.net/W_5XiCv3rGS1-J7EXpHSCQ==/18885211718782327.jpg?param=130y130&apos;,</span><br><span class="line">      &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">        name: &apos;这些民谣 - 一次听个够&apos;,</span><br><span class="line">        artist: &apos;翁大涵&apos;,</span><br><span class="line">        url: &apos;http://www.ytmp3.cn/down/60222.mp3&apos;,</span><br><span class="line">        cover: &apos;http://p2.music.126.net/Wx5GNJEpay2JbfVUJc4Aew==/109951163094853876.jpg?param=130y130&apos;,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        name: &apos;你的酒馆对我打了烊&apos;,</span><br><span class="line">        artist: &apos;陈雪凝&apos;,</span><br><span class="line">        url: &apos;http://www.ytmp3.cn/down/59770.mp3&apos;,</span><br><span class="line">        cover: &apos;http://p1.music.126.net/LiRR__0pJHSivqBHZzbMUw==/109951163816225567.jpg?param=130y130&apos;,</span><br><span class="line">      &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">        name: &apos;Something Just Like This&apos;,</span><br><span class="line">        artist: &apos;The Chainsmokers&apos;,</span><br><span class="line">        url: &apos;http://www.ytmp3.cn/down/50463.mp3&apos;,</span><br><span class="line">        cover: &apos;http://p2.music.126.net/ggnyubDdMxrhpqYvpZbhEQ==/3302932937412681.jpg?param=130y130&apos;,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        name: &apos;Good Time&apos;,</span><br><span class="line">        artist: &apos;Owl City&amp;Carly Rae Jepsen&apos;,</span><br><span class="line">        url: &apos;http://www.ytmp3.cn/down/34148.mp3&apos;,</span><br><span class="line">        cover: &apos;http://p1.music.126.net/c5NVKUIAUcyN4BQUDbGnEg==/109951163221157827.jpg?param=130y130&apos;,</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h3 id="2-4在next主题下的layout中引入APlayer音乐播放器源码"><a href="#2-4在next主题下的layout中引入APlayer音乐播放器源码" class="headerlink" title="2.4在next主题下的layout中引入APlayer音乐播放器源码"></a>2.4在next主题下的layout中引入APlayer音乐播放器源码</h3><p>在\themes\next\layout_layout.swig文件中，<body>里新增如下代码： </body></p><p><img src="/2019/12/08/Hexo添加APlayer音乐播放器功能/blog\jygBlog\source\_posts\Hexo添加APlayer音乐播放器功能\image-20191208012423145.png" alt="image-20191208012423145"></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 加入APlayer音乐播放器 --&gt;</span><br><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/APlayer.min.css&quot;&gt;</span><br><span class="line">&lt;div id=&quot;aplayer&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;/dist/APlayer.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;/dist/music.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure><h3 id="2-5-重新部署"><a href="#2-5-重新部署" class="headerlink" title="2.5 重新部署"></a>2.5 重新部署</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><p><img src="/2019/12/08/Hexo添加APlayer音乐播放器功能/image-20191208012722037.png" alt="image-20191208012722037"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;为什么会写hexo添加音乐播放器呢？初衷是有粉丝私信总是问我的博客中音乐播放器是怎么添加的。所以还是写一下，毕竟不是一两句话可以描述清楚。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;Hexo添加APlayer音乐
+      
+    
+    </summary>
+    
+      <category term="hexo博客" scheme="http://anfrank.gitee.io/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="音乐播放器" scheme="http://anfrank.gitee.io/categories/hexo%E5%8D%9A%E5%AE%A2/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8/"/>
+    
+      <category term="APlayer音乐播放器" scheme="http://anfrank.gitee.io/categories/hexo%E5%8D%9A%E5%AE%A2/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8/APlayer%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8/"/>
+    
+    
+      <category term="hexo博客" scheme="http://anfrank.gitee.io/tags/hexo%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="音乐播放器" scheme="http://anfrank.gitee.io/tags/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8/"/>
+    
+      <category term="APlayer音乐播放器" scheme="http://anfrank.gitee.io/tags/APlayer%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>SQL语句面试经典50题</title>
@@ -46,6 +83,40 @@
       <category term="SQL语句" scheme="http://anfrank.gitee.io/tags/SQL%E8%AF%AD%E5%8F%A5/"/>
     
       <category term="CRUD" scheme="http://anfrank.gitee.io/tags/CRUD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo博客模板第01章个性化推荐算法综述</title>
+    <link href="http://anfrank.gitee.io/2019/12/01/hexo%E5%8D%9A%E5%AE%A2%E6%A8%A1%E6%9D%BF/"/>
+    <id>http://anfrank.gitee.io/2019/12/01/hexo博客模板/</id>
+    <published>2019-12-01T03:03:11.000Z</published>
+    <updated>2019-12-07T16:53:14.479Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1 id=&quot;一级标题&quot;&gt;&lt;a href=&quot;#一级标题&quot; class=&quot;headerlink&quot; title=&quot;一级标题&quot;&gt;&lt;/a&gt;一级标题&lt;/h1&gt;
+      
+    
+    </summary>
+    
+      <category term="hexo博客模板" scheme="http://anfrank.gitee.io/categories/hexo%E5%8D%9A%E5%AE%A2%E6%A8%A1%E6%9D%BF/"/>
+    
+      <category term="hexo" scheme="http://anfrank.gitee.io/categories/hexo%E5%8D%9A%E5%AE%A2%E6%A8%A1%E6%9D%BF/hexo/"/>
+    
+      <category term="博客模板" scheme="http://anfrank.gitee.io/categories/hexo%E5%8D%9A%E5%AE%A2%E6%A8%A1%E6%9D%BF/hexo/%E5%8D%9A%E5%AE%A2%E6%A8%A1%E6%9D%BF/"/>
+    
+    
+      <category term="hexo博客模板" scheme="http://anfrank.gitee.io/tags/hexo%E5%8D%9A%E5%AE%A2%E6%A8%A1%E6%9D%BF/"/>
+    
+      <category term="hexo" scheme="http://anfrank.gitee.io/tags/hexo/"/>
+    
+      <category term="博客模板" scheme="http://anfrank.gitee.io/tags/%E5%8D%9A%E5%AE%A2%E6%A8%A1%E6%9D%BF/"/>
     
   </entry>
   
@@ -580,62 +651,6 @@
       <category term="右外连接" scheme="http://anfrank.gitee.io/tags/%E5%8F%B3%E5%A4%96%E8%BF%9E%E6%8E%A5/"/>
     
       <category term="交叉连接" scheme="http://anfrank.gitee.io/tags/%E4%BA%A4%E5%8F%89%E8%BF%9E%E6%8E%A5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git个人总结笔记</title>
-    <link href="http://anfrank.gitee.io/2018/09/06/Git%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0/"/>
-    <id>http://anfrank.gitee.io/2018/09/06/Git个人总结笔记/</id>
-    <published>2018-09-06T03:16:28.000Z</published>
-    <updated>2019-05-10T13:33:55.340Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Git个人总结笔记"><a href="#Git个人总结笔记" class="headerlink" title="Git个人总结笔记"></a>Git个人总结笔记</h1><h2 id="初始化一个Git仓库"><a href="#初始化一个Git仓库" class="headerlink" title="初始化一个Git仓库"></a>初始化一个Git仓库</h2><p>使用git init命令。</p><h2 id="添加文件到Git仓库"><a href="#添加文件到Git仓库" class="headerlink" title="添加文件到Git仓库"></a>添加文件到Git仓库</h2><p>分两步：</p><ul><li>使用命令git add <file>，注意，可反复多次使用，添加多个文件；</file></li><li>使用命令git commit -m <message>，完成。</message></li></ul><h2 id="查看git仓库状态"><a href="#查看git仓库状态" class="headerlink" title="查看git仓库状态"></a>查看git仓库状态</h2><p>要随时掌握工作区的状态，使用git status命令。</p><p>如果git status告诉你有文件被修改过，用git diff可以查看修改内容。</p><h2 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h2><p>HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset —hard commit_id。</p><ul><li><p>穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。<br>如：git reset —hard HEAD^</p></li><li><p>要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。<br>如：git reset —hard commit_id</p></li></ul><p>git diff HEAD — readme.txt：<br>查看工作区和版本库里面最新版本的区别</p><h2 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h2><p>git checkout — readme.txt<br>把readme.txt文件在工作区的修改全部撤销</p><ul><li><p>一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；</p></li><li><p>一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。</p></li></ul><p>就是让这个文件回到最近一次<code>git commit</code>或<code>git add</code>时的状态</p><p>git reset HEAD <file><br>可以把暂存区的修改撤销掉（unstage），重新放回工作区</file></p><ul><li>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout — file。</li><li>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD <file>，就回到了场景1，第二步按场景1操作。</file></li><li>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</li></ul><p>git rm用于删除一个文件。如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，你会丢失最近一次提交后你修改的内容。<br>git rm —cached <file>…</file></p><h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><p>创建SSH Key：<br>$ ssh-keygen -t rsa -C “youremail@example.com”<br>github添加SHH</p><p>本地仓库进行远程同步<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:michaelliao/learngit.git</span><br></pre></td></tr></table></figure></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure><p>第一次push加上-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来</p><p>以后只要本地作了提交，就可以通过命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure></p><p>远程仓库tips:</p><ul><li><p>要关联一个远程库，使用命令</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@server-name:path/repo-name.git；</span><br></pre></td></tr></table></figure></li><li><p>关联后，使用命令git push -u origin master第一次推送master分支的所有内容；</p></li><li><p>此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；</p></li></ul><h2 id="远程仓库克隆"><a href="#远程仓库克隆" class="headerlink" title="远程仓库克隆"></a>远程仓库克隆</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:michaelliao/gitskills.git</span><br></pre></td></tr></table></figure><h2 id="分支管理（重要）"><a href="#分支管理（重要）" class="headerlink" title="分支管理（重要）"></a>分支管理（重要）</h2><p>master指向最新的提交<br>HEAD指向的就是当前分支</p><p>只有master分支的时候：<br>每次提交，master分支都会向前移动一步，这样，随着你不断提交，master分支的线也越来越长</p><p>当我们创建新的分支，例如dev时，Git新建了一个指针叫dev，指向master相同的提交，再把HEAD指向dev，就表示当前分支在dev上：</p><p><img src="/2018/09/06/Git个人总结笔记/20180906012830969.png" alt=""></p><p>从现在开始，对工作区的修改和提交就是针对dev分支了，比如新提交一次后，dev指针往前移动一步，而master指针不变<br><img src="/2018/09/06/Git个人总结笔记/20180906013006354.png" alt=""><br>假如我们在dev上的工作完成了，就可以把dev合并到master上。Git怎么合并呢？最简单的方法，就是直接把master指向dev的当前提交，就完成了合并：<br><img src="/2018/09/06/Git个人总结笔记/20180906013104230.png" alt=""><br>合并完分支后，甚至可以删除dev分支。删除dev分支就是把dev指针给删掉，删掉后，我们就剩下了一条master分支：<br><img src="/2018/09/06/Git个人总结笔记/20180906013153959.png" alt=""></p><p>下面开始实战。<br>首先，我们创建dev分支，然后切换到dev分支：<br>git checkout -b dev</p><p>git checkout命令加上-b参数表示创建并切换，相当于以下两条命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch dev</span><br><span class="line">git checkout dev</span><br></pre></td></tr></table></figure></p><p>git branch命令查看当前分支</p><p>把dev分支的工作成果合并到master分支上:<br>git merge dev</p><p>合并后删除分支：<br>git branch -d dev</p><p>总结：<br>Git鼓励大量使用分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">查看分支：git branch</span><br><span class="line"></span><br><span class="line">创建分支：git branch &lt;name&gt;</span><br><span class="line"></span><br><span class="line">切换分支：git checkout &lt;name&gt;</span><br><span class="line"></span><br><span class="line">创建+切换分支：git checkout -b &lt;name&gt;</span><br><span class="line"></span><br><span class="line">合并某分支到当前分支：git merge &lt;name&gt;</span><br><span class="line"></span><br><span class="line">删除分支：git branch -d &lt;name&gt;</span><br></pre></td></tr></table></figure></p><p>本地库上使用命令git remote add把它和码云的远程库关联<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@gitee.com:liaoxuefeng/learngit.git</span><br></pre></td></tr></table></figure></p><p>git remote -v查看远程库信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br><span class="line">origin    git@github.com:michaelliao/learngit.git (fetch)</span><br><span class="line">origin    git@github.com:michaelliao/learngit.git (push)</span><br></pre></td></tr></table></figure></p><p>删除已关联的名为origin的远程库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote rm origin</span><br></pre></td></tr></table></figure></p><p>关联GitHub的远程库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add github git@github.com:michaelliao/learngit.git</span><br></pre></td></tr></table></figure></p><p>关联码云的远程库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add gitee git@gitee.com:liaoxuefeng/learngit.git</span><br></pre></td></tr></table></figure></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br><span class="line">gitee    git@gitee.com:liaoxuefeng/learngit.git (fetch)</span><br><span class="line">gitee    git@gitee.com:liaoxuefeng/learngit.git (push)</span><br><span class="line">github    git@github.com:michaelliao/learngit.git (fetch)</span><br><span class="line">github    git@github.com:michaelliao/learngit.git (push)</span><br></pre></td></tr></table></figure><p>如果要推送到GitHub，使用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push github master</span><br></pre></td></tr></table></figure></p><p>如果要推送到码云，使用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push gitee master</span><br></pre></td></tr></table></figure></p><h2 id="为开源项目贡献代码"><a href="#为开源项目贡献代码" class="headerlink" title="为开源项目贡献代码"></a>为开源项目贡献代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:enfangzhong/bootstrap.git</span><br></pre></td></tr></table></figure><p>添加推特公司bootstrap项目远程仓库<br>git remote add upstream git@github.com:twbs/bootstrap.git</p><p>查看建立连接的远程仓库<br><img src="/2018/09/06/Git个人总结笔记/20180906023141140.png" alt=""></p><p>1、首先拉取推特公司最新代码<br>git pull upstream master</p><p>2、自己创建分支<br>git checkout -b feature/add_sth</p><p>然后去修改你自己代码</p><p>git status查看状态</p><p>git add ./</p><p>git commit -m “add sth”</p><p>3.切换到主分支，继续拉取网上最新代码</p><p>git checkout master<br>git pull upstream master</p><p>4.切换到分支，进行测试，<br>git checkout feature/add_sth</p><p>5.合并分支<br>git rebase master</p><p>git push origin feature/add_sth</p><p><img src="/2018/09/06/Git个人总结笔记/20180906030018530.png" alt=""></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Git个人总结笔记&quot;&gt;&lt;a href=&quot;#Git个人总结笔记&quot; class=&quot;headerlink&quot; title=&quot;Git个人总结笔记&quot;&gt;&lt;/a&gt;Git个人总结笔记&lt;/h1&gt;&lt;h2 id=&quot;初始化一个Git仓库&quot;&gt;&lt;a href=&quot;#初始化一个Git仓库&quot; cla
-      
-    
-    </summary>
-    
-      <category term="JavaWeb" scheme="http://anfrank.gitee.io/categories/JavaWeb/"/>
-    
-    
-      <category term="Git" scheme="http://anfrank.gitee.io/tags/Git/"/>
-    
-      <category term="GiT撤销" scheme="http://anfrank.gitee.io/tags/GiT%E6%92%A4%E9%94%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JaveEE请求转发和重定向的区别</title>
-    <link href="http://anfrank.gitee.io/2018/09/05/JaveEE%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-    <id>http://anfrank.gitee.io/2018/09/05/JaveEE请求转发和重定向的区别/</id>
-    <published>2018-09-05T06:32:29.000Z</published>
-    <updated>2019-05-12T04:37:34.476Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="一、请求转发和重定向"><a href="#一、请求转发和重定向" class="headerlink" title="一、请求转发和重定向"></a>一、请求转发和重定向</h2><h3 id="请求转发："><a href="#请求转发：" class="headerlink" title="请求转发："></a>请求转发：</h3><p>request.getRequestDispatcher(URL地址).forward(request, response)</p><p>处理流程：</p><ul><li>客户端发送请求，Servlet做出业务逻辑处理。</li><li>Servlet调用forword()方法，服务器Servlet把目标资源返回给客户端浏览器。<br><img src="https://i.loli.net/2018/09/06/5b9128febacfe.png" alt=""></li></ul><h3 id="重定向："><a href="#重定向：" class="headerlink" title="重定向："></a>重定向：</h3><p>response.sendRedirect(URL地址)</p><p>处理流程：</p><ul><li>客户端发送请求，Servlet做出业务逻辑处理。</li><li>Servlet调用response.sendReadirect()方法，把要访问的目标资源作为response响应头信息发给客户端浏览器。</li><li>客户端浏览器重新访问服务器资源xxx.jsp，服务器再次对客户端浏览器做出响应。<br><img src="https://i.loli.net/2018/09/06/5b9129b0968aa.png" alt=""><br>重定向<br>以上两种情况，你都需要考虑Servlet处理完后，数据如何在jsp页面上呈现。图例是请求、响应的流程，没有标明数据如何处理、展现。</li></ul><h2 id="二、转发和重定向的路径问题"><a href="#二、转发和重定向的路径问题" class="headerlink" title="二、转发和重定向的路径问题"></a>二、转发和重定向的路径问题</h2><p>1）使用相对路径在重定向和转发中没有区别<br>2）重定向和请求转发使用绝对路径时，根/路径代表了不同含义<br>重定向response.sendRedirect(“xxx”)是服务器向客户端发送一个请求头信息，由客户端再请求一次服务器。/指的Tomcat的根目录,写绝对路径应该写成”/当前Web程序根名称/资源名” 。如”/WebModule/login.jsp”,”/bbs/servlet/LoginServlet”<br>转发是在服务器内部进行的，写绝对路径/开头指的是当前的Web应用程序。绝对路径写法就是是”/login.jsp”或”/servlet/LoginServlet”。</p><p><strong>总结：</strong>以上要注意是区分是从服务器外的请求，还在是内部转发，从服务器外的请求，从Tomcat根写起(就是要包括当前Web的根)；是服务器内部的转发，很简单了，因为在当前服务器内，/写起指的就是当前Web的根目录。</p><h2 id="三、转发和重定向的区别"><a href="#三、转发和重定向的区别" class="headerlink" title="三、转发和重定向的区别"></a>三、转发和重定向的区别</h2><ul><li><p>request.getRequestDispatcher()是容器中控制权的转向，在客户端浏览器地址栏中不会显示出转向后的地址；服务器内部转发，整个过程处于同一个请求当中。<br>response.sendRedirect()则是完全的跳转，浏览器将会得到跳转的地址，并重新发送请求链接。这样，从浏览器的地址栏中可以看到跳转后的链接地址。不在同一个请求。重定向，实际上客户端会向服务器端发送两个请求。<br>所以转发中数据的存取可以用request作用域：request.setAttribute(), request.getAttribute()，重定向是取不到request中的数据的。只能用session。</p></li><li><p>forward()更加高效，在可以满足需要时，尽量使用RequestDispatcher.forward()方法。（思考一下为什么？）</p></li><li><p>RequestDispatcher是通过调用HttpServletRequest对象的getRequestDispatcher()方法得到的，是属于请求对象的方法。<br>sendRedirect()是HttpServletResponse对象的方法，即响应对象的方法，既然调用了响应对象的方法，那就表明整个请求过程已经结束了，服务器开始向客户端返回执行的结果。</p></li><li><p>重定向可以跨域访问，而转发是在web服务器内部进行的，不能跨域访问。</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;一、请求转发和重定向&quot;&gt;&lt;a href=&quot;#一、请求转发和重定向&quot; class=&quot;headerlink&quot; title=&quot;一、请求转发和重定向&quot;&gt;&lt;/a&gt;一、请求转发和重定向&lt;/h2&gt;&lt;h3 id=&quot;请求转发：&quot;&gt;&lt;a href=&quot;#请求转发：&quot; class=&quot;he
-      
-    
-    </summary>
-    
-      <category term="JavaWeb" scheme="http://anfrank.gitee.io/categories/JavaWeb/"/>
-    
-    
-      <category term="java框架" scheme="http://anfrank.gitee.io/tags/java%E6%A1%86%E6%9E%B6/"/>
-    
-      <category term="java编程" scheme="http://anfrank.gitee.io/tags/java%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="JaveEE" scheme="http://anfrank.gitee.io/tags/JaveEE/"/>
     
   </entry>
   
