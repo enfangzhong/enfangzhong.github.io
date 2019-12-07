@@ -1736,7 +1736,7 @@ if(canvas.getContext){
         mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
         seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
         snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
-        document.getElementById("timeDate").innerHTML = "已苟活："+dnum+" 天 "; 
+        document.getElementById("timeDate").innerHTML = "我在此等候你："+dnum+" 天 "; 
         document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
     } 
 setInterval("createtime()",250);
@@ -1750,14 +1750,14 @@ setInterval("createtime()",250);
   
     <span class="site-uv" title="总访客量">
       <i class="fa fa-user"></i>
-      访问用户：<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人
+      我的第<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>位朋友
     </span>
   
 
   
     <span class="site-pv" title="总访问量">
       <i class="fa fa-eye"></i>
-      访问次数：<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+      经历<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次回眸才与你相遇
     </span>
   
 </div>
