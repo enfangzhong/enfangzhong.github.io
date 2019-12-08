@@ -2188,7 +2188,7 @@ Servlet调用forword()方法，服务器Servlet把目标资源返回给客
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/2018/08/26/Hexo个人博客_主题优化篇/">
+    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/2018/08/26/Hexo个人博客_hexo+github搭建个人博客及美化更新/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
@@ -2207,8 +2207,8 @@ Servlet调用forword()方法，服务器Servlet把目标资源返回给客
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/26/Hexo个人博客_主题优化篇/" itemprop="url">
-                  Hexo个人博客_主题优化篇
+                <a class="post-title-link" href="/2018/08/26/Hexo个人博客_hexo+github搭建个人博客及美化更新/" itemprop="url">
+                  hexo+github搭建个人博客及美化
                 </a>
               
             
@@ -2251,7 +2251,7 @@ Servlet调用forword()方法，服务器Servlet把目标资源返回给客
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-11 17:06:11" itemprop="dateModified" datetime="2019-05-11T17:06:11+08:00">2019-05-11</time>
+                <time title="修改时间：2019-05-10 20:18:41" itemprop="dateModified" datetime="2019-05-10T20:18:41+08:00">2019-05-10</time>
               
             
           </span>
@@ -2286,8 +2286,8 @@ Servlet调用forword()方法，服务器Servlet把目标资源返回给客
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/26/Hexo个人博客_主题优化篇/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/08/26/Hexo个人博客_主题优化篇/" itemprop="commentCount"></span>
+                <a href="/2018/08/26/Hexo个人博客_hexo+github搭建个人博客及美化更新/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/08/26/Hexo个人博客_hexo+github搭建个人博客及美化更新/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2317,15 +2317,13 @@ Servlet调用forword()方法，服务器Servlet把目标资源返回给客
       
         
           
-          Hexo个人博客_主题优化篇
-1、Hexo访问统计功能Hexo Next 解决 Busuanzi 统计浏览失效1node -v
-好了，到此为止，最基本的也是最全面的hexo+github搭建博客完结。接下来进入主题优化吧主题优化展示: 酱油哥
-欢迎访问我的博客Git托管博客效果 
-Coding托管博
+          使用Hexo+Github一步步搭建属于自己的博客（基础篇）
+1、准备工作安装Node.js和配置好Node.js环境，打开cmd命令行，输入：1node -v
+安装Git和配置好Git环境，安装成功的象征就是在电脑上任何位置鼠标右键能够出现如下两个选择Git GUI Here和Git Bash H
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/08/26/Hexo个人博客_主题优化篇/#more" rel="contents">
+            <a class="btn" href="/2018/08/26/Hexo个人博客_hexo+github搭建个人博客及美化更新/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -3230,22 +3228,30 @@ setInterval("createtime()",250);
 
 
   <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="/js/src/Valine.min.js"></script>
-
-  <!-- https://deserts.io/diy-a-comment-system/ -->
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
   <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
     new Valine({
-        lang: 'zh-cn',
-        admin_email: '944727327@qq.com', //博主邮箱
         el: '#comments' ,
+        verify: false,
+        notify: false,
         appId: 'SACSC0biGE5t01ErmVSxYvVt-gzGzoHsz',
         appKey: 'td1GAOLqHNMnQ4BtJENstUVW',
-        emoticon_url: 'https://cloud.panjunwen.com/alu',
-        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
         placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!填写邮箱能很快收到我的回复喔！老铁，你不想说两句吗？',
-  });
-
+        avatar:'wavatar',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
   </script>
+
 
 
   
