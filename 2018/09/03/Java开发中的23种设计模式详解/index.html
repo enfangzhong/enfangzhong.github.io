@@ -130,7 +130,7 @@
   </script>
 
   <meta name="description" content="Java开发中的23种设计模式详解java的设计模式大体上分为三大类： 创建型模式（5种）：工厂方法模式，抽象工厂模式，单例模式，建造者模式，原型模式。 结构型模式（7种）：适配器模式，装饰器模式，代理模式，外观模式，桥接模式，组合模式，享元模式。 行为型模式（11种）：策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。">
-<meta name="keywords" content="设计模式,java框架,java编程">
+<meta name="keywords" content="java框架,java编程,设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java开发中的23种设计模式详解">
 <meta property="og:url" content="http://anfrank.gitee.io/2018/09/03/Java开发中的23种设计模式详解/index.html">
@@ -699,11 +699,11 @@ function setSidebarMarginTop (headerOffset) {
       
         <div class="post-tags">
           
-            <a href="/tags/设计模式/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
-          
             <a href="/tags/java框架/" rel="tag"><i class="fa fa-tag"></i> java框架</a>
           
             <a href="/tags/java编程/" rel="tag"><i class="fa fa-tag"></i> java编程</a>
+          
+            <a href="/tags/设计模式/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
           
         </div>
       
@@ -1640,30 +1640,22 @@ setInterval("createtime()",250);
 
 
   <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  
-  
-  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-  
+  <script src="/js/src/Valine.min.js"></script>
+
+  <!-- https://deserts.io/diy-a-comment-system/ -->
   <script type="text/javascript">
-    var GUEST = ['nick','mail','link'];
-    var guest = 'nick,mail,link';
-    guest = guest.split(',').filter(function (item) {
-      return GUEST.indexOf(item)>-1;
-    });
     new Valine({
+        lang: 'zh-cn',
+        admin_email: '944727327@qq.com', //博主邮箱
         el: '#comments' ,
-        verify: false,
-        notify: false,
         appId: 'SACSC0biGE5t01ErmVSxYvVt-gzGzoHsz',
         appKey: 'td1GAOLqHNMnQ4BtJENstUVW',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
         placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!填写邮箱能很快收到我的回复喔！老铁，你不想说两句吗？',
-        avatar:'wavatar',
-        meta:guest,
-        pageSize:'10' || 10,
-        visitor: false
-    });
-  </script>
+  });
 
+  </script>
 
 
   
