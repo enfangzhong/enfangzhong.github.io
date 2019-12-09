@@ -780,7 +780,7 @@ w_{j}=w_{j}-\alpha \frac{\partial loss}{\partial w_{j}}</script><p>当然，要�
 <p>首先需要统计一下，我们样本当中这一维度特征的分布，比如我们想四段离散化，这里我们就需要统计一下四分之一分位点。这里就是0-18小时是一个区间，18-25小时是一个区间，25-40小时是一个区间，40-无穷大是另一个区间。那么我们总共有4个区间，这4个区间我们发现23是位于18-25这个区间，那么就离散化成了 [0,1,0,0]。如果这个值不是23，而是60，显然特征就会被离散化成[0,0,0,1]。当然，这里也可以不被4段化，而是5段，我们只需要按相应的去统计就可以了。</p>
 <p>下面再以一个离散值来举例，如果说一个人的国家是中国，系统中只有三个国家，那中国对应的实例化特征就是[1,0,0]，美国便是[0,1,0]。</p>
 <p><img src="/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/20190409210625322.png" alt="img"></p>
-<h3 id="四、代码实战LR之样本选择"><a href="#四、代码实战LR之样本选择" class="headerlink" title="四、代码实战LR之样本选择"></a>四、代码实战LR之样本选择</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="四、代码实战LR之样本选择"><a href="#四、代码实战LR之样本选择" class="headerlink" title="四、代码实战LR之样本选择"></a>四、代码实战LR之样本选择</h3><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
 
       
     </div>
