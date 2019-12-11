@@ -2051,7 +2051,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #6be893;
+  background: #09ffc3;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3180,6 +3180,9 @@ body {
 }
 .post-toc .nav .nav-child {
   display: block;
+}
+.post-toc ol {
+  font-size: 13px;
 }
 code {
   color: #ff7600;
