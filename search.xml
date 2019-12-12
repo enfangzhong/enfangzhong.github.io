@@ -10,9 +10,9 @@
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>微服务</tag>
         <tag>Spring Cloud</tag>
         <tag>微服务框架</tag>
+        <tag>微服务</tag>
       </tags>
   </entry>
   <entry>
@@ -25,9 +25,9 @@
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>微服务</tag>
         <tag>Spring Cloud</tag>
         <tag>微服务框架</tag>
+        <tag>微服务</tag>
       </tags>
   </entry>
   <entry>
@@ -39,8 +39,8 @@
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>Spring Boot</tag>
         <tag>微服务</tag>
+        <tag>Spring Boot</tag>
       </tags>
   </entry>
   <entry>
@@ -89,7 +89,7 @@
   <entry>
     <title><![CDATA[SQL语句面试经典50题]]></title>
     <url>%2F2019%2F12%2F03%2FSQL%E8%AF%AD%E5%8F%A5%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B850%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[SQL语句面试经典50题 2019/12/03 19:36 今天更新到这 2019/12/04 22:05 项目中完成了表单中的上传下载接口与前端对接。今天加班到八点，话说加班可以调休。希望过年调几天。 2019/12/05 01:43 今天研究了一下Flowable 工作流框架，明天继续。夜深了，休息。 2019/12/06 13:23 刚才在b站看了一个程序员老哥被裁的纪念品上面写着：感谢有你，一路同行，怀念我们一起奋斗的时光。 0.学习目标 了解SQL的作用 掌握SQL语句的编写 1. 为什么要练习sql语句？做为一个后端开发人员，sql语句的编写是至关重要的。在实习的第一天到公司，我的leader戴哥就是让我练习sql语句。尽管用mybatis plus，但是sql语句可以处理复杂的逻辑。 会写sql的程序员，才是真的的crud boy。 练习sql语句，主要看了猴子和小番茄的知乎博文分析。 这里有sql面试的50题，帮助大家更进一步的熟悉SQL. SQL是数据分析师的必备基础技能，希望大家跟我一起来打怪升级，最后成为某一领域的数据科学家。 常见的SQL面试题： 经典50题 - 知乎 https://zhuanlan.zhihu.com/p/38354000 SQL面试必会50题 - 知乎 https://zhuanlan.zhihu.com/p/43289968 2.练习题分析阶段 已知有如下4张表： 学生表：student(学号,学生姓名,出生年月,性别) 成绩表：score(学号,课程号,成绩) 课程表：course(课程号,课程名称,教师号) 教师表：teacher(教师号,教师姓名) 1.学生表Student(s_id,s_name,s_birth,s_sex) —学生编号,学生姓名, 出生年月,学生性别2.课程表Course(c_id,c_name,t_id) – —课程编号, 课程名称, 教师编号3.教师表Teacher(t_id,t_name) —教师编号,教师姓名4.成绩表Score(s_id,c_id,s_score) —学生编号,课程编号,分数 根据以上信息按照下面要求写出对应的SQL语句。 ps：这些题考察SQL的编写能力，对于这类型的题目，需要你先把4张表之间的关联关系搞清楚了，最好的办法是自己在草稿纸上画出关联图，然后再编写对应的SQL语句就比较容易了。下图是我画的这4张表的关系图，可以看出它们之间是通过哪些外键关联起来的： 3.准备阶段3.1.创建数据库和表为了演示题目的运行过程，我们先按下面语句在客户端navicat中创建数据库和表。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667-- 建表-- 学生表CREATE TABLE `Student`( `s_id` VARCHAR(20), `s_name` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;, `s_birth` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;, `s_sex` VARCHAR(10) NOT NULL DEFAULT &apos;&apos;, PRIMARY KEY(`s_id`));-- 课程表CREATE TABLE `Course`( `c_id` VARCHAR(20), `c_name` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;, `t_id` VARCHAR(20) NOT NULL, PRIMARY KEY(`c_id`));-- 教师表CREATE TABLE `Teacher`( `t_id` VARCHAR(20), `t_name` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;, PRIMARY KEY(`t_id`));-- 成绩表CREATE TABLE `Score`( `s_id` VARCHAR(20), `c_id` VARCHAR(20), `s_score` INT(3), PRIMARY KEY(`s_id`,`c_id`));-- 插入学生表测试数据insert into Student values(&apos;01&apos; , &apos;赵雷&apos; , &apos;1990-01-01&apos; , &apos;男&apos;);insert into Student values(&apos;02&apos; , &apos;钱电&apos; , &apos;1990-12-21&apos; , &apos;男&apos;);insert into Student values(&apos;03&apos; , &apos;孙风&apos; , &apos;1990-05-20&apos; , &apos;男&apos;);insert into Student values(&apos;04&apos; , &apos;李云&apos; , &apos;1990-08-06&apos; , &apos;男&apos;);insert into Student values(&apos;05&apos; , &apos;周梅&apos; , &apos;1991-12-01&apos; , &apos;女&apos;);insert into Student values(&apos;06&apos; , &apos;吴兰&apos; , &apos;1992-03-01&apos; , &apos;女&apos;);insert into Student values(&apos;07&apos; , &apos;郑竹&apos; , &apos;1989-07-01&apos; , &apos;女&apos;);insert into Student values(&apos;08&apos; , &apos;王菊&apos; , &apos;1990-01-20&apos; , &apos;女&apos;);-- 课程表测试数据insert into Course values(&apos;01&apos; , &apos;语文&apos; , &apos;02&apos;);insert into Course values(&apos;02&apos; , &apos;数学&apos; , &apos;01&apos;);insert into Course values(&apos;03&apos; , &apos;英语&apos; , &apos;03&apos;);-- 教师表测试数据insert into Teacher values(&apos;01&apos; , &apos;张三&apos;);insert into Teacher values(&apos;02&apos; , &apos;李四&apos;);insert into Teacher values(&apos;03&apos; , &apos;王五&apos;);-- 成绩表测试数据insert into Score values(&apos;01&apos; , &apos;01&apos; , 80);insert into Score values(&apos;01&apos; , &apos;02&apos; , 90);insert into Score values(&apos;01&apos; , &apos;03&apos; , 99);insert into Score values(&apos;02&apos; , &apos;01&apos; , 70);insert into Score values(&apos;02&apos; , &apos;02&apos; , 60);insert into Score values(&apos;02&apos; , &apos;03&apos; , 80);insert into Score values(&apos;03&apos; , &apos;01&apos; , 80);insert into Score values(&apos;03&apos; , &apos;02&apos; , 80);insert into Score values(&apos;03&apos; , &apos;03&apos; , 80);insert into Score values(&apos;04&apos; , &apos;01&apos; , 50);insert into Score values(&apos;04&apos; , &apos;02&apos; , 30);insert into Score values(&apos;04&apos; , &apos;03&apos; , 20);insert into Score values(&apos;05&apos; , &apos;01&apos; , 76);insert into Score values(&apos;05&apos; , &apos;02&apos; , 87);insert into Score values(&apos;06&apos; , &apos;01&apos; , 31);insert into Score values(&apos;06&apos; , &apos;03&apos; , 34);insert into Score values(&apos;07&apos; , &apos;02&apos; , 89);insert into Score values(&apos;07&apos; , &apos;03&apos; , 98); Student表： Course表： Teacher表： Score表： 4.面试题为了方便学习，我将50道面试题进行了分类练习 4.1.练习：简单查询 1查询姓“猴”的学生名单 2查询姓“孟”老师的个数123SELECT COUNT(*) AS 姓“孟”老师的个数FROM teacherWHERE t_name LIKE &apos;孟%&apos;]]></content>
+    <content type="text"><![CDATA[SQL语句面试经典50题 2019/12/03 19:36 今天更新到这 2019/12/04 22:05 项目中完成了表单中的上传下载接口与前端对接。今天加班到八点，话说加班可以调休。希望过年调几天。 2019/12/05 01:43 今天研究了一下Flowable 工作流框架，明天继续。夜深了，休息。 2019/12/06 13:23 刚才在b站看了一个程序员老哥被裁的纪念品上面写着：感谢有你，一路同行，怀念我们一起奋斗的时光。 0.学习目标 了解SQL的作用 掌握SQL语句的编写 1. 为什么要练习sql语句？做为一个后端开发人员，sql语句的编写是至关重要的。在实习的第一天到公司，我的leader戴哥就是让我练习sql语句。尽管用mybatis plus，但是sql语句可以处理复杂的逻辑。 会写sql的程序员，才是真的的crud boy。 练习sql语句，主要看了猴子和小番茄的知乎博文分析。 这里有sql面试的50题，帮助大家更进一步的熟悉SQL. SQL是数据分析师的必备基础技能，希望大家跟我一起来打怪升级，最后成为某一领域的数据科学家。 常见的SQL面试题： 经典50题 - 知乎 https://zhuanlan.zhihu.com/p/38354000 SQL面试必会50题 - 知乎 https://zhuanlan.zhihu.com/p/43289968 2.练习题分析阶段 已知有如下4张表： 学生表：student(学号,学生姓名,出生年月,性别) 成绩表：score(学号,课程号,成绩) 课程表：course(课程号,课程名称,教师号) 教师表：teacher(教师号,教师姓名) 1.学生表Student(s_id,s_name,s_birth,s_sex) —学生编号,学生姓名, 出生年月,学生性别2.课程表Course(c_id,c_name,t_id) – —课程编号, 课程名称, 教师编号3.教师表Teacher(t_id,t_name) —教师编号,教师姓名4.成绩表Score(s_id,c_id,s_score) —学生编号,课程编号,分数 根据以上信息按照下面要求写出对应的SQL语句。 ps：这些题考察SQL的编写能力，对于这类型的题目，需要你先把4张表之间的关联关系搞清楚了，最好的办法是自己在草稿纸上画出关联图，然后再编写对应的SQL语句就比较容易了。下图是我画的这4张表的关系图，可以看出它们之间是通过哪些外键关联起来的： 3.准备阶段3.1.创建数据库和表为了演示题目的运行过程，我们先按下面语句在客户端navicat中创建数据库和表。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667-- 建表-- 学生表CREATE TABLE `Student`( `s_id` VARCHAR(20), `s_name` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;, `s_birth` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;, `s_sex` VARCHAR(10) NOT NULL DEFAULT &apos;&apos;, PRIMARY KEY(`s_id`));-- 课程表CREATE TABLE `Course`( `c_id` VARCHAR(20), `c_name` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;, `t_id` VARCHAR(20) NOT NULL, PRIMARY KEY(`c_id`));-- 教师表CREATE TABLE `Teacher`( `t_id` VARCHAR(20), `t_name` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;, PRIMARY KEY(`t_id`));-- 成绩表CREATE TABLE `Score`( `s_id` VARCHAR(20), `c_id` VARCHAR(20), `s_score` INT(3), PRIMARY KEY(`s_id`,`c_id`));-- 插入学生表测试数据insert into Student values(&apos;01&apos; , &apos;赵雷&apos; , &apos;1990-01-01&apos; , &apos;男&apos;);insert into Student values(&apos;02&apos; , &apos;钱电&apos; , &apos;1990-12-21&apos; , &apos;男&apos;);insert into Student values(&apos;03&apos; , &apos;孙风&apos; , &apos;1990-05-20&apos; , &apos;男&apos;);insert into Student values(&apos;04&apos; , &apos;李云&apos; , &apos;1990-08-06&apos; , &apos;男&apos;);insert into Student values(&apos;05&apos; , &apos;周梅&apos; , &apos;1991-12-01&apos; , &apos;女&apos;);insert into Student values(&apos;06&apos; , &apos;吴兰&apos; , &apos;1992-03-01&apos; , &apos;女&apos;);insert into Student values(&apos;07&apos; , &apos;郑竹&apos; , &apos;1989-07-01&apos; , &apos;女&apos;);insert into Student values(&apos;08&apos; , &apos;王菊&apos; , &apos;1990-01-20&apos; , &apos;女&apos;);-- 课程表测试数据insert into Course values(&apos;01&apos; , &apos;语文&apos; , &apos;02&apos;);insert into Course values(&apos;02&apos; , &apos;数学&apos; , &apos;01&apos;);insert into Course values(&apos;03&apos; , &apos;英语&apos; , &apos;03&apos;);-- 教师表测试数据insert into Teacher values(&apos;01&apos; , &apos;张三&apos;);insert into Teacher values(&apos;02&apos; , &apos;李四&apos;);insert into Teacher values(&apos;03&apos; , &apos;王五&apos;);-- 成绩表测试数据insert into Score values(&apos;01&apos; , &apos;01&apos; , 80);insert into Score values(&apos;01&apos; , &apos;02&apos; , 90);insert into Score values(&apos;01&apos; , &apos;03&apos; , 99);insert into Score values(&apos;02&apos; , &apos;01&apos; , 70);insert into Score values(&apos;02&apos; , &apos;02&apos; , 60);insert into Score values(&apos;02&apos; , &apos;03&apos; , 80);insert into Score values(&apos;03&apos; , &apos;01&apos; , 80);insert into Score values(&apos;03&apos; , &apos;02&apos; , 80);insert into Score values(&apos;03&apos; , &apos;03&apos; , 80);insert into Score values(&apos;04&apos; , &apos;01&apos; , 50);insert into Score values(&apos;04&apos; , &apos;02&apos; , 30);insert into Score values(&apos;04&apos; , &apos;03&apos; , 20);insert into Score values(&apos;05&apos; , &apos;01&apos; , 76);insert into Score values(&apos;05&apos; , &apos;02&apos; , 87);insert into Score values(&apos;06&apos; , &apos;01&apos; , 31);insert into Score values(&apos;06&apos; , &apos;03&apos; , 34);insert into Score values(&apos;07&apos; , &apos;02&apos; , 89);insert into Score values(&apos;07&apos; , &apos;03&apos; , 98); Student表： Course表： Teacher表： Score表： 4.面试题为了方便学习，我将50道面试题进行了分类练习 4.1.练习：简单查询 1查询姓“猴”的学生名单 2查询姓“孟”老师的个数123SELECT COUNT(*) AS 姓“孟”老师的个数FROM teacherWHERE t_name LIKE &apos;孟%&apos; 4.2.练习：汇总、分组、分组条件查询]]></content>
       <categories>
         <category>SQL语句</category>
         <category>CRUD</category>
@@ -381,9 +381,9 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>JaveEE</tag>
         <tag>java框架</tag>
         <tag>java编程</tag>
+        <tag>JaveEE</tag>
       </tags>
   </entry>
   <entry>
@@ -407,9 +407,9 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
+        <tag>设计模式</tag>
         <tag>java框架</tag>
         <tag>java编程</tag>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
