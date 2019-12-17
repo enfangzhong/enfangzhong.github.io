@@ -25,9 +25,9 @@
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>微服务</tag>
         <tag>Spring Cloud</tag>
         <tag>微服务框架</tag>
+        <tag>微服务</tag>
       </tags>
   </entry>
   <entry>
@@ -40,9 +40,9 @@
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>微服务</tag>
         <tag>Spring Cloud</tag>
         <tag>微服务框架</tag>
+        <tag>微服务</tag>
       </tags>
   </entry>
   <entry>
@@ -54,8 +54,8 @@
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>Spring Boot</tag>
         <tag>微服务</tag>
+        <tag>Spring Boot</tag>
       </tags>
   </entry>
   <entry>
@@ -180,8 +180,8 @@
       </categories>
       <tags>
         <tag>个性化推荐算法</tag>
-        <tag>逻辑回归</tag>
         <tag>WideAndDeep</tag>
+        <tag>逻辑回归</tag>
         <tag>神经网络</tag>
       </tags>
   </entry>
