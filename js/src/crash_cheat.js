@@ -4,12 +4,12 @@
  document.addEventListener('visibilitychange', function () {
      if (document.hidden) {
          $('[rel="icon"]').attr('href', "/images/hert.png");
-         document.title = '别走! ╭(°A°`)╮ ';
+         document.title = '页面奔溃啦! ╭(°A°`)╮ ';
          clearTimeout(titleTime);
      }
      else {
          $('[rel="icon"]').attr('href', "/images/hert.png");
-         document.title = '真乖hhh (ฅ>ω<*ฅ)' + OriginTitle;
+         document.title = '(ฅ>ω<*ฅ)咦又好了,皮一下很开心hhh' + OriginTitle;
          titleTime = setTimeout(function () {
              document.title = OriginTitle;
          }, 2000);
