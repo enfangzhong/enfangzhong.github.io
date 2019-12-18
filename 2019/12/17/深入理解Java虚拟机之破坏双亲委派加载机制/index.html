@@ -138,7 +138,7 @@
 <meta property="og:description" content="双亲委派模型并不是一个强制性的约束模型，而是 Java 设计者推荐给开发者的类加载器实现方式。在 Java 的世界中大部分类加载器都遵循这个原则，但是显然也有例外。 在《深入理解 JVM 虚拟机》一书中，作者提出双亲委派模型目前出现过 3 次较大规模的“被破坏”情况。 1.第一次被破坏第一次被破坏其实发生在双亲委派模型出现之前，也就是 JDK 1.2 发布之前，由于双亲委派模型在 JDK 1.2">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://anfrank.gitee.io/2019/12/17/深入理解Java虚拟机之破坏双亲委派加载机制/1240">
-<meta property="og:updated_time" content="2019-12-17T03:54:47.008Z">
+<meta property="og:updated_time" content="2019-12-18T06:25:11.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解Java虚拟机之破坏双亲委派加载机制">
 <meta name="twitter:description" content="双亲委派模型并不是一个强制性的约束模型，而是 Java 设计者推荐给开发者的类加载器实现方式。在 Java 的世界中大部分类加载器都遵循这个原则，但是显然也有例外。 在《深入理解 JVM 虚拟机》一书中，作者提出双亲委派模型目前出现过 3 次较大规模的“被破坏”情况。 1.第一次被破坏第一次被破坏其实发生在双亲委派模型出现之前，也就是 JDK 1.2 发布之前，由于双亲委派模型在 JDK 1.2">
@@ -484,12 +484,24 @@ function setSidebarMarginTop (headerOffset) {
                 
               
 
-              <time title="创建时间：2019-12-17 11:35:00 / 修改时间：11:54:47" itemprop="dateCreated datePublished" datetime="2019-12-17T11:35:00+08:00">2019-12-17</time>
+              <time title="创建时间：2019-12-17 11:35:00" itemprop="dateCreated datePublished" datetime="2019-12-17T11:35:00+08:00">2019-12-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-12-18 14:25:11" itemprop="dateModified" datetime="2019-12-18T14:25:11+08:00">2019-12-18</time>
               
             
           </span>
@@ -509,21 +521,7 @@ function setSidebarMarginTop (headerOffset) {
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/深入理解Java虚拟机/" itemprop="url" rel="index"><span itemprop="name">深入理解Java虚拟机</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/深入理解Java虚拟机/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/深入理解Java虚拟机/JVM/Java虚拟机/" itemprop="url" rel="index"><span itemprop="name">Java虚拟机</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
 
                 
                 
@@ -556,7 +554,7 @@ function setSidebarMarginTop (headerOffset) {
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
             <span class="post-meta-divider">|</span>
-<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 5,154</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 5,150</span>
 
 <span class="post-meta-divider">|</span>
 <span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 20分钟</span>
@@ -600,52 +598,8 @@ function setSidebarMarginTop (headerOffset) {
 <p>那到底是在哪一步自动注册了 MySQL Driver 的呢？重点就在 DriverManager.getConnection() 方法中。我们都知道调用一个类的静态方法会自动初始化该类（前提是该类还没有被初始化过），进而执行其静态代码块，DriverManager 中的静态代码块如下：</p>
 <div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static &#123;</span><br><span class="line">    loadInitialDrivers();</span><br><span class="line">    println(&quot;JDBC DriverManager initialized&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <p>初始化方法 loadInitialDrivers() 的代码如下：</p>
-<pre><code>private static void loadInitialDrivers() {
-    String drivers;
-    try {
-        // 先读取系统属性
-        drivers = AccessController.doPrivileged(new PrivilegedAction&lt;String&gt;() {
-            public String run() {
-                return System.getProperty(&quot;jdbc.drivers&quot;);
-            }
-        });
-    } catch (Exception ex) {
-        drivers = null;
-    }
-    // 通过SPI加载驱动类
-    AccessController.doPrivileged(new PrivilegedAction&lt;Void&gt;() {
-        public Void run() {
-            ServiceLoader&lt;Driver&gt; loadedDrivers = ServiceLoader.load(Driver.class);
-            Iterator&lt;Driver&gt; driversIterator = loadedDrivers.iterator();
-            try{
-                while(driversIterator.hasNext()) {
-                    driversIterator.next();
-                }
-            } catch(Throwable t) {
-                // Do nothing
-            }
-            return null;
-        }
-    });
-    // 继续加载系统属性中的驱动类
-    if (drivers == null || drivers.equals(&quot;&quot;)) {
-        return;
-    }
-
-
-String[] driversList = drivers.split(&quot;:&quot;);
-println(&quot;number of Drivers:&quot; + driversList.length);
-for (String aDriver : driversList) {
-    try {
-        println(&quot;DriverManager.Initialize: loading &quot; + aDriver);
-        // 使用AppClassloader加载
-        Class.forName(aDriver, true,
-                ClassLoader.getSystemClassLoader());
-    } catch (Exception ex) {
-        println(&quot;DriverManager.Initialize: load failed: &quot; + ex);
-    }
-}
-</code></pre><p>}<br>从上面可以看出 JDBC 中的 DriverManager 的加载 Driver 的步骤顺序依次是：</p>
+<p>​<br>    private static void loadInitialDrivers() {<br>        String drivers;<br>        try {<br>            // 先读取系统属性<br>            drivers = AccessController.doPrivileged(new PrivilegedAction<string>() {<br>                public String run() {<br>                    return System.getProperty(“jdbc.drivers”);<br>                }<br>            });<br>        } catch (Exception ex) {<br>            drivers = null;<br>        }<br>        // 通过SPI加载驱动类<br>        AccessController.doPrivileged(new PrivilegedAction<void>() {<br>            public Void run() {<br>                ServiceLoader<driver> loadedDrivers = ServiceLoader.load(Driver.class);<br>                Iterator<driver> driversIterator = loadedDrivers.iterator();<br>                try{<br>                    while(driversIterator.hasNext()) {<br>                        driversIterator.next();<br>                    }<br>                } catch(Throwable t) {<br>                    // Do nothing<br>                }<br>                return null;<br>            }<br>        });<br>        // 继续加载系统属性中的驱动类<br>        if (drivers == null || drivers.equals(“”)) {<br>            return;<br>        }</driver></driver></void></string></p>
+<p>​<br>    String[] driversList = drivers.split(“:”);<br>    println(“number of Drivers:” + driversList.length);<br>    for (String aDriver : driversList) {<br>        try {<br>            println(“DriverManager.Initialize: loading “ + aDriver);<br>            // 使用AppClassloader加载<br>            Class.forName(aDriver, true,<br>                    ClassLoader.getSystemClassLoader());<br>        } catch (Exception ex) {<br>            println(“DriverManager.Initialize: load failed: “ + ex);<br>        }<br>    }<br>}<br>从上面可以看出 JDBC 中的 DriverManager 的加载 Driver 的步骤顺序依次是：</p>
 <p>通过 SPI 方式，读取 META-INF/services 下文件中的类名，使用 TCCL（线程上下文类加载器） 加载；<br>通过 System.getProperty(“jdbc.drivers”) 获取设置，然后通过系统类加载器加载。</p>
 <p>下面详细分析 SPI 加载的那段代码。</p>
 <h2 id="JDBC-中的-SPI"><a href="#JDBC-中的-SPI" class="headerlink" title="JDBC 中的 SPI"></a>JDBC 中的 SPI</h2><p>上面说了那么多 SPI，可能你还没弄懂什么是 SPI，所以先来看看什么是 SPI 机制，引用一段博文中的介绍：</p>
@@ -674,13 +628,8 @@ for (String aDriver : driversList) {
              callerCL = Thread.currentThread().getContextClassLoader();
          }
      }
-
-
- if(url == null) {
-     throw new SQLException(&quot;The url cannot be null&quot;, &quot;08001&quot;);
- }
-
- SQLException reason = null;
+</code></pre><p>​<br>     if(url == null) {<br>         throw new SQLException(“The url cannot be null”, “08001”);<br>     }</p>
+<pre><code> SQLException reason = null;
  // 遍历注册到registeredDrivers里的Driver类
  for(DriverInfo aDriver : registeredDrivers) {
      // 检查Driver类有效性
@@ -955,67 +904,7 @@ private static boolean isDriverAllowed(Driver driver, ClassLoader classLoader) {
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">46</span>
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1072,95 +961,7 @@ private static boolean isDriverAllowed(Driver driver, ClassLoader classLoader) {
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">66</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1305,7 +1106,7 @@ private static boolean isDriverAllowed(Driver driver, ClassLoader classLoader) {
     <h3 class="widget-title">标签云</h3>
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/APlayer音乐播放器/">APlayer音乐播放器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CRUD/">CRUD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GBDT/">GBDT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GiT撤销/">GiT撤销</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo个人博客/">Hexo个人博客</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Item-CF/">Item CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java虚拟机/">Java虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JaveEE/">JaveEE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LFM（latent-factor-model）算法/">LFM（latent factor model）算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Learn-To-Rank/">Learn To Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL内连接/">SQL内连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL语句/">SQL语句</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Boot/">Spring Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/">Spring Cloud</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/User-CF/">User CF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WideAndDeep/">WideAndDeep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github博客/">github博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo博客/">hexo博客</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo博客模板/">hexo博客模板</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/item2vec/">item2vec</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java框架/">java框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java编程/">java编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人博客/">个人博客</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法/">个性化推荐算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个性化推荐算法实践总结/">个性化推荐算法实践总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/交叉连接/">交叉连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益/">信息增益</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/信息增益率/">信息增益率</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/写作标签/">写作标签</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/决策树/">决策树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客优化/">博客优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客模板/">博客模板</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/友链/">友链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/右外连接/">右外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基于内容的推荐/">基于内容的推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基于随机游走的Personal-Rank/">基于随机游走的Personal Rank</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基尼指数/">基尼指数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实习/">实习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/左外连接/">左外连接</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务框架/">微服务框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序模型总结/">排序模型总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/标签云/">标签云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/毕业季/">毕业季</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息中间件/">消息中间件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深入理解Java虚拟机/">深入理解Java虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/神经网络/">神经网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/秋招/">秋招</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序员表白源码/">程序员表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线性回归/">线性回归</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自定义友链页面/">自定义友链页面</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/表白源码/">表白源码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/评估指标/">评估指标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逻辑回归/">逻辑回归</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随机森林/">随机森林</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/隐语义模型/">隐语义模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/非关系型数据库/">非关系型数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/音乐播放器/">音乐播放器</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java虚拟机/">Java虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Boot/">Spring Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/">Spring Cloud</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java编程思想/">java编程思想</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/写作标签/">写作标签</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客/">博客</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐算法/">推荐算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/标签云/">标签云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息中间件/">消息中间件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深入理解Java虚拟机/">深入理解Java虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/秋招/">秋招</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自定义友链页面/">自定义友链页面</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/音乐播放器/">音乐播放器</a><span class="tag-list-count">1</span></li></ul>
         </canvas>
     </div>
 </div>
