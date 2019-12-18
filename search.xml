@@ -74,7 +74,7 @@
   <entry>
     <title><![CDATA[Hexo个人博客一些写作标签]]></title>
     <url>%2F2019%2F12%2F08%2FHexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E4%B8%80%E4%BA%9B%E5%86%99%E4%BD%9C%E6%A0%87%E7%AD%BE%2F</url>
-    <content type="text"><![CDATA[[TOC] 一、代码标签代码：123&#123;% codeblock lang:command %&#125;这是一行代码&#123;% endcodeblock %&#125; 效果： 1这是一行代码 1这是一行代码 二、文本居中标签 代码： 123&#123;% cq %&#125;四郎，那年杏花微雨，你说你是果郡王。原来自那时起，一切便都是错的。&#123;% endcq %&#125; 效果： 四郎，那年杏花微雨，你说你是果郡王。原来自那时起，一切便都是错的。 三、note标签 _config 文件配置关键字：note, 我的配置如下： style: flaticons: trueborder_radius: 3 代码： 123456789101112131415161718&#123;% note default %&#125;default&#123;% endnote %&#125;&#123;% note primary %&#125;primary&#123;% endnote %&#125;&#123;% note success %&#125;success&#123;% endnote %&#125;&#123;% note info %&#125;info&#123;% endnote %&#125;&#123;% note warning %&#125;warning&#123;% endnote %&#125;&#123;% note danger %&#125;danger&#123;% endnote %&#125; 效果： default primary success info warning danger 四、label标签 _config 文件配置关键字：Label , 需要用的话把值设为true即可。 代码： 123456&#123;% label default@默认 %&#125;&#123;% label primary@主要 %&#125;&#123;% label success@成功 %&#125;&#123;% label info@信息 %&#125;&#123;% label warning@警告 %&#125;&#123;% label danger@危险 %&#125; 效果： 默认 主要 成功 信息 警告 危险 Lruihao博客 Sanarous的个人博客]]></content>
+    <content type="text"><![CDATA[[TOC] 一、代码标签代码：123&#123;% codeblock lang:command %&#125;这是一行代码&#123;% endcodeblock %&#125; 效果： 1这是一行代码 1这是一行代码 二、文本居中标签 代码： 123&#123;% cq %&#125;四郎，那年杏花微雨，你说你是果郡王。原来自那时起，一切便都是错的。&#123;% endcq %&#125; 效果： 四郎，那年杏花微雨，你说你是果郡王。原来自那时起，一切便都是错的。 三、note标签 _config 文件配置关键字：note, 我的配置如下： style: flaticons: trueborder_radius: 3 代码： 1234567891011121314151617181920212223&#123;% note default %&#125;default&#123;% endnote %&#125;&#123;% note primary %&#125;primary&#123;% endnote %&#125;&#123;% note success %&#125;success&#123;% endnote %&#125;&#123;% note info %&#125;info&#123;% endnote %&#125;&#123;% note warning %&#125;warning&#123;% endnote %&#125;&#123;% note danger %&#125;danger&#123;% endnote %&#125; 效果： default primary success info warning danger 四、label标签 _config 文件配置关键字：Label , 需要用的话把值设为true即可。 代码： 1234567891011&#123;% label default@默认 %&#125;&#123;% label primary@主要 %&#125;&#123;% label success@成功 %&#125;&#123;% label info@信息 %&#125;&#123;% label warning@警告 %&#125;&#123;% label danger@危险 %&#125; 效果： 默认 主要 成功 信息 警告 危险 Lruihao博客 Sanarous的个人博客]]></content>
       <categories>
         <category>Hexo个人博客</category>
         <category>写作标签</category>
@@ -193,8 +193,8 @@
       </categories>
       <tags>
         <tag>个性化推荐算法</tag>
-        <tag>WideAndDeep</tag>
         <tag>逻辑回归</tag>
+        <tag>WideAndDeep</tag>
         <tag>神经网络</tag>
       </tags>
   </entry>
@@ -394,9 +394,9 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
+        <tag>JaveEE</tag>
         <tag>java框架</tag>
         <tag>java编程</tag>
-        <tag>JaveEE</tag>
       </tags>
   </entry>
   <entry>
@@ -420,9 +420,9 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>设计模式</tag>
         <tag>java框架</tag>
         <tag>java编程</tag>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
