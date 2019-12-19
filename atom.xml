@@ -96,9 +96,9 @@
       <category term="JVM" scheme="http://anfrank.gitee.io/categories/JVM/"/>
     
     
-      <category term="深入理解Java虚拟机" scheme="http://anfrank.gitee.io/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
       <category term="JVM" scheme="http://anfrank.gitee.io/tags/JVM/"/>
+    
+      <category term="深入理解Java虚拟机" scheme="http://anfrank.gitee.io/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
     
       <category term="Java虚拟机" scheme="http://anfrank.gitee.io/tags/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
     
@@ -130,9 +130,9 @@
       <category term="微服务" scheme="http://anfrank.gitee.io/categories/Spring-Cloud/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
-      <category term="Spring Cloud" scheme="http://anfrank.gitee.io/tags/Spring-Cloud/"/>
-    
       <category term="微服务" scheme="http://anfrank.gitee.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="Spring Cloud" scheme="http://anfrank.gitee.io/tags/Spring-Cloud/"/>
     
   </entry>
   
@@ -162,9 +162,9 @@
       <category term="微服务" scheme="http://anfrank.gitee.io/categories/Spring-Cloud/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
-      <category term="Spring Cloud" scheme="http://anfrank.gitee.io/tags/Spring-Cloud/"/>
-    
       <category term="微服务" scheme="http://anfrank.gitee.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+      <category term="Spring Cloud" scheme="http://anfrank.gitee.io/tags/Spring-Cloud/"/>
     
   </entry>
   
@@ -194,9 +194,9 @@
       <category term="微服务" scheme="http://anfrank.gitee.io/categories/Spring-Boot/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
-      <category term="微服务" scheme="http://anfrank.gitee.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
-    
       <category term="Spring Boot" scheme="http://anfrank.gitee.io/tags/Spring-Boot/"/>
+    
+      <category term="微服务" scheme="http://anfrank.gitee.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
   </entry>
   

@@ -31,8 +31,8 @@
         <category>JVM</category>
       </categories>
       <tags>
-        <tag>深入理解Java虚拟机</tag>
         <tag>JVM</tag>
+        <tag>深入理解Java虚拟机</tag>
         <tag>Java虚拟机</tag>
       </tags>
   </entry>
@@ -45,8 +45,8 @@
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>Spring Cloud</tag>
         <tag>微服务</tag>
+        <tag>Spring Cloud</tag>
       </tags>
   </entry>
   <entry>
@@ -58,8 +58,8 @@
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>Spring Cloud</tag>
         <tag>微服务</tag>
+        <tag>Spring Cloud</tag>
       </tags>
   </entry>
   <entry>
@@ -71,8 +71,8 @@
         <category>微服务</category>
       </categories>
       <tags>
-        <tag>微服务</tag>
         <tag>Spring Boot</tag>
+        <tag>微服务</tag>
       </tags>
   </entry>
   <entry>
