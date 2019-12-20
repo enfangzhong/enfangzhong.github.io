@@ -132,14 +132,14 @@
   <meta name="description" content="0.学习目标 Tomcat8的优化 看懂Java底层字节码 编码的优化建议  1、Tomcat8优化tomcat服务器在JavaEE项目中使用率非常高，所以在生产环境对tomcat的优化也变得非 常重要了。对于tomcat的优化，主要是从2个方面入手，一是，tomcat自身的配置，另一个是tomcat所运行的jvm虚拟机的调优。下面我们将从这2个方面进行讲解。 1.1、Tomcat配置优化1.1.">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="架构与优化之JVM优化第02课垃圾回收">
+<meta property="og:title" content="架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议">
 <meta property="og:url" content="http://anfrank.gitee.io/2019/12/20/架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议/index.html">
 <meta property="og:site_name" content="AnFrank">
 <meta property="og:description" content="0.学习目标 Tomcat8的优化 看懂Java底层字节码 编码的优化建议  1、Tomcat8优化tomcat服务器在JavaEE项目中使用率非常高，所以在生产环境对tomcat的优化也变得非 常重要了。对于tomcat的优化，主要是从2个方面入手，一是，tomcat自身的配置，另一个是tomcat所运行的jvm虚拟机的调优。下面我们将从这2个方面进行讲解。 1.1、Tomcat配置优化1.1.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-20T03:43:00.579Z">
+<meta property="og:updated_time" content="2019-12-20T03:51:16.230Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="架构与优化之JVM优化第02课垃圾回收">
+<meta name="twitter:title" content="架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议">
 <meta name="twitter:description" content="0.学习目标 Tomcat8的优化 看懂Java底层字节码 编码的优化建议  1、Tomcat8优化tomcat服务器在JavaEE项目中使用率非常高，所以在生产环境对tomcat的优化也变得非 常重要了。对于tomcat的优化，主要是从2个方面入手，一是，tomcat自身的配置，另一个是tomcat所运行的jvm虚拟机的调优。下面我们将从这2个方面进行讲解。 1.1、Tomcat配置优化1.1.">
 
 
@@ -159,7 +159,7 @@
   };
 </script>
 
-  <title>架构与优化之JVM优化第02课垃圾回收 | AnFrank</title>
+  <title>架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议 | AnFrank</title>
   
 
 
@@ -457,7 +457,7 @@ function setSidebarMarginTop (headerOffset) {
 
         
         
-          <h1 class="post-title" itemprop="name headline">架构与优化之JVM优化第02课垃圾回收
+          <h1 class="post-title" itemprop="name headline">架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议
               
             
           </h1>
@@ -482,7 +482,7 @@ function setSidebarMarginTop (headerOffset) {
                 
               
 
-              <time title="创建时间：2019-12-20 20:03:11 / 修改时间：11:43:00" itemprop="dateCreated datePublished" datetime="2019-12-20T20:03:11+08:00">2019-12-20</time>
+              <time title="创建时间：2019-12-20 20:03:11 / 修改时间：11:51:16" itemprop="dateCreated datePublished" datetime="2019-12-20T20:03:11+08:00">2019-12-20</time>
             
 
             
@@ -785,7 +785,7 @@ function setSidebarMarginTop (headerOffset) {
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/2019/12/20/架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议/" title="架构与优化之JVM优化第02课垃圾回收">http://anfrank.gitee.io/2019/12/20/架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议/</a>
+    <a href="http://anfrank.gitee.io/2019/12/20/架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议/" title="架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议">http://anfrank.gitee.io/2019/12/20/架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
