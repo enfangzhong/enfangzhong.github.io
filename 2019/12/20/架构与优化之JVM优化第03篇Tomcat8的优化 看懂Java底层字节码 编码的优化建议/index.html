@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+
+  <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+  
+
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/favicon-32x32-next.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "9494e80d"
+    });
+  daovoice('update');
+  </script>
+
+  <meta name="description" content="0.学习目标 Tomcat8的优化 看懂Java底层字节码 编码的优化建议  1、Tomcat8优化tomcat服务器在JavaEE项目中使用率非常高，所以在生产环境对tomcat的优化也变得非 常重要了。对于tomcat的优化，主要是从2个方面入手，一是，tomcat自身的配置，另一个是tomcat所运行的jvm虚拟机的调优。下面我们将从这2个方面进行讲解。 1.1、Tomcat配置优化1.1.">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议">
+<meta property="og:url" content="http://anfrank.gitee.io/2019/12/20/架构与优化之JVM优化第03篇Tomcat8的优化 看懂Java底层字节码 编码的优化建议/index.html">
+<meta property="og:site_name" content="AnFrank">
+<meta property="og:description" content="0.学习目标 Tomcat8的优化 看懂Java底层字节码 编码的优化建议  1、Tomcat8优化tomcat服务器在JavaEE项目中使用率非常高，所以在生产环境对tomcat的优化也变得非 常重要了。对于tomcat的优化，主要是从2个方面入手，一是，tomcat自身的配置，另一个是tomcat所运行的jvm虚拟机的调优。下面我们将从这2个方面进行讲解。 1.1、Tomcat配置优化1.1.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-12-20T03:51:16.230Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议">
+<meta name="twitter:description" content="0.学习目标 Tomcat8的优化 看懂Java底层字节码 编码的优化建议  1、Tomcat8优化tomcat服务器在JavaEE项目中使用率非常高，所以在生产环境对tomcat的优化也变得非 常重要了。对于tomcat的优化，主要是从2个方面入手，一是，tomcat自身的配置，另一个是tomcat所运行的jvm虚拟机的调优。下面我们将从这2个方面进行讲解。 1.1、Tomcat配置优化1.1.">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AnFrank" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://anfrank.gitee.io/2019/12/20/架构与优化之JVM优化第03篇Tomcat8的优化 看懂Java底层字节码 编码的优化建议/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议 | AnFrank</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+
+
+<!--知乎卡片链接-->
+<script type="text/javascript" src="/js/src/linkcard.js"></script>
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+<a href="https://github.com/enfangzhong"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script>
+ function GetRandomNum(Min,Max)
+  {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return(Min + Math.round(Rand * Range));
+  }
+function setSidebarMarginTop (headerOffset) {
+    return $('#sidebar').css({ 'margin-top': headerOffset });
+  }
+ function getHeaderOffset () {
+    return $('.header-inner').height() + CONFIG.sidebar.offset;
+  }
+  window.onload=function(){
+    var subtitle = "喜欢一个人，始于颜值，敬于才华，合于性格，久于善良，终于人品。W我真的好想你，在每一个雨季，你选择遗忘的，是我最不舍的。W不怕万人阻挡，只怕自己投降。W成熟是给你陌生人看的，逗比是给朋友看的，幼稚是给喜欢的人看的。W人生当苦无妨，良人当归即可。W逝者如斯乎，不舍昼夜。";
+     var mytitle = subtitle.split("W");
+     var max = mytitle.length-1;
+     var index = GetRandomNum(0,max);
+     var text = mytitle[index];
+     $("#helloTitle").html(text);
+     var headOffset = getHeaderOffset();
+     setSidebarMarginTop(headOffset);
+     //动态subtitle设置
+  }
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AnFrank</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  
+    <p style="color:#black;font-size:18px;font-family:STXingkai" id="helloTitle" class="site-subtitle"></p>
+  
+
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+    <a href="/schedule/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>微言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于博主</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comments"></i> <br>留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-love">
+    <a href="/love/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>love</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-loveshow">
+    <a href="/loveshow/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>loveshow</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/2019/12/20/架构与优化之JVM优化第03篇Tomcat8的优化 看懂Java底层字节码 编码的优化建议/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnFrank">
+      <meta itemprop="description" content="你若晴天，我便安好。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AnFrank">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-20 20:03:11 / 修改时间：11:51:16" itemprop="dateCreated datePublished" datetime="2019-12-20T20:03:11+08:00">2019-12-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/20/架构与优化之JVM优化第03篇Tomcat8的优化 看懂Java底层字节码 编码的优化建议/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/12/20/架构与优化之JVM优化第03篇Tomcat8的优化 看懂Java底层字节码 编码的优化建议/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-divider">|</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 9,406</span>
+
+<span class="post-meta-divider">|</span>
+<span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 45分钟</span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="0-学习目标"><a href="#0-学习目标" class="headerlink" title="0.学习目标"></a>0.学习目标</h1><ul>
+<li>Tomcat8的优化</li>
+<li>看懂Java底层字节码</li>
+<li>编码的优化建议</li>
+</ul>
+<h1 id="1、Tomcat8优化"><a href="#1、Tomcat8优化" class="headerlink" title="1、Tomcat8优化"></a>1、Tomcat8优化</h1><p>tomcat服务器在JavaEE项目中使用率非常高，所以在生产环境对tomcat的优化也变得非 常重要了。<br>对于tomcat的优化，主要是从2个方面入手，一是，tomcat自身的配置，另一个是<br>tomcat所运行的jvm虚拟机的调优。<br>下面我们将从这2个方面进行讲解。</p>
+<h2 id="1-1、Tomcat配置优化1-1-1、部署安装tomcat8-下载并安装："><a href="#1-1、Tomcat配置优化1-1-1、部署安装tomcat8-下载并安装：" class="headerlink" title="1.1、Tomcat配置优化1.1.1、部署安装tomcat8 下载并安装："></a>1.1、Tomcat配置优化1.1.1、部署安装tomcat8 下载并安装：</h2><p><a href="https://tomcat.apache.org/download-80.cgicd" target="_blank" rel="noopener">https://tomcat.apache.org/download-80.cgicd</a> /tmp<br>wget <a href="http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat‐" target="_blank" rel="noopener">http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat‐</a> 8/v8.5.34/bin/apache‐tomcat‐8.5.34.tar.gz</p>
+<p>tar ‐xvf apache‐tomcat‐8.5.34.tar.gz cd apache‐tomcat‐8.5.34/conf</p>
+<h1 id="修改配置文件，配置tomcat的管理用户"><a href="#修改配置文件，配置tomcat的管理用户" class="headerlink" title="修改配置文件，配置tomcat的管理用户"></a>修改配置文件，配置tomcat的管理用户</h1><p>vim tomcat‐users.xml #写入如下内容：</p>
+<h1 id="保存退出"><a href="#保存退出" class="headerlink" title="保存退出"></a>保存退出</h1><h1 id="如果是tomcat7，配置了tomcat用户就可以登录系统了，但是tomcat8中不行，还需要修改另一个配置文件，否则访问不了，提示403"><a href="#如果是tomcat7，配置了tomcat用户就可以登录系统了，但是tomcat8中不行，还需要修改另一个配置文件，否则访问不了，提示403" class="headerlink" title="如果是tomcat7，配置了tomcat用户就可以登录系统了，但是tomcat8中不行，还需要修改另一个配置文件，否则访问不了，提示403"></a>如果是tomcat7，配置了tomcat用户就可以登录系统了，但是tomcat8中不行，还需要修改另一个配置文件，否则访问不了，提示403</h1><p>vim webapps/manager/META‐INF/context.xml</p>
+<h1 id="将-lt-Valve的内容注释掉"><a href="#将-lt-Valve的内容注释掉" class="headerlink" title="将&lt;Valve的内容注释掉"></a>将&lt;Valve的内容注释掉</h1><p>&lt;!‐‐ ‐‐&gt;</p>
+<h1 id="保存退出即可"><a href="#保存退出即可" class="headerlink" title="保存退出即可"></a>保存退出即可</h1><h1 id="启动tomcat"><a href="#启动tomcat" class="headerlink" title="启动tomcat"></a>启动tomcat</h1><p>cd /tmp/apache‐tomcat‐8.5.34/bin/<br>./startup.sh &amp;&amp; tail ‐f …/logs/catalina.out</p>
+<h1 id="打开浏览器进行测试访问http-192-168-40-133-8080"><a href="#打开浏览器进行测试访问http-192-168-40-133-8080" class="headerlink" title="打开浏览器进行测试访问http://192.168.40.133:8080/"></a>打开浏览器进行测试访问<a href="http://192.168.40.133:8080/" target="_blank" rel="noopener">http://192.168.40.133:8080/</a></h1><p>点击“Server Status”，输入用户名、密码进行登录，tomcat/tomcat进入之后即可看到服务的信息。</p>
+<p>1.1.2、禁用AJP连接<br>在服务状态页面中可以看到，默认状态下会启用AJP服务，并且占用8009端口。<br>什么是AJP呢？<br>AJP（Apache JServer Protocol）<br>AJPv13协议是面向包的。WEB服务器和Servlet容器通过TCP连接来交互；为了节省SOCKET创建的昂贵代价，WEB服务器会尝试维护一个永久TCP连接到servlet容器，并且在多个请求和响应周期过程会重用连接。我们一般是使用Nginx+tomcat的架构，所以用不着AJP协议，所以把AJP连接器禁用。修改conf下的server.xml文件，将AJP服务禁用掉即可。</p>
+<p><connector port="8009" protocol="AJP/1.3" redirectport="8443"><br>1</connector></p>
+<p>重启tomcat，查看效果。可以看到AJP服务以及不存在了。<br>1.1.3、执行器（线程池）<br>在tomcat中每一个用户请求都是一个线程，所以可以使用线程池提高性能。<br>修改server.xml文件：</p>
+<p>&lt;!‐‐将注释打开‐‐&gt;</p>
+<p><executor name="tomcatThreadPool" nameprefix="catalina‐exec‐" maxthreads="500" minsparethreads="50" prestartminsparethreads="true" maxqueuesize="100"><br>&lt;!‐‐<br>参数说明：<br>maxThreads：最大并发数，默认设置 200，一般建议在 500 ~ 1000，根据硬件设施和业务来判断<br>minSpareThreads：Tomcat 初 始 化 时 创 建 的 线 程 数 ， 默 认 设 置 25 prestartminSpareThreads： 在 Tomcat 初始化的时候就初始化 minSpareThreads 的参数值，如果不等于 true，minSpareThreads 的值就没啥效果了<br>maxQueueSize，最大的等待队列数，超过则拒绝请求<br>‐‐&gt;</executor></p>
+<p>&lt;!‐‐在Connector中设置executor属性指向上面的执行器‐‐&gt;</p>
+<connector executor="tomcatThreadPool" port="8080" protocol="HTTP/1.1" connectiontimeout="20000" redirectport="8443">
+
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>保存退出，重启tomcat，查看效果。<br>在页面中显示最大线程数为-1，这个是正常的，仅仅是显示的问题，实际使用的指定的值。</p>
+<p>也有人遇到这样的问<br>题：<a href="https://blog.csdn.net/weixin_38278878/article/details/80144397" target="_blank" rel="noopener">https://blog.csdn.net/weixin_38278878/article/details/80144397</a><br>1.1.4、3种运行模式<br>tomcat的运行模式有3种：<br>1.bio<br>默认的模式,性能非常低下,没有经过任何优化处理和支持.<br>2.nio<br>nio(new I/O)，是Java SE 1.4及后续版本提供的一种新的I/O操作方式(即java.nio包及其子包)。Java nio是一个基于缓冲区、并能提供非阻塞I/O操作的Java API，因此nio 也被看成是non-blocking I/O的缩写。它拥有比传统I/O操作(bio)更好的并发运行性能。<br>3.apr<br>安装起来最困难,但是从操作系统级别来解决异步的IO问题,大幅度的提高性能.<br>推荐使用nio，不过，在tomcat8中有最新的nio2，速度更快，建议使用nio2. 设置nio2：</p>
+<p><connector executor="tomcatThreadPool" port="8080" protocol="org.apache.coyote.http11.Http11Nio2Protocol" connectiontimeout="20000" redirectport="8443"><br>1<br>2</connector></p>
+<p>可以看到已经设置为nio2了。</p>
+<p>1.2、部署测试用的java web项目<br>为了方便测试性能，我们将部署一个java web项目，这个项目本身和本套课程没有什么关系，仅仅用于测试。<br>注意：这里在测试时，我们使用一个新的tomcat，进行测试，后面再对其进行优化 调整，再测试。<br>1.2.1、创建dashboard数据库<br>在资料中找到sql脚本文件dashboard.sql，在linux服务器上执行。</p>
+<p>cat dashboard.sql | mysql ‐uroot ‐proot<br>1<br>创建完成后，可以看到有3张表。<br>1.2.2、部署web应用<br>在资料中找到itcat-dashboard-web.war，上传到linux服务器，进行部署安装。</p>
+<p>cd /tmp/apache‐tomcat‐8.5.34/webapps<br>rm ‐rf *<br>mkdir ROOT<br> cd ROOT/<br>rz上传war包<br>jar ‐xvf itcat‐dashboard‐web.war rm ‐rf itcat‐dashboard‐web.war</p>
+<h1 id="修改数据库配置文件"><a href="#修改数据库配置文件" class="headerlink" title="修改数据库配置文件"></a>修改数据库配置文件</h1><p>cd /tmp/apache‐tomcat‐8.5.34/webapps/ROOT/WEB‐INF/classes vim jdbc.properties</p>
+<h1 id="这里根据自己的实际情况进行配置"><a href="#这里根据自己的实际情况进行配置" class="headerlink" title="这里根据自己的实际情况进行配置"></a>这里根据自己的实际情况进行配置</h1><p>jdbc.driverClassName=com.mysql.jdbc.Driver<br>jdbc.url=jdbc:mysql://node01:3306/dashboard? useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;allowMultiQueri es=true<br>jdbc.username=root</p>
+<p>jdbc.password=root<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>重新启动tomcat。<br>访问首页，查看是否已经启动成功：<a href="http://192.168.40.133:8080/index" target="_blank" rel="noopener">http://192.168.40.133:8080/index</a></p>
+<p>1.3、使用Apache JMeter进行测试<br>Apache Jmeter是开源的压力测试工具，我们借助于此工具进行测试，将测试出tomcat<br>的吞吐量等信息。</p>
+<p>1.3.1、下载安装<br>下载地址：<a href="http://jmeter.apache.org/download_jmeter.cgi安装：直接将下载好的zip压缩包进行解压即可。进入bin目录，找到jmeter.bat文件，双机打开即可启动。1.3.2、修改主题和语言" target="_blank" rel="noopener">http://jmeter.apache.org/download_jmeter.cgi安装：直接将下载好的zip压缩包进行解压即可。进入bin目录，找到jmeter.bat文件，双机打开即可启动。1.3.2、修改主题和语言</a><br>默认的主题是黑色风格的主题并且语言是英语，这样不太方便使用，所以需要修改下主题和中文语言。主题修改完成。</p>
+<p>接下来设置语言为简体中文。1.3.3、创建首页的测试用例<br>第一步：保存测试用例<br>第二步：添加线程组，使用线程模拟用户的并发<br>1000个线程，每个线程循环10次，也就是tomcat会接收到10000个请求。<br>第三步：添加http请求第四步：添加请求监控1.3.4、启动、进行测试1.3.5、聚合报告<br>在聚合报告中，重点看吞吐量。</p>
+<p>1.4、调整tomcat参数进行优化<br>通过上面测试可以看出，tomcat在不做任何调整时，吞吐量为73次/秒。<br>1.4.1、禁用AJP服务<br>可以看到，禁用AJP服务后，吞吐量会有所提升。<br>当然了，测试不一定准确，需要多测试几次才能看出是否有提升。</p>
+<p>1.4.2、设置线程池<br>通过设置线程池，调整线程池相关的参数进行测试tomcat的性能。<br>1.4.2.1、最大线程数为500，初始为50</p>
+<p><executor name="tomcatThreadPool" nameprefix="catalina‐exec‐" maxthreads="500" minsparethreads="50" prestartminsparethreads="true"><br>1<br>2<br>测试结果：</executor></p>
+<p>吞吐量为128次/秒，性能有所提升。<br>1.4.2.2、最大线程数为1000，初始为200</p>
+<p><executor name="tomcatThreadPool" nameprefix="catalina‐exec‐" maxthreads="1000" minsparethreads="200" prestartminsparethreads="true"><br>1<br>2</executor></p>
+<p>吞吐量为151，性能有所提升。<br>1.4.2.3、最大线程数为5000，初始为1000<br>是否是线程数最多，速度越快呢？ 我们来测试下。</p>
+<p><executor name="tomcatThreadPool" nameprefix="catalina‐exec‐" maxthreads="5000" minsparethreads="1000" prestartminsparethreads="true"><br>1<br>2</executor></p>
+<p>可以看到，虽然最大线程已经设置到5000，但是实际测试效果并不理想，并且平均的响 应时间也边长了，所以单纯靠提升线程数量是不能一直得到性能提升的。</p>
+<p>1.4.2.4、设置最大等待队列数<br>默认情况下，请求发送到tomcat，如果tomcat正忙，那么该请求会一直等待。这样虽然 可以保证每个请求都能请求到，但是请求时间就会边长。</p>
+<p>有些时候，我们也不一定要求请求一定等待，可以设置最大等待队列大小，如果超过就不等待了。这样虽然有些请求是失败的，但是请求时间会虽短。典型的应用：12306。</p>
+<p>&lt;!‐‐最大等待数为100‐‐&gt;</p>
+<p><executor name="tomcatThreadPool" nameprefix="catalina‐exec‐" maxthreads="500" minsparethreads="100" prestartminsparethreads="true" maxqueuesize="100"><br>1<br>2<br>3<br>4<br>5<br>6<br>7</executor></p>
+<p>测试结果：</p>
+<p>平均响应时间：3.1秒响应时间明显缩短<br>错误率：49.88%<br>错误率提升到一半，也可以理解，最大线程为500，测试的并发为1000 吞吐量：238次/秒<br>吞吐量明显提升<br>结论：响应时间、吞吐量这2个指标需要找到平衡才能达到更好的性能。<br>1.4.3、设置nio2的运行模式<br>将最大线程设置为500进行测试：</p>
+<executor name="tomcatThreadPool" nameprefix="catalina‐exec‐" maxthreads="500" minsparethreads="50" prestartminsparethreads="true">
+
+<p>&lt;!‐‐ 设置nio2 ‐‐&gt;</p>
+<connector executor="tomcatThreadPool" port="8080" protocol="org.apache.coyote.http11.Http11Nio2Protocol" connectiontimeout="20000" redirectport="8443">
+
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</p>
+<p>可以看到，平均响应时间有缩短，吞吐量有提升，可以得出结论：nio2的性能要高于<br>nio。</p>
+<p>1.5、调整JVM参数进行优化<br>接下来，测试通过jvm参数进行优化，为了测试一致性，依然将最大线程数设置为500， 启用nio2运行模式。<br>1.5.1、设置并行垃圾回收器</p>
+<h1 id="年轻代、老年代均使用并行收集器，初始堆内存64M，最大堆内存512M-JAVA-OPTS-”‐XX-UseParallelGC-‐XX-UseParallelOldGC-‐Xms64m-‐Xmx512m-‐-XX-PrintGCDetails-‐XX-PrintGCTimeStamps-‐XX-PrintGCDateStamps-‐-XX-PrintHeapAtGC-‐Xloggc-logs-gc-log”"><a href="#年轻代、老年代均使用并行收集器，初始堆内存64M，最大堆内存512M-JAVA-OPTS-”‐XX-UseParallelGC-‐XX-UseParallelOldGC-‐Xms64m-‐Xmx512m-‐-XX-PrintGCDetails-‐XX-PrintGCTimeStamps-‐XX-PrintGCDateStamps-‐-XX-PrintHeapAtGC-‐Xloggc-logs-gc-log”" class="headerlink" title="年轻代、老年代均使用并行收集器，初始堆内存64M，最大堆内存512M JAVA_OPTS=”‐XX:+UseParallelGC ‐XX:+UseParallelOldGC ‐Xms64m ‐Xmx512m ‐ XX:+PrintGCDetails ‐XX:+PrintGCTimeStamps ‐XX:+PrintGCDateStamps ‐ XX:+PrintHeapAtGC ‐Xloggc:../logs/gc.log”"></a>年轻代、老年代均使用并行收集器，初始堆内存64M，最大堆内存512M JAVA_OPTS=”‐XX:+UseParallelGC ‐XX:+UseParallelOldGC ‐Xms64m ‐Xmx512m ‐ XX:+PrintGCDetails ‐XX:+PrintGCTimeStamps ‐XX:+PrintGCDateStamps ‐ XX:+PrintHeapAtGC ‐Xloggc:../logs/gc.log”</h1><p>1</p>
+<p>测试结果与默认的JVM参数结果接近。（执行了2次测试，结果是第二次测试的结果）<br>1.5.2、查看gc日志文件<br>将gc.log文件上传到gceasy.io查看gc中是否存在问题。在报告中显示，在5次GC时，系统所消耗的时间大于用户时间，这反应出的服务器的性能存在瓶颈，调度CPU等资源所消耗的时间要长一些。<br>问题二：<br>可以关键指标中可以看出，吞吐量表现不错，但是gc时，线程的暂停时间稍有点长。<br>问题三：通过GC的统计可以看出：<br>年轻代的gc有74次，次数稍有多，说明年轻代设置的大小不合适需要调整<br>FullGC有8次，说明堆内存的大小不合适，需要调整<br>问题四：<br>从GC原因的可以看出，年轻代大小设置不合理，导致了多次GC。<br>1.5.3、调整年轻代大小</p>
+<p>JAVA_OPTS=”‐XX:+UseParallelGC ‐XX:+UseParallelOldGC ‐Xms128m ‐Xmx1024m ‐ XX:NewSize=64m ‐XX:MaxNewSize=256m ‐XX:+PrintGCDetails ‐ XX:+PrintGCTimeStamps ‐XX:+PrintGCDateStamps ‐XX:+PrintHeapAtGC ‐ Xloggc:../logs/gc.log”<br>1<br>将初始堆大小设置为128m，最大为1024m<br>初始年轻代大小64m，年轻代最大256m<br>从测试结果来看，吞吐量以及响应时间均有提升。<br>查看gc日志：</p>
+<p>可以看到GC次数要明显减少，说明调整是有效的。<br>1.5.4、设置G1垃圾回收器</p>
+<h1 id="设置了最大停顿时间100毫秒，初始堆内存128m，最大堆内存1024m-JAVA-OPTS-”‐XX-UseG1GC-‐XX-MaxGCPauseMillis-100-‐Xms128m-‐Xmx1024m-‐-XX-PrintGCDetails-‐XX-PrintGCTimeStamps-‐XX-PrintGCDateStamps-‐-XX-PrintHeapAtGC-‐Xloggc-logs-gc-log”"><a href="#设置了最大停顿时间100毫秒，初始堆内存128m，最大堆内存1024m-JAVA-OPTS-”‐XX-UseG1GC-‐XX-MaxGCPauseMillis-100-‐Xms128m-‐Xmx1024m-‐-XX-PrintGCDetails-‐XX-PrintGCTimeStamps-‐XX-PrintGCDateStamps-‐-XX-PrintHeapAtGC-‐Xloggc-logs-gc-log”" class="headerlink" title="设置了最大停顿时间100毫秒，初始堆内存128m，最大堆内存1024m JAVA_OPTS=”‐XX:+UseG1GC ‐XX:MaxGCPauseMillis=100 ‐Xms128m ‐Xmx1024m ‐ XX:+PrintGCDetails ‐XX:+PrintGCTimeStamps ‐XX:+PrintGCDateStamps ‐ XX:+PrintHeapAtGC ‐Xloggc:../logs/gc.log”"></a>设置了最大停顿时间100毫秒，初始堆内存128m，最大堆内存1024m JAVA_OPTS=”‐XX:+UseG1GC ‐XX:MaxGCPauseMillis=100 ‐Xms128m ‐Xmx1024m ‐ XX:+PrintGCDetails ‐XX:+PrintGCTimeStamps ‐XX:+PrintGCDateStamps ‐ XX:+PrintHeapAtGC ‐Xloggc:../logs/gc.log”</h1><p>1<br>测试结果：</p>
+<p>可以看到，吞吐量有所提升，评价响应时间也有所缩短。</p>
+<p>1.5.5、小结<br>通过上述的测试，可以总结出，对tomcat性能优化就是需要不断的进行调整参数，然后 测试结果，可能会调优也可能会调差，这时就需要借助于gc的可视化工具来看gc的情 况。再帮我我们做出决策应该调整哪些参数。</p>
+<p>2、JVM字节码<br>前面我们通过tomcat本身的参数以及jvm的参数对tomcat做了优化，其实要想将应用程 序跑的更快、效率更高，除了对tomcat容器以及jvm优化外，应用程序代码本身如果写 的效率不高的，那么也是不行的，所以，对于程序本身的优化也就很重要了。</p>
+<p>对于程序本身的优化，可以借鉴很多前辈们的经验，但是有些时候，在从源码角度方面 分析的话，不好鉴别出哪个效率高，如对字符串拼接的操作，是直接“+”号拼接效率高还 是使用StringBuilder效率高？<br>这个时候，就需要通过查看编译好的class文件中字节码，就可以找到答案。<br>我们都知道，java编写应用，需要先通过javac命令编译成class文件，再通过jvm执行，<br>jvm执行时是需要将class文件中的字节码载入到jvm进行运行的。</p>
+<p>2.1、通过javap命令查看class文件的字节码内容<br>首先，看一个简单的Test1类的代码：</p>
+<p>package cn.itcast.jvm;<br>public class Test1 {<br>public static void main(String[] args) {<br>int a =  2; int b =  5; int c = b ‐ a;<br>System.out.println(c);<br>}<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>通过javap命令查看class文件中的字节码内容：</p>
+<p>javap ‐v Test1.class &gt; Test1.txt<br>javap用法: javap <options> <classes><br>其中, 可能的选项包括:<br>‐help    ‐‐help    ‐?<br>‐version<br>‐v    ‐verbose<br>‐l<br>‐public<br>‐protected<br>‐package<br>‐p    ‐private<br>‐c<br>‐s<br>‐sysinfo</classes></options></p>
+<p>‐constants<br>‐classpath <path></path><br>‐cp <path></path><br>‐bootclasspath <path></path><br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>查看Test1.txt文件，内容如下：</p>
+<p>Classfile /F:/code/itcast‐jvm/itcast‐jvm‐ test/target/classes/cn/itcast/jvm/Test1.class<br>Last modified 2018‐9‐27; size 577 bytes<br>MD5 checksum 4214859db3543c0c783ec8a216a4795f Compiled from “Test1.java”<br>public class cn.itcast.jvm.Test1 minor version: 0<br>major version: 52<br>flags: ACC_PUBLIC, ACC_SUPER<br>Constant pool:</p>
+<h1 id="1-Methodref-5-23-java-lang-Object-”“-V"><a href="#1-Methodref-5-23-java-lang-Object-”“-V" class="headerlink" title="1 = Methodref    #5.#23    // java/lang/Object.”“: ()V"></a>1 = Methodref    #5.#23    // java/lang/Object.”<init>“: ()V</init></h1><h1 id="2-Fieldref-24-25-java-lang-System-out-Ljava-io-PrintStream"><a href="#2-Fieldref-24-25-java-lang-System-out-Ljava-io-PrintStream" class="headerlink" title="2 = Fieldref    #24.#25    // java/lang/System.out:Ljava/io/PrintStream;"></a>2 = Fieldref    #24.#25    // java/lang/System.out:Ljava/io/PrintStream;</h1><h1 id="3-Methodref-26-27-java-io-PrintStream-println-I-V"><a href="#3-Methodref-26-27-java-io-PrintStream-println-I-V" class="headerlink" title="3 = Methodref    #26.#27    // java/io/PrintStream.println: (I)V"></a>3 = Methodref    #26.#27    // java/io/PrintStream.println: (I)V</h1><h1 id="28-Utf8-cn-itcast-jvm-Test1"><a href="#28-Utf8-cn-itcast-jvm-Test1" class="headerlink" title="28 = Utf8    cn/itcast/jvm/Test1"></a>28 = Utf8    cn/itcast/jvm/Test1</h1><h1 id="29-Utf8-java-lang-Object"><a href="#29-Utf8-java-lang-Object" class="headerlink" title="29 = Utf8    java/lang/Object"></a>29 = Utf8    java/lang/Object</h1><h1 id="30-Utf8-java-lang-System"><a href="#30-Utf8-java-lang-System" class="headerlink" title="30 = Utf8    java/lang/System"></a>30 = Utf8    java/lang/System</h1><h1 id="31-Utf8-out"><a href="#31-Utf8-out" class="headerlink" title="31 = Utf8    out"></a>31 = Utf8    out</h1><h1 id="32-Utf8-Ljava-io-PrintStream"><a href="#32-Utf8-Ljava-io-PrintStream" class="headerlink" title="32 = Utf8    Ljava/io/PrintStream;"></a>32 = Utf8    Ljava/io/PrintStream;</h1><h1 id="33-Utf8-java-io-PrintStream"><a href="#33-Utf8-java-io-PrintStream" class="headerlink" title="33 = Utf8    java/io/PrintStream"></a>33 = Utf8    java/io/PrintStream</h1><h1 id="34-Utf8-println"><a href="#34-Utf8-println" class="headerlink" title="34 = Utf8    println"></a>34 = Utf8    println</h1><h1 id="35-Utf8-I-V"><a href="#35-Utf8-I-V" class="headerlink" title="35 = Utf8    (I)V"></a>35 = Utf8    (I)V</h1><p>{<br>public cn.itcast.jvm.Test1(); descriptor: ()V<br>flags: ACC_PUBLIC Code:<br>stack=1, locals=1, args_size=1 0: aload_0<br>1: invokespecial #1    // Method<br>java/lang/Object.”<init>“:()V<br>4: return LineNumberTable:<br>line 3: 0 LocalVariableTable:<br>Start    Length    Slot    Name    Signature<br>0    5    0    this    Lcn/itcast/jvm/Test1;</init></p>
+<p>public static void main(java.lang.String[]); descriptor: ([Ljava/lang/String;)V<br>flags: ACC_PUBLIC, ACC_STATIC<br>Code:<br>stack=2, locals=4, args_size=1 0: iconst_2<br>1: istore_1<br>2: iconst_5<br>3: istore_2<br>4: iload_2<br>5: iload_1<br>6: isub<br>7: istore_3<br>8: getstatic    #2    // Field java/lang/System.out:Ljava/io/PrintStream;<br>11: iload_3</p>
+<p>12: invokevirtual #3    // Method<br>java/io/PrintStream.println:(I)V<br>15: return LineNumberTable:<br>line    6:    0<br>line    7:    2<br>line    8:    4<br>line    9:    8<br>line 10: 15<br>LocalVariableTable:<br>Start<br>0    Length<br>16    Slot<br>0    Name<br>args    Signature<br>[Ljava/lang/String;<br>2    14    1    a    I<br>4    12    2    b    I<br>8    8    3    c    I<br>}<br>SourceFile: “Test1.java”<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>内容大致分为4个部分：<br>第一部分：显示了生成这个class的java源文件、版本信息、生成时间等。第二部分：显示了该类中所涉及到常量池，共35个常量。<br>第三部分：显示该类的构造器，编译器自动插入的。</p>
+<p>第四部分：显示了main方的信息。（这个是需要我们重点关注的）</p>
+<p>2.2、常量池<br>官网文档：</p>
+<p><a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4-140" target="_blank" rel="noopener">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4-140</a></p>
+<p>Constant Type    Value    说明<br>CONSTANT_Class    7    类或接口的符号引用<br>CONSTANT_Fieldref    9    字段的符号引用<br>CONSTANT_Methodref    10    类中方法的符号引用<br>CONSTANT_InterfaceMethodref    11    接口中方法的符号引用<br>CONSTANT_String    8    字符串类型常量<br>CONSTANT_Integer    3    整形常量<br>CONSTANT_Float    4    浮点型常量<br>CONSTANT_Long    5    长整型常量<br>CONSTANT_Double    6    双精度浮点型常量<br>CONSTANT_NameAndType    12    字段或方法的符号引用<br>CONSTANT_Utf8    1    UTF-8编码的字符串<br>CONSTANT_MethodHandle    15    表示方法句柄<br>CONSTANT_MethodType    16    标志方法类型<br>CONSTANT_InvokeDynamic    18    表示一个动态方法调用点<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>2.3、描述符<br>2.3.1、字段描述符<br>官网：<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.3.2" target="_blank" rel="noopener">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.3.2</a></p>
+<p>FieldType term<br>Type<br>Interpretation<br>B    byte    signed byte</p>
+<p>C<br>char    Unicode character code point in the Basic Multilingual Plane, encoded with UTF-16<br>D    double    double-precision floating-point value<br>F    float    single-precision floating-point value<br>I    int    integer<br>J    long    long integer<br>LClassName;    reference    an instance of class ClassName<br>S    short    signed short<br>Z    boolean    true or false<br>[    reference    one array dimension<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>2.3.2、方法描述符<br>官网：<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.3.3" target="_blank" rel="noopener">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.3.3</a></p>
+<p>示例：</p>
+<p>The method descriptor for the method:</p>
+<p>Object m(int i, double d, Thread t) {…}<br>1<br>is:</p>
+<p>(IDLjava/lang/Thread;)Ljava/lang/Object;<br>1<br>2.4、解读方法字节码</p>
+<p>public static void main(java.lang.String[]);<br>descriptor: ([Ljava/lang/String;)V    //方法描述，V表示该方法的放回值为void<br>flags: ACC_PUBLIC, ACC_STATIC    // 方法修饰符，public、static的<br>Code:<br>// stack=2,操作栈的大小为2、locals=4，本地变量表大小，args_size=1, 参数</p>
+<p>的个数</p>
+<p>stack=2, locals=4, args_size=1<br>0: iconst_2    //将数字2值压入操作栈，位于栈的最上面<br>1: istore_1    //从操作栈中弹出一个元素(数字2)，放入到本地变量表中，位</p>
+<p>于下标为1的位置（下标为0的是this）<br>2: iconst_5    //将数字5值压入操作栈，位于栈的最上面<br>3: istore_2    //从操作栈中弹出一个元素(5)，放入到本地变量表中，位于第下标为2个位置<br>4: iload_2    //将本地变量表中下标为2的位置元素压入操作栈（5）<br>5: iload_1    //将本地变量表中下标为1的位置元素压入操作栈（2）<br>6: isub    //操作栈中的2个数字相减<br>7: istore_3 // 将相减的结果压入到本地本地变量表中，位于下标为3的位置<br>// 通过#2号找到对应的常量，即可找到对应的引用<br>8: getstatic    #2    // Field java/lang/System.out:Ljava/io/PrintStream;<br>11: iload_3 //将本地变量表中下标为3的位置元素压入操作栈（3）<br>// 通过#3号找到对应的常量，即可找到对应的引用，进行方法调用<br>12: invokevirtual #3    // Method java/io/PrintStream.println:(I)V<br>15: return //返回<br>LineNumberTable:    //行号的列表</p>
+<p>line    6:    0<br>line    7:    2<br>line    8:    4<br>line    9:    8<br>line 10: 15 LocalVariableTable: // 本地变量表<br>Start<br>0    Length<br>16    Slot<br>0    Name<br>args    Signature<br>[Ljava/lang/String;<br>2    14    1    a    I<br>4    12    2    b    I<br>8    8    3    c    I<br>}</p>
+<p>SourceFile: “Test1.java”</p>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>2.4.1、图解</p>
+<p>2.5、研究 i++ 与 ++i 的不同<br>我们都知道，i++表示，先返回再+1，++i表示，先+1再返回。它的底层是怎么样的呢? 我们一起探究下。</p>
+<p>编写测试代码：</p>
+<p>public class Test2 {</p>
+<p>public static void main(String[] args) {<br>new Test2().method1();<br> new Test2().method2();<br>}<br>public void method1(){<br>int i = 1; int a = i++;<br>System.out.println(a); //打印1<br>}<br>public void method2(){<br>int i = 1; int a = ++i;<br>System.out.println(a);//打印2<br>}<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>2.5.1、查看class字节码</p>
+<p>Classfile /F:/code/itcast‐jvm/itcast‐jvm‐ test/target/classes/cn/itcast/jvm/Test2.class<br>MD5 checksum 901660fc11c43b6daadd0942150960ed Compiled from “Test2.java”<br>public class cn.itcast.jvm.Test2 minor version: 0<br>major version: 52<br>flags: ACC_PUBLIC, ACC_SUPER<br>Constant pool:</p>
+<h1 id="1-Methodref-8-27-java-lang-Object-”“-V"><a href="#1-Methodref-8-27-java-lang-Object-”“-V" class="headerlink" title="1 = Methodref    #8.#27    // java/lang/Object.”“: ()V"></a>1 = Methodref    #8.#27    // java/lang/Object.”<init>“: ()V</init></h1><h1 id="2-Class-28-cn-itcast-jvm-Test2"><a href="#2-Class-28-cn-itcast-jvm-Test2" class="headerlink" title="2 = Class    #28    // cn/itcast/jvm/Test2"></a>2 = Class    #28    // cn/itcast/jvm/Test2</h1><h1 id="3-Methodref-2-27-cn-itcast-jvm-Test2-”"><a href="#3-Methodref-2-27-cn-itcast-jvm-Test2-”" class="headerlink" title="3 = Methodref    #2.#27    // cn/itcast/jvm/Test2.”"></a>3 = Methodref    #2.#27    // cn/itcast/jvm/Test2.”</h1><p><init>“:()V</init></p>
+<h1 id="4-Methodref-2-29-cn-itcast-jvm-Test2-method1-V"><a href="#4-Methodref-2-29-cn-itcast-jvm-Test2-method1-V" class="headerlink" title="4 = Methodref    #2.#29    // cn/itcast/jvm/Test2.method1: ()V"></a>4 = Methodref    #2.#29    // cn/itcast/jvm/Test2.method1: ()V</h1><h1 id="5-Methodref-2-30-cn-itcast-jvm-Test2-method2-V"><a href="#5-Methodref-2-30-cn-itcast-jvm-Test2-method2-V" class="headerlink" title="5 = Methodref    #2.#30    // cn/itcast/jvm/Test2.method2: ()V"></a>5 = Methodref    #2.#30    // cn/itcast/jvm/Test2.method2: ()V</h1><h1 id="6-Fieldref-31-32-java-lang-System-out-Ljava-io-PrintStream"><a href="#6-Fieldref-31-32-java-lang-System-out-Ljava-io-PrintStream" class="headerlink" title="6 = Fieldref    #31.#32    // java/lang/System.out:Ljava/io/PrintStream;"></a>6 = Fieldref    #31.#32    // java/lang/System.out:Ljava/io/PrintStream;</h1><h1 id="7-Methodref-33-34-java-io-PrintStream-println-I-V"><a href="#7-Methodref-33-34-java-io-PrintStream-println-I-V" class="headerlink" title="7 = Methodref    #33.#34    // java/io/PrintStream.println: (I)V"></a>7 = Methodref    #33.#34    // java/io/PrintStream.println: (I)V</h1><h1 id="26-Utf8-Test2-java"><a href="#26-Utf8-Test2-java" class="headerlink" title="26    =    Utf8    Test2.java"></a>26    =    Utf8    Test2.java</h1><h1 id="27-NameAndType-9-10-““-V"><a href="#27-NameAndType-9-10-““-V" class="headerlink" title="27    =    NameAndType    #9:#10    // ““:()V"></a>27    =    NameAndType    #9:#10    // “<init>“:()V</init></h1><h1 id="28-Utf8-cn-itcast-jvm-Test2"><a href="#28-Utf8-cn-itcast-jvm-Test2" class="headerlink" title="28    =    Utf8    cn/itcast/jvm/Test2"></a>28    =    Utf8    cn/itcast/jvm/Test2</h1><h1 id="29-NameAndType-20-10-method1-V"><a href="#29-NameAndType-20-10-method1-V" class="headerlink" title="29    =    NameAndType    #20:#10    // method1:()V"></a>29    =    NameAndType    #20:#10    // method1:()V</h1><h1 id="30-NameAndType-24-10-method2-V"><a href="#30-NameAndType-24-10-method2-V" class="headerlink" title="30    =    NameAndType    #24:#10    // method2:()V"></a>30    =    NameAndType    #24:#10    // method2:()V</h1><h1 id="31-Class-36-java-lang-System"><a href="#31-Class-36-java-lang-System" class="headerlink" title="31    =    Class    #36    // java/lang/System"></a>31    =    Class    #36    // java/lang/System</h1><h1 id="32-NameAndType-37-38-out-Ljava-io-PrintStream"><a href="#32-NameAndType-37-38-out-Ljava-io-PrintStream" class="headerlink" title="32    =    NameAndType    #37:#38    // out:Ljava/io/PrintStream;"></a>32    =    NameAndType    #37:#38    // out:Ljava/io/PrintStream;</h1><h1 id="33-Class-39-java-io-PrintStream"><a href="#33-Class-39-java-io-PrintStream" class="headerlink" title="33    =    Class    #39    // java/io/PrintStream"></a>33    =    Class    #39    // java/io/PrintStream</h1><h1 id="34-NameAndType-40-41-println-I-V"><a href="#34-NameAndType-40-41-println-I-V" class="headerlink" title="34    =    NameAndType    #40:#41    // println:(I)V"></a>34    =    NameAndType    #40:#41    // println:(I)V</h1><h1 id="35-Utf8-java-lang-Object"><a href="#35-Utf8-java-lang-Object" class="headerlink" title="35    =    Utf8    java/lang/Object"></a>35    =    Utf8    java/lang/Object</h1><h1 id="36-Utf8-java-lang-System"><a href="#36-Utf8-java-lang-System" class="headerlink" title="36    =    Utf8    java/lang/System"></a>36    =    Utf8    java/lang/System</h1><h1 id="37-Utf8-out"><a href="#37-Utf8-out" class="headerlink" title="37    =    Utf8    out"></a>37    =    Utf8    out</h1><h1 id="38-Utf8-Ljava-io-PrintStream"><a href="#38-Utf8-Ljava-io-PrintStream" class="headerlink" title="38    =    Utf8    Ljava/io/PrintStream;"></a>38    =    Utf8    Ljava/io/PrintStream;</h1><h1 id="39-Utf8-java-io-PrintStream"><a href="#39-Utf8-java-io-PrintStream" class="headerlink" title="39    =    Utf8    java/io/PrintStream"></a>39    =    Utf8    java/io/PrintStream</h1><h1 id="40-Utf8-println"><a href="#40-Utf8-println" class="headerlink" title="40    =    Utf8    println"></a>40    =    Utf8    println</h1><h1 id="41-Utf8-I-V"><a href="#41-Utf8-I-V" class="headerlink" title="41    =    Utf8    (I)V"></a>41    =    Utf8    (I)V</h1><p>{<br>public cn.itcast.jvm.Test2(); descriptor: ()V<br>flags: ACC_PUBLIC Code:<br>stack=1, locals=1, args_size=1 0: aload_0<br>1: invokespecial #1    // Method java/lang/Object.”<init>“:()V<br>4: return LineNumberTable:<br>line 3: 0 LocalVariableTable:<br>Start    Length    Slot    Name    Signature<br>0    5    0    this    Lcn/itcast/jvm/Test2;</init></p>
+<p>public static void main(java.lang.String[]); descriptor: ([Ljava/lang/String;)V<br>flags: ACC_PUBLIC, ACC_STATIC<br>Code:<br>stack=2, locals=1, args_size=1<br>0: new    #2    // class cn/itcast/jvm/Test2<br>3: dup</p>
+<p>4: invokespecial #3    // Method “<init>“:()V<br>7: invokevirtual #4    // Method method1:()V<br>10: new    #2    // class cn/itcast/jvm/Test2<br>13: dup<br>14: invokespecial #3    // Method “<init>“:()V<br>17: invokevirtual #5    // Method method2:()V<br>20: return LineNumberTable:<br>line 6: 0<br>line 7: 10<br>line 8: 20 LocalVariableTable:<br>Start    Length    Slot    Name    Signature<br>0    21    0    args    [Ljava/lang/String;</init></init></p>
+<p>public void method1(); descriptor: ()V flags: ACC_PUBLIC Code:<br>stack=2, locals=3, args_size=1 0: iconst_1<br>1: istore_1<br>2: iload_1<br>3: iinc    1, 1<br>6: istore_2<br>7: getstatic    #6    // Field java/lang/System.out:Ljava/io/PrintStream;<br>10: iload_2<br>11: invokevirtual #7    // Method java/io/PrintStream.println:(I)V<br>14: return LineNumberTable:<br>line 11: 0<br>line 12: 2<br>line 13: 7<br>line 14: 14 LocalVariableTable:<br>Start    Length    Slot    Name    Signature<br>0    15    0    this    Lcn/itcast/jvm/Test2; 2    13    1        i    I<br>7    8    2    a    I</p>
+<p>public void method2(); descriptor: ()V flags: ACC_PUBLIC Code:<br>stack=2, locals=3, args_size=1 0: iconst_1<br>1: istore_1<br>2: iinc    1, 1<br>5: iload_1<br>6: istore_2<br>7: getstatic    #6    // Field java/lang/System.out:Ljava/io/PrintStream;<br>10: iload_2<br>11: invokevirtual #7    // Method java/io/PrintStream.println:(I)V<br>14: return LineNumberTable:<br>line 17: 0<br>line 18: 2<br>line 19: 7<br>line 20: 14 LocalVariableTable:<br>Start    Length    Slot    Name    Signature<br>0    15    0    this    Lcn/itcast/jvm/Test2; 2    13    1        i    I<br>7    8    2    a    I<br>}<br>SourceFile: “Test2.java”</p>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65<br>66<br>67<br>68<br>69<br>70<br>71<br>72<br>73<br>74<br>75<br>76<br>77<br>78<br>79<br>80<br>81<br>82<br>83<br>84<br>85<br>86<br>87<br>88<br>89<br>90<br>91<br>92<br>93<br>94<br>95<br>96<br>97<br>98<br>99<br>2.5.2、对比<br>i++：</p>
+<p>0: iconst_1    //将数字1压入到操作栈<br>1: istore_1    //将数字1从操作栈弹出，压入到本地变量表中，下标为1<br>2: iload_1    //从本地变量表中获取下标为1的数据，压入到操作栈中<br>3: iinc    1, 1 // 将本地变量中的1，再+1<br>6: istore_2    // 将数字1从操作栈弹出，压入到本地变量表中，下标为2 7: getstatic        #6    // Field<br>java/lang/System.out:Ljava/io/PrintStream;<br>10: iload_2    //从本地变量表中获取下标为2的数据，压入到操作栈中<br>11: invokevirtual #7    // Method java/io/PrintStream.println:(I)V<br>14: return<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>++i：</p>
+<p>0: iconst_1    //将数字1压入到操作栈<br>1: istore_1    //将数字1从操作栈弹出，压入到本地变量表中，下标为1<br>2: iinc    1, 1// 将本地变量中的1，再+1<br>5: iload_1    //从本地变量表中获取下标为1的数据（2），压入到操作栈中<br>6: istore_2 //将数字2从操作栈弹出，压入到本地变量表中，下标为2<br>7: getstatic    #6    // Field java/lang/System.out:Ljava/io/PrintStream;<br>10: iload_2 //从本地变量表中获取下标为2的数据（2），压入到操作栈中<br>11: invokevirtual #7    // Method java/io/PrintStream.println:(I)V<br>14: return<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>区别：</p>
+<p>i++<br>只是在本地变量中对数字做了相加，并没有将数据压入到操作栈<br>将前面拿到的数字1，再次从操作栈中拿到，压入到本地变量中<br>++i<br>将本地变量中的数字做了相加，并且将数据压入到操作栈将操作栈中的数据，再次压入到本地变量中<br>小结：可以通过查看字节码的方式对代码的底层做研究，探究其原理。</p>
+<p>2.6、字符串拼接<br>字符串的拼接在开发过程中使用是非常频繁的，常用的方式有三种：</p>
+<p>+号拼接： str+“456”<br>StringBuilder拼接<br>StringBuffer拼接</p>
+<p>StringBuffer是保证线程安全的，效率是比较低的，我们更多的是使用场景是不会涉及到 线程安全的问题的，所以更多的时候会选择StringBuilder，效率会高一些。<br>那么，问题来了，StringBuilder和“+”号拼接，哪个效率高呢？接下来我们通过字节码的 方式进行探究。</p>
+<p>首先，编写个示例：</p>
+<p>package cn.itcast.jvm;<br>public class Test3 {<br>public static void main(String[] args) {<br>new Test3().m1();<br>new Test3().m2();<br>public void m1(){<br>String s1 = “123”; String s2 = “456”; String s3 = s1 + s2; System.out.println(s3);<br>}</p>
+<p>public void m2(){<br>String s1 = “123”; String s2 = “456”;<br>StringBuilder sb = new StringBuilder(); sb.append(s1);<br>sb.append(s2);<br>String s3 = sb.toString(); System.out.println(s3);<br>}<br>}<br>}</p>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>查看Test3.class的字节码</p>
+<p>Classfile /F:/code/itcast‐jvm/itcast‐jvm‐ test/target/classes/cn/itcast/jvm/Test3.class<br>MD5 checksum b3f7629e7e37768b9b5581be01df40d6 Compiled from “Test3.java”<br>public class cn.itcast.jvm.Test3 minor version: 0<br>major version: 52<br>flags: ACC_PUBLIC, ACC_SUPER<br>Constant pool:</p>
+<h1 id="1-Methodref-14-36-java-lang-Object-”“-V"><a href="#1-Methodref-14-36-java-lang-Object-”“-V" class="headerlink" title="1 = Methodref    #14.#36    // java/lang/Object.”“: ()V"></a>1 = Methodref    #14.#36    // java/lang/Object.”<init>“: ()V</init></h1><h1 id="2-Class-37-cn-itcast-jvm-Test3"><a href="#2-Class-37-cn-itcast-jvm-Test3" class="headerlink" title="2 = Class    #37    // cn/itcast/jvm/Test3"></a>2 = Class    #37    // cn/itcast/jvm/Test3</h1><h1 id="3-Methodref-2-36-cn-itcast-jvm-Test3-”"><a href="#3-Methodref-2-36-cn-itcast-jvm-Test3-”" class="headerlink" title="3 = Methodref    #2.#36    // cn/itcast/jvm/Test3.”"></a>3 = Methodref    #2.#36    // cn/itcast/jvm/Test3.”</h1><p><init>“:()V</init></p>
+<h1 id="4-Methodref-2-38-cn-itcast-jvm-Test3-m1-V"><a href="#4-Methodref-2-38-cn-itcast-jvm-Test3-m1-V" class="headerlink" title="4 = Methodref    #2.#38    // cn/itcast/jvm/Test3.m1:()V"></a>4 = Methodref    #2.#38    // cn/itcast/jvm/Test3.m1:()V</h1><h1 id="5-Methodref-2-39-cn-itcast-jvm-Test3-m2-V"><a href="#5-Methodref-2-39-cn-itcast-jvm-Test3-m2-V" class="headerlink" title="5 = Methodref    #2.#39    // cn/itcast/jvm/Test3.m2:()V"></a>5 = Methodref    #2.#39    // cn/itcast/jvm/Test3.m2:()V</h1><h1 id="6-String-40-123"><a href="#6-String-40-123" class="headerlink" title="6 = String    #40    // 123"></a>6 = String    #40    // 123</h1><h1 id="7-String-41-456"><a href="#7-String-41-456" class="headerlink" title="7 = String    #41    // 456"></a>7 = String    #41    // 456</h1><h1 id="8-Class-42-java-lang-StringBuilder"><a href="#8-Class-42-java-lang-StringBuilder" class="headerlink" title="8 = Class    #42    // java/lang/StringBuilder"></a>8 = Class    #42    // java/lang/StringBuilder</h1><h1 id="9-Methodref-8-36-java-lang-StringBuilder-”"><a href="#9-Methodref-8-36-java-lang-StringBuilder-”" class="headerlink" title="9 = Methodref    #8.#36    // java/lang/StringBuilder.”"></a>9 = Methodref    #8.#36    // java/lang/StringBuilder.”</h1><p><init>“:()V</init></p>
+<h1 id="10-Methodref-8-43-java-lang-StringBuilder-append-Ljava-lang-String-Ljava-lang-StringBuilder"><a href="#10-Methodref-8-43-java-lang-StringBuilder-append-Ljava-lang-String-Ljava-lang-StringBuilder" class="headerlink" title="10 = Methodref    #8.#43    // java/lang/StringBuilder.append: (Ljava/lang/String;)Ljava/lang/StringBuilder;"></a>10 = Methodref    #8.#43    // java/lang/StringBuilder.append: (Ljava/lang/String;)Ljava/lang/StringBuilder;</h1><h1 id="11-Methodref-8-44-java-lang-StringBuilder-toString-Ljava-lang-String"><a href="#11-Methodref-8-44-java-lang-StringBuilder-toString-Ljava-lang-String" class="headerlink" title="11 = Methodref    #8.#44    // java/lang/StringBuilder.toString:()Ljava/lang/String;"></a>11 = Methodref    #8.#44    // java/lang/StringBuilder.toString:()Ljava/lang/String;</h1><h1 id="12-Fieldref-45-46-java-lang-System-out-Ljava-io-PrintStream"><a href="#12-Fieldref-45-46-java-lang-System-out-Ljava-io-PrintStream" class="headerlink" title="12 = Fieldref    #45.#46    // java/lang/System.out:Ljava/io/PrintStream;"></a>12 = Fieldref    #45.#46    // java/lang/System.out:Ljava/io/PrintStream;</h1><h1 id="13-Methodref-47-48-java-io-PrintStream-println-Ljava-lang-String-V"><a href="#13-Methodref-47-48-java-io-PrintStream-println-Ljava-lang-String-V" class="headerlink" title="13 = Methodref    #47.#48    // java/io/PrintStream.println: (Ljava/lang/String;)V"></a>13 = Methodref    #47.#48    // java/io/PrintStream.println: (Ljava/lang/String;)V</h1><h1 id="14-Class-49-java-lang-Object"><a href="#14-Class-49-java-lang-Object" class="headerlink" title="14 = Class    #49    // java/lang/Object"></a>14 = Class    #49    // java/lang/Object</h1><h1 id="15-Utf8"><a href="#15-Utf8" class="headerlink" title="15 = Utf8    "></a>15 = Utf8    <init></init></h1><h1 id="16-Utf8-V"><a href="#16-Utf8-V" class="headerlink" title="16 = Utf8    ()V"></a>16 = Utf8    ()V</h1><h1 id="17-Utf8-Code"><a href="#17-Utf8-Code" class="headerlink" title="17 = Utf8    Code"></a>17 = Utf8    Code</h1><h1 id="18-Utf8-LineNumberTable"><a href="#18-Utf8-LineNumberTable" class="headerlink" title="18 = Utf8    LineNumberTable"></a>18 = Utf8    LineNumberTable</h1><h1 id="19-Utf8-LocalVariableTable"><a href="#19-Utf8-LocalVariableTable" class="headerlink" title="19 = Utf8    LocalVariableTable"></a>19 = Utf8    LocalVariableTable</h1><h1 id="20-Utf8-this"><a href="#20-Utf8-this" class="headerlink" title="20 = Utf8    this"></a>20 = Utf8    this</h1><h1 id="21-Utf8-Lcn-itcast-jvm-Test3"><a href="#21-Utf8-Lcn-itcast-jvm-Test3" class="headerlink" title="21 = Utf8    Lcn/itcast/jvm/Test3;"></a>21 = Utf8    Lcn/itcast/jvm/Test3;</h1><h1 id="22-Utf8-main"><a href="#22-Utf8-main" class="headerlink" title="22 = Utf8    main"></a>22 = Utf8    main</h1><h1 id="23-Utf8-Ljava-lang-String-V"><a href="#23-Utf8-Ljava-lang-String-V" class="headerlink" title="23 = Utf8    ([Ljava/lang/String;)V"></a>23 = Utf8    ([Ljava/lang/String;)V</h1><h1 id="24-Utf8-args"><a href="#24-Utf8-args" class="headerlink" title="24    =    Utf8    args"></a>24    =    Utf8    args</h1><h1 id="25-Utf8-Ljava-lang-String"><a href="#25-Utf8-Ljava-lang-String" class="headerlink" title="25    =    Utf8    [Ljava/lang/String;"></a>25    =    Utf8    [Ljava/lang/String;</h1><h1 id="26-Utf8-m1"><a href="#26-Utf8-m1" class="headerlink" title="26    =    Utf8    m1"></a>26    =    Utf8    m1</h1><h1 id="27-Utf8-s1"><a href="#27-Utf8-s1" class="headerlink" title="27    =    Utf8    s1"></a>27    =    Utf8    s1</h1><h1 id="28-Utf8-Ljava-lang-String"><a href="#28-Utf8-Ljava-lang-String" class="headerlink" title="28    =    Utf8    Ljava/lang/String;"></a>28    =    Utf8    Ljava/lang/String;</h1><h1 id="29-Utf8-s2"><a href="#29-Utf8-s2" class="headerlink" title="29    =    Utf8    s2"></a>29    =    Utf8    s2</h1><h1 id="30-Utf8-s3"><a href="#30-Utf8-s3" class="headerlink" title="30    =    Utf8    s3"></a>30    =    Utf8    s3</h1><h1 id="31-Utf8-m2"><a href="#31-Utf8-m2" class="headerlink" title="31    =    Utf8    m2"></a>31    =    Utf8    m2</h1><h1 id="32-Utf8-sb"><a href="#32-Utf8-sb" class="headerlink" title="32    =    Utf8    sb"></a>32    =    Utf8    sb</h1><h1 id="33-Utf8-Ljava-lang-StringBuilder"><a href="#33-Utf8-Ljava-lang-StringBuilder" class="headerlink" title="33    =    Utf8    Ljava/lang/StringBuilder;"></a>33    =    Utf8    Ljava/lang/StringBuilder;</h1><h1 id="34-Utf8-SourceFile"><a href="#34-Utf8-SourceFile" class="headerlink" title="34    =    Utf8    SourceFile"></a>34    =    Utf8    SourceFile</h1><h1 id="35-Utf8-Test3-java"><a href="#35-Utf8-Test3-java" class="headerlink" title="35    =    Utf8    Test3.java"></a>35    =    Utf8    Test3.java</h1><h1 id="36-NameAndType-15-16-““-V"><a href="#36-NameAndType-15-16-““-V" class="headerlink" title="36    =    NameAndType    #15:#16    // ““:()V"></a>36    =    NameAndType    #15:#16    // “<init>“:()V</init></h1><h1 id="37-Utf8-cn-itcast-jvm-Test3"><a href="#37-Utf8-cn-itcast-jvm-Test3" class="headerlink" title="37    =    Utf8    cn/itcast/jvm/Test3"></a>37    =    Utf8    cn/itcast/jvm/Test3</h1><h1 id="38-NameAndType-26-16-m1-V"><a href="#38-NameAndType-26-16-m1-V" class="headerlink" title="38    =    NameAndType    #26:#16    // m1:()V"></a>38    =    NameAndType    #26:#16    // m1:()V</h1><h1 id="39-NameAndType-31-16-m2-V"><a href="#39-NameAndType-31-16-m2-V" class="headerlink" title="39    =    NameAndType    #31:#16    // m2:()V"></a>39    =    NameAndType    #31:#16    // m2:()V</h1><h1 id="40-Utf8-123"><a href="#40-Utf8-123" class="headerlink" title="40    =    Utf8    123"></a>40    =    Utf8    123</h1><h1 id="41-Utf8-456"><a href="#41-Utf8-456" class="headerlink" title="41    =    Utf8    456"></a>41    =    Utf8    456</h1><h1 id="42-Utf8-java-lang-StringBuilder"><a href="#42-Utf8-java-lang-StringBuilder" class="headerlink" title="42    =    Utf8    java/lang/StringBuilder"></a>42    =    Utf8    java/lang/StringBuilder</h1><h1 id="43-NameAndType-50-51-append"><a href="#43-NameAndType-50-51-append" class="headerlink" title="43    =    NameAndType    #50:#51    // append:"></a>43    =    NameAndType    #50:#51    // append:</h1><p>(Ljava/lang/String;)Ljava/lang/StringBuilder;</p>
+<h1 id="44-NameAndType-52-53-toString"><a href="#44-NameAndType-52-53-toString" class="headerlink" title="44 = NameAndType    #52:#53    //    toString:"></a>44 = NameAndType    #52:#53    //    toString:</h1><p>()Ljava/lang/String;            </p>
+<h1 id="45-Class-54-java-lang-System"><a href="#45-Class-54-java-lang-System" class="headerlink" title="45 = Class    #54    //    java/lang/System"></a>45 = Class    #54    //    java/lang/System</h1><h1 id="46-NameAndType-55-56-out-Ljava-io-PrintStream"><a href="#46-NameAndType-55-56-out-Ljava-io-PrintStream" class="headerlink" title="46 = NameAndType    #55:#56    //    out:Ljava/io/PrintStream;"></a>46 = NameAndType    #55:#56    //    out:Ljava/io/PrintStream;</h1><h1 id="47-Class-57-java-io-PrintStream"><a href="#47-Class-57-java-io-PrintStream" class="headerlink" title="47 = Class    #57    //    java/io/PrintStream"></a>47 = Class    #57    //    java/io/PrintStream</h1><h1 id="48-NameAndType-58-59-println"><a href="#48-NameAndType-58-59-println" class="headerlink" title="48 = NameAndType    #58:#59    //    println:"></a>48 = NameAndType    #58:#59    //    println:</h1><p>(Ljava/lang/String;)V</p>
+<pre><code>#49    =    Utf8    java/lang/Object
+#50    =    Utf8    append
+#51    =    Utf8    (Ljava/lang/String;)Ljava/lang/StringBuilder;
+#52    =    Utf8    toString
+#53    =    Utf8    ()Ljava/lang/String;
+#54    =    Utf8    java/lang/System
+#55    =    Utf8    out
+#56    =    Utf8    Ljava/io/PrintStream;
+#57    =    Utf8    java/io/PrintStream
+#58    =    Utf8    println
+#59    =    Utf8    (Ljava/lang/String;)V
+</code></pre><p>{<br>public cn.itcast.jvm.Test3();<br>descriptor: ()V flags: ACC_PUBLIC Code:<br>stack=1, locals=1, args_size=1 0: aload_0<br>1: invokespecial #1    // Method java/lang/Object.”<init>“:()V<br>4: return LineNumberTable:<br>line 3: 0 LocalVariableTable:<br>Start    Length    Slot    Name    Signature<br>0    5    0    this    Lcn/itcast/jvm/Test3;</init></p>
+<p>public static void main(java.lang.String[]); descriptor: ([Ljava/lang/String;)V<br>flags: ACC_PUBLIC, ACC_STATIC<br>Code:<br>stack=2, locals=1, args_size=1<br>0: new    #2    // class cn/itcast/jvm/Test3<br>3: dup<br>4: invokespecial #3    // Method “<init>“:()V<br>7: invokevirtual #4    // Method m1:()V<br>10: new    #2    // class cn/itcast/jvm/Test3<br>13: dup<br>14: invokespecial #3    // Method “<init>“:()V<br>17: invokevirtual #5    // Method m2:()V<br>20: return LineNumberTable:<br>line 6: 0<br>line 7: 10<br>line 8: 20 LocalVariableTable:<br>Start    Length    Slot    Name    Signature<br>0    21    0    args    [Ljava/lang/String;</init></init></p>
+<p>public void m1(); descriptor: ()V<br>flags: ACC_PUBLIC<br>Code:<br>stack=2, locals=4, args_size=1</p>
+<p>0:    ldc    #6    //    String    123<br>2:    astore_1<br>3:    ldc    #7    //    String    456<br>5:    astore_2<br>6:    new    #8    //    class<br>java/lang/StringBuilder 9: dup<br>10: invokespecial #9    // Method java/lang/StringBuilder.”<init>“:()V<br>13: aload_1<br>14: invokevirtual #10    // Method java/lang/StringBuilder.append: (Ljava/lang/String;)Ljava/lang/StringBuilder;<br>17: aload_2<br>18: invokevirtual #10    // Method java/lang/StringBuilder.append: (Ljava/lang/String;)Ljava/lang/StringBuilder;<br>21: invokevirtual #11    // Method java/lang/StringBuilder.toString:()Ljava/lang/String;<br>24: astore_3<br>25: getstatic    #12    // Field java/lang/System.out:Ljava/io/PrintStream;<br>28: aload_3<br>29: invokevirtual #13    // Method java/io/PrintStream.println:(Ljava/lang/String;)V<br>32: return LineNumberTable:<br>line 11: 0<br>line 12: 3<br>line 13: 6<br>line 14: 25<br>line 15: 32 LocalVariableTable:<br>Start    Length    Slot    Name    Signature<br>0    33    0    this    Lcn/itcast/jvm/Test3;<br>3    30    1    s1    Ljava/lang/String;<br>6    27    2    s2    Ljava/lang/String;<br>25    8    3    s3    Ljava/lang/String;<br>public void m2(); descriptor: ()V flags: ACC_PUBLIC Code:<br>stack=2, locals=5, args_size=1<br>0: ldc    #6    // String 123<br>2: astore_1<br>3: ldc    #7    // String 456<br>5: astore_2<br>6: new    #8    // class java/lang/StringBuilder<br>9: dup<br>10: invokespecial #9    // Method java/lang/StringBuilder.”<init>“:()V<br>13: astore_3<br>14: aload_3<br>15: aload_1<br>16: invokevirtual #10    // Method java/lang/StringBuilder.append: (Ljava/lang/String;)Ljava/lang/StringBuilder;<br>19: pop<br>20: aload_3<br>21: aload_2<br>22: invokevirtual #10    // Method java/lang/StringBuilder.append: (Ljava/lang/String;)Ljava/lang/StringBuilder;<br>25: pop<br>26: aload_3<br>27: invokevirtual #11    // Method java/lang/StringBuilder.toString:()Ljava/lang/String;<br>30: astore    4<br>32: getstatic    #12    // Field java/lang/System.out:Ljava/io/PrintStream;<br>35: aload    4<br>37: invokevirtual #13    // Method java/io/PrintStream.println:(Ljava/lang/String;)V<br>40: return LineNumberTable:<br>line 18: 0<br>line 19: 3</init></init></p>
+<p>line 20: 6<br>LocalVariableTable:<br>}<br>SourceFile: “Test3.java”</p>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65<br>66<br>67<br>68<br>69<br>70<br>71<br>72<br>73<br>74<br>75<br>76<br>77<br>78<br>79<br>80<br>81<br>82<br>83<br>84<br>85<br>86<br>87<br>88<br>89<br>90<br>91<br>92<br>93<br>94<br>95<br>96<br>97<br>98<br>99<br>100<br>101<br>102<br>103<br>104<br>105<br>106<br>107<br>108<br>109<br>110<br>111<br>112<br>113<br>114<br>115<br>116<br>117<br>118<br>119<br>120<br>121<br>122<br>123<br>124<br>125<br>126<br>127<br>128<br>129<br>130<br>131<br>132<br>133<br>134<br>135<br>136<br>137<br>138<br>139<br>140<br>141<br>142<br>143<br>144<br>145<br>146<br>147<br>148<br>149<br>150<br>151<br>152<br>153<br>154<br>155<br>156<br>157<br>158<br>159<br>160<br>161<br>162<br>163<br>164<br>165<br>从解字节码中可以看出，m1()方法源码中是使用+号拼接，但是在字节码中也被编译成了<br>StringBuilder方式。<br>所以，可以得出结论，字符串拼接，+号和StringBuilder是相等的，效率一样。<br>接下来，我们再看一个案例：</p>
+<p>package cn.itcast.jvm; public class Test4 {<br>public static void main(String[] args) { new Test4().m1();<br>new Test4().m2();<br>}</p>
+<p>public void m1(){ String str = “”;<br>for (int i = 0; i &lt; 5; i++) { str = str + i;<br>}<br>System.out.println(str);<br>}</p>
+<p>public void m2(){<br>StringBuilder sb = new StringBuilder(); for (int i = 0; i &lt; 5; i++) {<br>sb.append(i);<br>}<br>System.out.println(sb.toString());<br>}<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>m1() 与 m2() 哪个方法的效率高？ 依然是通过字节码的方式进行探究。</p>
+<p>Classfile /F:/code/itcast‐jvm/itcast‐jvm‐ test/target/classes/cn/itcast/jvm/Test4.class<br>MD5 checksum f87a55446b8b6cd88b6e54bd5edcc9dc Compiled from “Test4.java”<br>public class cn.itcast.jvm.Test4 minor version: 0<br>major version: 52<br>flags: ACC_PUBLIC, ACC_SUPER<br>Constant pool:</p>
+<h1 id="1-Methodref-14-39-java-lang-Object-”“-V"><a href="#1-Methodref-14-39-java-lang-Object-”“-V" class="headerlink" title="1 = Methodref    #14.#39    // java/lang/Object.”“: ()V"></a>1 = Methodref    #14.#39    // java/lang/Object.”<init>“: ()V</init></h1><h1 id="2-Class-40-cn-itcast-jvm-Test4"><a href="#2-Class-40-cn-itcast-jvm-Test4" class="headerlink" title="2 = Class    #40    // cn/itcast/jvm/Test4"></a>2 = Class    #40    // cn/itcast/jvm/Test4</h1><h1 id="3-Methodref-2-39-cn-itcast-jvm-Test4-”"><a href="#3-Methodref-2-39-cn-itcast-jvm-Test4-”" class="headerlink" title="3 = Methodref    #2.#39    // cn/itcast/jvm/Test4.”"></a>3 = Methodref    #2.#39    // cn/itcast/jvm/Test4.”</h1><p><init>“:()V</init></p>
+<h1 id="4-Methodref-2-41-cn-itcast-jvm-Test4-m1-V"><a href="#4-Methodref-2-41-cn-itcast-jvm-Test4-m1-V" class="headerlink" title="4 = Methodref    #2.#41    // cn/itcast/jvm/Test4.m1:()V"></a>4 = Methodref    #2.#41    // cn/itcast/jvm/Test4.m1:()V</h1><h1 id="5-Methodref-2-42-cn-itcast-jvm-Test4-m2-V"><a href="#5-Methodref-2-42-cn-itcast-jvm-Test4-m2-V" class="headerlink" title="5 = Methodref    #2.#42    // cn/itcast/jvm/Test4.m2:()V"></a>5 = Methodref    #2.#42    // cn/itcast/jvm/Test4.m2:()V</h1><h1 id="6-String-43"><a href="#6-String-43" class="headerlink" title="6 = String    #43    //"></a>6 = String    #43    //</h1><h1 id="7-Class-44-java-lang-StringBuilder"><a href="#7-Class-44-java-lang-StringBuilder" class="headerlink" title="7 = Class    #44    // java/lang/StringBuilder"></a>7 = Class    #44    // java/lang/StringBuilder</h1><h1 id="8-Methodref-7-39-java-lang-StringBuilder-”"><a href="#8-Methodref-7-39-java-lang-StringBuilder-”" class="headerlink" title="8 = Methodref    #7.#39    // java/lang/StringBuilder.”"></a>8 = Methodref    #7.#39    // java/lang/StringBuilder.”</h1><p><init>“:()V</init></p>
+<h1 id="9-Methodref-7-45-java-lang-StringBuilder-append-Ljava-lang-String-Ljava-lang-StringBuilder"><a href="#9-Methodref-7-45-java-lang-StringBuilder-append-Ljava-lang-String-Ljava-lang-StringBuilder" class="headerlink" title="9 = Methodref    #7.#45    // java/lang/StringBuilder.append: (Ljava/lang/String;)Ljava/lang/StringBuilder;"></a>9 = Methodref    #7.#45    // java/lang/StringBuilder.append: (Ljava/lang/String;)Ljava/lang/StringBuilder;</h1><h1 id="10-Methodref-7-46-java-lang-StringBuilder-append-I-Ljava-lang-StringBuilder"><a href="#10-Methodref-7-46-java-lang-StringBuilder-append-I-Ljava-lang-StringBuilder" class="headerlink" title="10 = Methodref    #7.#46    // java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;"></a>10 = Methodref    #7.#46    // java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;</h1><h1 id="11-Methodref-7-47-java-lang-StringBuilder-toString-Ljava-lang-String"><a href="#11-Methodref-7-47-java-lang-StringBuilder-toString-Ljava-lang-String" class="headerlink" title="11 = Methodref    #7.#47    // java/lang/StringBuilder.toString:()Ljava/lang/String;"></a>11 = Methodref    #7.#47    // java/lang/StringBuilder.toString:()Ljava/lang/String;</h1><h1 id="12-Fieldref-48-49-java-lang-System-out-Ljava-io-PrintStream"><a href="#12-Fieldref-48-49-java-lang-System-out-Ljava-io-PrintStream" class="headerlink" title="12 = Fieldref    #48.#49    // java/lang/System.out:Ljava/io/PrintStream;"></a>12 = Fieldref    #48.#49    // java/lang/System.out:Ljava/io/PrintStream;</h1><h1 id="13-Methodref-50-51-java-io-PrintStream-println-Ljava-lang-String-V"><a href="#13-Methodref-50-51-java-io-PrintStream-println-Ljava-lang-String-V" class="headerlink" title="13 = Methodref    #50.#51    // java/io/PrintStream.println: (Ljava/lang/String;)V"></a>13 = Methodref    #50.#51    // java/io/PrintStream.println: (Ljava/lang/String;)V</h1><h1 id="14-Class-52-java-lang-Object"><a href="#14-Class-52-java-lang-Object" class="headerlink" title="14 = Class    #52    // java/lang/Object"></a>14 = Class    #52    // java/lang/Object</h1><h1 id="15-Utf8-1"><a href="#15-Utf8-1" class="headerlink" title="15 = Utf8    "></a>15 = Utf8    <init></init></h1><h1 id="16-Utf8-V-1"><a href="#16-Utf8-V-1" class="headerlink" title="16 = Utf8    ()V"></a>16 = Utf8    ()V</h1><h1 id="17-Utf8-Code-1"><a href="#17-Utf8-Code-1" class="headerlink" title="17 = Utf8    Code"></a>17 = Utf8    Code</h1><h1 id="18-Utf8-LineNumberTable-1"><a href="#18-Utf8-LineNumberTable-1" class="headerlink" title="18 = Utf8    LineNumberTable"></a>18 = Utf8    LineNumberTable</h1><h1 id="19-Utf8-LocalVariableTable-1"><a href="#19-Utf8-LocalVariableTable-1" class="headerlink" title="19 = Utf8    LocalVariableTable"></a>19 = Utf8    LocalVariableTable</h1><h1 id="20-Utf8-this-1"><a href="#20-Utf8-this-1" class="headerlink" title="20 = Utf8    this"></a>20 = Utf8    this</h1><h1 id="21-Utf8-Lcn-itcast-jvm-Test4"><a href="#21-Utf8-Lcn-itcast-jvm-Test4" class="headerlink" title="21 = Utf8    Lcn/itcast/jvm/Test4;"></a>21 = Utf8    Lcn/itcast/jvm/Test4;</h1><h1 id="22-Utf8-main-1"><a href="#22-Utf8-main-1" class="headerlink" title="22 = Utf8    main"></a>22 = Utf8    main</h1><h1 id="23-Utf8-Ljava-lang-String-V-1"><a href="#23-Utf8-Ljava-lang-String-V-1" class="headerlink" title="23    =    Utf8    ([Ljava/lang/String;)V"></a>23    =    Utf8    ([Ljava/lang/String;)V</h1><h1 id="24-Utf8-args-1"><a href="#24-Utf8-args-1" class="headerlink" title="24    =    Utf8    args"></a>24    =    Utf8    args</h1><h1 id="25-Utf8-Ljava-lang-String-1"><a href="#25-Utf8-Ljava-lang-String-1" class="headerlink" title="25    =    Utf8    [Ljava/lang/String;"></a>25    =    Utf8    [Ljava/lang/String;</h1><h1 id="26-Utf8-m1-1"><a href="#26-Utf8-m1-1" class="headerlink" title="26    =    Utf8    m1"></a>26    =    Utf8    m1</h1><h1 id="27-Utf8-i"><a href="#27-Utf8-i" class="headerlink" title="27    =    Utf8    i"></a>27    =    Utf8    i</h1><h1 id="28-Utf8-I"><a href="#28-Utf8-I" class="headerlink" title="28    =    Utf8    I"></a>28    =    Utf8    I</h1><h1 id="29-Utf8-str"><a href="#29-Utf8-str" class="headerlink" title="29    =    Utf8    str"></a>29    =    Utf8    str</h1><h1 id="30-Utf8-Ljava-lang-String"><a href="#30-Utf8-Ljava-lang-String" class="headerlink" title="30    =    Utf8    Ljava/lang/String;"></a>30    =    Utf8    Ljava/lang/String;</h1><h1 id="31-Utf8-StackMapTable"><a href="#31-Utf8-StackMapTable" class="headerlink" title="31    =    Utf8    StackMapTable"></a>31    =    Utf8    StackMapTable</h1><h1 id="32-Class-53-java-lang-String"><a href="#32-Class-53-java-lang-String" class="headerlink" title="32    =    Class    #53    // java/lang/String"></a>32    =    Class    #53    // java/lang/String</h1><h1 id="33-Utf8-m2"><a href="#33-Utf8-m2" class="headerlink" title="33    =    Utf8    m2"></a>33    =    Utf8    m2</h1><h1 id="34-Utf8-sb"><a href="#34-Utf8-sb" class="headerlink" title="34    =    Utf8    sb"></a>34    =    Utf8    sb</h1><h1 id="35-Utf8-Ljava-lang-StringBuilder"><a href="#35-Utf8-Ljava-lang-StringBuilder" class="headerlink" title="35    =    Utf8    Ljava/lang/StringBuilder;"></a>35    =    Utf8    Ljava/lang/StringBuilder;</h1><h1 id="36-Class-44-java-lang-StringBuilder"><a href="#36-Class-44-java-lang-StringBuilder" class="headerlink" title="36    =    Class    #44    // java/lang/StringBuilder"></a>36    =    Class    #44    // java/lang/StringBuilder</h1><h1 id="37-Utf8-SourceFile"><a href="#37-Utf8-SourceFile" class="headerlink" title="37    =    Utf8    SourceFile"></a>37    =    Utf8    SourceFile</h1><h1 id="38-Utf8-Test4-java"><a href="#38-Utf8-Test4-java" class="headerlink" title="38    =    Utf8    Test4.java"></a>38    =    Utf8    Test4.java</h1><h1 id="39-NameAndType-15-16-““-V"><a href="#39-NameAndType-15-16-““-V" class="headerlink" title="39    =    NameAndType    #15:#16    // ““:()V"></a>39    =    NameAndType    #15:#16    // “<init>“:()V</init></h1><h1 id="40-Utf8-cn-itcast-jvm-Test4"><a href="#40-Utf8-cn-itcast-jvm-Test4" class="headerlink" title="40    =    Utf8    cn/itcast/jvm/Test4"></a>40    =    Utf8    cn/itcast/jvm/Test4</h1><h1 id="41-NameAndType-26-16-m1-V"><a href="#41-NameAndType-26-16-m1-V" class="headerlink" title="41    =    NameAndType    #26:#16    // m1:()V"></a>41    =    NameAndType    #26:#16    // m1:()V</h1><h1 id="42-NameAndType-33-16-m2-V"><a href="#42-NameAndType-33-16-m2-V" class="headerlink" title="42    =    NameAndType    #33:#16    // m2:()V"></a>42    =    NameAndType    #33:#16    // m2:()V</h1><h1 id="43-Utf8"><a href="#43-Utf8" class="headerlink" title="43    =    Utf8"></a>43    =    Utf8</h1><h1 id="44-Utf8-java-lang-StringBuilder"><a href="#44-Utf8-java-lang-StringBuilder" class="headerlink" title="44    =    Utf8    java/lang/StringBuilder"></a>44    =    Utf8    java/lang/StringBuilder</h1><h1 id="45-NameAndType-54-55-append"><a href="#45-NameAndType-54-55-append" class="headerlink" title="45    =    NameAndType    #54:#55    // append:"></a>45    =    NameAndType    #54:#55    // append:</h1><p>(Ljava/lang/String;)Ljava/lang/StringBuilder;</p>
+<h1 id="46-NameAndType-54-56-append-I-Ljava-lang-StringBuilder"><a href="#46-NameAndType-54-56-append-I-Ljava-lang-StringBuilder" class="headerlink" title="46 = NameAndType    #54:#56    // append: (I)Ljava/lang/StringBuilder;"></a>46 = NameAndType    #54:#56    // append: (I)Ljava/lang/StringBuilder;</h1><h1 id="47-NameAndType-57-58-toString"><a href="#47-NameAndType-57-58-toString" class="headerlink" title="47 = NameAndType    #57:#58    //    toString:"></a>47 = NameAndType    #57:#58    //    toString:</h1><p>()Ljava/lang/String;            </p>
+<h1 id="48-Class-59-java-lang-System"><a href="#48-Class-59-java-lang-System" class="headerlink" title="48 = Class    #59    //    java/lang/System"></a>48 = Class    #59    //    java/lang/System</h1><h1 id="49-NameAndType-60-61-out-Ljava-io-PrintStream"><a href="#49-NameAndType-60-61-out-Ljava-io-PrintStream" class="headerlink" title="49 = NameAndType    #60:#61    //    out:Ljava/io/PrintStream;"></a>49 = NameAndType    #60:#61    //    out:Ljava/io/PrintStream;</h1><h1 id="50-Class-62-java-io-PrintStream"><a href="#50-Class-62-java-io-PrintStream" class="headerlink" title="50 = Class    #62    //    java/io/PrintStream"></a>50 = Class    #62    //    java/io/PrintStream</h1><h1 id="51-NameAndType-63-64-println"><a href="#51-NameAndType-63-64-println" class="headerlink" title="51 = NameAndType    #63:#64    //    println:"></a>51 = NameAndType    #63:#64    //    println:</h1><p>(Ljava/lang/String;)V</p>
+<h1 id="52-Utf8-java-lang-Object"><a href="#52-Utf8-java-lang-Object" class="headerlink" title="52 = Utf8    java/lang/Object"></a>52 = Utf8    java/lang/Object</h1><h1 id="53-Utf8-java-lang-String"><a href="#53-Utf8-java-lang-String" class="headerlink" title="53 = Utf8    java/lang/String"></a>53 = Utf8    java/lang/String</h1><h1 id="54-Utf8-append"><a href="#54-Utf8-append" class="headerlink" title="54 = Utf8    append"></a>54 = Utf8    append</h1><h1 id="55-Utf8-Ljava-lang-String-Ljava-lang-StringBuilder"><a href="#55-Utf8-Ljava-lang-String-Ljava-lang-StringBuilder" class="headerlink" title="55 = Utf8    (Ljava/lang/String;)Ljava/lang/StringBuilder;"></a>55 = Utf8    (Ljava/lang/String;)Ljava/lang/StringBuilder;</h1><h1 id="56-Utf8-I-Ljava-lang-StringBuilder"><a href="#56-Utf8-I-Ljava-lang-StringBuilder" class="headerlink" title="56 = Utf8    (I)Ljava/lang/StringBuilder;"></a>56 = Utf8    (I)Ljava/lang/StringBuilder;</h1><h1 id="57-Utf8-toString"><a href="#57-Utf8-toString" class="headerlink" title="57 = Utf8    toString"></a>57 = Utf8    toString</h1><h1 id="58-Utf8-Ljava-lang-String"><a href="#58-Utf8-Ljava-lang-String" class="headerlink" title="58 = Utf8    ()Ljava/lang/String;"></a>58 = Utf8    ()Ljava/lang/String;</h1><h1 id="59-Utf8-java-lang-System"><a href="#59-Utf8-java-lang-System" class="headerlink" title="59 = Utf8    java/lang/System"></a>59 = Utf8    java/lang/System</h1><h1 id="60-Utf8-out"><a href="#60-Utf8-out" class="headerlink" title="60 = Utf8    out"></a>60 = Utf8    out</h1><h1 id="61-Utf8-Ljava-io-PrintStream"><a href="#61-Utf8-Ljava-io-PrintStream" class="headerlink" title="61 = Utf8    Ljava/io/PrintStream;"></a>61 = Utf8    Ljava/io/PrintStream;</h1><h1 id="62-Utf8-java-io-PrintStream"><a href="#62-Utf8-java-io-PrintStream" class="headerlink" title="62 = Utf8    java/io/PrintStream"></a>62 = Utf8    java/io/PrintStream</h1><h1 id="63-Utf8-println"><a href="#63-Utf8-println" class="headerlink" title="63 = Utf8    println"></a>63 = Utf8    println</h1><h1 id="64-Utf8-Ljava-lang-String-V"><a href="#64-Utf8-Ljava-lang-String-V" class="headerlink" title="64 = Utf8    (Ljava/lang/String;)V"></a>64 = Utf8    (Ljava/lang/String;)V</h1><p>{<br>public cn.itcast.jvm.Test4(); descriptor: ()V<br>flags: ACC_PUBLIC Code:<br>stack=1, locals=1, args_size=1 0: aload_0<br>1: invokespecial #1    // Method<br>java/lang/Object.”<init>“:()V<br>4: return LineNumberTable:<br>line 3: 0 LocalVariableTable:<br>Start    Length    Slot    Name    Signature<br>0    5    0    this    Lcn/itcast/jvm/Test4;</init></p>
+<p>public static void main(java.lang.String[]); descriptor: ([Ljava/lang/String;)V<br>flags: ACC_PUBLIC, ACC_STATIC<br>Code:<br>stack=2, locals=1, args_size=1<br>0: new    #2    // class cn/itcast/jvm/Test4<br>3: dup<br>4: invokespecial #3    // Method “<init>“:()V<br>7: invokevirtual #4    // Method m1:()V<br>10: new    #2    // class cn/itcast/jvm/Test4<br>13: dup<br>14: invokespecial #3    // Method “<init>“:()V<br>17: invokevirtual #5    // Method m2:()V<br>20: return LineNumberTable:<br>line 6: 0<br>line 7: 10</init></init></p>
+<p>line 8: 20</p>
+<p>LocalVariableTable:<br>Start    Length    Slot    Name    Signature<br>0    21    0    args    [Ljava/lang/String;<br>public void m1(); descriptor: ()V flags: ACC_PUBLIC Code:<br>stack=2, locals=3, args_size=1<br>0: ldc    #6    // String<br>2: astore_1    // 将空字符串压入到本地变量表中的下标为1的位置<br>3: iconst_0    // 将数字0压入操作栈顶<br>4: istore_2    // 将栈顶数字0压入到本地变量表中的下标为2的位置<br>5: iload_2    // 将本地变量中下标为2的数字0压入操作栈顶<br>6: iconst_5 // 将数字5压入操作栈顶<br>7: if_icmpge    35    //比较栈顶两int型数值大小，当结果大于等于0时跳</p>
+<p>转到35</p>
+<p>10: new    #7    // class</p>
+<p>java/lang/StringBuilder<br>13: dup    //复制栈顶数值并将复制值压入栈顶(数字5)<br>14: invokespecial #8    // Method java/lang/StringBuilder.”<init>“:()V<br>17: aload_1<br>18: invokevirtual #9    // Method java/lang/StringBuilder.append: (Ljava/lang/String;)Ljava/lang/StringBuilder;<br>21: iload_2 //将本地变量中下标为2的数字0压入操作栈顶<br>22: invokevirtual #10    // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;<br>25: invokevirtual #11    // Method java/lang/StringBuilder.toString:()Ljava/lang/String;<br>28:    astore_1<br>29:    iinc    2, 1<br>32:    goto    5<br>35:    getstatic    #12    // Field<br>java/lang/System.out:Ljava/io/PrintStream; 38: aload_1<br>39: invokevirtual #13    // Method java/io/PrintStream.println:(Ljava/lang/String;)V<br>42: return LineNumberTable:</init></p>
+<p>line    11:    0<br>line    12:    3<br>line    13:    10<br>line    12:    29<br>line    15:    35<br>line    16:    42<br>LocalVariableTable:<br>Start    Length    Slot    Name    Signature<br>5    30    2    i    I<br>0    43    0    this    Lcn/itcast/jvm/Test4;<br>3    40    1    str    Ljava/lang/String;<br>StackMapTable: number_of_entries = 2 frame_type = 253 /<em> append </em>/<br>offset_delta = 5<br>locals = [ class java/lang/String, int ] frame_type = 250 /<em> chop </em>/<br>offset_delta = 29</p>
+<p>public void m2(); descriptor: ()V flags: ACC_PUBLIC Code:<br>stack=2, locals=3, args_size=1<br>0: new    #7    // class java/lang/StringBuilder<br>3: dup<br>4: invokespecial #8    // Method java/lang/StringBuilder.”<init>“:()V<br>7: astore_1<br>8: iconst_0<br>9: istore_2<br>10: iload_2<br>11: iconst_5<br>12: if_icmpge    27<br>15: aload_1<br>16: iload_2<br>17: invokevirtual #10    // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;<br>20: pop<br>21: iinc    2, 1<br>24: goto    10<br>27: getstatic    #12    // Field java/lang/System.out:Ljava/io/PrintStream;<br>30: aload_1<br>31: invokevirtual #11    // Method java/lang/StringBuilder.toString:()Ljava/lang/String;<br>34: invokevirtual #13    // Method java/io/PrintStream.println:(Ljava/lang/String;)V<br>37: return LineNumberTable:<br>line 19: 0<br>line 20: 8<br>line 21: 15<br>line 20: 21<br>line 23: 27<br>line 24: 37 LocalVariableTable:<br>Start    Length    Slot    Name    Signature 10        17        2        i    I<br>0    38    0    this    Lcn/itcast/jvm/Test4;<br>8    30    1    sb    Ljava/lang/StringBuilder;<br>StackMapTable: number_of_entries = 2 frame_type = 253 /<em> append </em>/<br>offset_delta = 10<br>locals = [ class java/lang/StringBuilder, int ] frame_type = 250 /<em> chop </em>/<br>offset_delta = 16<br>}<br>SourceFile: “Test4.java”</init></p>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65<br>66<br>67<br>68<br>69<br>70<br>71<br>72<br>73<br>74<br>75<br>76<br>77<br>78<br>79<br>80<br>81<br>82<br>83<br>84<br>85<br>86<br>87<br>88<br>89<br>90<br>91<br>92<br>93<br>94<br>95<br>96<br>97<br>98<br>99<br>100<br>101<br>102<br>103<br>104<br>105<br>106<br>107<br>108<br>109<br>110<br>111<br>112<br>113<br>114<br>115<br>116<br>117<br>118<br>119<br>120<br>121<br>122<br>123<br>124<br>125<br>126<br>127<br>128<br>129<br>130<br>131<br>132<br>133<br>134<br>135<br>136<br>137<br>138<br>139<br>140<br>141<br>142<br>143<br>144<br>145<br>146<br>147<br>148<br>149<br>150<br>151<br>152<br>153<br>154<br>155<br>156<br>157<br>158<br>159<br>160<br>161<br>162<br>163<br>164<br>165<br>166<br>167<br>168<br>169<br>170<br>171<br>172<br>173<br>174<br>175<br>176<br>177<br>178<br>179<br>180<br>181<br>182<br>183<br>184<br>185<br>186<br>187<br>188<br>189<br>190<br>191<br>192<br>193<br>194<br>195<br>可以看到，m1()方法中的循环体内，每一次循环都会创建StringBuilder对象，效率低于<br>m2()方法。</p>
+<p>2.7、小结<br>使用字节码的方式可以很好查看代码底层的执行，从而可以看出哪些实现效率高，哪些 实现效率低。可以更好的对我们的代码做优化。让程序执行效率更高。</p>
+<p>3、代码优化<br>优化，不仅仅是在运行环境进行优化，还需要在代码本身做优化，如果代码本身存在性 能问题，那么在其他方面再怎么优化也不可能达到效果最优的。</p>
+<p>3.1、尽可能使用局部变量<br>调用方法时传递的参数以及在调用中创建的临时变量都保存在栈中速度较快，其他变 量，如静态变量、实例变量等，都在堆中创建，速度较慢。另外，栈中创建的变量，随 着方法的运行结束，这些内容就没了，不需要额外的垃圾回收。</p>
+<p>3.2、尽量减少对变量的重复计算<br>明确一个概念，对方法的调用，即使方法中只有一句语句，也是有消耗的。所以例如下 面的操作：</p>
+<p>for (int i = 0; i &lt; list.size(); i++)<br>{…}<br>1<br>2<br>建议替换为：</p>
+<p>int length = list.size();<br>for (int i = 0,    i &lt; length; i++)<br>{…}</p>
+<p>1<br>2<br>3<br>4<br>这样，在list.size()很大的时候，就减少了很多的消耗。</p>
+<p>3.3、尽量采用懒加载的策略，即在需要的时候才创建<br>String str = “aaa”;<br>if (i == 1){<br>list.add(str);<br>}<br>//建议替换成<br>if (i == 1){<br>String str = “aaa”; list.add(str);<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>3.4、异常不应该用来控制程序流程<br>异常对性能不利。抛出异常首先要创建一个新的对象，Throwable接口的构造函数调用 名为fillInStackTrace()的本地同步方 法，fillInStackTrace()方法检查堆栈，收集调用跟踪信息。只要有异常被抛出，Java虚拟机就必须调整调用堆栈，因为在处理过程中创建 了一个新的对象。异常只能用于错误处理，不应该用来控制程序流程。</p>
+<p>3.5、不要将数组声明为public static final<br>因为这毫无意义，这样只是定义了引用为static final，数组的内容还是可以随意改变的， 将数组声明为public更是一个安全漏洞，这意味着这个数组可以被外部类所改变。</p>
+<p>3.6、不要创建一些不使用的对象，不要导入一些不使用的类<br>这毫无意义，如果代码中出现”The value of the local variable i is not used”、“The import java.util is never used”，那么请删除这些无用的内容</p>
+<p>3.7、程序运行过程中避免使用反射<br>反射是Java提供给用户一个很强大的功能，功能强大往往意味着效率不高。不建议在程序运行过程中使用尤其是频繁使用反射机制，特别是 Method的invoke方法。<br>如果确实有必要，一种建议性的做法是将那些需要通过反射加载的类在项目启动的时候 通过反射实例化出一个对象并放入内存。</p>
+<p>3.8、使用数据库连接池和线程池<br>这两个池都是用于重用对象的，前者可以避免频繁地打开和关闭连接，后者可以避免频 繁地创建和销毁线程。</p>
+<p>3.9、容器初始化时尽可能指定长度<br>容器初始化时尽可能指定长度，如：new ArrayList&lt;&gt;(10); new HashMap&lt;&gt;(32); 避免容器长度不足时，扩容带来的性能损耗。</p>
+<p>3.10、ArrayList随机遍历快，LinkedList添加删除快<br>3.11、使用Entry遍历Map<br>Map<string,string> map = new HashMap&lt;&gt;();<br>for (Map.Entry<string,string> entry : map.entrySet()) { String key = entry.getKey();<br>String value = entry.getValue();<br>}<br>1<br>2<br>3<br>4<br>避免使用这种方式：</string,string></string,string></p>
+<p>Map<string,string> map = new HashMap&lt;&gt;(); for (String key : map.keySet()) {<br>String value = map.get(key);<br>}<br>1<br>2<br>3<br>3.12、不要手动调用System.gc();<br>3.13、String尽量少用正则表达式<br>正则表达式虽然功能强大，但是其效率较低，除非是有需要，否则尽可能少用。</string,string></p>
+<p>replace() 不支持正则<br>replaceAll() 支持正则<br>如果仅仅是字符的替换建议使用replace()。</p>
+<p>3.14、日志的输出要注意级别<br>// 当 前 的 日 志 级 别 是 error LOGGER.info(“保存出错！” + user);<br>1<br>3.15、对资源的close()建议分开操作<br>try{<br>XXX.close();<br>YYY.close();<br>}<br>catch (Exception e){<br>…<br>}<br>// 建议改为<br>try{<br>XXX.close();<br>}<br>catch (Exception e){<br>…<br>}<br>try{<br>YYY.close();<br>}<br>catch (Exception e){<br>…<br>}</p>
+</connector></executor></connector>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="AnFrank 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="AnFrank 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AnFrank</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://anfrank.gitee.io/2019/12/20/架构与优化之JVM优化第03篇Tomcat8的优化 看懂Java底层字节码 编码的优化建议/" title="架构与优化之JVM优化第03课Tomcat8的优化 看懂Java底层字节码 编码的优化建议">http://anfrank.gitee.io/2019/12/20/架构与优化之JVM优化第03篇Tomcat8的优化 看懂Java底层字节码 编码的优化建议/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JVM/" rel="tag"><i class="fa fa-tag"></i> JVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/" rel="next" title="架构与优化之JVM优化第02篇垃圾回收">
+                <i class="fa fa-chevron-left"></i> 架构与优化之JVM优化第02篇垃圾回收
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="AnFrank">
+            
+              <p class="site-author-name" itemprop="name">AnFrank</p>
+              <p class="site-description motion-element" itemprop="description">你若晴天，我便安好。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/enfangzhong" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://blog.csdn.net/qintian888" target="_blank" title="CSDN"><i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/5604852325" target="_blank" title="weibo"><i class="fa fa-fw fa-weibo"></i>weibo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/itjygfly" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/enfangzhong" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:enfangzhong@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lruihao.cn/" title="博采众长" target="_blank">博采众长</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leridy.pw/" title="乐余地" target="_blank">乐余地</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tmy123.com/" title="同盟源" target="_blank">同盟源</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yremp.live" title="Yremp" target="_blank">Yremp</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          <marquee>
+	<a href="/links">
+	<font size="4" face="STXingkai">
+		<font color="#FF0000">欢</font>
+		<font color="#E80017">迎</font>
+		<font color="#D1002E">点</font>
+		<font color="#BA0045">我</font>
+		<font color="#A3005C">互</font>
+		<font color="#A00073">换</font>
+		<font color="#A0008A">友</font>
+		<font color="#A000A1">链</font>
+		<font color="#A000B8">哦</font>
+		<font color="#A000CF">~</font>
+		<font color="#A000E6">~</font>
+	</font>
+	</a>
+</marquee>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-学习目标"><span class="nav-text">0.学习目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1、Tomcat8优化"><span class="nav-text">1、Tomcat8优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1、Tomcat配置优化1-1-1、部署安装tomcat8-下载并安装："><span class="nav-text">1.1、Tomcat配置优化1.1.1、部署安装tomcat8 下载并安装：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改配置文件，配置tomcat的管理用户"><span class="nav-text">修改配置文件，配置tomcat的管理用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保存退出"><span class="nav-text">保存退出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如果是tomcat7，配置了tomcat用户就可以登录系统了，但是tomcat8中不行，还需要修改另一个配置文件，否则访问不了，提示403"><span class="nav-text">如果是tomcat7，配置了tomcat用户就可以登录系统了，但是tomcat8中不行，还需要修改另一个配置文件，否则访问不了，提示403</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#将-lt-Valve的内容注释掉"><span class="nav-text">将&lt;Valve的内容注释掉</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保存退出即可"><span class="nav-text">保存退出即可</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动tomcat"><span class="nav-text">启动tomcat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打开浏览器进行测试访问http-192-168-40-133-8080"><span class="nav-text">打开浏览器进行测试访问http://192.168.40.133:8080/</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改数据库配置文件"><span class="nav-text">修改数据库配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#这里根据自己的实际情况进行配置"><span class="nav-text">这里根据自己的实际情况进行配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#年轻代、老年代均使用并行收集器，初始堆内存64M，最大堆内存512M-JAVA-OPTS-”‐XX-UseParallelGC-‐XX-UseParallelOldGC-‐Xms64m-‐Xmx512m-‐-XX-PrintGCDetails-‐XX-PrintGCTimeStamps-‐XX-PrintGCDateStamps-‐-XX-PrintHeapAtGC-‐Xloggc-logs-gc-log”"><span class="nav-text">年轻代、老年代均使用并行收集器，初始堆内存64M，最大堆内存512M JAVA_OPTS=”‐XX:+UseParallelGC ‐XX:+UseParallelOldGC ‐Xms64m ‐Xmx512m ‐ XX:+PrintGCDetails ‐XX:+PrintGCTimeStamps ‐XX:+PrintGCDateStamps ‐ XX:+PrintHeapAtGC ‐Xloggc:../logs/gc.log”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置了最大停顿时间100毫秒，初始堆内存128m，最大堆内存1024m-JAVA-OPTS-”‐XX-UseG1GC-‐XX-MaxGCPauseMillis-100-‐Xms128m-‐Xmx1024m-‐-XX-PrintGCDetails-‐XX-PrintGCTimeStamps-‐XX-PrintGCDateStamps-‐-XX-PrintHeapAtGC-‐Xloggc-logs-gc-log”"><span class="nav-text">设置了最大停顿时间100毫秒，初始堆内存128m，最大堆内存1024m JAVA_OPTS=”‐XX:+UseG1GC ‐XX:MaxGCPauseMillis=100 ‐Xms128m ‐Xmx1024m ‐ XX:+PrintGCDetails ‐XX:+PrintGCTimeStamps ‐XX:+PrintGCDateStamps ‐ XX:+PrintHeapAtGC ‐Xloggc:../logs/gc.log”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Methodref-5-23-java-lang-Object-”“-V"><span class="nav-text">1 = Methodref    #5.#23    // java/lang/Object.”“: ()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Fieldref-24-25-java-lang-System-out-Ljava-io-PrintStream"><span class="nav-text">2 = Fieldref    #24.#25    // java/lang/System.out:Ljava/io/PrintStream;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Methodref-26-27-java-io-PrintStream-println-I-V"><span class="nav-text">3 = Methodref    #26.#27    // java/io/PrintStream.println: (I)V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#28-Utf8-cn-itcast-jvm-Test1"><span class="nav-text">28 = Utf8    cn/itcast/jvm/Test1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#29-Utf8-java-lang-Object"><span class="nav-text">29 = Utf8    java/lang/Object</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#30-Utf8-java-lang-System"><span class="nav-text">30 = Utf8    java/lang/System</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#31-Utf8-out"><span class="nav-text">31 = Utf8    out</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#32-Utf8-Ljava-io-PrintStream"><span class="nav-text">32 = Utf8    Ljava/io/PrintStream;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#33-Utf8-java-io-PrintStream"><span class="nav-text">33 = Utf8    java/io/PrintStream</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#34-Utf8-println"><span class="nav-text">34 = Utf8    println</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#35-Utf8-I-V"><span class="nav-text">35 = Utf8    (I)V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Methodref-8-27-java-lang-Object-”“-V"><span class="nav-text">1 = Methodref    #8.#27    // java/lang/Object.”“: ()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Class-28-cn-itcast-jvm-Test2"><span class="nav-text">2 = Class    #28    // cn/itcast/jvm/Test2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Methodref-2-27-cn-itcast-jvm-Test2-”"><span class="nav-text">3 = Methodref    #2.#27    // cn/itcast/jvm/Test2.”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Methodref-2-29-cn-itcast-jvm-Test2-method1-V"><span class="nav-text">4 = Methodref    #2.#29    // cn/itcast/jvm/Test2.method1: ()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Methodref-2-30-cn-itcast-jvm-Test2-method2-V"><span class="nav-text">5 = Methodref    #2.#30    // cn/itcast/jvm/Test2.method2: ()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Fieldref-31-32-java-lang-System-out-Ljava-io-PrintStream"><span class="nav-text">6 = Fieldref    #31.#32    // java/lang/System.out:Ljava/io/PrintStream;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Methodref-33-34-java-io-PrintStream-println-I-V"><span class="nav-text">7 = Methodref    #33.#34    // java/io/PrintStream.println: (I)V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#26-Utf8-Test2-java"><span class="nav-text">26    =    Utf8    Test2.java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#27-NameAndType-9-10-““-V"><span class="nav-text">27    =    NameAndType    #9:#10    // ““:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#28-Utf8-cn-itcast-jvm-Test2"><span class="nav-text">28    =    Utf8    cn/itcast/jvm/Test2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#29-NameAndType-20-10-method1-V"><span class="nav-text">29    =    NameAndType    #20:#10    // method1:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#30-NameAndType-24-10-method2-V"><span class="nav-text">30    =    NameAndType    #24:#10    // method2:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#31-Class-36-java-lang-System"><span class="nav-text">31    =    Class    #36    // java/lang/System</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#32-NameAndType-37-38-out-Ljava-io-PrintStream"><span class="nav-text">32    =    NameAndType    #37:#38    // out:Ljava/io/PrintStream;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#33-Class-39-java-io-PrintStream"><span class="nav-text">33    =    Class    #39    // java/io/PrintStream</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#34-NameAndType-40-41-println-I-V"><span class="nav-text">34    =    NameAndType    #40:#41    // println:(I)V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#35-Utf8-java-lang-Object"><span class="nav-text">35    =    Utf8    java/lang/Object</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#36-Utf8-java-lang-System"><span class="nav-text">36    =    Utf8    java/lang/System</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#37-Utf8-out"><span class="nav-text">37    =    Utf8    out</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#38-Utf8-Ljava-io-PrintStream"><span class="nav-text">38    =    Utf8    Ljava/io/PrintStream;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#39-Utf8-java-io-PrintStream"><span class="nav-text">39    =    Utf8    java/io/PrintStream</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#40-Utf8-println"><span class="nav-text">40    =    Utf8    println</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#41-Utf8-I-V"><span class="nav-text">41    =    Utf8    (I)V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Methodref-14-36-java-lang-Object-”“-V"><span class="nav-text">1 = Methodref    #14.#36    // java/lang/Object.”“: ()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Class-37-cn-itcast-jvm-Test3"><span class="nav-text">2 = Class    #37    // cn/itcast/jvm/Test3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Methodref-2-36-cn-itcast-jvm-Test3-”"><span class="nav-text">3 = Methodref    #2.#36    // cn/itcast/jvm/Test3.”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Methodref-2-38-cn-itcast-jvm-Test3-m1-V"><span class="nav-text">4 = Methodref    #2.#38    // cn/itcast/jvm/Test3.m1:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Methodref-2-39-cn-itcast-jvm-Test3-m2-V"><span class="nav-text">5 = Methodref    #2.#39    // cn/itcast/jvm/Test3.m2:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-String-40-123"><span class="nav-text">6 = String    #40    // 123</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-String-41-456"><span class="nav-text">7 = String    #41    // 456</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-Class-42-java-lang-StringBuilder"><span class="nav-text">8 = Class    #42    // java/lang/StringBuilder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Methodref-8-36-java-lang-StringBuilder-”"><span class="nav-text">9 = Methodref    #8.#36    // java/lang/StringBuilder.”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-Methodref-8-43-java-lang-StringBuilder-append-Ljava-lang-String-Ljava-lang-StringBuilder"><span class="nav-text">10 = Methodref    #8.#43    // java/lang/StringBuilder.append: (Ljava/lang/String;)Ljava/lang/StringBuilder;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-Methodref-8-44-java-lang-StringBuilder-toString-Ljava-lang-String"><span class="nav-text">11 = Methodref    #8.#44    // java/lang/StringBuilder.toString:()Ljava/lang/String;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-Fieldref-45-46-java-lang-System-out-Ljava-io-PrintStream"><span class="nav-text">12 = Fieldref    #45.#46    // java/lang/System.out:Ljava/io/PrintStream;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-Methodref-47-48-java-io-PrintStream-println-Ljava-lang-String-V"><span class="nav-text">13 = Methodref    #47.#48    // java/io/PrintStream.println: (Ljava/lang/String;)V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-Class-49-java-lang-Object"><span class="nav-text">14 = Class    #49    // java/lang/Object</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-Utf8"><span class="nav-text">15 = Utf8    </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-Utf8-V"><span class="nav-text">16 = Utf8    ()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#17-Utf8-Code"><span class="nav-text">17 = Utf8    Code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#18-Utf8-LineNumberTable"><span class="nav-text">18 = Utf8    LineNumberTable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-Utf8-LocalVariableTable"><span class="nav-text">19 = Utf8    LocalVariableTable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20-Utf8-this"><span class="nav-text">20 = Utf8    this</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#21-Utf8-Lcn-itcast-jvm-Test3"><span class="nav-text">21 = Utf8    Lcn/itcast/jvm/Test3;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#22-Utf8-main"><span class="nav-text">22 = Utf8    main</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#23-Utf8-Ljava-lang-String-V"><span class="nav-text">23 = Utf8    ([Ljava/lang/String;)V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#24-Utf8-args"><span class="nav-text">24    =    Utf8    args</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#25-Utf8-Ljava-lang-String"><span class="nav-text">25    =    Utf8    [Ljava/lang/String;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#26-Utf8-m1"><span class="nav-text">26    =    Utf8    m1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#27-Utf8-s1"><span class="nav-text">27    =    Utf8    s1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#28-Utf8-Ljava-lang-String"><span class="nav-text">28    =    Utf8    Ljava/lang/String;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#29-Utf8-s2"><span class="nav-text">29    =    Utf8    s2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#30-Utf8-s3"><span class="nav-text">30    =    Utf8    s3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#31-Utf8-m2"><span class="nav-text">31    =    Utf8    m2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#32-Utf8-sb"><span class="nav-text">32    =    Utf8    sb</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#33-Utf8-Ljava-lang-StringBuilder"><span class="nav-text">33    =    Utf8    Ljava/lang/StringBuilder;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#34-Utf8-SourceFile"><span class="nav-text">34    =    Utf8    SourceFile</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#35-Utf8-Test3-java"><span class="nav-text">35    =    Utf8    Test3.java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#36-NameAndType-15-16-““-V"><span class="nav-text">36    =    NameAndType    #15:#16    // ““:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#37-Utf8-cn-itcast-jvm-Test3"><span class="nav-text">37    =    Utf8    cn/itcast/jvm/Test3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#38-NameAndType-26-16-m1-V"><span class="nav-text">38    =    NameAndType    #26:#16    // m1:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#39-NameAndType-31-16-m2-V"><span class="nav-text">39    =    NameAndType    #31:#16    // m2:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#40-Utf8-123"><span class="nav-text">40    =    Utf8    123</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#41-Utf8-456"><span class="nav-text">41    =    Utf8    456</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#42-Utf8-java-lang-StringBuilder"><span class="nav-text">42    =    Utf8    java/lang/StringBuilder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#43-NameAndType-50-51-append"><span class="nav-text">43    =    NameAndType    #50:#51    // append:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#44-NameAndType-52-53-toString"><span class="nav-text">44 = NameAndType    #52:#53    //    toString:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#45-Class-54-java-lang-System"><span class="nav-text">45 = Class    #54    //    java/lang/System</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#46-NameAndType-55-56-out-Ljava-io-PrintStream"><span class="nav-text">46 = NameAndType    #55:#56    //    out:Ljava/io/PrintStream;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#47-Class-57-java-io-PrintStream"><span class="nav-text">47 = Class    #57    //    java/io/PrintStream</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#48-NameAndType-58-59-println"><span class="nav-text">48 = NameAndType    #58:#59    //    println:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Methodref-14-39-java-lang-Object-”“-V"><span class="nav-text">1 = Methodref    #14.#39    // java/lang/Object.”“: ()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Class-40-cn-itcast-jvm-Test4"><span class="nav-text">2 = Class    #40    // cn/itcast/jvm/Test4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Methodref-2-39-cn-itcast-jvm-Test4-”"><span class="nav-text">3 = Methodref    #2.#39    // cn/itcast/jvm/Test4.”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Methodref-2-41-cn-itcast-jvm-Test4-m1-V"><span class="nav-text">4 = Methodref    #2.#41    // cn/itcast/jvm/Test4.m1:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Methodref-2-42-cn-itcast-jvm-Test4-m2-V"><span class="nav-text">5 = Methodref    #2.#42    // cn/itcast/jvm/Test4.m2:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-String-43"><span class="nav-text">6 = String    #43    //</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Class-44-java-lang-StringBuilder"><span class="nav-text">7 = Class    #44    // java/lang/StringBuilder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-Methodref-7-39-java-lang-StringBuilder-”"><span class="nav-text">8 = Methodref    #7.#39    // java/lang/StringBuilder.”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Methodref-7-45-java-lang-StringBuilder-append-Ljava-lang-String-Ljava-lang-StringBuilder"><span class="nav-text">9 = Methodref    #7.#45    // java/lang/StringBuilder.append: (Ljava/lang/String;)Ljava/lang/StringBuilder;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-Methodref-7-46-java-lang-StringBuilder-append-I-Ljava-lang-StringBuilder"><span class="nav-text">10 = Methodref    #7.#46    // java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-Methodref-7-47-java-lang-StringBuilder-toString-Ljava-lang-String"><span class="nav-text">11 = Methodref    #7.#47    // java/lang/StringBuilder.toString:()Ljava/lang/String;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-Fieldref-48-49-java-lang-System-out-Ljava-io-PrintStream"><span class="nav-text">12 = Fieldref    #48.#49    // java/lang/System.out:Ljava/io/PrintStream;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-Methodref-50-51-java-io-PrintStream-println-Ljava-lang-String-V"><span class="nav-text">13 = Methodref    #50.#51    // java/io/PrintStream.println: (Ljava/lang/String;)V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-Class-52-java-lang-Object"><span class="nav-text">14 = Class    #52    // java/lang/Object</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-Utf8-1"><span class="nav-text">15 = Utf8    </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-Utf8-V-1"><span class="nav-text">16 = Utf8    ()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#17-Utf8-Code-1"><span class="nav-text">17 = Utf8    Code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#18-Utf8-LineNumberTable-1"><span class="nav-text">18 = Utf8    LineNumberTable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-Utf8-LocalVariableTable-1"><span class="nav-text">19 = Utf8    LocalVariableTable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20-Utf8-this-1"><span class="nav-text">20 = Utf8    this</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#21-Utf8-Lcn-itcast-jvm-Test4"><span class="nav-text">21 = Utf8    Lcn/itcast/jvm/Test4;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#22-Utf8-main-1"><span class="nav-text">22 = Utf8    main</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#23-Utf8-Ljava-lang-String-V-1"><span class="nav-text">23    =    Utf8    ([Ljava/lang/String;)V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#24-Utf8-args-1"><span class="nav-text">24    =    Utf8    args</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#25-Utf8-Ljava-lang-String-1"><span class="nav-text">25    =    Utf8    [Ljava/lang/String;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#26-Utf8-m1-1"><span class="nav-text">26    =    Utf8    m1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#27-Utf8-i"><span class="nav-text">27    =    Utf8    i</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#28-Utf8-I"><span class="nav-text">28    =    Utf8    I</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#29-Utf8-str"><span class="nav-text">29    =    Utf8    str</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#30-Utf8-Ljava-lang-String"><span class="nav-text">30    =    Utf8    Ljava/lang/String;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#31-Utf8-StackMapTable"><span class="nav-text">31    =    Utf8    StackMapTable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#32-Class-53-java-lang-String"><span class="nav-text">32    =    Class    #53    // java/lang/String</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#33-Utf8-m2"><span class="nav-text">33    =    Utf8    m2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#34-Utf8-sb"><span class="nav-text">34    =    Utf8    sb</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#35-Utf8-Ljava-lang-StringBuilder"><span class="nav-text">35    =    Utf8    Ljava/lang/StringBuilder;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#36-Class-44-java-lang-StringBuilder"><span class="nav-text">36    =    Class    #44    // java/lang/StringBuilder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#37-Utf8-SourceFile"><span class="nav-text">37    =    Utf8    SourceFile</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#38-Utf8-Test4-java"><span class="nav-text">38    =    Utf8    Test4.java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#39-NameAndType-15-16-““-V"><span class="nav-text">39    =    NameAndType    #15:#16    // ““:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#40-Utf8-cn-itcast-jvm-Test4"><span class="nav-text">40    =    Utf8    cn/itcast/jvm/Test4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#41-NameAndType-26-16-m1-V"><span class="nav-text">41    =    NameAndType    #26:#16    // m1:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#42-NameAndType-33-16-m2-V"><span class="nav-text">42    =    NameAndType    #33:#16    // m2:()V</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#43-Utf8"><span class="nav-text">43    =    Utf8</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#44-Utf8-java-lang-StringBuilder"><span class="nav-text">44    =    Utf8    java/lang/StringBuilder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#45-NameAndType-54-55-append"><span class="nav-text">45    =    NameAndType    #54:#55    // append:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#46-NameAndType-54-56-append-I-Ljava-lang-StringBuilder"><span class="nav-text">46 = NameAndType    #54:#56    // append: (I)Ljava/lang/StringBuilder;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#47-NameAndType-57-58-toString"><span class="nav-text">47 = NameAndType    #57:#58    //    toString:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#48-Class-59-java-lang-System"><span class="nav-text">48 = Class    #59    //    java/lang/System</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#49-NameAndType-60-61-out-Ljava-io-PrintStream"><span class="nav-text">49 = NameAndType    #60:#61    //    out:Ljava/io/PrintStream;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#50-Class-62-java-io-PrintStream"><span class="nav-text">50 = Class    #62    //    java/io/PrintStream</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#51-NameAndType-63-64-println"><span class="nav-text">51 = NameAndType    #63:#64    //    println:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#52-Utf8-java-lang-Object"><span class="nav-text">52 = Utf8    java/lang/Object</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#53-Utf8-java-lang-String"><span class="nav-text">53 = Utf8    java/lang/String</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#54-Utf8-append"><span class="nav-text">54 = Utf8    append</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#55-Utf8-Ljava-lang-String-Ljava-lang-StringBuilder"><span class="nav-text">55 = Utf8    (Ljava/lang/String;)Ljava/lang/StringBuilder;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#56-Utf8-I-Ljava-lang-StringBuilder"><span class="nav-text">56 = Utf8    (I)Ljava/lang/StringBuilder;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#57-Utf8-toString"><span class="nav-text">57 = Utf8    toString</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#58-Utf8-Ljava-lang-String"><span class="nav-text">58 = Utf8    ()Ljava/lang/String;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#59-Utf8-java-lang-System"><span class="nav-text">59 = Utf8    java/lang/System</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#60-Utf8-out"><span class="nav-text">60 = Utf8    out</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#61-Utf8-Ljava-io-PrintStream"><span class="nav-text">61 = Utf8    Ljava/io/PrintStream;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#62-Utf8-java-io-PrintStream"><span class="nav-text">62 = Utf8    java/io/PrintStream</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#63-Utf8-println"><span class="nav-text">63 = Utf8    println</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#64-Utf8-Ljava-lang-String-V"><span class="nav-text">64 = Utf8    (Ljava/lang/String;)V</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+
+      
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java虚拟机/">Java虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Boot/">Spring Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/">Spring Cloud</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java编程思想/">java编程思想</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/写作标签/">写作标签</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客/">博客</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐算法/">推荐算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/标签云/">标签云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息中间件/">消息中间件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深入理解Java虚拟机/">深入理解Java虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/秋招/">秋招</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自定义友链页面/">自定义友链页面</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/音乐播放器/">音乐播放器</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+  <!-- canvas粒子时钟 -->
+  
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+
+
+
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnFrank</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">GitHub</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!--
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+-->
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">Enfang</a> v6.3.0</div>
+
+
+
+
+
+<font color="MediumPurple" face="STLiti">
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共151.8k字|</span>
+</div>
+</font>
+
+<font color="MediumPurple" face="STLiti"><span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span></font>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("05/28/2018 20:01:01");//此处为建站时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "我在此等候你："+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      我的第<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>位朋友
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      经历<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次回眸才与你相遇
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+
+  <!-- https://deserts.io/diy-a-comment-system/ -->
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: '944727327@qq.com', //博主邮箱
+        el: '#comments' ,
+        appId: 'SACSC0biGE5t01ErmVSxYvVt-gzGzoHsz',
+        appKey: 'td1GAOLqHNMnQ4BtJENstUVW',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!填写邮箱能很快收到我的回复喔！老铁，你不想说两句吗？',
+  });
+
+
+  if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+
+  </script>
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+</body>
+</html>
