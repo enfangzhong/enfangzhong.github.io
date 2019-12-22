@@ -577,7 +577,7 @@ pre code {
   text-shadow: none;
 }
 .highlight {
-  border-radius: 1px;
+  border-radius: 8px;
 }
 .highlight pre {
   border: none;
@@ -2092,7 +2092,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #4096ff;
+  background: #ffc4ff;
 }
 .links-of-blogroll {
   font-size: 13px;
