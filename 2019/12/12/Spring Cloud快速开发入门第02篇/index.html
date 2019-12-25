@@ -130,7 +130,7 @@
   </script>
 
   <meta name="description" content="0.学习目标 会配置Hystix熔断 会使用Feign进行远程调用 能独立搭建Zuul网关 能编写Zuul的过滤器  1.Hystrix1.1.简介Hystrix,英文意思是豪猪，全身是刺，看起来就不好惹，是一种保护机制。 Hystrix也是Netflix公司的一款组件。 主页：https://github.com/Netflix/Hystrix/  那么Hystix的作用是什么呢？具体要保护什么">
-<meta name="keywords" content="Spring Cloud,微服务">
+<meta name="keywords" content="微服务,Spring Cloud">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Cloud快速开发入门第02篇">
 <meta property="og:url" content="http://anfrank.gitee.io/2019/12/12/Spring Cloud快速开发入门第02篇/index.html">
@@ -174,7 +174,7 @@
 <meta property="og:image" content="http://anfrank.gitee.io/2019/12/12/Spring%20Cloud快速开发入门第02篇/1529136926454.png">
 <meta property="og:image" content="http://anfrank.gitee.io/2019/12/12/Spring%20Cloud快速开发入门第02篇/1529161460740.png">
 <meta property="og:image" content="http://anfrank.gitee.io/2019/12/12/Spring%20Cloud快速开发入门第02篇/1529161252733.png">
-<meta property="og:updated_time" content="2019-12-18T06:19:06.993Z">
+<meta property="og:updated_time" content="2019-12-25T09:19:37.912Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Cloud快速开发入门第02篇">
 <meta name="twitter:description" content="0.学习目标 会配置Hystix熔断 会使用Feign进行远程调用 能独立搭建Zuul网关 能编写Zuul的过滤器  1.Hystrix1.1.简介Hystrix,英文意思是豪猪，全身是刺，看起来就不好惹，是一种保护机制。 Hystrix也是Netflix公司的一款组件。 主页：https://github.com/Netflix/Hystrix/  那么Hystix的作用是什么呢？具体要保护什么">
@@ -537,7 +537,7 @@ function setSidebarMarginTop (headerOffset) {
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-12-18 14:19:06" itemprop="dateModified" datetime="2019-12-18T14:19:06+08:00">2019-12-18</time>
+                <time title="修改时间：2019-12-25 17:19:37" itemprop="dateModified" datetime="2019-12-25T17:19:37+08:00">2019-12-25</time>
               
             
           </span>
@@ -790,10 +790,9 @@ function setSidebarMarginTop (headerOffset) {
 <p><img src="/2019/12/12/Spring Cloud快速开发入门第02篇/1528863489923.png" alt="1528863489923"></p>
 <h1 id="3-Zuul网关"><a href="#3-Zuul网关" class="headerlink" title="3.Zuul网关"></a>3.Zuul网关</h1><p>通过前面的学习，使用Spring Cloud实现微服务的架构基本成型，大致是这样的：</p>
 <p><img src="/2019/12/12/Spring Cloud快速开发入门第02篇/1525674644660.png" alt="1525674644660"></p>
-<pre><code>我们使用Spring Cloud Netflix中的Eureka实现了服务注册中心以及服务注册与发现；而服务间通过Ribbon或Feign实现服务的消费以及均衡负载。为了使得服务集群更为健壮，使用Hystrix的融断机制来避免在微服务架构中个别服务出现异常时引起的故障蔓延。
-
-在该架构中，我们的服务集群包含：内部服务Service A和Service B，他们都会注册与订阅服务至Eureka Server，而Open Service是一个对外的服务，通过均衡负载公开至服务调用方。我们把焦点聚集在对外服务这块，直接暴露我们的服务地址，这样的实现是否合理，或者是否有更好的实现方式呢？
-</code></pre><p>先来说说这样架构需要做的一些事儿以及存在的不足：</p>
+<p>我们使用Spring Cloud Netflix中的Eureka实现了服务注册中心以及服务注册与发现；而服务间通过Ribbon或Feign实现服务的消费以及均衡负载。为了使得服务集群更为健壮，使用Hystrix的融断机制来避免在微服务架构中个别服务出现异常时引起的故障蔓延。</p>
+<p>在该架构中，我们的服务集群包含：内部服务Service A和Service B，他们都会注册与订阅服务至Eureka Server，而Open Service是一个对外的服务，通过均衡负载公开至服务调用方。我们把焦点聚集在对外服务这块，直接暴露我们的服务地址，这样的实现是否合理，或者是否有更好的实现方式呢？</p>
+<p>先来说说这样架构需要做的一些事儿以及存在的不足：</p>
 <ul>
 <li><p>破坏了服务无状态特点。</p>
 <pre><code>为了保证对外服务的安全性，我们需要实现对服务访问的权限控制，而开放服务的权限控制机制将会贯穿并污染整个开放服务的业务逻辑，这会带来的最直接问题是，破坏了服务集群中REST API无状态的特点。
@@ -969,9 +968,9 @@ function setSidebarMarginTop (headerOffset) {
       
         <div class="post-tags">
           
-            <a href="/tags/Spring-Cloud/" rel="tag"><i class="fa fa-tag"></i> Spring Cloud</a>
-          
             <a href="/tags/微服务/" rel="tag"><i class="fa fa-tag"></i> 微服务</a>
+          
+            <a href="/tags/Spring-Cloud/" rel="tag"><i class="fa fa-tag"></i> Spring Cloud</a>
           
         </div>
       
