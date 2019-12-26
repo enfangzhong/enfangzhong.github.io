@@ -133,7 +133,7 @@
 <meta name="keywords" content="博客">
 <meta property="og:type" content="article">
 <meta property="og:title" content="将hexo博客同时部署发布托管到github和coding">
-<meta property="og:url" content="http://anfrank.gitee.io/2018/08/30/Hexo个人博客_同时部署发布托管到github和coding/index.html">
+<meta property="og:url" content="http://enfangzhong.github.io/2018/08/30/Hexo个人博客_同时部署发布托管到github和coding/index.html">
 <meta property="og:site_name" content="AnFrank&#39;s Blog">
 <meta property="og:description" content="前言之前我们把hexo托管在github，但是毕竟github是国外的，访问速度上还是有点慢，所以想也部署一套在国内的托管平台，之前查资料听说gitcafe,但是听说gitcafe已经被coding收购了，所以就决定部署到coding。 查询了多方资料，终于鼓捣出了本地一次部署，同时更新到github以及coding。 正文_config.yml配置想要同时部署到2个平台，就要修改博客根目录下面的">
 <meta property="og:locale" content="zh-CN">
@@ -157,7 +157,7 @@
 
 
 
-  <link rel="canonical" href="http://anfrank.gitee.io/2018/08/30/Hexo个人博客_同时部署发布托管到github和coding/">
+  <link rel="canonical" href="http://enfangzhong.github.io/2018/08/30/Hexo个人博客_同时部署发布托管到github和coding/">
 
 
 
@@ -302,6 +302,14 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
@@ -318,14 +326,6 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-schedule">
     <a href="/schedule/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>微言</a>
@@ -334,9 +334,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于博主</a>
+          <li class="menu-item menu-item-links">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
   </li>
         
         
@@ -350,9 +350,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-links">
-    <a href="/links/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
   </li>
         
         
@@ -448,7 +448,7 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/2018/08/30/Hexo个人博客_同时部署发布托管到github和coding/">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2018/08/30/Hexo个人博客_同时部署发布托管到github和coding/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
@@ -589,7 +589,7 @@ function setSidebarMarginTop (headerOffset) {
 <p>所以我的是这样：<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo:</span><br><span class="line">      github: git@github.com:enfang/enfang.github.io.git,master</span><br><span class="line">      coding: git@git.coding.net:enfang/enfang.git,master</span><br></pre></td></tr></table></figure></div></p>
 <p>我这边提交采用的SSH密钥，这个方法有个好处，提交的时候不用输入用户名和密码。如果你习惯用http的方式，只要将地址改成相应的http地址即可。</p>
 <p>coding上创建一个新项目<br>这里只介绍coding上面如何创建项目，以及把本地hexo部署到coding上面，还不懂如何创建hexo的请看我之前的系类文章。首先我们创建一个项目，创建后进入项目的代码模块，获取到这个项目的ssh地址，我的是<a href="https://git.coding.net/enfang/enfang.git" target="_blank" rel="noopener">https://git.coding.net/enfang/enfang.git</a><br><img src="https://i.loli.net/2018/08/30/5b86d929e4b68.png" alt=""></p>
-<p>同步本地hexo到coding上<br>把获取到了ssh配置在上面的_config.yml文件中的deploy下，如果是第一次使用coding的话，需要设置SSH公钥，生成的方法可以参考coding帮助中心<br>如果你看过我第一篇文章里面介绍过秘钥生成。<br>coding上的<a href="http://enfang.coding.me/2018/08/26/hexo+github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0/#more" target="_blank" rel="noopener">第一篇文章</a><br>github上的<a href="https://enfangzhong.github.io/2018/08/26/hexo+github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0/#more" target="_blank" rel="noopener">第一篇文章</a></p>
+<p>同步本地hexo到coding上<br>把获取到了ssh配置在上面的_config.yml文件中的deploy下，如果是第一次使用coding的话，需要设置SSH公钥，生成的方法可以参考coding帮助中心<br>如果你看过我第一篇文章里面介绍过秘钥生成。<br>coding上的<a href="http://enfang.coding.me/2018/08/26/hexo+github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0/#more" target="_blank" rel="noopener">第一篇文章</a><br>github上的<a href="https://enfangzhong.github.io/2018/08/26/hexo+github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96%E6%9B%B4%E6%96%B0/#more">第一篇文章</a></p>
 <p>我这里直接使用之前部署github时已经生成的公钥。<br><img src="https://i.loli.net/2018/08/30/5b86d92990647.png" alt=""></p>
 <p>本地打开 id_rsa.pub 文件，复制其中全部内容，填写到SSH_RSA公钥key下的一栏，公钥名称可以随意起名字。完成后点击“添加”，然后输入密码或动态码即可添加完成。<br><img src="https://i.loli.net/2018/08/30/5b86d92a0c55e.png" alt=""></p>
 <p>添加后，测试公钥是否添加成功，在git bash命令输入：<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@git.coding.net</span><br></pre></td></tr></table></figure></div></p>
@@ -600,8 +600,8 @@ function setSidebarMarginTop (headerOffset) {
 <p>分支选择master，因为前面配置的分支是master,因此开启之后，也需要是master。然后看起之后就可访问了。</p>
 <p><strong>注意：</strong></p>
 <p>如果你的项目名称跟你coding的用户名一样，比如我的用户是叫enfang,博客项目名也叫enfang<br>那直接访问 enfang.coding.me就能访问博客，否则就要带上项目名：enfang.coding.me/项目名 才能访问<br>推荐项目名跟用户名一样，这样就可以省略项目名了<br><img src="https://i.loli.net/2018/08/30/5b86d92bb1a82.png" alt=""></p>
-<p>总结<br>到此为止，终于可以实现一次部署，github和coding两个网站同时更新。访问速度也是唰唰唰的快，忙乎了两天终于搭好了独立博客。希望对还在搭建hexo独立博客的小伙伴有帮助。<br>本人博客效果<br><img src="https://i.loli.net/2018/08/30/5b86d932b57bd.png" alt=""><br><a href="https://enfangzhong.github.io/" target="_blank" rel="noopener">效果展示</a></p>
-<p><strong>欢迎访问我的博客</strong><br><a href="https://enfangzhong.github.io/" target="_blank" rel="noopener">Git托管博客效果</a> </p>
+<p>总结<br>到此为止，终于可以实现一次部署，github和coding两个网站同时更新。访问速度也是唰唰唰的快，忙乎了两天终于搭好了独立博客。希望对还在搭建hexo独立博客的小伙伴有帮助。<br>本人博客效果<br><img src="https://i.loli.net/2018/08/30/5b86d932b57bd.png" alt=""><br><a href="https://enfangzhong.github.io/">效果展示</a></p>
+<p><strong>欢迎访问我的博客</strong><br><a href="https://enfangzhong.github.io/">Git托管博客效果</a> </p>
 <p><a href="http://enfang.coding.me/" target="_blank" rel="noopener">Coding托管博客效果</a></p>
 <p><a href="https://itjyg.gitee.io" target="_blank" rel="noopener">码云托管博客效果</a></p>
 
@@ -654,7 +654,7 @@ function setSidebarMarginTop (headerOffset) {
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/2018/08/30/Hexo个人博客_同时部署发布托管到github和coding/" title="将hexo博客同时部署发布托管到github和coding">http://anfrank.gitee.io/2018/08/30/Hexo个人博客_同时部署发布托管到github和coding/</a>
+    <a href="http://enfangzhong.github.io/2018/08/30/Hexo个人博客_同时部署发布托管到github和coding/" title="将hexo博客同时部署发布托管到github和coding">http://enfangzhong.github.io/2018/08/30/Hexo个人博客_同时部署发布托管到github和coding/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>

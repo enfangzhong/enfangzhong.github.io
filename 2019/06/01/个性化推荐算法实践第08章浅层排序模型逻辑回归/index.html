@@ -133,20 +133,20 @@
 <meta name="keywords" content="推荐算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="个性化推荐算法实践第08章浅层排序模型逻辑回归">
-<meta property="og:url" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/index.html">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/index.html">
 <meta property="og:site_name" content="AnFrank&#39;s Blog">
 <meta property="og:description" content="[TOC] 个性化推荐算法实践第08章浅层排序模型逻辑回归本章节重点介绍点击率预估模型，逻辑回归模型，以及选取实例数据集，从特征选择到模型训练、模型评估等几个方面来代码实战逻辑回归模型。 本章节重点介绍一种排序模型，逻辑回归模型。从逻辑回归模型的背景知识与数学原理进行介绍。并介绍样本选择与特征选择相关知识。最后结合公开数据集。代码实战训练可用的逻辑回归模型。 逻辑回归模型的背景介绍一、LR（log">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1565107327628.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135721017.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135751384.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135782966.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/20190409210625322.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1565107327628.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135721017.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135751384.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1569135782966.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/20190409210625322.png">
 <meta property="og:updated_time" content="2019-12-18T06:22:18.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个性化推荐算法实践第08章浅层排序模型逻辑回归">
 <meta name="twitter:description" content="[TOC] 个性化推荐算法实践第08章浅层排序模型逻辑回归本章节重点介绍点击率预估模型，逻辑回归模型，以及选取实例数据集，从特征选择到模型训练、模型评估等几个方面来代码实战逻辑回归模型。 本章节重点介绍一种排序模型，逻辑回归模型。从逻辑回归模型的背景知识与数学原理进行介绍。并介绍样本选择与特征选择相关知识。最后结合公开数据集。代码实战训练可用的逻辑回归模型。 逻辑回归模型的背景介绍一、LR（log">
-<meta name="twitter:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1565107327628.png">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/1565107327628.png">
 
 
 
@@ -155,7 +155,7 @@
 
 
 
-  <link rel="canonical" href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/">
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/">
 
 
 
@@ -300,6 +300,14 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
@@ -316,14 +324,6 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-schedule">
     <a href="/schedule/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>微言</a>
@@ -332,9 +332,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于博主</a>
+          <li class="menu-item menu-item-links">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
   </li>
         
         
@@ -348,9 +348,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-links">
-    <a href="/links/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
   </li>
         
         
@@ -446,7 +446,7 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
@@ -811,7 +811,7 @@ w_{j}=w_{j}-\alpha \frac{\partial loss}{\partial w_{j}}</script><p>当然，要�
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/" title="个性化推荐算法实践第08章浅层排序模型逻辑回归">http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/</a>
+    <a href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/" title="个性化推荐算法实践第08章浅层排序模型逻辑回归">http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第08章浅层排序模型逻辑回归/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>

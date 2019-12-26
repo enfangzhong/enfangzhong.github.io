@@ -133,48 +133,48 @@
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="架构与优化之JVM优化第01篇JVM基础">
-<meta property="og:url" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/index.html">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/index.html">
 <meta property="og:site_name" content="AnFrank&#39;s Blog">
 <meta property="og:description" content="0.学习目标 了解下我们为什么要学习JVM优化   掌握jvm的运行参数以及参数的设置   掌握jvm的内存模型（堆内存）   掌握jamp命令的使用以及通过MAT工具进行分析   掌握定位分析内存溢出的方法   掌握jstack命令的使用   掌握VisualJVM工具的使用    1、我们为什么要对jvm做优化？在本地开发环境中我们很少会遇到需要对jvm进行优化的需求，但是到了生产环境，我们">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219155258725.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219155224831.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219155636643.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219155940784.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/20190619215656739.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219173358911.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219173557859.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219173901648.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219175033119.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219175208607.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219175951080.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219180326233.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219181250853.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219181317573.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219181348201.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219181413557.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219181441422.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219221555326.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219221823077.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219221736582.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219221936015.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219222053874.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219222439231.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219223821746.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219224901088.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219225126244.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219225226502.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219225513677.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219225624456.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219225744090.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219230428372.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219230618659.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219230825758.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219155258725.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219155224831.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219155636643.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219155940784.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/20190619215656739.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219173358911.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219173557859.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219173901648.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219175033119.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219175208607.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219175951080.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219180326233.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219181250853.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219181317573.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219181348201.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219181413557.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219181441422.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219221555326.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219221823077.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219221736582.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219221936015.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219222053874.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219222439231.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219223821746.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219224901088.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219225126244.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219225226502.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219225513677.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219225624456.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219225744090.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219230428372.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219230618659.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219230825758.png">
 <meta property="og:updated_time" content="2019-12-22T15:50:39.891Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="架构与优化之JVM优化第01篇JVM基础">
 <meta name="twitter:description" content="0.学习目标 了解下我们为什么要学习JVM优化   掌握jvm的运行参数以及参数的设置   掌握jvm的内存模型（堆内存）   掌握jamp命令的使用以及通过MAT工具进行分析   掌握定位分析内存溢出的方法   掌握jstack命令的使用   掌握VisualJVM工具的使用    1、我们为什么要对jvm做优化？在本地开发环境中我们很少会遇到需要对jvm进行优化的需求，但是到了生产环境，我们">
-<meta name="twitter:image" content="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219155258725.png">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/image-20191219155258725.png">
 
 
 
@@ -183,7 +183,7 @@
 
 
 
-  <link rel="canonical" href="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/">
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/">
 
 
 
@@ -328,6 +328,14 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
@@ -344,14 +352,6 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-schedule">
     <a href="/schedule/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>微言</a>
@@ -360,9 +360,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于博主</a>
+          <li class="menu-item menu-item-links">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
   </li>
         
         
@@ -376,9 +376,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-links">
-    <a href="/links/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
   </li>
         
         
@@ -474,7 +474,7 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
@@ -947,7 +947,7 @@ function setSidebarMarginTop (headerOffset) {
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/" title="架构与优化之JVM优化第01篇JVM基础">http://anfrank.gitee.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/</a>
+    <a href="http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/" title="架构与优化之JVM优化第01篇JVM基础">http://enfangzhong.github.io/2019/12/19/架构与优化之JVM优化第01篇JVM基础/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>

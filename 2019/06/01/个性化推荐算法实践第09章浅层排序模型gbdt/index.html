@@ -133,23 +133,23 @@
 <meta name="keywords" content="推荐算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="个性化推荐算法实践第09章浅层排序模型gbdt">
-<meta property="og:url" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/index.html">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/index.html">
 <meta property="og:site_name" content="AnFrank&#39;s Blog">
 <meta property="og:description" content="[TOC] 个性化推荐算法实践第09章浅层排序模型gbdt本章节重点介绍排序模型gbdt。分别介绍梯度提升树以及xgboost的数学原理。并介绍gbdt与LR模型的混合模型网络。最合结合公开数据集，代码实战训练gbdt模型以及gbdt与LR混合模型。 gbdt通过多轮迭代,每轮迭代产生一个弱分类器，每个分类器在上一轮分类器的残差基础上进行训练。对弱分类器的要求一般是足够简单，并且是低方差和高偏差的">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566459385812.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566471769876.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1568567063198.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1568567108682.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566823913657.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566823913657.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566824388831.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1568573502799.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566459385812.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566471769876.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1568567063198.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1568567108682.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566823913657.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566823913657.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566824388831.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1568573502799.png">
 <meta property="og:updated_time" content="2019-12-18T06:22:27.822Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个性化推荐算法实践第09章浅层排序模型gbdt">
 <meta name="twitter:description" content="[TOC] 个性化推荐算法实践第09章浅层排序模型gbdt本章节重点介绍排序模型gbdt。分别介绍梯度提升树以及xgboost的数学原理。并介绍gbdt与LR模型的混合模型网络。最合结合公开数据集，代码实战训练gbdt模型以及gbdt与LR混合模型。 gbdt通过多轮迭代,每轮迭代产生一个弱分类器，每个分类器在上一轮分类器的残差基础上进行训练。对弱分类器的要求一般是足够简单，并且是低方差和高偏差的">
-<meta name="twitter:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566459385812.png">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566459385812.png">
 
 
 
@@ -158,7 +158,7 @@
 
 
 
-  <link rel="canonical" href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/">
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/">
 
 
 
@@ -303,6 +303,14 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
@@ -319,14 +327,6 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-schedule">
     <a href="/schedule/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>微言</a>
@@ -335,9 +335,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于博主</a>
+          <li class="menu-item menu-item-links">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
   </li>
         
         
@@ -351,9 +351,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-links">
-    <a href="/links/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
   </li>
         
         
@@ -449,7 +449,7 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
@@ -852,7 +852,7 @@ r_{m}=-\left[\frac{\partial L\left(y, f\left(x_{i}\right)\right)}{\partial f\lef
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/" title="个性化推荐算法实践第09章浅层排序模型gbdt">http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/</a>
+    <a href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/" title="个性化推荐算法实践第09章浅层排序模型gbdt">http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>

@@ -133,74 +133,74 @@
 <meta name="keywords" content="消息中间件,rabbitmq">
 <meta property="og:type" content="article">
 <meta property="og:title" content="消息中间件之rabbitmq及数据同步">
-<meta property="og:url" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/index.html">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/index.html">
 <meta property="og:site_name" content="AnFrank&#39;s Blog">
 <meta property="og:description" content="0.学习目标 了解常见的MQ产品 了解RabbitMQ的5种消息模型 会使用Spring AMQP 利用MQ实现搜索和静态页的数据同步  1.RabbitMQ1.1.搜索与商品服务的问题目前我们已经完成了商品详情和搜索系统的开发。我们思考一下，是否存在问题？  商品的原始数据保存在数据库中，增删改查都在数据库中完成。 搜索服务数据来源是索引库，如果数据库商品发生变化，索引库数据不能及时更新。 商品">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527063872737.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527064480681.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527064487042.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527064606029.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532758972119.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527064762982.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532759070767.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532761948333.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532761916357.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527068544487.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532762038694.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532762308507.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532762961149.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532762975546.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532763328424.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532763817830.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532763489858.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532763733443.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532763773208.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764253019.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764600849.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764694290.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764717995.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764734232.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764831241.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764895239.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764957092.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765013834.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765038088.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765123282.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765151039.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765197277.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527085386747.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527085448377.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527085826462.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765689904.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527086159534.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527086284940.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527086564505.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766264386.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766291204.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766437787.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527088296131.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766712166.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766951432.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766981230.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532767057491.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532767136007.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532767171063.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532767227821.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527090258083.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532767726274.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532768930797.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532769005960.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532769181819.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532769581964.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532772446520.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532772471931.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532772521932.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527063872737.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527064480681.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527064487042.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527064606029.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532758972119.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527064762982.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532759070767.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532761948333.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532761916357.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527068544487.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532762038694.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532762308507.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532762961149.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532762975546.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532763328424.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532763817830.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532763489858.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532763733443.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532763773208.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764253019.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764600849.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764694290.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764717995.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764734232.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764831241.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764895239.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532764957092.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765013834.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765038088.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765123282.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765151039.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765197277.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527085386747.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527085448377.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527085826462.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532765689904.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527086159534.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527086284940.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527086564505.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766264386.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766291204.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766437787.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527088296131.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766712166.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766951432.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532766981230.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532767057491.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532767136007.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532767171063.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532767227821.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527090258083.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532767726274.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532768930797.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532769005960.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532769181819.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532769581964.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532772446520.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532772471931.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1532772521932.png">
 <meta property="og:updated_time" content="2019-12-18T06:25:24.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="消息中间件之rabbitmq及数据同步">
 <meta name="twitter:description" content="0.学习目标 了解常见的MQ产品 了解RabbitMQ的5种消息模型 会使用Spring AMQP 利用MQ实现搜索和静态页的数据同步  1.RabbitMQ1.1.搜索与商品服务的问题目前我们已经完成了商品详情和搜索系统的开发。我们思考一下，是否存在问题？  商品的原始数据保存在数据库中，增删改查都在数据库中完成。 搜索服务数据来源是索引库，如果数据库商品发生变化，索引库数据不能及时更新。 商品">
-<meta name="twitter:image" content="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527063872737.png">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/1527063872737.png">
 
 
 
@@ -209,7 +209,7 @@
 
 
 
-  <link rel="canonical" href="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/">
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/">
 
 
 
@@ -354,6 +354,14 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
@@ -370,14 +378,6 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-schedule">
     <a href="/schedule/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>微言</a>
@@ -386,9 +386,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于博主</a>
+          <li class="menu-item menu-item-links">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
   </li>
         
         
@@ -402,9 +402,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-links">
-    <a href="/links/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
   </li>
         
         
@@ -500,7 +500,7 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
@@ -1073,7 +1073,7 @@ Topic：通配符，把消息交给符合routing pattern（路由模式） 的�
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/" title="消息中间件之rabbitmq及数据同步">http://anfrank.gitee.io/2019/12/18/消息中间件之RabbitMQ及数据同步/</a>
+    <a href="http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/" title="消息中间件之rabbitmq及数据同步">http://enfangzhong.github.io/2019/12/18/消息中间件之RabbitMQ及数据同步/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>

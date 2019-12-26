@@ -133,18 +133,18 @@
 <meta name="keywords" content="推荐算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="个性化推荐算法实践第07章综述学习排序">
-<meta property="og:url" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/index.html">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/index.html">
 <meta property="og:site_name" content="AnFrank&#39;s Blog">
 <meta property="og:description" content="[TOC] 个性化推荐算法实践第07章综述学习排序综述学习排序的思路，并介绍工业界排序架构以及本课程重点讲解的学习排序模型。 一、什么是学习排序（Learn To Rank）？说起学习排序，首先介绍一下排序，排序是在搜索场景以及推荐场景中应用的最为广泛的。 传统的排序方法是基于构造相关度函数，使相关度函数对于每一个文档进行打分，得分较高的文档，排的位置就靠前。但是，随着相关度函数中特征的增多，使调">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992495527.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1565100075461.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992495527.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1565100075461.png">
 <meta property="og:updated_time" content="2019-12-18T06:22:08.978Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个性化推荐算法实践第07章综述学习排序">
 <meta name="twitter:description" content="[TOC] 个性化推荐算法实践第07章综述学习排序综述学习排序的思路，并介绍工业界排序架构以及本课程重点讲解的学习排序模型。 一、什么是学习排序（Learn To Rank）？说起学习排序，首先介绍一下排序，排序是在搜索场景以及推荐场景中应用的最为广泛的。 传统的排序方法是基于构造相关度函数，使相关度函数对于每一个文档进行打分，得分较高的文档，排的位置就靠前。但是，随着相关度函数中特征的增多，使调">
-<meta name="twitter:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/1564992344840.png">
 
 
 
@@ -153,7 +153,7 @@
 
 
 
-  <link rel="canonical" href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/">
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/">
 
 
 
@@ -298,6 +298,14 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
@@ -314,14 +322,6 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-schedule">
     <a href="/schedule/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>微言</a>
@@ -330,9 +330,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于博主</a>
+          <li class="menu-item menu-item-links">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
   </li>
         
         
@@ -346,9 +346,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-links">
-    <a href="/links/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
   </li>
         
         
@@ -444,7 +444,7 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
@@ -674,7 +674,7 @@ function setSidebarMarginTop (headerOffset) {
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/" title="个性化推荐算法实践第07章综述学习排序">http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/</a>
+    <a href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/" title="个性化推荐算法实践第07章综述学习排序">http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第07章综述学习排序/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>

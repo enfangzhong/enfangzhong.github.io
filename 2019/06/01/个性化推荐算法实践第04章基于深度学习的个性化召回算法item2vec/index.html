@@ -133,20 +133,20 @@
 <meta name="keywords" content="推荐算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec">
-<meta property="og:url" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/index.html">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/index.html">
 <meta property="og:site_name" content="AnFrank&#39;s Blog">
 <meta property="og:description" content="[TOC] 个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec本章节重点介绍一种基于深度学习的个性化召回算法item2vec。从item2vec的背景与物理意义以及算法的主流程进行介绍。并对该算法依赖的模型word2vec数学原理进行浅析。最后结合公开数据集代码实战item2vec算法。 本章节重点介绍基于深度学习的个性化召回算法item2vec。分为两部分：第一部分，item">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/1564895184811.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/1564895184811.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190331193124458.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MTY0MDU4Mw==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/1564901411917.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/1564945861541.png">
-<meta property="og:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/1564946420820.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/1564901411917.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/1564945861541.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/1564946420820.png">
 <meta property="og:updated_time" content="2019-12-18T06:21:37.572Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec">
 <meta name="twitter:description" content="[TOC] 个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec本章节重点介绍一种基于深度学习的个性化召回算法item2vec。从item2vec的背景与物理意义以及算法的主流程进行介绍。并对该算法依赖的模型word2vec数学原理进行浅析。最后结合公开数据集代码实战item2vec算法。 本章节重点介绍基于深度学习的个性化召回算法item2vec。分为两部分：第一部分，item">
-<meta name="twitter:image" content="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/1564895184811.png">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/1564895184811.png">
 
 
 
@@ -155,7 +155,7 @@
 
 
 
-  <link rel="canonical" href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/">
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/">
 
 
 
@@ -300,6 +300,14 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
@@ -316,14 +324,6 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-schedule">
     <a href="/schedule/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>微言</a>
@@ -332,9 +332,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于博主</a>
+          <li class="menu-item menu-item-links">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
   </li>
         
         
@@ -348,9 +348,9 @@ function setSidebarMarginTop (headerOffset) {
         
         
           
-          <li class="menu-item menu-item-links">
-    <a href="/links/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
   </li>
         
         
@@ -446,7 +446,7 @@ function setSidebarMarginTop (headerOffset) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AnFrank">
@@ -821,7 +821,7 @@ p(z | w)=\left(\delta\left(v(w)^{T} \theta^{z}\right)\right)^{L^{u}(z)} *\left(1
     <strong>本文作者： </strong>AnFrank</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/" title="个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec">http://anfrank.gitee.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/</a>
+    <a href="http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/" title="个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec">http://enfangzhong.github.io/2019/06/01/个性化推荐算法实践第04章基于深度学习的个性化召回算法item2vec/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
