@@ -129,18 +129,27 @@
   daovoice('update');
   </script>
 
-  <meta name="description" content="0.学习目标 了解什么是垃圾回收 掌握垃圾会回收的常见算法 学习串行、并行、并发、G1垃圾收集器 学习GC日志的可视化查看  1、什么是垃圾回收？程序的运行必然需要申请内存资源，无效的对象资源如果不及时处理就会一直占有内存 资源，最终将导致内存溢出，所以对内存资源的管理是非常重要了。 1.1、C/C++语言的垃圾回收在C/C++语言中，没有自动垃圾回收机制，是通过new关键字申请内存资源，通过de">
+  <meta name="description" content="0.学习目标 了解什么是垃圾回收 掌握垃圾会回收的常见算法 学习串行、并行、并发、G1垃圾收集器 学习GC日志的可视化查看  1、什么是垃圾回收？程序的运行必然需要申请内存资源，无效的对象资源如果不及时处理就会一直占有内存 资源，最终将导致内存溢出，所以对内存资源的管理是非常重要了。 通俗的理解java对象的这一辈子 　　我是一个普通的java对象，我出生在Eden区，在Eden区我还看到和我长的">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="架构与优化之JVM优化第02篇垃圾回收">
 <meta property="og:url" content="http://enfangzhong.github.io/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/index.html">
 <meta property="og:site_name" content="AnFrank&#39;s Blog">
-<meta property="og:description" content="0.学习目标 了解什么是垃圾回收 掌握垃圾会回收的常见算法 学习串行、并行、并发、G1垃圾收集器 学习GC日志的可视化查看  1、什么是垃圾回收？程序的运行必然需要申请内存资源，无效的对象资源如果不及时处理就会一直占有内存 资源，最终将导致内存溢出，所以对内存资源的管理是非常重要了。 1.1、C/C++语言的垃圾回收在C/C++语言中，没有自动垃圾回收机制，是通过new关键字申请内存资源，通过de">
+<meta property="og:description" content="0.学习目标 了解什么是垃圾回收 掌握垃圾会回收的常见算法 学习串行、并行、并发、G1垃圾收集器 学习GC日志的可视化查看  1、什么是垃圾回收？程序的运行必然需要申请内存资源，无效的对象资源如果不及时处理就会一直占有内存 资源，最终将导致内存溢出，所以对内存资源的管理是非常重要了。 通俗的理解java对象的这一辈子 　　我是一个普通的java对象，我出生在Eden区，在Eden区我还看到和我长的">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-22T15:51:24.173Z">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog/jygBlog/source/_posts/架构与优化之JVM优化第02篇垃圾回收/image-20191227111522922.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog/jygBlog/source/_posts/架构与优化之JVM优化第02篇垃圾回收/18021456-60fcf6f4303e4facbb2a6b57d99b3a6d.jpg">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog/jygBlog/source/_posts/架构与优化之JVM优化第02篇垃圾回收/young_gc.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog/jygBlog/source/_posts/架构与优化之JVM优化第02篇垃圾回收/19222114-6435e25e050f4a2ea3230879392bdfb3.jpg">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog/jygBlog/source/_posts/架构与优化之JVM优化第02篇垃圾回收/19222543-1da7fb7bc5d24fd18872a267b65e939e.jpg">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog/jygBlog/source/_posts/架构与优化之JVM优化第02篇垃圾回收/19222820-8eca1c1518754d8fac6da532b13f746b.jpg">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog/jygBlog/source/_posts/架构与优化之JVM优化第02篇垃圾回收/image-20191227105028340.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog/jygBlog/source/_posts/架构与优化之JVM优化第02篇垃圾回收/young_gc.png">
+<meta property="og:updated_time" content="2019-12-27T06:07:48.256Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="架构与优化之JVM优化第02篇垃圾回收">
-<meta name="twitter:description" content="0.学习目标 了解什么是垃圾回收 掌握垃圾会回收的常见算法 学习串行、并行、并发、G1垃圾收集器 学习GC日志的可视化查看  1、什么是垃圾回收？程序的运行必然需要申请内存资源，无效的对象资源如果不及时处理就会一直占有内存 资源，最终将导致内存溢出，所以对内存资源的管理是非常重要了。 1.1、C/C++语言的垃圾回收在C/C++语言中，没有自动垃圾回收机制，是通过new关键字申请内存资源，通过de">
+<meta name="twitter:description" content="0.学习目标 了解什么是垃圾回收 掌握垃圾会回收的常见算法 学习串行、并行、并发、G1垃圾收集器 学习GC日志的可视化查看  1、什么是垃圾回收？程序的运行必然需要申请内存资源，无效的对象资源如果不及时处理就会一直占有内存 资源，最终将导致内存溢出，所以对内存资源的管理是非常重要了。 通俗的理解java对象的这一辈子 　　我是一个普通的java对象，我出生在Eden区，在Eden区我还看到和我长的">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog/jygBlog/source/_posts/架构与优化之JVM优化第02篇垃圾回收/image-20191227111522922.png">
 
 
 
@@ -499,7 +508,7 @@ function setSidebarMarginTop (headerOffset) {
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-12-22 23:51:24" itemprop="dateModified" datetime="2019-12-22T23:51:24+08:00">2019-12-22</time>
+                <time title="修改时间：2019-12-27 14:07:48" itemprop="dateModified" datetime="2019-12-27T14:07:48+08:00">2019-12-27</time>
               
             
           </span>
@@ -552,10 +561,10 @@ function setSidebarMarginTop (headerOffset) {
             <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
             <span class="post-meta-divider">|</span>
-<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 6,988</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 9,322</span>
 
 <span class="post-meta-divider">|</span>
-<span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 29分钟</span>
+<span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 37分钟</span>
 
           
 
@@ -583,16 +592,38 @@ function setSidebarMarginTop (headerOffset) {
 <li>学习GC日志的可视化查看</li>
 </ul>
 <h1 id="1、什么是垃圾回收？"><a href="#1、什么是垃圾回收？" class="headerlink" title="1、什么是垃圾回收？"></a>1、什么是垃圾回收？</h1><p>程序的运行必然需要申请内存资源，无效的对象资源如果不及时处理就会一直占有内存 资源，最终将导致内存溢出，所以对内存资源的管理是非常重要了。</p>
-<p>1.1、C/C++语言的垃圾回收<br>在C/C++语言中，没有自动垃圾回收机制，是通过new关键字申请内存资源，通过delete 关键字释放内存资源。</p>
+<p><strong>通俗的理解java对象的这一辈子</strong></p>
+<p>　　我是一个普通的java对象，我出生在Eden区，在Eden区我还看到和我长的很像的小兄弟，我们在Eden区中玩了挺长时间。有一天Eden区中的人实在是太多了，我就被迫去了Survivor区的“From”区，自从去了Survivor区，我就开始漂了，有时候在Survivor的“From”区，有时候在Survivor的“To”区，居无定所。直到我18岁的时候，爸爸说我成人了，该去社会上闯闯了。于是我就去了年老代那边，年老代里，人很多，并且年龄都挺大的，我在这里也认识了很多人。在年老代里，我生活了20年(每次GC加一岁)，然后被回收。</p>
+<p><img src="/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog\jygBlog\source\_posts\架构与优化之JVM优化第02篇垃圾回收\image-20191227111522922.png" alt="image-20191227111522922"></p>
+<p>GC策略解决了哪些问题？</p>
+<p>既然是要进行自动GC，那必然会有相应的策略，而这些策略解决了哪些问题呢，粗略的来说，主要有以下几点。</p>
+<p>​    <strong>1、哪些对象可以被回收。（ 根搜索算法解决）</strong></p>
+<p>​    <strong>2、何时回收这些对象。</strong></p>
+<p>​    <strong>3、采用什么样的方式回收。</strong></p>
+<p> <img src="/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog\jygBlog\source\_posts\架构与优化之JVM优化第02篇垃圾回收\18021456-60fcf6f4303e4facbb2a6b57d99b3a6d.jpg" alt="img"> </p>
+<p>根搜索算法</p>
+<p>​     由于引用计数算法的缺陷，所以JVM一般会采用一种新的算法，叫做<strong>根搜索算法</strong>。它的处理方式就是，<strong>设立若干种根对象，当任何一个根对象到某一个对象均不可达时，则认为这个对象是可以被回收的</strong>。</p>
+<p> 就拿上图来说，ObjectD和ObjectE是互相关联的，但是由于GC roots到这两个对象不可达，所以最终D和E还是会被当做GC的对象，上图若是采用引用计数法，则A-E五个对象都不会被回收。</p>
+<p>​     说到GC roots（GC根），在JAVA语言中，可以当做GC roots的对象有以下几种：</p>
+<p>​     <strong>1、虚拟机栈中的引用的对象。</strong></p>
+<p>​     <strong>2、方法区中的类静态属性引用的对象。</strong></p>
+<p>​     <strong>3、方法区中的常量引用的对象。</strong></p>
+<p>​     <strong>4、本地方法栈中JNI的引用的对象。</strong></p>
+<p>​     第一和第四种都是指的方法的本地变量表，第二种表达的意思比较清晰，第三种主要指的是声明为final的常量值。</p>
+<p>​        HotSpot JVM把年轻代分为了三部分：1个Eden区和2个Survivor区（分别叫from和to）。默认比例为8：1,为啥默认会是这个比例，接下来我们会聊到。一般情况下，新创建的对象都会被分配到Eden区(一些大对象特殊处理),这些对象经过第一次Minor GC后，如果仍然存活，将会被移到Survivor区。对象在Survivor区中每熬过一次Minor GC，年龄就会增加1岁，当它的年龄增加到一定程度时，就会被移动到年老代中。</p>
+<p>　　因为年轻代中的对象基本都是朝生夕死的(80%以上)，所以在年轻代的垃圾回收算法使用的是复制算法，复制算法的基本思想就是将内存分为两块，每次只用其中一块，当这一块内存用完，就将还活着的对象复制到另外一块上面。复制算法不会产生内存碎片。</p>
+<p>　　在GC开始的时候，对象只会存在于Eden区和名为“From”的Survivor区，Survivor区“To”是空的。紧接着进行GC，Eden区中所有存活的对象都会被复制到“To”，而在“From”区中，仍存活的对象会根据他们的年龄值来决定去向。年龄达到一定值(年龄阈值，可以通过-XX:MaxTenuringThreshold来设置)的对象会被移动到年老代中，没有达到阈值的对象会被复制到“To”区域。经过这次GC后，Eden区和From区已经被清空。这个时候，“From”和“To”会交换他们的角色，也就是新的“To”就是上次GC前的“From”，新的“From”就是上次GC前的“To”。不管怎样，都会保证名为To的Survivor区域是空的。Minor GC会一直重复这样的过程，直到“To”区被填满，“To”区被填满之后，会将所有对象移动到年老代中。</p>
+<p> <img src="/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog\jygBlog\source\_posts\架构与优化之JVM优化第02篇垃圾回收\young_gc.png" alt="young_gc"> </p>
+<h2 id="1-1、C-C-语言的垃圾回收"><a href="#1-1、C-C-语言的垃圾回收" class="headerlink" title="1.1、C/C++语言的垃圾回收"></a>1.1、C/C++语言的垃圾回收</h2><p>在C/C++语言中，没有自动垃圾回收机制，是通过new关键字申请内存资源，通过delete 关键字释放内存资源。</p>
 <p>如果，程序员在某些位置没有写delete进行释放，那么申请的对象将一直占用内存资源， 最终可能会导致内存溢出。</p>
-<p>1.2、Java语言的垃圾回收<br>为了让程序员更专注于代码的实现，而不用过多的考虑内存释放的问题，所以，在Java语言中，有了自动的垃圾回收机制，也就是我们熟悉的GC。</p>
+<h2 id="1-2、Java语言的垃圾回收"><a href="#1-2、Java语言的垃圾回收" class="headerlink" title="1.2、Java语言的垃圾回收"></a>1.2、Java语言的垃圾回收</h2><p>为了让程序员更专注于代码的实现，而不用过多的考虑内存释放的问题，所以，在Java语言中，有了自动的垃圾回收机制，也就是我们熟悉的GC。</p>
 <p>有了垃圾回收机制后，程序员只需要关心内存的申请即可，内存的释放由系统自动识别 完成。<br>换句话说，自动的垃圾回收的算法就会变得非常重要了，如果因为算法的不合理，导致 内存资源一直没有释放，同样也可能会导致内存溢出的。</p>
 <p>当然，除了Java语言，C#、Python等语言也都有自动的垃圾回收机制。</p>
-<p>2、垃圾回收的常见算法<br>自动化的管理内存资源，垃圾回收机制必须要有一套算法来进行计算，哪些是有效的对 象，哪些是无效的对象，对于无效的对象就要进行回收处理。</p>
+<h1 id="2、垃圾回收的常见算法"><a href="#2、垃圾回收的常见算法" class="headerlink" title="2、垃圾回收的常见算法"></a>2、垃圾回收的常见算法</h1><p>自动化的管理内存资源，垃圾回收机制必须要有一套算法来进行计算，哪些是有效的对 象，哪些是无效的对象，对于无效的对象就要进行回收处理。</p>
 <p>常见的垃圾回收算法有：引用计数法、标记清除法、标记压缩法、复制算法、分代算法 等。</p>
-<p>2.1、引用计数法<br>引用计数是历史最悠久的一种算法，最早George E. Collins在1960的时候首次提出，50年后的今天，该算法依然被很多编程语言使用。</p>
-<p>2.1.1、原理<br>假设有一个对象A，任何一个对象对A的引用，那么对象A的引用计数器+1，当引用失败 时，对象A的引用计数器就-1，如果对象A的计数器的值为0，就说明对象A没有引用了， 可以被回收。</p>
-<p>2.1.2、优缺点<br>优点：</p>
+<h2 id="2-1、引用计数法"><a href="#2-1、引用计数法" class="headerlink" title="2.1、引用计数法"></a>2.1、引用计数法</h2><p>引用计数是历史最悠久的一种算法，最早George E. Collins在1960的时候首次提出，50年后的今天，该算法依然被很多编程语言使用。</p>
+<h3 id="2-1-1、原理"><a href="#2-1-1、原理" class="headerlink" title="2.1.1、原理"></a>2.1.1、原理</h3><p>假设有一个对象A，任何一个对象对A的引用，那么对象A的引用计数器+1，当引用失败 时，对象A的引用计数器就-1，如果对象A的计数器的值为0，就说明对象A没有引用了， 可以被回收。</p>
+<h3 id="2-1-2、优缺点"><a href="#2-1-2、优缺点" class="headerlink" title="2.1.2、优缺点"></a>2.1.2、优缺点</h3><p>优点：</p>
 <ul>
 <li>实时性较高，无需等到内存不够的时候，才开始回收，运行时根据对象的计数器是否为0，就可以直接回收。</li>
 <li>在垃圾回收过程中，应用无需挂起。如果申请内存时，内存不足，则立刻报<br>outofmember 错误。</li>
@@ -605,20 +636,46 @@ function setSidebarMarginTop (headerOffset) {
 <li>无法解决循环引用问题。（最大的缺点）</li>
 </ul>
 <p>什么是循环引用？</p>
-<p>class TestA{<br>public TestB b;<br>}<br>class TestB{ public TestA a;<br>}<br>public class Main{<br>public static void main(String[] args){ A a = new A();<br>B b = new B(); a.b=b;<br>b.a=a;<br>a = null; b = null;<br>}<br>}</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class TestA &#123;</span><br><span class="line">    public TestB b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class TestB &#123;</span><br><span class="line">    public TestA a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        A a = new A();</span><br><span class="line">        B b = new B();</span><br><span class="line">        a.b = b;</span><br><span class="line">        b.a = a;</span><br><span class="line">        a = null;</span><br><span class="line">        b = null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <p>虽然a和b都为null，但是由于a和b存在循环引用，这样a和b永远都不会被回收。</p>
-<p>2.2、标记清除法<br>标记清除算法，是将垃圾回收分为2个阶段，分别是标记和清除。</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class Object &#123;</span><br><span class="line"></span><br><span class="line">    Object field = null;</span><br><span class="line">    </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Thread thread = new Thread(new Runnable() &#123;</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                Object objectA = new Object();</span><br><span class="line">                Object objectB = new Object();//1</span><br><span class="line">                objectA.field = objectB;</span><br><span class="line">                objectB.field = objectA;//2</span><br><span class="line">                //to do something</span><br><span class="line">                objectA = null;</span><br><span class="line">                objectB = null;//3</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        thread.start();</span><br><span class="line">        while (true);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p> 这段代码看起来有点刻意为之，但其实在实际编程过程当中，是经常出现的，比如两个一对一关系的数据库对象，各自保持着对方的引用。最后一个无限循环只是为了保持JVM不退出，没什么实际意义。</p>
+<p>​     对于我们现在使用的GC来说，当thread线程运行结束后，会将objectA和objectB全部作为待回收的对象。而如果我们的GC采用上面所说的引用计数算法，则这两个对象永远不会被回收，即便我们在使用后显示的将对象归为空值也毫无作用。</p>
+<p>​     这里LZ大致解释一下，在代码中LZ标注了1、2、3三个数字，当第1个地方的语句执行完以后，两个对象的引用计数全部为1。当第2个地方的语句执行完以后，两个对象的引用计数就全部变成了2。当第3个地方的语句执行完以后，也就是将二者全部归为空值以后，二者的引用计数仍然为1。根据引用计数算法的回收规则，引用计数没有归0的时候是不会被回收的。</p>
+<h2 id="2-2、标记清除法（五分钟让你彻底明白标记-清除算法）"><a href="#2-2、标记清除法（五分钟让你彻底明白标记-清除算法）" class="headerlink" title="2.2、标记清除法（五分钟让你彻底明白标记/清除算法）"></a>2.2、标记清除法（五分钟让你彻底明白标记/清除算法）</h2><p>​        首先，我们通过根搜索算法知道，它可以解决我们应该回收哪些对象的问题，但是它显然还不能承担垃圾搜集的重任，<strong>因为我们在程序（程序也就是指我们运行在JVM上的JAVA程序）运行期间如果想进行垃圾回收，就必须让GC线程与程序当中的线程互相配合，才能在不影响程序运行的前提下，顺利的将垃圾进行回收</strong>。</p>
+<p>​        为了达到这个目的，标记/清除算法就应运而生了。<strong>它的做法是当堆中的有效内存空间（available memory）被耗尽的时候，就会停止整个程序（也被成为stop the world），然后进行两项工作，第一项则是标记，第二项则是清除</strong>。</p>
+<p>标记清除算法，是将垃圾回收分为2个阶段，分别是标记和清除。</p>
 <ul>
-<li>标记：从根节点开始标记引用的对象。</li>
-<li>清除：未被标记引用的对象就是垃圾对象，可以被清理。</li>
+<li>标记：从根节点开始标记引用的对象。( <strong>标记的过程其实就是，遍历所有的GC Roots，然后将所有GC Roots可达的对象标记为存活的对象。</strong> )</li>
+<li>清除：未被标记引用的对象就是垃圾对象，可以被清理。( <strong>清除的过程将遍历堆中所有的对象，将没有标记的对象全部清除掉。</strong> )</li>
 </ul>
-<p>2.2.1、原理</p>
-<p>这张图代表的是程序运行期间所有对象的状态，它们的标志位全部是0（也就是未标记， 以下默认0就是未标记，1为已标记），假设这会儿有效内存空间耗尽了，JVM将会停止应用程序的运行并开启GC线程，然后开始进行标记工作，按照根搜索算法，标记完以后， 对象的状态如下图。可以看到，按照根搜索算法，所有从root对象可达的对象就被标记为了存活的对象，此 时已经完成了第一阶段标记。接下来，就要执行第二阶段清除了，那么清除完以后，剩下的对象以及对象的状态如下图所示。可以看到，没有被标记的对象将会回收清除掉，而被标记的对象将会留下，并且会将标记位重新归0。接下来就不用说了，唤醒停止的程序线程，让程序继续运行即可。<br>2.2.2、优缺点<br>可以看到，标记清除算法解决了引用计数算法中的循环引用的问题，没有从root节点引 用的对象都会被回收。</p>
-<p>同样，标记清除算法也是有缺点的：<br>效率较低，标记和清除两个动作都需要遍历所有的对象，并且在GC时，需要停止应用程序，对于交互性要求比较高的应用而言这个体验是非常差的。<br>通过标记清除算法清理出来的内存，碎片化较为严重，因为被回收的对象可能存在于内存的各个角落，所以清理出来的内存是不连贯的。</p>
-<p>2.3、标记压缩算法<br>标记压缩算法是在标记清除算法的基础之上，做了优化改进的算法。和标记清除算法一 样，也是从根节点开始，对对象的引用进行标记，在清理阶段，并不是简单的清理未标 记的对象，而是将存活的对象压缩到内存的一端，然后清理边界以外的垃圾，从而解决 了碎片化的问题。</p>
-<p>2.3.1、原理<br>2.3.2、优缺点<br>优缺点同标记清除算法，解决了标记清除算法的碎片化的问题，同时，标记压缩算法多了一步，对象移动内存位置的步骤，其效率也有有一定的影响。</p>
-<p>2.4、复制算法<br>复制算法的核心就是，将原有的内存空间一分为二，每次只用其中的一块，在垃圾回收时，将正在使用的对象复制到另一个内存空间中，然后将该内存空间清空，交换两个内存的角色，完成垃圾的回收。<br>如果内存中的垃圾对象较多，需要复制的对象就较少，这种情况下适合使用该方式并且效率比较高，反之，则不适合。2.4.1、JVM中年轻代内存空间</p>
-<p>1.在GC开始的时候，对象只会存在于Eden区和名为“From”的Survivor区，Survivor 区“To”是空的。<br>2.紧接着进行GC，Eden区中所有存活的对象都会被复制到“To”，而在“From”区中，仍 存活的对象会根据他们的年龄值来决定去向。年龄达到一定值(年龄阈值，可以通过- XX:MaxTenuringThreshold来设置)的对象会被移动到年老代中，没有达到阈值的对 象会被复制到“To”区域。<br>3.经过这次GC后，Eden区和From区已经被清空。这个时候，“From”和“To”会交换他 们的角色，也就是新的“To”就是上次GC前的“From”，新的“From”就是上次GC前的“To”。不管怎样，都会保证名为To的Survivor区域是空的。<br>4.GC会一直重复这样的过程，直到“To”区被填满，“To”区被填满之后，会将所有对象移动到年老代中。</p>
+<p><strong>通俗的话解释一下标记/清除算法：</strong></p>
+<p>​        就是当程序运行期间，若可以使用的内存被耗尽的时候，GC线程就会被触发并将程序暂停，随后将依旧存活的对象标记一遍，最终再将堆中所有没被标记的对象全部清除掉，接下来便让程序恢复运行。 </p>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><p> <img src="/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog\jygBlog\source\_posts\架构与优化之JVM优化第02篇垃圾回收\19222114-6435e25e050f4a2ea3230879392bdfb3.jpg" alt="img"> </p>
+<p>这张图代表的是程序运行期间所有对象的状态，它们的标志位全部是0（也就是未标记， 以下默认0就是未标记，1为已标记），假设这会儿有效内存空间耗尽了，JVM将会停止应用程序的运行并开启GC线程，然后开始进行标记工作，按照根(root)搜索算法，标记完以后， 对象的状态如下图。</p>
+<p> <img src="/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog\jygBlog\source\_posts\架构与优化之JVM优化第02篇垃圾回收\19222543-1da7fb7bc5d24fd18872a267b65e939e.jpg" alt="img"> </p>
+<p>可以看到，按照根(root)搜索算法，所有从root对象可达的对象就被标记为了存活的对象，此时已经完成了第一阶段标记。接下来，就要执行第二阶段清除了，那么清除完以后，剩下的对象以及对象的状态如下图所示。</p>
+<p> <img src="/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog\jygBlog\source\_posts\架构与优化之JVM优化第02篇垃圾回收\19222820-8eca1c1518754d8fac6da532b13f746b.jpg" alt="img"> </p>
+<p>可以看到，没有被标记的对象将会回收清除掉，而被标记的对象将会留下，并且会将标记位重新归0。接下来就不用说了，唤醒停止的程序线程，让程序继续运行即可。</p>
+<p>为什么非要停止程序的运行呢？</p>
+<p>​     这个其实也不难理解，LZ举个最简单的例子，假设我们的程序与GC线程是一起运行的，各位试想这样一种场景。</p>
+<p>​     假设我们刚标记完图中最右边的那个对象，暂且记为A，结果此时在程序当中又new了一个新对象B，且A对象可以到达B对象。但是由于此时A对象已经标记结束，B对象此时的标记位依然是0，因为它错过了标记阶段。因此当接下来轮到清除阶段的时候，新对象B将会被苦逼的清除掉。如此一来，不难想象结果，GC线程将会导致程序无法正常工作。</p>
+<p>​     上面的结果当然令人无法接受，我们刚new了一个对象，结果经过一次GC，忽然变成null了，这还怎么玩？</p>
+<h3 id="2-2-2、优缺点"><a href="#2-2-2、优缺点" class="headerlink" title="2.2.2、优缺点"></a>2.2.2、优缺点</h3><p>可以看到，标记清除算法解决了引用计数算法中的循环引用的问题，没有从root节点引 用的对象都会被回收。</p>
+<p>同样，标记清除算法也是有缺点的：<br>1、效率较低，标记和清除两个动作都需要遍历所有的对象，并且在GC时，需要停止应用程序，对于交互性要求比较高的应用而言这个体验是非常差的。</p>
+<p> <strong>（递归与全堆对象遍历），而且在进行GC的时候，需要停止应用程序，这会导致用户体验非常差劲</strong>，尤其对于交互式的应用程序来说简直是无法接受。试想一下，如果你玩一个网站，这个网站一个小时就挂五分钟，你还玩吗？ </p>
+<p>2、 第二点主要的缺点，则是<strong>这种方式清理出来的空闲内存是不连续的</strong>通过标记清除算法清理出来的内存，碎片化较为严重，因为被回收的对象可能存在于内存的各个角落，所以清理出来的内存是不连贯的。</p>
+<p> 第二点主要的缺点，则是<strong>这种方式清理出来的空闲内存是不连续的</strong>，这点不难理解，我们的死亡对象都是随即的出现在内存的各个角落的，现在把它们清除之后，内存的布局自然会乱七八糟。而为了应付这一点，JVM就不得不维持一个内存的空闲列表，这又是一种开销。而且在分配数组对象的时候，寻找连续的内存空间会不太好找。 </p>
+<h2 id="2-3、标记压缩算法"><a href="#2-3、标记压缩算法" class="headerlink" title="2.3、标记压缩算法"></a>2.3、标记压缩算法</h2><p>标记压缩算法是在标记清除算法的基础之上，做了优化改进的算法。和标记清除算法一 样，也是从根节点开始，对对象的引用进行标记，在清理阶段，并不是简单的清理未标 记的对象，而是将存活的对象压缩到内存的一端，然后清理边界以外的垃圾，从而解决 了碎片化的问题。</p>
+<p>2.3.1、原理</p>
+<h3 id="2-3-2、优缺点"><a href="#2-3-2、优缺点" class="headerlink" title="2.3.2、优缺点"></a>2.3.2、优缺点</h3><p>优缺点同标记清除算法，解决了标记清除算法的碎片化的问题，同时，标记压缩算法多了一步，对象移动内存位置的步骤，其效率也有有一定的影响。</p>
+<h2 id="2-4、复制算法"><a href="#2-4、复制算法" class="headerlink" title="2.4、复制算法"></a>2.4、复制算法</h2><p>复制算法的核心就是，将原有的内存空间一分为二，每次只用其中的一块，在垃圾回收时，将正在使用的对象复制到另一个内存空间中，然后将该内存空间清空，交换两个内存的角色，完成垃圾的回收。<br>如果内存中的垃圾对象较多，需要复制的对象就较少，这种情况下适合使用该方式并且效率比较高，反之，则不适合。</p>
+<p><img src="/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog\jygBlog\source\_posts\架构与优化之JVM优化第02篇垃圾回收\image-20191227105028340.png" alt="image-20191227105028340"></p>
+<h3 id="2-4-1、JVM中年轻代内存空间"><a href="#2-4-1、JVM中年轻代内存空间" class="headerlink" title="2.4.1、JVM中年轻代内存空间"></a>2.4.1、JVM中年轻代内存空间</h3><p> <img src="/2019/12/20/架构与优化之JVM优化第02篇垃圾回收/blog\jygBlog\source\_posts\架构与优化之JVM优化第02篇垃圾回收\young_gc.png" alt="young_gc">  </p>
+<p>1.在GC开始的时候，对象只会存在于Eden区和名为“From”的Survivor区，Survivor 区“To”是空的。</p>
+<p>2.紧接着进行GC，Eden区中所有存活的对象都会被复制到“To”，而在“From”区中，仍 存活的对象会根据他们的年龄值来决定去向。年龄达到一定值(年龄阈值，可以通过- XX:MaxTenuringThreshold来设置)的对象会被移动到年老代中，没有达到阈值的对 象会被复制到“To”区域。</p>
+<p>3.经过这次GC后，Eden区和From区已经被清空。这个时候，“From”和“To”会交换他 们的角色，也就是新的“To”就是上次GC前的“From”，新的“From”就是上次GC前的“To”。不管怎样，都会保证名为To的Survivor区域是空的。</p>
+<p>4.GC会一直重复这样的过程，直到“To”区被填满，“To”区被填满之后，会将所有对象移动到年老代中。</p>
 <p>2.4.2、优缺点<br>优点：</p>
 <p>在垃圾对象多的情况下，效率较高清理后，内存无碎片<br>缺点：</p>
 <p>在垃圾对象少的情况下，不适用，如：老年代内存<br>分配的2块内存空间，在同一个时刻，只能使用一半，内存使用率较低</p>
@@ -1088,7 +1145,7 @@ function setSidebarMarginTop (headerOffset) {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-学习目标"><span class="nav-text">0.学习目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1、什么是垃圾回收？"><span class="nav-text">1、什么是垃圾回收？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数"><span class="nav-text">参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打印出的信息"><span class="nav-text">打印出的信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数-1"><span class="nav-text">参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打印的信息"><span class="nav-text">打印的信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置启动参数"><span class="nav-text">设置启动参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行日志"><span class="nav-text">运行日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一步，初始标记"><span class="nav-text">第一步，初始标记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二步，并发标记"><span class="nav-text">第二步，并发标记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三步，预处理"><span class="nav-text">第三步，预处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四步，重新标记"><span class="nav-text">第四步，重新标记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第六步，重置"><span class="nav-text">第六步，重置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志"><span class="nav-text">日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扫描根节点"><span class="nav-text">扫描根节点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新RS区域所消耗的时间"><span class="nav-text">更新RS区域所消耗的时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象拷贝"><span class="nav-text">对象拷贝</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-学习目标"><span class="nav-text">0.学习目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1、什么是垃圾回收？"><span class="nav-text">1、什么是垃圾回收？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1、C-C-语言的垃圾回收"><span class="nav-text">1.1、C/C++语言的垃圾回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2、Java语言的垃圾回收"><span class="nav-text">1.2、Java语言的垃圾回收</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、垃圾回收的常见算法"><span class="nav-text">2、垃圾回收的常见算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1、引用计数法"><span class="nav-text">2.1、引用计数法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1、原理"><span class="nav-text">2.1.1、原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2、优缺点"><span class="nav-text">2.1.2、优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2、标记清除法（五分钟让你彻底明白标记-清除算法）"><span class="nav-text">2.2、标记清除法（五分钟让你彻底明白标记/清除算法）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-text"> </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2、优缺点"><span class="nav-text">2.2.2、优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3、标记压缩算法"><span class="nav-text">2.3、标记压缩算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2、优缺点"><span class="nav-text">2.3.2、优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4、复制算法"><span class="nav-text">2.4、复制算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1、JVM中年轻代内存空间"><span class="nav-text">2.4.1、JVM中年轻代内存空间</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数"><span class="nav-text">参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打印出的信息"><span class="nav-text">打印出的信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数-1"><span class="nav-text">参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打印的信息"><span class="nav-text">打印的信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置启动参数"><span class="nav-text">设置启动参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行日志"><span class="nav-text">运行日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一步，初始标记"><span class="nav-text">第一步，初始标记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二步，并发标记"><span class="nav-text">第二步，并发标记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三步，预处理"><span class="nav-text">第三步，预处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四步，重新标记"><span class="nav-text">第四步，重新标记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第六步，重置"><span class="nav-text">第六步，重置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志"><span class="nav-text">日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扫描根节点"><span class="nav-text">扫描根节点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新RS区域所消耗的时间"><span class="nav-text">更新RS区域所消耗的时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象拷贝"><span class="nav-text">对象拷贝</span></a></li></ol></div>
             
 
           </div>
@@ -1438,7 +1495,7 @@ if(canvas.getContext){
 <font color="MediumPurple" face="STLiti">
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共151.8k字|</span>
+  <span class="post-count">博客全站共154.1k字|</span>
 </div>
 </font>
 
