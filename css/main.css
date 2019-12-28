@@ -1149,7 +1149,6 @@ pre .javascript .function {
   margin: 60px 20px 0;
 }
 body {
-  background-image: url("/images/background.jpg");
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
@@ -2092,7 +2091,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #3e6e06;
+  background: #47ff58;
 }
 .links-of-blogroll {
   font-size: 13px;
