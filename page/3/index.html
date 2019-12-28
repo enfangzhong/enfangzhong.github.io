@@ -992,112 +992,19 @@ function setSidebarMarginTop (headerOffset) {
       
         
           
-            <p>SQL语句面试经典50题</p>
-<hr>
-<p>2019/12/03   19:36   今天更新到这</p>
-<p>2019/12/04   22:05   项目中完成了表单中的上传下载接口与前端对接。今天加班到八点，话说加班可以调休。希望过年调几天。</p>
-<p>2019/12/05   01:43   今天研究了一下Flowable 工作流框架，明天继续。夜深了，休息。</p>
-<p>2019/12/06   13:23    刚才在b站看了一个程序员老哥被裁的纪念品上面写着：感谢有你，一路同行，怀念我们一起奋斗的时光。</p>
-<hr>
-<h1 id="0-学习目标"><a href="#0-学习目标" class="headerlink" title="0.学习目标"></a>0.学习目标</h1><ul>
-<li>了解SQL的作用</li>
-<li>掌握SQL语句的编写</li>
-</ul>
-<h1 id="1-为什么要练习sql语句？"><a href="#1-为什么要练习sql语句？" class="headerlink" title="1. 为什么要练习sql语句？"></a>1. 为什么要练习sql语句？</h1><p>做为一个后端开发人员，sql语句的编写是至关重要的。在实习的第一天到公司，我的leader戴哥就是让我练习sql语句。尽管用mybatis plus，但是sql语句可以处理复杂的逻辑。</p>
-<p>会写sql的程序员，才是真的的crud  boy。</p>
-<p>练习sql语句，主要看了猴子和小番茄的知乎博文分析。</p>
-<p>这里有sql面试的50题，帮助大家更进一步的熟悉SQL. SQL是数据分析师的必备基础技能，希望大家跟我一起来打怪升级，最后成为某一领域的数据科学家。</p>
-<p>常见的SQL面试题：</p>
-<blockquote>
-<p>经典50题 - 知乎 <a href="https://zhuanlan.zhihu.com/p/38354000" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/38354000</a> </p>
-<p>SQL面试必会50题 - 知乎 <a href="https://zhuanlan.zhihu.com/p/43289968" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/43289968</a> </p>
-</blockquote>
-<h1 id="2-练习题分析阶段"><a href="#2-练习题分析阶段" class="headerlink" title="2.练习题分析阶段"></a>2.练习题分析阶段</h1><p><img src="/2019/12/03/SQL语句面试经典50题/v2-888536dd71af452945e0a6a478a4e1f1_1200x500.jpg" alt="常见的SQL面试题：经典50题"> </p>
-<p>已知有如下4张表：</p>
-<p>学生表：student(学号,学生姓名,出生年月,性别)</p>
-<p>成绩表：score(学号,课程号,成绩)</p>
-<p>课程表：course(课程号,课程名称,教师号)</p>
-<p>教师表：teacher(教师号,教师姓名)</p>
-<p>1.学生表<br>Student(s_id,s_name,s_birth,s_sex) —学生编号,学生姓名, 出生年月,学生性别<br>2.课程表<br>Course(c_id,c_name,t_id) – —课程编号, 课程名称, 教师编号<br>3.教师表<br>Teacher(t_id,t_name) —教师编号,教师姓名<br>4.成绩表<br>Score(s_id,c_id,s_score) —学生编号,课程编号,分数</p>
-<p>根据以上信息按照下面要求写出对应的SQL语句。</p>
-<p>ps：这些题考察SQL的编写能力，对于这类型的题目，需要你先把4张表之间的关联关系搞清楚了，最好的办法是自己在草稿纸上画出关联图，然后再编写对应的SQL语句就比较容易了。下图是我画的这4张表的关系图，可以看出它们之间是通过哪些外键关联起来的： </p>
-<p><img src="/2019/12/03/SQL语句面试经典50题/v2-86fd263583a6cead51675982c1735e68_hd.jpg" alt="img"> </p>
-<h1 id="3-准备阶段"><a href="#3-准备阶段" class="headerlink" title="3.准备阶段"></a>3.准备阶段</h1><h2 id="3-1-创建数据库和表"><a href="#3-1-创建数据库和表" class="headerlink" title="3.1.创建数据库和表"></a>3.1.创建数据库和表</h2><p>为了演示题目的运行过程，我们先按下面语句在客户端navicat中创建数据库和表。</p>
-<p> <img src="/2019/12/03/SQL语句面试经典50题/v2-9fb2b06e6889bc7db47d4ce61164ad10_hd.jpg" alt="img"> </p>
-<p> <img src="/2019/12/03/SQL语句面试经典50题/v2-7054b72fc575d2ffcaa6152883609050_hd.jpg" alt="img"> </p>
-<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">-- 建表</span><br><span class="line">-- 学生表</span><br><span class="line">CREATE TABLE `Student`(</span><br><span class="line">	`s_id` VARCHAR(20),</span><br><span class="line">	`s_name` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">	`s_birth` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">	`s_sex` VARCHAR(10) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">	PRIMARY KEY(`s_id`)</span><br><span class="line">);</span><br><span class="line">-- 课程表</span><br><span class="line">CREATE TABLE `Course`(</span><br><span class="line">	`c_id`  VARCHAR(20),</span><br><span class="line">	`c_name` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">	`t_id` VARCHAR(20) NOT NULL,</span><br><span class="line">	PRIMARY KEY(`c_id`)</span><br><span class="line">);</span><br><span class="line">-- 教师表</span><br><span class="line">CREATE TABLE `Teacher`(</span><br><span class="line">	`t_id` VARCHAR(20),</span><br><span class="line">	`t_name` VARCHAR(20) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">	PRIMARY KEY(`t_id`)</span><br><span class="line">);</span><br><span class="line">-- 成绩表</span><br><span class="line">CREATE TABLE `Score`(</span><br><span class="line">	`s_id` VARCHAR(20),</span><br><span class="line">	`c_id`  VARCHAR(20),</span><br><span class="line">	`s_score` INT(3),</span><br><span class="line">	PRIMARY KEY(`s_id`,`c_id`)</span><br><span class="line">);</span><br><span class="line">-- 插入学生表测试数据</span><br><span class="line">insert into Student values(&apos;01&apos; , &apos;赵雷&apos; , &apos;1990-01-01&apos; , &apos;男&apos;);</span><br><span class="line">insert into Student values(&apos;02&apos; , &apos;钱电&apos; , &apos;1990-12-21&apos; , &apos;男&apos;);</span><br><span class="line">insert into Student values(&apos;03&apos; , &apos;孙风&apos; , &apos;1990-05-20&apos; , &apos;男&apos;);</span><br><span class="line">insert into Student values(&apos;04&apos; , &apos;李云&apos; , &apos;1990-08-06&apos; , &apos;男&apos;);</span><br><span class="line">insert into Student values(&apos;05&apos; , &apos;周梅&apos; , &apos;1991-12-01&apos; , &apos;女&apos;);</span><br><span class="line">insert into Student values(&apos;06&apos; , &apos;吴兰&apos; , &apos;1992-03-01&apos; , &apos;女&apos;);</span><br><span class="line">insert into Student values(&apos;07&apos; , &apos;郑竹&apos; , &apos;1989-07-01&apos; , &apos;女&apos;);</span><br><span class="line">insert into Student values(&apos;08&apos; , &apos;王菊&apos; , &apos;1990-01-20&apos; , &apos;女&apos;);</span><br><span class="line">-- 课程表测试数据</span><br><span class="line">insert into Course values(&apos;01&apos; , &apos;语文&apos; , &apos;02&apos;);</span><br><span class="line">insert into Course values(&apos;02&apos; , &apos;数学&apos; , &apos;01&apos;);</span><br><span class="line">insert into Course values(&apos;03&apos; , &apos;英语&apos; , &apos;03&apos;);</span><br><span class="line"></span><br><span class="line">-- 教师表测试数据</span><br><span class="line">insert into Teacher values(&apos;01&apos; , &apos;张三&apos;);</span><br><span class="line">insert into Teacher values(&apos;02&apos; , &apos;李四&apos;);</span><br><span class="line">insert into Teacher values(&apos;03&apos; , &apos;王五&apos;);</span><br><span class="line"></span><br><span class="line">-- 成绩表测试数据</span><br><span class="line">insert into Score values(&apos;01&apos; , &apos;01&apos; , 80);</span><br><span class="line">insert into Score values(&apos;01&apos; , &apos;02&apos; , 90);</span><br><span class="line">insert into Score values(&apos;01&apos; , &apos;03&apos; , 99);</span><br><span class="line">insert into Score values(&apos;02&apos; , &apos;01&apos; , 70);</span><br><span class="line">insert into Score values(&apos;02&apos; , &apos;02&apos; , 60);</span><br><span class="line">insert into Score values(&apos;02&apos; , &apos;03&apos; , 80);</span><br><span class="line">insert into Score values(&apos;03&apos; , &apos;01&apos; , 80);</span><br><span class="line">insert into Score values(&apos;03&apos; , &apos;02&apos; , 80);</span><br><span class="line">insert into Score values(&apos;03&apos; , &apos;03&apos; , 80);</span><br><span class="line">insert into Score values(&apos;04&apos; , &apos;01&apos; , 50);</span><br><span class="line">insert into Score values(&apos;04&apos; , &apos;02&apos; , 30);</span><br><span class="line">insert into Score values(&apos;04&apos; , &apos;03&apos; , 20);</span><br><span class="line">insert into Score values(&apos;05&apos; , &apos;01&apos; , 76);</span><br><span class="line">insert into Score values(&apos;05&apos; , &apos;02&apos; , 87);</span><br><span class="line">insert into Score values(&apos;06&apos; , &apos;01&apos; , 31);</span><br><span class="line">insert into Score values(&apos;06&apos; , &apos;03&apos; , 34);</span><br><span class="line">insert into Score values(&apos;07&apos; , &apos;02&apos; , 89);</span><br><span class="line">insert into Score values(&apos;07&apos; , &apos;03&apos; , 98);</span><br></pre></td></tr></table></figure></div>
-<p>Student表：</p>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212102315915.png" alt="image-20191212102315915"></p>
-<p>Course表：</p>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212102510760.png" alt="image-20191212102510760"></p>
-<p> Teacher表：</p>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212102618628.png" alt=" Teacher"></p>
-<p> Score表：</p>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212102654572.png" alt=" Score "></p>
-<h1 id="4-面试题"><a href="#4-面试题" class="headerlink" title="4.面试题"></a>4.面试题</h1><p>为了方便学习，我将50道面试题进行了分类练习</p>
-<h2 id="4-1-练习：简单查询"><a href="#4-1-练习：简单查询" class="headerlink" title="4.1.练习：简单查询"></a>4.1.练习：简单查询</h2><p><img src="/2019/12/03/SQL语句面试经典50题/v2-5a377ec35954190b6ee6b07e2c74c575_hd.jpg" alt="img"> </p>
-<h4 id="1-查询姓“猴”的学生名单"><a href="#1-查询姓“猴”的学生名单" class="headerlink" title="1.查询姓“猴”的学生名单"></a>1.查询姓“猴”的学生名单</h4><p><img src="/2019/12/03/SQL语句面试经典50题/v2-74404bfe16150f5a9f4a473297e1e079_hd.jpg" alt="img"> </p>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212105344854.png" alt="image-20191212105344854"></p>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212105601321.png" alt="image-20191212105601321"></p>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212105632018.png" alt="image-20191212105632018"></p>
-<h4 id="2-查询姓“孟”老师的个数"><a href="#2-查询姓“孟”老师的个数" class="headerlink" title="2.查询姓“孟”老师的个数"></a>2.查询姓“孟”老师的个数</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) AS 姓“孟”老师的个数</span><br><span class="line">FROM teacher</span><br><span class="line">WHERE t_name LIKE &apos;孟%&apos;</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212105917024.png" alt="image-20191212105917024"></p>
-<h2 id="4-2-练习：汇总、分组、分组条件查询"><a href="#4-2-练习：汇总、分组、分组条件查询" class="headerlink" title="4.2.练习：汇总、分组、分组条件查询"></a>4.2.练习：汇总、分组、分组条件查询</h2><h3 id="4-2-1-练习：汇总"><a href="#4-2-1-练习：汇总" class="headerlink" title="4.2.1.练习：汇总"></a>4.2.1.练习：汇总</h3><p> <img src="/2019/12/03/SQL语句面试经典50题/v2-983199041b422ac426e919544ae4450e_hd.jpg" alt="img"> </p>
-<h4 id="3-面试题：查询课程编号为“0002”的总成绩"><a href="#3-面试题：查询课程编号为“0002”的总成绩" class="headerlink" title="3. 面试题：查询课程编号为“0002”的总成绩"></a>3. 面试题：查询课程编号为“0002”的总成绩</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [总成绩:汇总函数sum]</span><br><span class="line">from 从哪张表中查找数据[成绩表score]</span><br><span class="line">where 查询条件 [课程号是0002]</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">SELECT sum(s_score)</span><br><span class="line">FROM score</span><br><span class="line"></span><br><span class="line">WHERE c_id =&apos;0002&apos;</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212110022584.png" alt="image-20191212110022584"></p>
-<h4 id="4-查询选了课程的学生人数"><a href="#4-查询选了课程的学生人数" class="headerlink" title="4. 查询选了课程的学生人数"></a>4. 查询选了课程的学生人数</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">这个题目翻译成大白话就是：查询有多少人选了课程</span><br><span class="line">select 学号，成绩表里学号有重复值需要去掉</span><br><span class="line">from 从课程表查找score;</span><br><span class="line">*/</span><br><span class="line">SELECT COUNT(DISTINCT c_id) AS 学生人数</span><br><span class="line"></span><br><span class="line">FROM score</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212110055542.png" alt="image-20191212110055542"></p>
-<h3 id="4-2-2-练习：分组"><a href="#4-2-2-练习：分组" class="headerlink" title="4.2.2  练习：分组"></a>4.2.2  练习：分组</h3><p> <img src="/2019/12/03/SQL语句面试经典50题/v2-a5f8fc41ba4bf08d49b2dcfac4094831_hd.jpg" alt="img"> </p>
-<h4 id="5-查询各科成绩最高和最低的分"><a href="#5-查询各科成绩最高和最低的分" class="headerlink" title="5.查询各科成绩最高和最低的分"></a>5.查询各科成绩最高和最低的分</h4><p>以如下的形式显示：课程号，最高分，最低分 </p>
-<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [课程ID：是课程号的别名,最高分：max(成绩) ,最低分：min(成绩)]</span><br><span class="line">from 从哪张表中查找数据 [成绩表score]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [各科成绩：也就是每门课程的成绩，需要按课程号分组];</span><br><span class="line">*/</span><br><span class="line">/*</span><br><span class="line">上述题的拆分：课程id为0002的最高分与最低分</span><br><span class="line"></span><br><span class="line">SELECT MAX(s_score) AS 最高分, MIN(s_score) AS 最低分</span><br><span class="line">FROM score</span><br><span class="line">WHERE c_id = &apos;0002&apos;</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">SELECT</span><br><span class="line">	c_id,MAX(s_score) AS 最高分,MIN(s_score) AS 最低分</span><br><span class="line">FROM score</span><br><span class="line">GROUP BY c_id</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212110934135.png" alt="image-20191212110934135"></p>
-<h4 id="6-查询每门课程被选修的学生数"><a href="#6-查询每门课程被选修的学生数" class="headerlink" title="6.查询每门课程被选修的学生数"></a>6.查询每门课程被选修的学生数</h4><p>— 通过对成绩表的课程id进行分组，然后对该学号进行计数</p>
-<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [课程号，选修该课程的学生数：汇总函数count]</span><br><span class="line">from 从哪张表中查找数据 [成绩表score]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [每门课程：按课程号分组];</span><br><span class="line">*/</span><br><span class="line">SELECT c_id,COUNT(c_id)</span><br><span class="line">FROM</span><br><span class="line">score</span><br><span class="line">GROUP BY c_id</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212111222219.png" alt="image-20191212111222219"></p>
-<h4 id="7-查询男生、女生人数"><a href="#7-查询男生、女生人数" class="headerlink" title="7.查询男生、女生人数"></a>7.查询男生、女生人数</h4><ul>
-<li><p>在学生表中对性别进行分组 计数</p>
-<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [性别，对应性别的人数：汇总函数count]</span><br><span class="line">from 从哪张表中查找数据 [性别在学生表中，所以查找的是学生表student]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [男生、女生人数：按性别分组]</span><br><span class="line">having 对分组结果指定条件 [没有]</span><br><span class="line">order by 对查询结果排序[没有];</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">SELECT s_sex,COUNT(s_sex) AS 个数</span><br><span class="line">FROM student</span><br><span class="line">GROUP BY s_sex</span><br></pre></td></tr></table></figure></div>
-</li>
-</ul>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212111302108.png" alt="image-20191212111302108"></p>
-<h3 id="4-2-3-分组结果的条件"><a href="#4-2-3-分组结果的条件" class="headerlink" title="4.2.3 分组结果的条件"></a>4.2.3 分组结果的条件</h3><p> <img src="/2019/12/03/SQL语句面试经典50题/v2-e272c0f9609047fa50073f46f84139c4_hd.jpg" alt="img"> </p>
-<h4 id="8-查询平均成绩大于60分学生的学号和平均成绩"><a href="#8-查询平均成绩大于60分学生的学号和平均成绩" class="headerlink" title="8.查询平均成绩大于60分学生的学号和平均成绩"></a>8.查询平均成绩大于60分学生的学号和平均成绩</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">题目翻译成大白话：</span><br><span class="line">平均成绩：展开来说就是计算每个学生的平均成绩</span><br><span class="line">这里涉及到“每个”就是要分组了</span><br><span class="line">平均成绩大于60分，就是对分组结果指定条件</span><br><span class="line"></span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [学号，平均成绩：汇总函数avg(成绩)]</span><br><span class="line">from 从哪张表中查找数据 [成绩在成绩表中，所以查找的是成绩表score]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [平均成绩：先按学号分组，再计算平均成绩]</span><br><span class="line">having 对分组结果指定条件 [平均成绩大于60分]</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">-- 在成绩表中对学号进行分组求平均成绩  having条件是平均成绩&gt;60分</span><br><span class="line">select s_id,AVG(s_score)</span><br><span class="line">FROM score</span><br><span class="line">GROUP BY s_id</span><br><span class="line">HAVING AVG(s_score)&gt;60</span><br><span class="line">ORDER BY AVG(s_score) DESC</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212111352401.png" alt="image-20191212111352401"></p>
-<h4 id="9-查询至少选修两门课程的学生学号"><a href="#9-查询至少选修两门课程的学生学号" class="headerlink" title="9.查询至少选修两门课程的学生学号"></a>9.查询至少选修两门课程的学生学号</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">翻译成大白话：</span><br><span class="line">第1步，需要先计算出每个学生选修的课程数据，需要按学号分组</span><br><span class="line">第2步，至少选修两门课程：也就是每个学生选修课程数目&gt;=2，对分组结果指定条件</span><br><span class="line"></span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [学号,每个学生选修课程数目：汇总函数count]</span><br><span class="line">from 从哪张表中查找数据 [课程的学生学号：课程表score]</span><br><span class="line">where 查询条件 [至少选修两门课程：需要先计算出每个学生选修了多少门课，需要用分组，所以这里没有where子句]</span><br><span class="line">group by 分组 [每个学生选修课程数目：按课程号分组，然后用汇总函数count计算出选修了多少门课]</span><br><span class="line">having 对分组结果指定条件 [至少选修两门课程：每个学生选修课程数目&gt;=2]</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">SELECT s_id,COUNT(c_id) as 选修课程数目</span><br><span class="line">FROM score</span><br><span class="line">GROUP BY c_id</span><br><span class="line">HAVING COUNT(c_id)&gt;=2</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212130502309.png" alt="image-20191212130502309"></p>
-<h4 id="10-查询同名同性学生名单并统计同名人数"><a href="#10-查询同名同性学生名单并统计同名人数" class="headerlink" title="10.查询同名同性学生名单并统计同名人数"></a>10.查询同名同性学生名单并统计同名人数</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">翻译成大白话，问题解析：</span><br><span class="line">1）查找出姓名相同的学生有谁，每个姓名相同学生的人数</span><br><span class="line">查询结果：姓名,人数</span><br><span class="line">条件：怎么算姓名相同？按姓名分组后人数大于等于2，因为同名的人数大于等于2</span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [姓名,人数：汇总函数count(*)]</span><br><span class="line">from 从哪张表中查找数据 [学生表student]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [姓名相同：按姓名分组]</span><br><span class="line">having 对分组结果指定条件 [姓名相同：count(*)&gt;=2]</span><br><span class="line">order by 对查询结果排序[没有];</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">SELECT s_name,COUNT(s_name)</span><br><span class="line">FROM student</span><br><span class="line">GROUP BY s_name</span><br><span class="line">HAVING COUNT(s_name)&gt;=2</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212131157051.png" alt="image-20191212131157051"></p>
-<h4 id="11-查询不及格的课程并按课程号从大到小排列"><a href="#11-查询不及格的课程并按课程号从大到小排列" class="headerlink" title="11.查询不及格的课程并按课程号从大到小排列"></a>11.查询不及格的课程并按课程号从大到小排列</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [课程号]</span><br><span class="line">from 从哪张表中查找数据 [成绩表score]</span><br><span class="line">where 查询条件 [不及格：成绩 &lt;60]</span><br><span class="line">group by 分组 [没有]</span><br><span class="line">having 对分组结果指定条件 [没有]</span><br><span class="line">order by 对查询结果排序[课程号从大到小排列：降序desc];</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">SELECT c_id</span><br><span class="line">FROM score</span><br><span class="line">WHERE s_score&lt;60</span><br><span class="line">GROUP BY c_id</span><br><span class="line">ORDER BY c_id</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212131322831.png" alt="image-20191212131322831"></p>
-<h4 id="12-查询每门课程的平均成绩，结果按平均成绩升序排序，平均成绩相同时，按课程号降序排列"><a href="#12-查询每门课程的平均成绩，结果按平均成绩升序排序，平均成绩相同时，按课程号降序排列" class="headerlink" title="12.查询每门课程的平均成绩，结果按平均成绩升序排序，平均成绩相同时，按课程号降序排列"></a>12.查询每门课程的平均成绩，结果按平均成绩升序排序，平均成绩相同时，按课程号降序排列</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [课程号,平均成绩：汇总函数avg(成绩)]</span><br><span class="line">from 从哪张表中查找数据 [成绩表score]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [每门课程：按课程号分组]</span><br><span class="line">having 对分组结果指定条件 [没有]</span><br><span class="line">order by 对查询结果排序[按平均成绩升序排序:asc，平均成绩相同时，按课程号降序排列:desc];</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">SELECT c_id,AVG(s_score) as 平均成绩</span><br><span class="line">FROM score</span><br><span class="line">GROUP BY c_id</span><br><span class="line">ORDER BY AVG(s_score) ASC,c_id DESC</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212131432805.png" alt="image-20191212131432805"></p>
-<h4 id="13-检索课程编号为“0004”且分数小于60的学生学号，结果按按分数降序排列"><a href="#13-检索课程编号为“0004”且分数小于60的学生学号，结果按按分数降序排列" class="headerlink" title="13.检索课程编号为“0004”且分数小于60的学生学号，结果按按分数降序排列"></a>13.检索课程编号为“0004”且分数小于60的学生学号，结果按按分数降序排列</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 []</span><br><span class="line">from 从哪张表中查找数据 [成绩表score]</span><br><span class="line">where 查询条件 [课程编号为“04”且分数小于60]</span><br><span class="line">group by 分组 [没有]</span><br><span class="line">having 对分组结果指定条件 []</span><br><span class="line">order by 对查询结果排序[查询结果按按分数降序排列];</span><br><span class="line">*/</span><br><span class="line">select s_id,s_score</span><br><span class="line">FROM score</span><br><span class="line">WHERE c_id = &quot;0004&quot; AND s_score &gt;=60</span><br><span class="line">ORDER BY s_score DESC</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212131500424.png" alt="image-20191212131500424"></p>
-<h4 id="14-统计每门课程的学生选修人数-超过2人的课程才统计"><a href="#14-统计每门课程的学生选修人数-超过2人的课程才统计" class="headerlink" title="14.统计每门课程的学生选修人数(超过2人的课程才统计)"></a>14.统计每门课程的学生选修人数(超过2人的课程才统计)</h4><p>要求输出课程号和选修人数，查询结果按人数降序排序，若人数相同，按课程号升序排序</p>
-<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [要求输出课程号和选修人数]</span><br><span class="line">from 从哪张表中查找数据 []</span><br><span class="line">where 查询条件 []</span><br><span class="line">group by 分组 [每门课程：按课程号分组]</span><br><span class="line">having 对分组结果指定条件 [学生选修人数(超过2人的课程才统计)：每门课程学生人数&gt;2]</span><br><span class="line">order by 对查询结果排序[查询结果按人数降序排序，若人数相同，按课程号升序排序];</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">SELECT c_id,COUNT(score.s_id) as &apos;选修人数&apos;</span><br><span class="line">FROM score</span><br><span class="line">GROUP BY c_id</span><br><span class="line">HAVING COUNT(score.s_id) &gt; 2</span><br><span class="line">ORDER BY COUNT(score.s_id) DESC,c_id ASC</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212134936442.png" alt="image-20191212134936442"></p>
-<h4 id="15-查询两门以上不及格课程的同学的学号及其平均成绩"><a href="#15-查询两门以上不及格课程的同学的学号及其平均成绩" class="headerlink" title="15.查询两门以上不及格课程的同学的学号及其平均成绩"></a>15.查询两门以上不及格课程的同学的学号及其平均成绩</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">分析思路</span><br><span class="line">先分解题目：</span><br><span class="line">1）[两门以上][不及格课程]限制条件</span><br><span class="line">2）[同学的学号及其平均成绩]，也就是每个学生的平均成绩，显示学号，平均成绩</span><br><span class="line">分析过程：</span><br><span class="line">第1步：得到每个学生的平均成绩，显示学号，平均成绩</span><br><span class="line">第2步：再加上限制条件：</span><br><span class="line">1）不及格课程</span><br><span class="line">2）两门以上[不及格课程]：课程数目&gt;2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/* </span><br><span class="line">第1步：得到每个学生的平均成绩，显示学号，平均成绩</span><br><span class="line">select 查询结果 [学号,平均成绩：汇总函数avg(成绩)]</span><br><span class="line">from 从哪张表中查找数据 [涉及到成绩：成绩表score]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [每个学生的平均：按学号分组]</span><br><span class="line">having 对分组结果指定条件 [没有]</span><br><span class="line">order by 对查询结果排序[没有];</span><br><span class="line">*/</span><br><span class="line">select 学号, avg(成绩) as 平均成绩</span><br><span class="line">from score</span><br><span class="line">group by 学号;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/* </span><br><span class="line">第2步：再加上限制条件：</span><br><span class="line">1）不及格课程</span><br><span class="line">2）两门以上[不及格课程]</span><br><span class="line">select 查询结果 [学号,平均成绩：汇总函数avg(成绩)]</span><br><span class="line">from 从哪张表中查找数据 [涉及到成绩：成绩表score]</span><br><span class="line">where 查询条件 [限制条件：不及格课程，平均成绩&lt;60]</span><br><span class="line">group by 分组 [每个学生的平均：按学号分组]</span><br><span class="line">having 对分组结果指定条件 [限制条件：课程数目&gt;2,汇总函数count(课程号)&gt;2]</span><br><span class="line">order by 对查询结果排序[没有];</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">SELECT s_id,COUNT(s_score),avg(s_score) AS 平均成绩</span><br><span class="line">FROM score</span><br><span class="line">WHERE s_score&lt;60</span><br><span class="line">GROUP BY s_id</span><br><span class="line">HAVING COUNT(s_score)&gt;=2</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191212140305267.png" alt="image-20191212140305267"></p>
-<h3 id="4-3-复杂查询"><a href="#4-3-复杂查询" class="headerlink" title="4.3.复杂查询"></a>4.3.复杂查询</h3><h4 id="16-查询所有课程成绩小于60分学生的学号、姓名"><a href="#16-查询所有课程成绩小于60分学生的学号、姓名" class="headerlink" title="16.查询所有课程成绩小于60分学生的学号、姓名"></a>16.查询所有课程成绩小于60分学生的学号、姓名</h4><p>这道题目知乎猴子解法是存在问题的。我这边提供我的理解吧。</p>
-<blockquote>
-<p>第一种做法：将学号分组  在每个学号组  找成绩最高值&lt;60的学号</p>
-</blockquote>
-<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">SELECT score.s_id,student.s_name</span><br><span class="line">FROM score</span><br><span class="line">INNER JOIN student</span><br><span class="line">ON score.s_id = student.s_id</span><br><span class="line">GROUP BY s_id</span><br><span class="line">HAVING MAX(s_score) &lt;60</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191215011833878.png" alt="image-20191215011833878"></p>
-<p>第二种解法：</p>
-<p>step1: 查询出学生课程数的统计量</p>
-<p>step2: 查询出学生课程成绩&lt;60分对应课程数的统计量</p>
-<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">SELECT A.s_id,S.s_name</span><br><span class="line">FROM</span><br><span class="line"></span><br><span class="line">(SELECT s_id,COUNT(c_id) AS cnt</span><br><span class="line">FROM score</span><br><span class="line">GROUP BY score.s_id) AS A</span><br><span class="line"></span><br><span class="line">INNER JOIN</span><br><span class="line"></span><br><span class="line">(SELECT s_id,COUNT(c_id) AS cnt</span><br><span class="line">FROM score</span><br><span class="line">WHERE s_score&lt;60</span><br><span class="line">GROUP BY s_id) AS B</span><br><span class="line"></span><br><span class="line">ON A.s_id = B.s_id</span><br><span class="line"></span><br><span class="line">INNER JOIN student AS S</span><br><span class="line">ON A.s_id = S.s_id</span><br><span class="line"></span><br><span class="line">WHERE A.cnt = B.cnt</span><br></pre></td></tr></table></figure></div>
-<p><img src="/2019/12/03/SQL语句面试经典50题/image-20191216100937996.png" alt="image-20191216100937996"></p>
-<h4 id="17、查询没有学全所有课的学生的学号、姓名"><a href="#17、查询没有学全所有课的学生的学号、姓名" class="headerlink" title="17、查询没有学全所有课的学生的学号、姓名"></a>17、查询没有学全所有课的学生的学号、姓名</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">-- 第一种解法：</span><br><span class="line">-- 首先学号分组  做having条件：每个学号统计出不同课程数量  小于 课程表中不同课程数量</span><br><span class="line">-- 上面结果为没有学全所有课程的学号</span><br><span class="line">-- 然后在学生表中  WHERE s_id IN ()条件  查找出学号、姓名。（这一步也可以用 INNER JOIN ON。）</span><br><span class="line"></span><br><span class="line">SELECT s_id,s_name FROM student</span><br><span class="line">WHERE s_id IN</span><br><span class="line">(</span><br><span class="line">SELECT s_id</span><br><span class="line">FROM score</span><br><span class="line">GROUP BY s_id</span><br><span class="line">HAVING COUNT(DISTINCT c_id) &lt; (SELECT COUNT(DISTINCT c_id) FROM course)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-- 这种解法后来发现score表会存在一些学生没有成绩。比如说王菊同学一门课程成绩都不存在。</span><br><span class="line">-- 但是上述做法没有把王菊同学查找出来。</span><br><span class="line"></span><br><span class="line">-- 第二种解法：</span><br></pre></td></tr></table></figure></div>
-<h4 id="18、查询出只选修了两门课程的全部学生的学号和姓名"><a href="#18、查询出只选修了两门课程的全部学生的学号和姓名" class="headerlink" title="18、查询出只选修了两门课程的全部学生的学号和姓名"></a>18、查询出只选修了两门课程的全部学生的学号和姓名</h4><h4 id="1990年出生的学生名单"><a href="#1990年出生的学生名单" class="headerlink" title="1990年出生的学生名单"></a>1990年出生的学生名单</h4><h4 id="查询各科成绩前两名的记录"><a href="#查询各科成绩前两名的记录" class="headerlink" title="查询各科成绩前两名的记录"></a>查询各科成绩前两名的记录</h4><h4 id="分组取每组最大值、最小值，每组最大的N条（top-N）记录。"><a href="#分组取每组最大值、最小值，每组最大的N条（top-N）记录。" class="headerlink" title="分组取每组最大值、最小值，每组最大的N条（top N）记录。"></a>分组取每组最大值、最小值，每组最大的N条（top N）记录。</h4><h3 id="4-4-sql面试题：topN问题"><a href="#4-4-sql面试题：topN问题" class="headerlink" title="4.4  sql面试题：topN问题"></a>4.4  sql面试题：topN问题</h3><h3 id="4-5-多表查询"><a href="#4-5-多表查询" class="headerlink" title="4.5 多表查询"></a>4.5 多表查询</h3><p> <img src="/2019/12/03/SQL语句面试经典50题/v2-d3517e45d5a4ca25655133b714486550_hd.jpg" alt="img"> </p>
-<h4 id="查询所有学生的学号、姓名、选课数、总成绩"><a href="#查询所有学生的学号、姓名、选课数、总成绩" class="headerlink" title="查询所有学生的学号、姓名、选课数、总成绩"></a>查询所有学生的学号、姓名、选课数、总成绩</h4><h4 id="查询平均成绩大于85的所有学生的学号、姓名和平均成绩"><a href="#查询平均成绩大于85的所有学生的学号、姓名和平均成绩" class="headerlink" title="查询平均成绩大于85的所有学生的学号、姓名和平均成绩"></a>查询平均成绩大于85的所有学生的学号、姓名和平均成绩</h4><h4 id="查询学生的选课情况：学号，姓名，课程号，课程名称"><a href="#查询学生的选课情况：学号，姓名，课程号，课程名称" class="headerlink" title="查询学生的选课情况：学号，姓名，课程号，课程名称"></a>查询学生的选课情况：学号，姓名，课程号，课程名称</h4><h4 id="查询出每门课程的及格人数和不及格人数"><a href="#查询出每门课程的及格人数和不及格人数" class="headerlink" title="查询出每门课程的及格人数和不及格人数"></a>查询出每门课程的及格人数和不及格人数</h4><h4 id="使用分段-100-85-85-70-70-60-lt-60-来统计各科成绩，分别统计：各分数段人数，课程号和课程名称"><a href="#使用分段-100-85-85-70-70-60-lt-60-来统计各科成绩，分别统计：各分数段人数，课程号和课程名称" class="headerlink" title="使用分段[100-85],[85-70],[70-60],[&lt;60]来统计各科成绩，分别统计：各分数段人数，课程号和课程名称"></a>使用分段[100-85],[85-70],[70-60],[&lt;60]来统计各科成绩，分别统计：各分数段人数，课程号和课程名称</h4><h4 id="查询课程编号为0003且课程成绩在80分以上的学生的学号和姓名"><a href="#查询课程编号为0003且课程成绩在80分以上的学生的学号和姓名" class="headerlink" title="查询课程编号为0003且课程成绩在80分以上的学生的学号和姓名|"></a>查询课程编号为0003且课程成绩在80分以上的学生的学号和姓名|</h4><h3 id="4-6-sql面试题：行列如何互换？"><a href="#4-6-sql面试题：行列如何互换？" class="headerlink" title="4.6 sql面试题：行列如何互换？"></a>4.6 sql面试题：行列如何互换？</h3><p>下面是学生的成绩表（表名score，列名：学号、课程号、成绩）</p>
-<p><img src="/2019/12/03/SQL语句面试经典50题/v2-4d2a6f3afb29d0a5b596a4fd57f82cd0_hd.jpg" alt="img"></p>
-<p>使用sql实现将该表行转列为下面的表结构</p>
-<p><img src="/2019/12/03/SQL语句面试经典50题/v2-a628c7d239662b9bee8e1a3892810861_hd.jpg" alt="img"></p>
-<p>【面试题类型总结】这类题目属于行列如何互换，解题思路如下：</p>
+          SQL语句面试经典50题
 
-          
+2019/12/03   19:36   今天更新到这
+2019/12/04   22:05   项目中完成了表单中的上传下载接口与前端对接。今天加班到八点，话说加班可以调休。希望过年调几天。
+2019/12/05   01:43   今天研究了一下Flowable 工作
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/03/SQL语句面试经典50题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1278,24 +1185,17 @@ function setSidebarMarginTop (headerOffset) {
       
         
           
-            <p>[TOC]</p>
-<h1 id="秋招的那些事"><a href="#秋招的那些事" class="headerlink" title="秋招的那些事"></a>秋招的那些事</h1><h3 id="一、秋招"><a href="#一、秋招" class="headerlink" title="一、秋招"></a>一、秋招</h3><h4 id="1-1-提前批"><a href="#1-1-提前批" class="headerlink" title="1.1 提前批"></a>1.1 提前批</h4><p>博主在秋招之前参与了提前批的神仙打架。根据记忆提前批就面了字节跳动、京东、浦发银行，当时投递的是推荐算法，没有准备好就上战场了。</p>
-<h4 id="1-2-秋招"><a href="#1-2-秋招" class="headerlink" title="1.2 秋招"></a>1.2 秋招</h4><p>每年秋招是9-11月这个阶段，一般互联网公司都集中在9月。10月还存在一些公司鞭尸。毕竟offer收割机都是手握多个offer。</p>
-<p><img src="/2019/11/11/秋招的那些事/image-20191130222614545.png" alt="image-20191130222614545"></p>
-<h3 id="二、实习"><a href="#二、实习" class="headerlink" title="二、实习"></a>二、实习</h3><blockquote>
-<p>2.1 博主研二下期间（3-5月）还在写小paper。花了时间准备一篇专利，只是<del>~</del>~~~~。错过了实习的金三银四。</p>
-<p>2.2 搞完论文大概是5月份了吧，当时全身心的投入到了算法与大数据的知识海洋中了，没有参与实习。</p>
-<p>2.3 我实习在武汉最湿冷的时候。出不出太阳，全看心情。偶尔昨天气温20度，今天就5度。平时下下小雨。</p>
-<p>2.4 南湖大道与雄庄路的十字路口总是那么的拥挤。每天早上循环播放着下一站茶山刘by房东的猫度过。</p>
-</blockquote>
-<p>​                                        </p>
-<p>北京朋友的朋友圈全是雪雪雪。雪花儿，武汉期待你的到来。</p>
-<p><img src="/2019/11/11/秋招的那些事/image-20191130224535426.png" alt="拥堵的南湖大道与雄庄路的十字路口"></p>
-<p>​                                               听说今天北京下雪了。雪花儿，我在武汉等你的到来。</p>
-<p><img src="/2019/11/11/秋招的那些事/image-20191130230241101.png" alt="image-20191130230241101"></p>
-<p>——————————————————2019/11/30  夜深了，今天暂且写到这咯。</p>
-
-          
+          [TOC]
+秋招的那些事一、秋招1.1 提前批博主在秋招之前参与了提前批的神仙打架。根据记忆提前批就面了字节跳动、京东、浦发银行，当时投递的是推荐算法，没有准备好就上战场了。
+1.2 秋招每年秋招是9-11月这个阶段，一般互联网公司都集中在9月。10月还存在一些公司鞭尸。毕竟offer收割机都是手握
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/11/11/秋招的那些事/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1476,38 +1376,17 @@ function setSidebarMarginTop (headerOffset) {
       
         
           
-            <p>[TOC]</p>
-<h1 id="个性化推荐算法实践第12章推荐算法回顾与总结"><a href="#个性化推荐算法实践第12章推荐算法回顾与总结" class="headerlink" title="个性化推荐算法实践第12章推荐算法回顾与总结"></a>个性化推荐算法实践第12章推荐算法回顾与总结</h1><p>  推荐算法实战课程，课程是有问答专区，如果你有问题可以在问答专区提问，我会在每天固定时间解答课程，结合问答专区能够让你更快的掌握知识。</p>
-<p>开始本章节的内容之前我们首先来回顾一下上一章节的内容，上一章节我们对之前所讲述过的排序部分的内容进行了总结与回顾。</p>
-<p>本章节我们对课程所讲述过的全部内容进行总结与回顾，下面一起来看一下本章节的内容大纲。</p>
-<p>一、个性化推荐算法离线架构</p>
-<p>个性化推荐算法离线架构，无论是在个性化召回部分还是在个性化排序部分，我们都有一套离线处理，得到我们模型的流程，我们将这套流程的抽象一下给大家解析一下。</p>
-<p>二、个性化推荐算法在线架构</p>
-<p>无论是在个性化召回部分还是在个性化排序不分，我们都曾经将在线部分的架构呢，给大家讲解过，这里我们一起回顾一下。</p>
-<p>三、本课程所讲述过的算法模型的内容回顾</p>
-<h3 id="一、个性化推荐算法离线架构"><a href="#一、个性化推荐算法离线架构" class="headerlink" title="一、个性化推荐算法离线架构"></a>一、个性化推荐算法离线架构</h3><p>下面一起来看一下离线架构。</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第12章推荐算法回顾与总结/1566830509493.png" alt="1566830509493"></p>
-<p>我们原始的日志呢，包含以下四个部分。</p>
-<p>①用户的点击与用户的展示日志。</p>
-<p>②我们记录用户信息的日志，这里包含用户的静态信息和统计的一些动态的信息，包括用户喜欢什么样的类型的内容等等。</p>
-<p>③item的信息</p>
-<p>④实时流式信息（Streaming）。这里的流式是指包含用户的一些实时行为。比如说用户订阅某个频道、用户将某些物品加入到购物车等等等等。</p>
-<p>基于以上的日志，我们首先进行样本的筛选，我们将测试样本有噪声的样本的剔除掉得到我们的样本，得到样本之后呢，我们再进行特征选择。</p>
-<p>在个性化召回部分，可能我们只是更多的需要我们的点击与展示数据。但是在我们的个性化排序部分，可能我们还需要用户的信息（user info），项目的信息（item info）以及上下文信息等等的一些信息。</p>
-<p>基于我们的特征选择与样本选择之后呢，我们得到了我们的训练数据集以及测试数据，接下来无论是在召回部分还是在排序部分，我们都使用的训练数据集去训练模型，使用我们的测试数据去评估我们模型的表现。如果我们模型的表现达到了我们的要求，我们就将我们得到的模型文件的导出。</p>
-<p>这里在个性化召回部分呢，可能是导出的直接用户的推荐结果，也可能是item相似度的列表亦或是我们的深度学习的模型文件。</p>
-<p>在排序部分我们得到的模型文件的基本都是模型的实例化本身。像逻辑回归部分呢，其实我们只需要得到不同特征对应的参数即可。</p>
-<h3 id="二、个性化推荐算法在线架构"><a href="#二、个性化推荐算法在线架构" class="headerlink" title="二、个性化推荐算法在线架构"></a>二、个性化推荐算法在线架构</h3><h5 id="1、Recall在线架构"><a href="#1、Recall在线架构" class="headerlink" title="1、Recall在线架构"></a>1、Recall在线架构</h5><p><img src="/2019/06/01/个性化推荐算法实践第12章推荐算法回顾与总结/1566831234657.png" alt="1566831234657"></p>
-<p>说完了离线架构，下面我们来一起回顾一下在线架构的召回部分，大部分情况下我们召回部分得到的结果呢，是直接写入到KV存储当中了。用户访问我们的Server的时候呢，直接召回到自己对应的推荐结果，我们拿到推荐结果对应的id呢，从我们的Detail Server当中的获取Detail 传给我们的排序部分，但是呢在一些复杂场景情况下，我们比如训练了一些深度学习的模型，那么我们在用户访问我们的Server的时候呢，我们首先得需要拼接一下用户侧（user info）的特征，然后呢访问我们的Server得到用户的向量表示然后再进行召回。</p>
-<h5 id="2、Rank在线架构"><a href="#2、Rank在线架构" class="headerlink" title="2、Rank在线架构"></a>2、Rank在线架构</h5><p>说完了个性化召回的在线架构的，下面我们来一起看一下排序部分在线架构。排序部分在线架构根据我们模型的不同的分为以下几种。</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第12章推荐算法回顾与总结/1566832185932.png" alt="1566832185932"></p>
-<p>1、如果是像<strong>逻辑回归</strong>或者是<strong>GBDT</strong>这种浅层模型。我们这里的Rank Server可以直接将模型加载到内存当中，与我们的推荐引擎的进行服务的交互。用户访问我们的Server的时候，我们首先召回得到我们的候选集列表，对于每一个候选集列表，那我们去KV当中的拼一下我们的特征，就是获得我们用户侧（user info）的特征以及项目侧（item info）的特征包括一些上下文特征等等。我们将拼接的特征的传递给让给Rank Server。Rank Server用模型来进行下预测，将预测的结果呢再传递给我们的推荐引擎。推荐引擎的依据我们每一个item预测的得分的进行一下排序，这个顺序呢就是展示给用户的顺序。</p>
-<p>2、如果我们这里采用像WD这样的深度学习模型的话，我们这里的Rank Server需要与我们的TF Server进行交互，这里的Rank Server相当于我们这里的请求的透传，并且返回的结果呢，也透传给我们的推荐引擎。</p>
-<h3 id="三、本课程所讲述过的算法模型的内容回顾"><a href="#三、本课程所讲述过的算法模型的内容回顾" class="headerlink" title="三、本课程所讲述过的算法模型的内容回顾"></a>三、本课程所讲述过的算法模型的内容回顾</h3><p>回顾完了在线架构，我们来一起看一下本课程具体讲解了哪些算法与模型？</p>
-<p>首先来看个性化召回部分，这里我们介绍了基于领域的CF、LFM、Person Rank 、Item2Vec、ContentBased。我们CF是在个性化推荐算法实战入门必修课里介绍的，入门必修课是一门免费的课程大家都可以看到。还有我们基于内容的推荐以及呢，我们这里基于深度学习的推荐Item2Vec。</p>
-<p>我们在排序部分的介绍了浅层模型Rank LR（逻辑回归）,浅层模型组合GBDT。介绍了浅层模型不同模型的组合：LR+GBDT的混合模型。最后我们介绍了深度学习模型WD。以上的每一个算法或者模型呢，我们都是从物理意义数学公式推导，代码实战等几个方面来给大家介绍的，那么好了，本章节的内容到这里就全部结束了。本章节重点回顾了我们本次课程所讲述的全部内容。到这里本次个性化推荐算法实战课程的全部内容就结束了，非常感谢大家对于本课程的认真学习。祝大家在本次课程中学习一切顺利。</p>
-
-          
+          [TOC]
+个性化推荐算法实践第12章推荐算法回顾与总结  推荐算法实战课程，课程是有问答专区，如果你有问题可以在问答专区提问，我会在每天固定时间解答课程，结合问答专区能够让你更快的掌握知识。
+开始本章节的内容之前我们首先来回顾一下上一章节的内容，上一章节我们对之前所讲述过的排序部分的内容进行了总结
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/01/个性化推荐算法实践第12章推荐算法回顾与总结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1688,42 +1567,21 @@ function setSidebarMarginTop (headerOffset) {
       
         
           
-            <p>[TOC]</p>
-<h1 id="个性化推荐算法实践第11章排序模型总结与回顾"><a href="#个性化推荐算法实践第11章排序模型总结与回顾" class="headerlink" title="个性化推荐算法实践第11章排序模型总结与回顾"></a>个性化推荐算法实践第11章排序模型总结与回顾</h1><ul>
-<li>model在测试数据集效果回顾<br>1、逻辑回归模型、gbdt模型、gbdt模型与逻辑回归混合模型以及wd模型在测试数据集上的效果进行一下简单的回顾</li>
-</ul>
-<ul>
-<li><p>LTR中特征维度浅析</p>
-<p>2、我们会对工业界实际项目中建立排序模型所使用的特征进行一下简单的浅析。</p>
-</li>
-<li><p>工业界Rank技术展望<br>3、对工业界的排序技术进行一下展望</p>
-</li>
-</ul>
-<h3 id="一、model在测试数据集效果回顾"><a href="#一、model在测试数据集效果回顾" class="headerlink" title="一、model在测试数据集效果回顾"></a>一、model在测试数据集效果回顾</h3><h5 id="1、效果回顾"><a href="#1、效果回顾" class="headerlink" title="1、效果回顾"></a>1、效果回顾</h5><p><img src="/2019/06/01/个性化推荐算法实践第11章排序模型总结与回顾/1566837900314.png" alt="1566837900314"></p>
-<p>下面首先来回顾一下各模型在测试数据集上的表现。由于我们各Rank模型在线上实际使用时呢是对item进行打分，然后呢不同的item按照这个得分的展现给用户，所以呢我们这里更加关心的是模型对于我们item预测得分序的关系，所以呢也就是AUC我们这里从我们模型交叉验证得到的AUC以及模型在测试数据集表现的AUC两点的进行一下回顾。</p>
-<p>我们在排序部分的重点介绍了四种模型分别是逻辑回归、GBDT、GBDT与逻辑回归的混合模型以及我们基于深度学习的WD模型。</p>
-<p>首先呢从我们的模型交叉验证的效果来看一下GBDT与逻辑回归的混合模型的表现要好于GBDT。GBDT要好于我们的逻辑回归模型，由于我们的WD并没有采用我行交叉验证的方式呢，去评估，所以这里没有数据。好了，我们再来看一下训练好的模型呢，在测试数据集上的表现也就是看一下模型的泛化能力。这里同样的GBDT与逻辑回归的混合模型的是要好GBDT，GBDT是要比逻辑回归好，这里要注意一下，在实际的我们的项目中WD模型实际上是表现的最好，但是在这里限于我们的样本的数量了只有3万等等的一些限制。WD表现的要略低于GBDT。不过没有关系，如果大家有机会在实际项目海量的数据集当中了去实践一下，不同的Rank模型的话，大家一定能得到下面的结论，WD模型的表现是要好于GBDT与逻辑回归的混合模型。混合模型是要好于GBDT模型。GBDT是要好于我们的逻辑回归模型。但我实际工作中零一搭建个性化排序系统时得到的结论也是这样的。</p>
-<h5 id="2、离线评估"><a href="#2、离线评估" class="headerlink" title="2、离线评估"></a>2、离线评估</h5><h6 id="模型交叉验证-model-cv"><a href="#模型交叉验证-model-cv" class="headerlink" title="模型交叉验证(model cv)"></a>模型交叉验证(model cv)</h6><p>在我们训练不同的排序模型，将不同的模型放到线上时，我们如何来评价离线的准入以及在线的收益呢？下面来看一下排序模型的评估，首先来看一下离线评估，第一点的，我们需要看一下模型交叉验证得到的指标，这些指标的，包括我们课上重点提到的AUC，以及准确召回等等的一些指标，这些指标我们需要明确它的物理意义，这样才能够帮助我们清晰地判断模型的效果。</p>
-<h6 id="model-test-data-performance"><a href="#model-test-data-performance" class="headerlink" title="model test data performance"></a>model test data performance</h6><p>最终的我们还需要判断一下模型的泛化能力，也就是模型在测试数据集上的表现，比如模型在测试数据集上得到的AUC,得到的准确率等等，我们结合着不同的业务场景的也会有一些独自的评判标准，比如我们在信息流场景当中呢，我们可能更关注的是session的平均点击位置，这里简单的解释一下。我们每一个session展示了，比如说三条数据。</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第11章排序模型总结与回顾/1566838660693.png" alt="1566838660693"></p>
-<p>在我们的测试数据上的原有的情况下，比如我们点击了这3条，经过我们训练模型对于这三个数据得重新打分之后呢，我们能否将已经击的这个第二条呢？学习到第一的位置，这样我们的平均点击位置的就更靠前了，这样的效果也就说明了是更好的。当然了，不同的业务场景还有一些其他的指标。</p>
-<h5 id="3、在线评估"><a href="#3、在线评估" class="headerlink" title="3、在线评估"></a>3、在线评估</h5><h6 id="业务指标"><a href="#业务指标" class="headerlink" title="业务指标"></a>业务指标</h6><p>下面我们来看一下在线指标，首先呢是业务指标。比如说点击率，购买率，平均阅读时长，总的交易额度等等，我们根据不同的业务场景的制订了评价的指标，最终的结果呢也已在线AB测试得到的业务指标的生效为准。</p>
-<h6 id="平均点击位置"><a href="#平均点击位置" class="headerlink" title="平均点击位置"></a>平均点击位置</h6><p>离线的评价指标的只是我们能否准入的一个衡量的标准，并不能决定我们在线实际效果的好坏，当然了这里还有一些辅助的评价指标，比如像之前我们介绍的平均点击位置。当然呢在线评估时，我们首先来看一下业务指标，其次呢是我们的辅助评价指标。好啦，在线离线的评估呢，我们已经说完了。</p>
-<h3 id="二、LTR中特征维度浅析"><a href="#二、LTR中特征维度浅析" class="headerlink" title="二、LTR中特征维度浅析"></a>二、LTR中特征维度浅析</h3><h6 id="1、特征维度"><a href="#1、特征维度" class="headerlink" title="1、特征维度"></a>1、特征维度</h6><ul>
-<li>特征维度</li>
-</ul>
-<p><img src="/2019/06/01/个性化推荐算法实践第11章排序模型总结与回顾/1566839442552.png" alt="1566839442552"></p>
-<p>下面来看一下特征了有哪一些？我们的构建排序模型是常用的特征的有以下几个方面，我们来简单的介绍一下，用户侧的特征包含了用户的静态的属性，比如说年龄，性别，地域，还有一些简单的统计特征，比如该用户在我们平台上浏览过多少个商品？点击过多少个商品的购买过多少个商品的，购买过多少个商品啊？近30天浏览了多少商品的这种长短时的统计，最后还有一些用户侧的高维的特征，我们基于它的浏览点击购买历史的给他打上一些标签，比如说呢，她就喜欢某某品牌的香水某某品牌的鞋子等等。刚刚介绍用户特征侧时是以电商场景举例。对于其他的产品道理也是一样的，比如说信息流。我们只需要统计一下用户发现喜欢财经呢，还是喜欢体育，是喜欢娱乐呢？还是喜欢科技，甚至呢我们还可以给他打上标签儿，是科比的标签的还是鹿晗的标签等等？道理都是一样的。</p>
-<p>商品侧的特征基础的特征包含商品的名称，商品的上线日期啊等等统计的特征的包含商品被购买的次数。商品的点击率呀，商品的购买率啊等等。一些高维的标签，那比如说这个商品的，他是深受90后欢迎啊，深受年轻女性的欢迎啊，我们的上下文的特征的有，当前是星期几呀？现在是几点呀？用户请求我们服务时所处的地理位置信息等等。用户和item的关系。比如说这个商品呢，是该用户两个月之前加入到购物车里头，一个月之前点击过的呀，半年之前购买过呀，等等的一些信息，还有我们的统计登录信息，比如说呢商品的上架的时间呢与购买率间的关系，比如说近一个月之内上架的商品打开的购买率是多少？近两个月等等我们统计出来显然的又增加了一维特征。好了我们曾经无数次说过特征与样本是决定我们最终这个整体表现的天花板，而我们采用不同的模型的只能去逼近这个天花板。像我刚才介绍这些不同维度特征时呢，我们是用电商场景举例的，但是呢实际的项目中呢，假如没有做过电商的场景，可以根据特征的大体由这五个维度来想到一些电商场景下应该有哪些特征？大家在自己的项目当中呢，或者自己解决实际问题过程中的，也一定要结合的实际去构造我们需要的特征。</p>
-<h6 id="2、特征的数目"><a href="#2、特征的数目" class="headerlink" title="2、特征的数目"></a>2、特征的数目</h6><ul>
-<li>特征的数目</li>
-</ul>
-<p>我们说过为了防止过拟合，那我们尽量要将特征与样本的数目来维持在1：100。举例，比如说我们这里有1000个训练样本，那么这里我选择了十个特征，这是没有问题的，但是呢，有的同学说我没有找到十个特征，我只找到了八个那也是没有问题的。</p>
-<p>可能最终我们学习出来的效果不会很好。但是有的同学说我找到了50个特征，那么显然呢，这个模型呢就会过拟合。他在测试数据集上的表现的就会比较差，就是说它的泛化能力就不会很强。</p>
-<h3 id="三、工业界Rank技术展望"><a href="#三、工业界Rank技术展望" class="headerlink" title="三、工业界Rank技术展望"></a>三、工业界Rank技术展望</h3><h6 id="1、多目标学习"><a href="#1、多目标学习" class="headerlink" title="1、多目标学习"></a>1、多目标学习</h6><p>我们知道了在信息流场景中的我们既想用户拿多点击，也就是点击率预估模型也想用户停留的阅读时长的要长一点。这样呢就是两个目标。之前的可能有很多方式呢，比如说训练两个模型，一个呢是点击率预估模型，一个是平均阅读时长预估模型，然后乘起来，比如说那像电商场景中的我们既想用户呢，他得购买率也就是说最终的转化率呢要高又想拿我们懂得交易额度也能高。有人呢对这种多目标问题的提出了一种将不同的目标的融合到一个网络里进行学习的方法。</p>
-<h6 id="2、强化学习"><a href="#2、强化学习" class="headerlink" title="2、强化学习"></a>2、强化学习</h6><p>我们知道强化学习的是成功保证历史最大回报率的一种办法，现在呢这种算法呢，在游戏里应用的比较广泛也比较成熟，但排序的领域也有一些落地与尝试。希望大家的能够对这些较新的技术进行不断的追求，不断的学习。不断的探究，不断的尝试。那么本章节的内容到这里就全部结束了，本章节的重点是对之前多讲述过的排序部分的内容进行了总结回顾，下一章节我们将会对个性化推荐算法课程的内容来进行一下总结。</p>
+          [TOC]
+个性化推荐算法实践第11章排序模型总结与回顾
+model在测试数据集效果回顾1、逻辑回归模型、gbdt模型、gbdt模型与逻辑回归混合模型以及wd模型在测试数据集上的效果进行一下简单的回顾
 
-          
+
+LTR中特征维度浅析
+2、我们会对工业界实际项目中建立排序模型所使用的特征进行一下简单的浅析。
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/01/个性化推荐算法实践第11章排序模型总结与回顾/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1904,119 +1762,17 @@ function setSidebarMarginTop (headerOffset) {
       
         
           
-            <p>[TOC]</p>
-<h1 id="个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep"><a href="#个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep" class="headerlink" title="个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep"></a>个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep</h1><p>欢迎来到本次个性化推荐算法实战课程，本课程是有问答专区，如果你有问题可以在问答专区提问，我会在每天固定时间解答，课程结合问答专区能够让您更快的掌握知识。</p>
-<p>开始本章节的课程之前，我们首先来回顾一下上一章节的内容，上一章节我们重点讲述了树模型GBDT的数学原理，以及在测试数据集上代码实战了GBDT模型的训练，并且介绍了GBDT与逻辑回归的混合模型，那么本章节我们将重点介绍深度学习，在点击率预估方面的实战，分别介绍WD模型的数学原理，以及在测试数据集上代码实战WD模型的训练。</p>
-<ul>
-<li><p>背景介绍之深度学习</p>
-</li>
-<li><p>DNN网络结构与数学原理</p>
-</li>
-<li><p>WD(wide and deep)网络结构与数学原理</p>
-</li>
-</ul>
-<p>下面我们首先来看一下本章节的内容大纲。1、背景知识介绍之深度学习，由于本章节所介绍的内容与之前我们所学习的浅层模型有较大的不同，所以我们首先介绍一下背景知识，什么是深度学习？2、DNN网络结构与数学原理，介绍完什么是深度学习，我们便选取一种具有代表性的网络DNN，来从它的数学原理如何进行参数学习来详解一下。3、WD网络结构与数学原理，WD模型便是我们所说的，使用深度学习来完成点击率预估实战所采用的模型，wd模型实际上是DNN与逻辑回归的混合模型，但是与之前我们所介绍过的GBDT与逻辑回归的混合模型不同，WD呢是联合训练的，所以我们要学习一下它的网络结构，并且详细的了解一下它的数学原理是如何做到联合训练的。</p>
-<h3 id="一、背景介绍之什么是深度学习"><a href="#一、背景介绍之什么是深度学习" class="headerlink" title="一、背景介绍之什么是深度学习"></a>一、背景介绍之什么是深度学习</h3><h5 id="1-1什么是神经元"><a href="#1-1什么是神经元" class="headerlink" title="1.1什么是神经元?"></a>1.1什么是神经元?</h5><p>下面开始本小节的内容，本小节将重点介绍背景知识，什么是深度学习？深度学习，实际上是利用神经网络学习出一种非线性函数，该函数的输入是我们从训练数据中提取的特征，该函数的输出是训练数据所对应的label，那么说到这里，问题的核心就变成了什么是神经网络，在介绍神经网络之前，我们首先介绍一下它的组成成分，神经元，什么是神经元呢？下面来看一下，这里所说的神经元呢，实际上是指的是人工神经元，与我们生物上神经元的概念呢有所不同。但是呢，我们通过这个网络结构呢，实际上能够联想一下我们生物上的神经元，与该结构有极大的相似性。</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1566904703475.png" alt="1566904703475"></p>
-<p>下面我们来看一下该结构，这里有几路输入，每一路输入了对应的输入的参数。也就是说我们最终的加权和是什么呢？我这里简单的写一下，加权和=$w_1<em>x_1+w_2</em>x_2+w_3<em>x_3+…+w_n</em>x_n$。加权和之后呢，还要做一下激活函数，这里的激活函数呢，主要是去线性化。常用的激活函数呢，我们在介绍逻辑回归模型的时候，也曾介绍过一种阶跃函数，大家应该还记得。这里的整体的网络结构呢与我们的逻辑回归模型的有一定的相似性。</p>
-<h5 id="1-2激活函数"><a href="#1-2激活函数" class="headerlink" title="1.2激活函数"></a>1.2激活函数</h5><p>那么下面我们来看一下常用的激活函数有哪一些呢？</p>
-<h6 id="1-2-1阶跃函数-sigmod"><a href="#1-2-1阶跃函数-sigmod" class="headerlink" title="1.2.1阶跃函数 sigmod"></a>1.2.1阶跃函数 sigmod</h6><p>第1种呢是我们比较熟悉的阶跃函数，该函数我们曾在逻辑回归里介绍过，该函数的取值范围呢是[0~1]，在x等于0时的函数值是0.5，他有一个特点那便是在x大于0的时候，很快函数值就趋向于1。x小于0的时候，函数值非常快的就趋向于0。</p>
-<h6 id="1-2-2双曲正切"><a href="#1-2-2双曲正切" class="headerlink" title="1.2.2双曲正切"></a>1.2.2双曲正切</h6><p>第2种呢，是双曲正切，该函数的图像呢与阶跃函数几乎是一样的，只不过呢，它的取值范围呢是[-1,+1]，而且呢，该函数在取值为中间值变为最大值，以及取值为中间值变为最小值的速度呢，要比阶跃函数要快一些。</p>
-<h6 id="1-2-3修正线性单元"><a href="#1-2-3修正线性单元" class="headerlink" title="1.2.3修正线性单元"></a>1.2.3修正线性单元</h6><p>第3种，修正线性单元，当输入大于零时，该函数的输出的是输入的本身，当输入小于零时，该函数的输出呢是0。在神经网络的参数学习中呢，如果我们采用之前讲述过的随机梯度下降的方法，修正线性单元函数能够更快的达到收敛。</p>
-<h5 id="1-3-什么是神经网络？"><a href="#1-3-什么是神经网络？" class="headerlink" title="1.3 什么是神经网络？"></a>1.3 什么是神经网络？</h5><p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567153841330.png" alt="1567153841330"></p>
-<p>好了介绍完了激活函数，下面我们来学习一下什么是神经网络。神经网络呢是由许多神经元组成的，我们先来简单的看一下网络结构，网络结构呢分为输入层，隐层以及输出层。</p>
-<p>输出层呢，可以是一个也可以是多个。像我们做点击率预估呢，那便是一个。如果我们做分类呢是多分类的话，显然就是多个。有几个分类呢，也就有几个输出。输入指的是什么呢？输入指的是我们提取的特征，输入层呢，与隐层之间的采用的是全连接，也就是说我这里的隐层1与我输入层的每一个输入，都有参数相连。这里的隐层2呢，对于输入层的每一个输入呢，也都是有参数相连的。这里参数相连去加权求和之后呢，同样需要有激活函数来去线性化。</p>
-<p>我们发现如果输入层与隐层不是全连接的话，而是一一连接的话，那么该网络也便回退到了我们之前讲述过的逻辑回归模型。为什么呢？很好理解，如果是一一连接的话，很像我们之前讲述过的w1与x1相乘，w2与x2相乘。</p>
-<p>这样全连接呢，实际上相当于我们在逻辑回归模型里所做的特征交叉，但是呢，这里交叉的力度呢，会更强一点。</p>
-<p>举个例子，如果我们这里只有三个输入特征，且并非全连接。对该隐层的第1个节点，我们让三个输入特征的前两个与它连接，实际上这就相当于完成了我们之前所做的两维特征的特征交叉。</p>
-<p>而这里呢，由于每一个节点与之输入层都是全连接的，所以参数的规模呢要比之前大了非常多。我们来看一下一共有多少个参数呢？比如说我们的输入层一共有三个节点，隐层也是有三个节点，那么隐层的每一个节点，显然啦，与输入层之间的都是全连接，也就是都是三个参数，以及每一个隐层的节点呢，都需要一个偏执，所以这里总的参数呢，是3×3+3=12。而相同情景下逻辑回归的参数呢，只有三个，所以从参数量级上呢，神经网络还是要大很多的。</p>
-<p>如果按当时我们训练逻辑回归模型所举的例子，输入特征100多维这里就按100维来算的话，隐层的节点如果有n个。那么这里的总参数便是（100n+n）也就是101n，而我们知道逻辑回归当中的这种情形下只有100个参数，所以呢，总体来讲参数的量级上呢，差了n倍，这个n呢是隐层的节点数目，也就是说隐藏的节点数目越多的话，参数的量级差距越大，神经网络能够学习到的隐含特征的也就越丰富。</p>
-<h5 id="1-3深度学习与传统的机器学习有哪些流程的异同呢？"><a href="#1-3深度学习与传统的机器学习有哪些流程的异同呢？" class="headerlink" title="1.3深度学习与传统的机器学习有哪些流程的异同呢？"></a>1.3深度学习与传统的机器学习有哪些流程的异同呢？</h5><p>DL  DIFFS  ML</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567157137223.png" alt="1567157137223"></p>
-<p>介绍完了神经网络，下面我们来看一下深度学习与传统的机器学习有哪些流程的异同呢？首先呢，我们来看一下传统的机器学习。这里以我们所学习过的逻辑回归模型的训练为例，我们拿到训练数据之后呢，需要做特征工程，这里的特征工程呢，是指我们要挑选相应的特征，我们要做特征的离散化。归一化甚至呢，我们要区分连续特征以及离散特征不同的处理，最终呢，我们还要做特征的交叉等等，我们把特征工程处理好了之后呢，我们便得到了训练样本，训练样本呢，在传入的模型当中呢，去进行权重的学习，也就是参数的学习，最终呢，我们得到模型来完成结果的预测。</p>
-<p>但是在深入学习中呢，我们只需要对输入的训练样本呢进行基础特征的抽取，而不再需要做繁琐的特征工程，繁琐的特征工程呢，相当于交由我们模型当中的多维参数来帮我们学习，这里呢，神经网络呢，就学习了这些复杂特征，进而呢在隐层之间呢，我们学习模型的参数，得到模型之后呢，我们便用来预测结果。好了本小节就全部结束了，本小节重点介绍了背景知识之什么是深度学习，下一小节我们将选取一种经典的深度神经网络DNN来介绍它的网络结构与数学原理。</p>
-<h3 id="二、DNN网络结构与反向传播算法"><a href="#二、DNN网络结构与反向传播算法" class="headerlink" title="二、DNN网络结构与反向传播算法"></a>二、DNN网络结构与反向传播算法</h3><h5 id="2-1DNN网络结构"><a href="#2-1DNN网络结构" class="headerlink" title="2.1DNN网络结构"></a>2.1DNN网络结构</h5><p>开始本小节的课程之前，我们首先来回顾一下上一小节的内容，上一小节我们重点介绍的背景知识，什么是深度学习，那么本小节我们叫重点介绍，DNN网络结构以及DNN网络结构参数学习的数学原理，下面开始本小节的内容，下面我们来看一下DNN网络结构，DNN呢，实际上是深度神经网络与我们之前介绍过的，神经网络的结构呢，有相似性，也有不同的地方相似的地方呢。</p>
-<p>相似的地方就是这里也分为三个大部分，第1大部分呢便是输入层，这是我们特征。多了的地方，第2大部分呢是隐层是我们基础特征的抽象到高阶特征，然后高阶特征之间参数不停的学习的过程。第3部分呢便是输出层，这里可以是一个节点，像我们在点击率预估问题中呢，便是一个输出，也可以是多个输出，像我们在多分类问题当中呢，便是多个输出。</p>
-<p>但是这里与我们之前讲过的神经网络有不同的地方呢，便是我们的隐层呢，这里可以是多层，每一层的节点呢可以变得不同，好了这便是DNN网络结构。当然这里输入层与隐层，隐层与隐层，隐层与输出层之间的也都是全连接。</p>
-<h5 id="2-2-DNN模型参数"><a href="#2-2-DNN模型参数" class="headerlink" title="2.2 DNN模型参数"></a>2.2 DNN模型参数</h5><h6 id="2-2-1-隐层的层数，每个隐层神经元的个数，以及激活函数"><a href="#2-2-1-隐层的层数，每个隐层神经元的个数，以及激活函数" class="headerlink" title="2.2.1 隐层的层数，每个隐层神经元的个数，以及激活函数"></a>2.2.1 隐层的层数，每个隐层神经元的个数，以及激活函数</h6><p>好了，下面让我们来看一下DNN模型当中有哪些重要的参数是值得我们注意的。首先呢，便是隐层的层数，每个隐层神经元的个数，以及激活函数。隐层的层数以及每个隐层神经元的个数呢，决定了网络的参数的量级，这里上一小节呢，我们曾经简单的举例过，三个维度特征的输入以及单隐层，三个隐层节点的话，它的参数呢是3×3+3，那么很明显我们这里可以以此类推，如果隐层与隐层之间的计算方式呢，也是这么计算，模型的参数的量级呢，是由隐层的层数以及每个隐层神经元的个数来决定的。当然了，还与我们输入特征的维度有直接的关系。激活函数的上一小节我们曾经介绍过三种，这里我们说过激活函数呢是决定我们参数收敛的快慢的。</p>
-<h6 id="2-2-2-输入输出层的向量维度"><a href="#2-2-2-输入输出层的向量维度" class="headerlink" title="2.2.2 输入输出层的向量维度"></a>2.2.2 输入输出层的向量维度</h6><p>输入输出层的向量维度，如果是单维度的输出的话，像我们点击率预估这种问题就需要单维度的输出。如果是多维度的输出，像多分类问题呢，就需要多维度的输出。输入层的向量呢，是我们选定好基础特征之后呢，在完成，像字符串的哈希，然后做一个简单的Embedding或者说是我们这里将连续值呢进行分段离散等等的操作之后呢，我们得到的一个输入层的向量。</p>
-<h6 id="2-2-3-不同层之间神经元的连接权重与偏移值B"><a href="#2-2-3-不同层之间神经元的连接权重与偏移值B" class="headerlink" title="2.2.3 不同层之间神经元的连接权重与偏移值B"></a>2.2.3 不同层之间神经元的连接权重与偏移值B</h6><p>我们需要学习的参数是什么呢？就是不同层之间神经元的连接权重，这里可能是输入层与隐层，隐层与隐层，隐层与输出层之间的连接权重，以及呢每一个节点上的偏移值，这是我们模型需要学习的参数。</p>
-<h5 id="2-3-前向传播"><a href="#2-3-前向传播" class="headerlink" title="2.3 前向传播"></a>2.3 前向传播</h5><p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567182098732.png" alt="1567182098732"></p>
-<p>下面我们来了解一下DNN模型的函数表达式，我们只要了解了网络的任何一个节点的输出值也便得到了模型的输出，因为模型的输出实际上就是输出层节点的输出值。</p>
-<p>$a_{j}^{t}=f\left(\sum_{k} w_{j k}^{t} a_{k}^{t-1}+b_{j}^{t}\right)$<br>$z_{j}^{t}=\sum_{k} w_{j k}^{t} a_{k}^{t-1}+b_{j}^{t}$</p>
-<p>下面我们来一起看一下公式，下面来解释一下公式，借助于一个简单的网络。t是指的这里的网络中的第t层，t-1呢是t层前面的一层。比如这一层，我们定义为第t层，那么这一层的前一层显然就是t-1层。</p>
-<p>如果大家不好理解的话，可以想象一下，当t为0时也便是输入层。当t为1时，便是第一个隐层，当t为大T，便是输出层，这样也许就会好理解一点。a是指的每一个节点的激活值，这里的j表示的是第t个层上我们的这个第j个节点的激活值，这里我们可以把j想象成为1 2…..的节点。如果是1的话，那么便表示第t层上第1个节点的激活值，如果是2的话，并表示第t层上第2个节点的激活值。这里的w是指的第（t-1）层上第k个的节点指向第t层上j这个节点。这里的a同样是激活值，它表示的是第（t-1）层上第k个节点的激活值，b表示第t层上第j个节点的偏移值。如果这里我们求的是第1个节点的激活值的话，那么显然这里也便是第1个节点的偏移值好了。</p>
-<p>下面我们以第t层上第1个节点的激活值求值来举例说明一下这个公式。这里呢，如果我们要求第t层上第1个节点的激活值，那么显然我们要依赖于第（t-1）层上，每一个节点的激活值。那么公式应该如下$w_{11}^{t}<em>a_{1}^{t-1}+w_{12}^{t}</em>a_{2}^{t-1}+w_{13}^{t}*a_{3}^{t-1}+b_{1}^t$，最终呢，我们还要加一个$b_{1}^t$偏执，这个偏执得到的加权求和呢。我们再过一下激活函数f，也便得到了我们的激活值。我们把加权求和没有经过激活函数的部分呢定义为$z_{j}^t$。$a_{j}^t$实际上也就是f(z)。</p>
-<p>好了，经过我们的讲述呢，我们发现当模型的w与b，也就是所有的参数固定之后呢，我们输入层的特征输入之后，我们第1层的激活值是由我们的输入与w、d参数得到的。第2层呢是由我们第一隐层的激活值呢，与w、b参数达到的，我们这个过程呢是逐步向前去传播。我们把模型根据输入得到输出的过程呢，叫做前向传播。</p>
-<h5 id="2-4-反向传播"><a href="#2-4-反向传播" class="headerlink" title="2.4 反向传播"></a>2.4 反向传播</h5><p>下面我们来学习一下DNN模型是如何学习我们的参数w与b的。</p>
-<h6 id="2-4-1-Our-Target"><a href="#2-4-1-Our-Target" class="headerlink" title="2.4.1 Our Target"></a>2.4.1 Our Target</h6><p>$\frac{\partial L}{\partial w_{j k}^{t}} \quad \frac{\partial L}{\partial b_{j}^{t}}$</p>
-<p>我们的目标是什么呢？我们的目标很简单，目标是求得损失函数，对模型中任意两层上两个节点连接的偏导，以及求得损失函数，对任意层上节点的偏置的偏导，如果我们得到了这两个偏导的话，我们发现我们就能将模型中的任意一个参数呢进行梯度下降，这样呢，经过数次迭代，我们最终就能将模型完成收敛，也便学习到了我们需要学的w与b。</p>
-<h6 id="2-4-2-What-We-Have"><a href="#2-4-2-What-We-Have" class="headerlink" title="2.4.2 What We Have"></a>2.4.2 What We Have</h6><p>$\frac{\partial L}{\partial a_{j}^{T}} \quad \frac{\partial L}{\partial z_{j}^{T}}$</p>
-<p>我们现在已知的是什么呢？我们现在已经知道了，是损失函数对于输出层节点激活值的偏导，这里的T表示的是输出层，为什么说我们已知道了，我们来详细的写一下公式，假使我们这里的loss函数呢是平方损失函数$(y-a_{j}^{T})^2$。对于每一个样本，我们的损失函数呢是这样的。我们发现以loss函数对于我们这里的输出层的输出激活值，去取偏导的话，很明显的，我们是能够得到答案的，也便是$-2（y-a_{j}^{T}）$。同样的这里我们知道了，loss函数对于最后一层节点输出激活值的偏导，也便知道了，我们这里的loss函数对于$z_{j}^T$的偏导，我们来推导一下。用一个链导法则。</p>
-<p>$\frac{\partial L}{\partial a_{j}^{T}} \quad \frac{\partial a}{\partial z_{j}^{T}}$</p>
-<p>a = f(z)</p>
-<p>前一部分呢，是我们已经得到答案的，而后一部分呢，我们又曾经说过a呢，实际上等于我们的f（z）, 这里的f是激活函数，所以这一部分呢也很容易求的，所以我们说了我们知道了loss函数，对于最后一层节点激活值的偏导也便知道了loss函数对于z的偏导。</p>
-<h6 id="2-4-3反向传播的推导"><a href="#2-4-3反向传播的推导" class="headerlink" title="2.4.3反向传播的推导"></a>2.4.3反向传播的推导</h6><script type="math/tex; mode=display">
-\frac{\partial L}{\partial b_{j}^{t}   }  =  \frac{\partial L}{\partial z_{j}^{t}  } * \frac{\partial z_{j}^{t}  }{\partial b_{j}^{t}   }=\frac{\partial L}{\partial z_{j}^{t}   }</script><p>$z_{j}^{t}=\sum_{k} \mathcal{W}_{j k}^{t} a_{k}^{t-1}+b_{j}^{t}$</p>
-<p>$\frac{\partial L}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} <em> \frac{\partial z_{j}^{t}}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} </em> a_{k}^{t-1}$</p>
-<p>下面我们来看一下是如何一步一步，通过我们已知的这些东西去进行推导的来看推导，这里我们的目标之一呢是求的loss函数，对于任意节点的偏移，它的偏导，好了这里我们应用一下链导法则，首先呢，我们对loss函数呢，求z值的偏导，既然呢对z值呢，求我们偏移的偏导。</p>
-<p>大家应该对这个公式有印象，这个公式是前面我们说的前项传播的公式，所以这里我们看到z值对于b值的偏导呢，实际上是1，因为呢，在z对b偏转的过程中呢，前面这一部分呢相当于是常数。</p>
-<p>$\frac{\partial L}{\partial b_{j}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} * \frac{\partial z_{j}^{t}}{\partial b_{j}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} $ </p>
-<p>$\frac{\partial L}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} <em> \frac{\partial z_{j}^{t}}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} </em> a_{k}^{t-1}$<br>好了我们再来看一下，loss函数对于任意的网络中的w值，求偏导的整体过程，同样这里我们也采用链导法则，首先呢是loss函数对于z的偏导。z对于w的偏导。</p>
-<p>$z_{j}^{t}=\sum_{k} \mathcal{W}_{j k}^{t} a_{k}^{t-1}+b_{j}^{t}$</p>
-<p>我们看到z对于任意的w的偏导呢，显然呢，是这里的上一层k节点的激活值$a_{k}^{t-1}$，所以我们看到经过我们的推导呢，我们这里只需要知道loss函数对于任意节点的z值，它的的偏导我们也便得到了最终想要的答案，但是我们这里已知的是我们的loss函数对于我们输出节点的z值，所以说如果我们可以利用倒数第2层节点z值与输出层节点z值之间的关系，逐渐的将loss函数对于输入层节点的z值的偏导，传递的倒数第2层，进而呢由倒数第2层传递到倒数第3层，这样逐一的反向传播，我们便可以得到loss函数对于任意节点z值的偏导，继而我们便得到了loss函数，对于模型参数的偏导，也便完成了我们这里的学习。</p>
-<h6 id="2-4-4-反向传播的核心部分"><a href="#2-4-4-反向传播的核心部分" class="headerlink" title="2.4.4 反向传播的核心部分"></a>2.4.4 反向传播的核心部分</h6><p>$\frac{\partial L}{\partial z_{j}^{t-1}}=\sum_{k} \frac{\partial L}{\partial z_{k}^{t}} \frac{\partial z_{k}^{t}}{\partial z_{j}^{t-1}}$<br>$z_{k}^{t}=\sum_{j} w_{k j}^{t} a_{j}^{t-1}+b_{k}^{t}$</p>
-<p>$\frac{\partial z_{k}^{t}}{\partial z_{j}^{t-1}}=\frac{\partial z_{k}^{t}}{\partial a_{j}^{t-1}} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}=w_{k j}^{t} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}$</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567185943400.png" alt="1567185943400"></p>
-<p>好了下面我们来看推导的最核心的部分，我们说过现在问题的核心呢，变成了如何由损失函数对于输出层节点的。向前传播到倒数第2层，进而传播到倒数第3层，那么这里我们用一个普遍的公式，便是我们知道了第t层的z值的偏导，怎么由第t层z值的偏导呢去推导出第（t-1）层z值的偏导，如果我们知道了这个式子，问题也便解决了，普遍情况下的链导法的是损失函数对$z_k^t$求导，$z_k^t$对$z_j^{t-1}$求导即可。</p>
-<p>为什么这里还有一个累加呢？我们借助于简单的网络来说明一下，我们看到这里上一层的任意节点，对下一层的每一个节点都有贡献，都有函数关系，所以我们在$z_k^t$对$z_j^{t-1}$，求偏导时，我们需要每一个节点都算一下偏导，所以这里出现了累加，好了我们将前向传播的式子呢，jk对调一下，我们之前讲前向传播时是求的第t层上第j个节点的a值或者z值。这里呢，我们是求第t层上第k个节点的z值，实际上我们只是把jk对调了一下即可。好了，我们这里呢，损失函数对第t层的z的偏导我们是知道的，因为呢，我们是从最后的T也就是输出层。往前传播的这里只需要求后一部分即可，我们采用链导法的，借助于激活值，我们看到呢后一部分是直接能够得到答案的，因为我们说过a等于f(z)，这里的f是激活函数。</p>
-<p>同样呢，我们根据这个式子$\frac{\partial z_{k}^{t}}{\partial z_{j}^{t-1}}=\frac{\partial z_{k}^{t}}{\partial a_{j}^{t-1}} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}=w_{k j}^{t} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}$。前一部分呢，也是能够得到答案的，是这里的$w_{kj}^{t}$，既然这样的话，我们的整体流程也便窜了起来，由于我们这里损失函数对于z值偏等的过程中呢，是从后向前求的，所以我们这里的整体流程呢被称为反向传播。</p>
-<h6 id="2-4-5方向传播的流程"><a href="#2-4-5方向传播的流程" class="headerlink" title="2.4.5方向传播的流程"></a>2.4.5方向传播的流程</h6><ul>
-<li>对应输入x，设置合理的输入向量</li>
-<li>前向传播逐层逐个神经元求解加权和与激活值</li>
-<li>对于输出层求解输出层损失函数对于z值的偏导</li>
-<li>反向传播逐层求解损失函数对z值的偏导</li>
-<li>得到损失函数对于任意节点z值的偏导，也变得到了w与b的梯度</li>
-</ul>
-<p>好了，下面我们来看一下整体的反向传播流程是怎么样的，第1步对于从样本中获取的输入呢，我们经过哈希或Embedding等过程呢，设置好合理的输入向量维度，我们根据初始化的模型的参数w与b，逐层的前向传播，这样我们就得到了任意节点的加权和、z值与激活值a值。 然后我们对于输出层求解输出层损失函数对于z值的偏导，这我们是能够得到的，继而反向传播逐层求解损失函数对z值的偏导，这里我们是根据损失函数对$z^t$的偏导与损失函数对于$z^{t-1}$偏导之间的关系反向传播逐层得到的。最终呢，我们得到了损失函数，对于任意节点z值的偏导，也变得到了w与b的梯度，这里我们在推导的时候曾经详细的讲述过。</p>
-<p>好了，我们得到了梯度之后呢，便完成了第1轮的迭代，之后呢，我们再逐次将反向传播的过程呢，不停的去进行，直到我们的参数收敛，模型也变训练好了。好了，本小节就到这里，本小节主要讲述了dnn的网络结构以及DNN模型求解的数学原理，下一小节我们将介绍wd模型的网络结构与数学原理。</p>
-<h3 id="三、wide-and-deep的网络结构以及数学原理介绍"><a href="#三、wide-and-deep的网络结构以及数学原理介绍" class="headerlink" title="三、wide and deep的网络结构以及数学原理介绍"></a>三、wide and deep的网络结构以及数学原理介绍</h3><h5 id=""><a href="#" class="headerlink" title=" "></a> </h5><p>开始本小节的课程之前，我们首先来回顾一下上一小节的内容，上一小节我们重点介绍了dnn的网络结构以及数学原理，那么本小节我们将重点介绍wd的网络结构以及数学原理下面开始本小节的内容，下面来看一下本小节的内容会从哪几个方面展开。</p>
-<p>1、wd的物理意义，首先会给大家介绍一下wd为什么会优于我们之前单独介绍过的逻辑回归模型，以及上一小节介绍过的深度神经网络。</p>
-<p>2、wd的网络结构，会向大家展示一下wd模型是如果构造的。</p>
-<p>3、wd的数学原理，我们会一起看一下反向传播算法在wd上是如何进行的。</p>
-<h5 id="3-1-wd的物理意义"><a href="#3-1-wd的物理意义" class="headerlink" title="3.1 wd的物理意义"></a>3.1 wd的物理意义</h5><h6 id="论文：wide-amp-deep-learning-for-recommender-systems"><a href="#论文：wide-amp-deep-learning-for-recommender-systems" class="headerlink" title="论文：wide &amp; deep learning for recommender systems"></a>论文：wide &amp; deep learning for recommender systems</h6><p>好了下面我们来看一下wd的物理意义。wd出自于谷歌的论文，这篇论文我会在附件中提供给大家，如果大家需要可以读一下这篇论文呢，详述了wd的优点以及wd的网络结构，包括5个在wd上做的一些实验的结果好了下面我们来介绍一下wd为什么会优于我们之前单独介绍过的逻辑回归模型以及深度神经网络模型。</p>
-<h6 id="Generalization-and-memorization-泛化与记忆"><a href="#Generalization-and-memorization-泛化与记忆" class="headerlink" title="Generalization and memorization 泛化与记忆"></a>Generalization and memorization 泛化与记忆</h6><p>首先呢，我们推荐系统当中呢有两个概念，泛化以及记忆，这里的泛化是指的我们推荐的多样性。记忆就比如说某人啊来到我们的推荐系统，一直点击宫斗类型的电视剧，那么这是我们的推荐系统也会一直给他推荐宫斗类型的电视剧，此过程我们称之为记忆，但是呢，这个人也有可能会喜欢历史类型的电视剧的多样性为泛化。我们如何将历史类型的电视剧的特征与该用户的特征在排序时呢，给他学到一个较高的参数呢，如果我们单纯的用逻辑回归的话，我们就需要组合特征，但是组合特征也有一个问题，如果我们的训练数据中没有该用户行为过历史题材电视剧的样本的话，我们的模型也是学不到组合特征对应的参数的，但是呢，深度神经网络DNN是可以的，我们曾经说过，深度神经网络呢可以将我们传入的基础特征进行高维的组合，在隐层当中呢，学出一些高维的特征，但是单独的深度神经网络也有一个问题，如果某用户的行为数据呢并不是十分的充分，那么我们学习的深度神经网络呢，可能会对该用户进行过于的泛化。推荐的结果呢，大多数是他不喜欢的好了，wd的便是能够结合逻辑回归的记忆能力，以及我们深度神经网络的泛化能力，很好的平衡了这两点。</p>
-<h5 id="3-2-wd网络结构"><a href="#3-2-wd网络结构" class="headerlink" title="3.2 wd网络结构"></a>3.2 wd网络结构</h5><p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567188315016.png" alt="1567188315016"></p>
-<p>下面我们来一起看一下wd的网络结构，wd的网络结构呢分为两大部分，一部分的是wide部分，这一部分和我们之前介绍过的逻辑回归模型呢，有极大的相似性，比如我们这里输入三个特征，那么它同样呢是将这三个特征呢与对应的参数组合$w1<em>x1+w2</em>x2+w3*x3$，第2部分呢是deep部分，deep部分与我们曾经介绍过的深度神经网络呢，几乎是一样的，这里也分为输入层以及隐藏，当然了，我们这里也是全连接的。</p>
-<p>这里唯一与之前所介绍过的有所不同的是，wd模型的输出呢是将(wide侧的参数与特征的加权和)与(deep侧最后一个隐层的输出)，做相加在一起经过激活函数，最终得到我们模型的输出。</p>
-<p>这样的结构呢，能够保证我们在每一次反向传播的过程中呢，不仅更新地deep侧的参数，同时呢也会更新wide侧的参数，这样也就保证了我们所说的联合训练。通常情况下，我们将离散特征以及离散特征的组合特征放入到wide侧，而我们将连续特征的放入到我们的深度神经网络侧，对于一些字符型的特征，我们通常是先做一下哈希，再做一下Embedding，然后传入到deep侧。</p>
-<h5 id="3-3-模型的输出"><a href="#3-3-模型的输出" class="headerlink" title="3.3  模型的输出"></a>3.3  模型的输出</h5><p>好了，下面我们来一起看一下模型的输出。模型的输出，包含两部分。</p>
-<p>第1部分的是我们的wide侧的输出，这里的x便是我们wide输入的特征，这里的cross便是特征的组合。</p>
-<p>第2部分同样的我们这里的deep侧。倒数第2层节点的激活值也就是最后一个隐层的激活值，与我们输出节点与deep侧相连的w的乘积，再加上偏执。</p>
-<p>最终2部分的加和呢，要过一下我们的激活函数，这里的激活函数呢是阶跃函数，但是在deep侧的隐层之间的参数学习是我们采用的激活函数是<strong>修正线性单元</strong>。</p>
-<h5 id="3-4-WD-model的反向传播"><a href="#3-4-WD-model的反向传播" class="headerlink" title="3.4 WD model的反向传播"></a>3.4 WD model的反向传播</h5><p>大家一定要注意一下，好了下面我们来看一下反向传播是如何在wd上进行的。</p>
-<h6 id="wide参数的学习过程"><a href="#wide参数的学习过程" class="headerlink" title="wide参数的学习过程"></a>wide参数的学习过程</h6><p>$\frac{\partial L}{\partial w_{w i d e j}}=\frac{\partial L}{\partial a^{T}} \frac{\partial a^{T}}{\partial z^{T}} \frac{\partial z^{T}}{\partial w_{w i d e j}}=\frac{\partial L}{\partial a^{T}} \sigma^{\prime}\left(z^{T}\right) x_{w i d e j}$</p>
-<p>首先呢，我们先来看一下wide参数的学习过程，我们这里采用梯度下降的学习方法，所以呢，我们这里只需要求得，损失函数对于w和任意参数的偏导，也便能够进行参数学习，我们来看一下公式推导，这里采用链导法则。损失函数对w偏导，实际上也就是损失函数对输出层激活值的偏导在乘以激活值，对z值的偏导，在乘z值对参数w的偏大。</p>
-<p>损失函数对输出层激活值的偏导，无论我们是采用平方分式函数，还是我们采用对数损失函数，我们曾经都详细的讲过，这一部分的值应该是多少，这里不太赘述。</p>
-<p>激活函数的导数计算：我们知道a等于f（z），这里的f就是激活函数，所以呢，这一部分也便是激活函数的导数。我们把$\sigma^{\prime}\left(z^{T}\right) $放进去即可，</p>
-<p>最后一部分的，由于我们输出层的输出。实际上我们说过是有两部分的由wide侧以及deep侧，显然呢，我们这里对于wide侧的参数的偏导与deep侧没有关系，也便是我们这里deep侧参数对应的特征。好了，该部分的推导那就讲到这里。</p>
-<h6 id="WD-model的反向传播"><a href="#WD-model的反向传播" class="headerlink" title="WD model的反向传播"></a>WD model的反向传播</h6><p>$\frac{\partial L}{\partial z_{j}^{t-1}}=\sum_{k} \frac{\partial L}{\partial z_{k}^{t}} \frac{\partial z_{k}^{t}}{\partial a_{j}^{t-1}} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}=\sum_{k} \frac{\partial L}{\partial z_{k}^{t}} w_{d e e p kj}^{t} \frac{\partial a_{j}^{t-1}}{\partial z_{j}^{t-1}}$<br>$z_{k}^{t}=\sum_{j} w_{d e e p k j}^{t} a_{j}^{t-1}+b_{k}^{t} \rightarrow t \neq T \quad z_{k}^{t}=\left(\sum_{j} w_{d e e p kj}^{t} a_{j}^{t-1}+b_{k}^{t}\right)+w_{\text {wide}} * X \rightarrow t=T$</p>
-<p>下面我们来看一下deep侧参数的学习过程，与我们之前讲述过的dnn网络的反向传播是一样的，我们这里的核心呢都是损失函数，对于输出层z值的偏导，逐渐的前向传播，我们逐渐的得到，损失函数对倒数第2层z值的偏导逐次向前，这里唯一不同的是什么呢？</p>
-<p>不同的是我们这里的前向传播的过程呢，如果当我们是最后一层时，我们这里会多出了一些wide侧的特征。</p>
-<p>下面来看一下公式推导，这里我们在求上一层损失函数，对z值的偏导时，为什么这里会有一个累加呢？我们在上一小节曾经介绍过，这是因为（t+1）层上任意节点的激活值，都曾经被t层上第j节点贡献过，所以呢，我们需要累加。</p>
-<p>好了，我们看到这3部分。</p>
-<p>第1部分的，损失函数对于上一层节点的z值的偏导，这里我们是知道的，因为在最开始的时候呢，我们是知道，对输出层z值的偏导逐渐的向前传播，也便知道了t层。</p>
-<p>第2部分，中间这一部分呢，根据下面我们两个式子，这两个式子我们分别发现的，虽然带我们的输出层的，我们有wide侧的特征，但是呢，并不影响我们这里求偏导，因为对于我们这里的偏导，wide侧的部分相当于常数，所以我们还是得到了相同的答案。</p>
-<p>第3部分，最后一部分呢也是我们刚才说过的，a=f(z)。相当于呢，我们是激活函数的导数，也没有问题。我们得到了损失函数，对于任意层结点的z值的偏导。</p>
-<p>$\frac{\partial L}{\partial b_{j}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} * \frac{\partial z_{j}^{t}}{\partial b_{j}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} $</p>
-<p>$ \frac{\partial L}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} <em> \frac{\partial z_{j}^{t}}{\partial w_{j k}^{t}}=\frac{\partial L}{\partial z_{j}^{t}} </em> a_{k}^{t-1}$</p>
-<p>根据上一小节我们讲过的，此时我们便得到了损失函数，对于deep侧对于每一个偏执以及每一个w的偏导，这样我们便能够进行我们的梯度下降，进行参数学习了。好了，这就是wd模型的反向传播。</p>
-<h5 id="3-5server架构"><a href="#3-5server架构" class="headerlink" title="3.5server架构"></a>3.5server架构</h5><p><img src="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/1567191012618.png" alt="1567191012618"></p>
-<p>下面我们来看一下，我们得到了最终的模型之后呢，我们是如何与推荐引擎呢进行交互的，这里由于我们采用的是TensorFlow呢，实现我们的wd模型，这里我们必须搭一个TensorFlow serving来提供我们的深度学习的rank服务。</p>
-<p>此时呢，推荐引擎呢，需要发动请求到rank server，rank server与TensorFlow serving呢，进行一次交互，将请求呢透传的TensorFlow serving，TensorFlow serving得到的结果呢，返回给我们这里的rank server。rank server再将结果呢透回给我们这里的推荐引擎，来完成每一个item对该user的得分，进而完成排序，我们之前讲述过的浅层模型是rank server可以直接将我们得到的模型文件的load的内存当中，然后利用API呢，去提供打分。</p>
-<p>好了，本小节的内容就到这里，本小节重点介绍了wd的网络结构以及数学原理，那么下一小节我们将代码实在wd模型。</p>
-
-          
+          [TOC]
+个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep欢迎来到本次个性化推荐算法实战课程，本课程是有问答专区，如果你有问题可以在问答专区提问，我会在每天固定时间解答，课程结合问答专区能够让您更快的掌握知识。
+开始本章节的课程之前，我们首先来回顾一下上一章节的内容，上一章节
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/01/个性化推荐算法实践第10章基于深度学习的排序模型WideAndDeep/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2197,225 +1953,17 @@ function setSidebarMarginTop (headerOffset) {
       
         
           
-            <p>[TOC]</p>
-<h1 id="个性化推荐算法实践第09章浅层排序模型gbdt"><a href="#个性化推荐算法实践第09章浅层排序模型gbdt" class="headerlink" title="个性化推荐算法实践第09章浅层排序模型gbdt"></a>个性化推荐算法实践第09章浅层排序模型gbdt</h1><p>本章节重点介绍排序模型gbdt。分别介绍梯度提升树以及xgboost的数学原理。并介绍gbdt与LR模型的混合模型网络。最合结合公开数据集，代码实战训练gbdt模型以及gbdt与LR混合模型。</p>
-<p>gbdt通过多轮迭代,每轮迭代产生一个弱分类器，每个分类器在上一轮分类器的残差基础上进行训练。对弱分类器的要求一般是足够简单，并且是低方差和高偏差的。因为训练的过程是通过降低偏差来不断提高最终分类器的精度，（此处是可以证明的）。</p>
-<ul>
-<li>GBDT(Gradient Boosting Tree)背景知识介绍：</li>
-</ul>
-<p>由于GBDT(Gradient Boosting Tree)是由Boosting Tree，也就是很多个树模型的组合，首先了解什么是决策树，决策树是如果构建的。</p>
-<ul>
-<li>GBDT数学原理与构建方法：</li>
-</ul>
-<p>我们需要这个GBDT模型是如何将很多个树模型组合在一起，并且发挥了比一颗树更大威力的。</p>
-<ul>
-<li>XGBoost数学原理与构建方法:</li>
-</ul>
-<p>XGBoost是陈天奇提出的GBDT一种改进与落地方法，由于其高性能以及优良的表现，在工业界广泛使用。</p>
-<p>从头了解Gradient Boosting算法 ：<a href="https://blog.csdn.net/qq_36510261/article/details/78875278" target="_blank" rel="noopener">https://blog.csdn.net/qq_36510261/article/details/78875278</a></p>
-<p>GBDT(Gradient Boosting Decision Tree)入门（一）：<a href="https://blog.csdn.net/qq_38150441/article/details/80343626" target="_blank" rel="noopener">https://blog.csdn.net/qq_38150441/article/details/80343626</a></p>
-<h3 id="一、GBDT-Gradient-Boosting-Tree-背景知识介绍"><a href="#一、GBDT-Gradient-Boosting-Tree-背景知识介绍" class="headerlink" title="一、GBDT(Gradient Boosting Tree)背景知识介绍"></a>一、GBDT(Gradient Boosting Tree)背景知识介绍</h3><p>介绍什么是决策树，并且向大家展示分类与回归树是如何构建的（决策树是如果构建的）。</p>
-<h4 id="1、什么是决策树"><a href="#1、什么是决策树" class="headerlink" title="1、什么是决策树"></a>1、什么是决策树</h4><p>树的数据结构大家都应该了解，树有根节点，左右子树，叶子节点等等组成。</p>
-<p>什么是决策树呢？在决策树中我们可以这样认为，叶子节点对应的是模型的输出，其余节点每一个节点对应特征。而决策树呢，就是样本在该节点对应的特征由于取值的不同划分到左右两颗子树里面。同时呢，在左右两颗子树里面再利用对应的节点，将数据划分，最终呢会划分到某一叶子节点，便完成了模型的输出。</p>
-<p>大体的流程就是这个样子，如下图。我们以上一小节的曾经举过的实例来简单讲解一下。</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566459385812.png" alt="1566459385812"></p>
-<p>比如说这里根节点对应的特征呢，是给没给女朋友买礼物，如果给了的话，那么该样本数据呢就会落到右子树当中，如果没有没有给啊，那么显然呢，要么会落到左子树当中。那么再依据新的节点，这个节点对应的特征可能是说陪没陪女朋友是没有吃饭，如果是陪了的话那么继续往下，没有陪的话那么继续往下到左子树，这样呢，我们一直到叶的节点，叶子节点呢表示模型的输出，由于该实力呢是2分类问题，所以拿叶子结点的输出呢，便是0或1表示呢女朋友是否开心，当然了，树模型也可以是回归树，比如呢，我们在预测某人的身高这个问题上，那么最终的叶子节点可能会输出180、175cm, 相信经过上面的介绍，大家已经对决策处有了一个初步的了解。</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566471769876.png" alt="1566471769876"></p>
-<p>下面我们以一组具体的样本来给大家详述一下决策树的构建过程。我们这里有一组训练样本，这个样本呢，有5条数据，然后呢有两个特征，是否在水下生活以及是否有脚蹼，当然了它的label呢是是否鱼类，是一个二分类问题，我们看到这里5组数据呢特征的取值都是0、1，一表示带水下生活，一表示有脚趾，好了，那么我们构建出的决策树应该是什么样呢？是这样的，根节点对应的特征是是否在水下生活？如果不是的话，我们发现没在水下生活的那么很明显对应的label，全都不是鱼类，那么这里也就直接到了叶子节点，也就不是。好了，如果是在水下生活的话，我们看到在水下生活，但是呢，有是鱼类也有不是鱼类的。所以我们这里需要再借助一个特征，也就是有没有脚蹼。我们发现在水下生活，并且有脚蹼的话，图片很明显都是鱼类。如果在水下生活，并且没有脚蹼的话便不是鱼类。这就是我们基于这五条训练数据得到的模型，那么这个模型是如何工作的呢？在新的样本输入进来的时候，比如说不在水下生活也没有脚蹼，那么我们的模型是如何给出预测的呢？首先呢，不在水下生活，直接就会预测不是鱼类，这便是决策书的工作流程，我们已经了解了什么是决策处，但是哪一个特征应该是<strong>优先特征</strong>帮我们把样本到左右两颗子树，以及整体的决策树构建的流程，我们还不是很清晰，下面来一起了解一下。</p>
-<h4 id="2、决策树构造原理"><a href="#2、决策树构造原理" class="headerlink" title="2、决策树构造原理"></a>2、决策树构造原理</h4><ul>
-<li>1、CART生成</li>
-<li>2、回归树：平方误差最小化原则（CART生成算法构造回归树）</li>
-<li>3、分类树：基尼指数（CART生成算法构造分类树）</li>
-</ul>
-<h2 id="决策树生成"><a href="#决策树生成" class="headerlink" title="决策树生成"></a><strong>决策树生成</strong></h2><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>生成算法</th>
-<th>划分标准</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ID3</td>
-<td>信息增益</td>
-</tr>
-<tr>
-<td>C4.5</td>
-<td>信息增益率</td>
-</tr>
-<tr>
-<td>CART</td>
-<td>基尼指数</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h5 id="2-1、CART生成"><a href="#2-1、CART生成" class="headerlink" title="2.1、CART生成"></a>2.1、CART生成</h5><p>CART算法原理及实现：</p>
-<p><a href="https://blog.csdn.net/hewei0241/article/details/8280490" target="_blank" rel="noopener">https://blog.csdn.net/hewei0241/article/details/8280490</a><br><a href="https://blog.csdn.net/gzj_1101/article/details/78355234" target="_blank" rel="noopener">https://blog.csdn.net/gzj_1101/article/details/78355234</a></p>
-<p>这里介绍的决策树生成树的算法是CART算法，分类回归树算法：CART(Classification And Regression Tree)算法。CART中的“C”表示分类，CART中的“R”呢表示回归，当然了，我们决策树生成的算法呢，还有很多，比如说ID3、C45等等等等，这里为了与后面的知识介绍，GBDT其实相连，所以这里我们选用了CART生成算法进行介绍。</p>
-<p>CART生成算法，既可以<strong>构造回归树</strong>。当然了构造回归树我们采用的原则是平方误差最小化。CART生成算法，也可以去构建<strong>分类树</strong>。构造分类树时，我们采用基尼指数作为选取最优划分特征的依据。</p>
-<p>下面我们分别来看一下回归数与分类数的构造。</p>
-<h5 id="2-2、回归树：平方误差最小化原则（CART生成算法构造回归树）"><a href="#2-2、回归树：平方误差最小化原则（CART生成算法构造回归树）" class="headerlink" title="2.2、回归树：平方误差最小化原则（CART生成算法构造回归树）"></a>2.2、回归树：平方误差最小化原则（CART生成算法构造回归树）</h5><h6 id="2-2-1-回归树的函数表示"><a href="#2-2-1-回归树的函数表示" class="headerlink" title="2.2.1 回归树的函数表示"></a>2.2.1 回归树的函数表示</h6><p>首先呢，我们来一起看一下回归树的函数表示：</p>
-<script type="math/tex; mode=display">
-f(x)=\sum_{m=1}^{M} c_{m} I\left(x \in R_{m}\right)</script><p>这里的M表示一共有M个叶子节点，$R_{m}$表示m叶子节点对应的区域，如果我们输入的样本属于这个区域的话，这里公式中的I便为1。如果不属于，公式中的I便为0。也就是说我们的样本是属于这个区域的话，这里公式中的I便为1。如果不属于，公式中的I便为0。<br>也就是说如果我们的样本是m区域，那么对应的输出为$c_{m}$。</p>
-<script type="math/tex; mode=display">
-{\sum_{x_{i} \in \mathcal{R}_{m}}\left(y_{i}-f\left(x_{i}\right)\right)^{2}}</script><script type="math/tex; mode=display">
-{c_{m}=\operatorname{ave}\left(y_{i} | x_{i} \in R_{m}\right)}</script><p>$c_{m}$的定义需要满足在m区域的所有样本对应的模型的输出，与自己label差的平方和是最小的。显然$c_{m}$应该等于在m区域所有样本的label的平均值。</p>
-<p>下面介绍回归树如何选取最优划分特征。也就是说哪一个特征应该放到根节点，哪一个特征应该放在第二层的节点。</p>
-<h6 id="2-2-2-最优划分特征"><a href="#2-2-2-最优划分特征" class="headerlink" title="2.2.2 最优划分特征"></a>2.2.2 最优划分特征</h6><p>j表示的是特征，s表示的是特征取值的一个临界分隔值。</p>
-<p>如果这个特征取值$x^j$比这个临界分隔值s小的话，我们便划分到第一部分</p>
-<p>如果这个特征取值$x^j$比这个临界分隔值s大的话，我们便划分到第二部分</p>
-<p>对应第一部分和第二部分，有一个常数值，就是常数c，这个c是怎么定义的呢？c是属于区域所有样本的平均值。</p>
-<p>倾向性得分。</p>
-<p>区域的lable做差。</p>
-<p>可以以18做划分</p>
-<p>也可以</p>
-<p>最优化的划分。</p>
-<h6 id="2-2-3-树的构建流程"><a href="#2-2-3-树的构建流程" class="headerlink" title="2.2.3 树的构建流程"></a>2.2.3 树的构建流程</h6><ul>
-<li>遍历所有的特征，特征的最佳划分对应的得分，选取最小的得分的特征</li>
-</ul>
-<p>遍历所有的特征，特征的最佳划分对应的得分，选取最小的得分的特征为最优特征，会将其放在根节点。</p>
-<ul>
-<li>将数据依据此选取的特征划分分成两部分</li>
-</ul>
-<p>基于此特征我们将数据分为两部分，也就是树的左右子树。</p>
-<ul>
-<li><p>继续在左右两部分遍历变量找到划分特征直到满足停止条件</p>
-<p>在左右子树里，我们再继续进行上面的操作，继续寻找最优划分特征。当然呢，在左右子树里，根节点特征被拿掉了，我们继续这一个流程，直到满足停止条件。在回归树当中呢，停止条件有两个。一是子树中只剩下一个特征。二是达到了我们之前设定的树的深度。</p>
-<blockquote>
-<p>对应分类树来说呢，同样，如果说子树中label只剩下一种分类或者说特征只剩下一个，也是要进行停止的。</p>
-<p>分类树与回归树的构建流程是一致的。但是分类树的最佳划分特征选取的是基尼指数。</p>
-</blockquote>
-</li>
-</ul>
-<h5 id="2-3、分类树：基尼指数（CART生成算法构造分类树）"><a href="#2-3、分类树：基尼指数（CART生成算法构造分类树）" class="headerlink" title="2.3、分类树：基尼指数（CART生成算法构造分类树）"></a>2.3、分类树：基尼指数（CART生成算法构造分类树）</h5><p>基尼指数公式</p>
-<script type="math/tex; mode=display">
-{\operatorname{Gini}(D)=1-\sum_{k=1}^{K}\left(\frac{\left|C_{k}\right|}{|D|}\right)^{2}}</script><script type="math/tex; mode=display">
-{D_{1}=\{(x, y) \in D | A(x) \geq a\}, D_{2}=D-D_{1}}</script><script type="math/tex; mode=display">
-{\operatorname{Gini}(D, A)=\frac{\left|D_{1}\right|}{|D|} \operatorname{Gini}\left(D_{1}\right)+\frac{\left|D_{2}\right|}{|D|} \operatorname{Gini}\left(D_{2}\right)}</script><p>对于某样本D的基尼系数是由上述公式求解的。公式中的$C_k$表示样本中的第k个分类它的样本数。分母表示总的样本数。如果这个样本只有一个分类，我们发现这个样本的基尼系数为0。这也是我们希望看到的。</p>
-<p>如果我们将样本中的某特征以a为临界值进行划分，我们便得到了$D_1$,$D_2$两个部分。对于特征A以a为邻近值划分下的基尼指数了，也便是我们的第一的基尼系数加上第二的基尼系数，当然了这里都是带权的，这个权重呢，也便是我们划分的第一的样本除以总的样本的数目第二。第2个样本除以总的样本的数目。</p>
-<p>下面我们以一个具体的例子来解释一下这个公式，这个实例呢，是我们之前介绍什么是二叉树的时候曾经用。</p>
-<p>好了下面我们来看一下<strong>水下生活</strong>这个特征，它的基尼指数是多少呢？这里显然呢，水下生活这个特征只能以01为划分。这样呢，我们划分水下生活这个特征成的第一呢是占了3/5，然后这里面呢有2/3的呢，是1是鱼类这个分类，也就是1减去2/3的平方，再减去哪1/3的平方也就得到了4/9【1-（2/3）^2 - (1/3)^2 = 4/9】。我们看到零它占了2/5，但是呢，零对应的所有的内部呢都是一样的，也就是说呢，1减去1的平方也就成了0【1-(2/2)^2=0】，所以呢，对于水下生活这一个特征，它的基尼指数呢是12/45，≈0.26667。</p>
-<p>我们再来。看一下<strong>是否有脚趾</strong>这样一个特征，它的基尼指数，我们看到呢，它将样本划分成了两部分，一部分呢占据4/5，然后呢，这里面呢它应该是呢，1-1/2的平方再减去1/2的平方也就得到了2/4【1-（1/2）^2 - (1/2)^2 = 1/2】，也就是1/2，然后呢，另一部分呢是1/5，然后呢乘以呢，是什么呢？1-1的平方也就是0【1-(1/1)^2】，最终呢他得到的是4/10。</p>
-<p>显然呢水下生活它的基尼指数更低一点，它是零点二几，是否有脚趾的基尼指数是0.4。所以说呢，我们的根节点呢，应该用是否在水下生活。本小节的内容到这里就全部结束了，本小节重点讲述了GDP的背景知识决策数，讲述的决策处是什么以及决策处如何构建。 </p>
-<p>防止回归树过拟合：回归树剪枝（预剪枝和后剪枝），控制树的生长（如控制树深），在树每次生长的时候对一些特征进行采样，甚至可以加一些限制条件比如说在叶子节点上最少要多少个样本。叶子节点少于10个样本是不可以的。必须要在阈值样本数量才可以进行学习。</p>
-<h3 id="二、梯度提升树的数学原理与构建流程"><a href="#二、梯度提升树的数学原理与构建流程" class="headerlink" title="二、梯度提升树的数学原理与构建流程"></a>二、梯度提升树的数学原理与构建流程</h3><p>集成学习Ensemble Learning ：Bagging 和 Boosting相关的博文</p>
-<blockquote>
-<p>Bagging和Boosting 概念及区别：<a href="https://www.cnblogs.com/liuwu265/p/4690486.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuwu265/p/4690486.html</a></p>
-<p>Bagging与随机森林算法原理小结 ：<a href="https://www.cnblogs.com/pinard/p/6156009.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6156009.html</a></p>
-<p>Bagging（Bootstrap aggregating）、随机森林（random forests）、AdaBoost  ：<a href="https://blog.csdn.net/xlinsist/article/details/51475345" target="_blank" rel="noopener">https://blog.csdn.net/xlinsist/article/details/51475345</a></p>
-<p>bagging和boosting 总结，较全：<a href="https://blog.csdn.net/u014114990/article/details/50948079" target="_blank" rel="noopener">https://blog.csdn.net/u014114990/article/details/50948079</a></p>
-<p>集成学习Ensemble Learning与树模型、Bagging 和 Boosting、模型融合：<a href="https://blog.csdn.net/sinat_26917383/article/details/54667077" target="_blank" rel="noopener">https://blog.csdn.net/sinat_26917383/article/details/54667077</a></p>
-</blockquote>
-<p><img src="/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1568567063198.png" alt="1568567063198"></p>
-<p><img src="/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1568567108682.png" alt="1568567108682"></p>
-<p>Boosting与Bagging主要的不同是：Boosting的base分类器是按顺序训练的（in sequence），训练每个base分类器时所使用的训练集是加权重的，而训练集中的每个样本的权重系数取决于前一个base分类器的性能。如果前一个base分类器错误分类地样本点，那么这个样本点在下一个base分类器训练时会有一个更大的权重。一旦训练完所有的base分类器，我们组合所有的分类器给出最终的预测结果。</p>
-<p>本次的个性化推荐算法实战课程主要从boosting来进行梯度提示树的学习。</p>
-<h5 id="2-1-boosting"><a href="#2-1-boosting" class="headerlink" title="2.1 boosting"></a>2.1 boosting</h5><ul>
-<li>什么是boosting</li>
-</ul>
-<p>大家好，欢迎来到本次的个性化推荐算法实战课程，开始本小节的课程之前，我们首先来回顾一下上一小节的内容，上一个小节我们重点讲述了决策处的构建过程，那么本小节我们将重点介绍梯度提升数的构建过程，下面开始本小节的内容，我们首先来看一下什么是提升方法，其实我反而有这么一种基本的思想，对于一些复杂的任务，无论是回归问题还是分类问题，如果许多专家得出的结论会比其中某一专家得出来的结论更加靠谱，这就是我们俗语说的三个臭皮匠顶一个诸葛亮的道理，那么问题来了，我们在实际的任务中呢学习一个非常非常良好的模型是比较费力的，而学习很多弱的模型呢是比较简单的，如果我们能将这学习到的许多热的模型组合起来，也就完成了我们提升方法的思想，也就通过群体决策来战胜了一个强大的模型，那么无论是对于分类问题还是回归问题，实际上呢提升方法呢，就是从弱学习模型开始出发，反复的学习，得到一系列的弱分类器或回归器将它们组合的，里面构成了强大的模型，大多数提升方法都是通过改变训练数据的权重或者说改变训练数据的值，来完成对于弱模型的学习，这样对于提升方法来说呢，有两个问题需要考虑。</p>
-<p>1、第一个问题是每一个弱模型的学习过程中呢，我们怎么改变训练样本的值？或者说是训练样本权重的分布？2、第二个问题呢是如何将这些弱模型的组合成一个强模型？</p>
-<ul>
-<li>如何改变训练数据的权重</li>
-</ul>
-<p>我们来分别看一下第一个问题如何改变训练数据的权重和值。我们以分类问题来举例，对于刚开始学习到的弱分类器，我们在下一轮学习做分类器的过程中呢，我们会减弱那些被上一轮分类器正确分类的样本，而去增加那些上一轮弱分类器分类错误的样本的权重，这样一来便可以对那些没有被正确分类的样本重点照顾，只有这样才能再将多个弱分类器组合的过程中呢，有希望战胜一个强大的分类器，</p>
-<ul>
-<li>如何组合多个基础model<br>第2个问题如何组合多个基础的模型，我们在训练得到了多个弱模型之后呢，不同的提升方法的处理是有所不同的，比如像业界比较著名的ada提升方法的便采用了加权表决的方法，具体的在分类问题呢，它会加大分类误差率较小的弱分类器的权重，使其在表决中呢起到更大的作用，那么对于梯度提升术呢，这里显然呢，它采用的是等权的加和也就是每一棵树呢，它起到的作用都是相同的，对于回归问题呢也是如此，下面我们来看一下提升树的具体的数学原理。</li>
-</ul>
-<h5 id="2-2-Boosting-Tree"><a href="#2-2-Boosting-Tree" class="headerlink" title="2.2 Boosting Tree"></a>2.2 Boosting Tree</h5><ul>
-<li>提升树模型函数</li>
-</ul>
-<script type="math/tex; mode=display">
-{f_{M}(x)=\sum_{m=1}^{M} T\left(x ; \boldsymbol{\theta}_{m}\right)}</script><p>首先呢，我们看一下提升数的函数表示，这里呢，我来解释一下公式，这是每一棵树它的函数表示，那么这里的提升树呢，由M棵树来构成，每一棵树呢，大家都可以把它想象成上一节我们讲过的决策树，$\theta$是这一棵树的参数，好了，我们看到呢，每一棵树呢都是等权相加的，那么这样的一个提升树模型，我们是怎么样来进行学习的呢？</p>
-<script type="math/tex; mode=display">
-{f_{m}(x)=f_{m-1}(x)+T\left(x ; \theta_{m}\right)}</script><p>这里呢，我们采用前项分布的算法，这是一种启发式的学习方法，他能够保证了在每一轮的学习当中呢，只学习一棵树的参数，这样有什么好处呢？我们以一个简单的例子来说明一下，如果提升树一共有十棵树，那么我们在学习第一棵树的时候也就是$f_1$,那么嘛，他显然就等于$t_1$，但是$f_2$他等于$f_1$加上$t_2$，这里呢，由于$f_1$已经变成了已知了，那么此时我们只需要学习$t_2$，它保证了我们每一轮的迭代都是可学习的。</p>
-<script type="math/tex; mode=display">
-{\boldsymbol{\theta}_{m}=\arg \min _{\theta_{m}} \sum_{i}^{N} L\left(y_{i}, f_{m-1}\left(x_{i}\right)+T\left(x_{i} ; \boldsymbol{\theta}_{m}\right)\right)}</script><p>这样我们如何去学习$t_2$呢？只需要按照我们的损失函数。在损失函数上的我们只需要最小化这个公式就可以，$y_{i}$是样本对应的label,$f_{m-1}\left(x_{i}\right)$这是我们<strong>上一轮已经学习到的函数</strong>，这是$T\left(x ; \theta_{m}\right)$我们<strong>这一轮待学习的函数</strong></p>
-<p>这样启发式的方法保证了我们的可学习性，如果我们不采用启发式的方法，大家看一下这里我们的LOSS函数${f_{M}(x)=\sum_{m=1}^{M} T\left(x ; \boldsymbol{\theta}_{m}\right)}$应该是$f_{M}$，$f_{M}$的话这里相当于每一轮不是有一棵树的参数需要学习，而是有M颗树需要学习。那是根本没法学习的。</p>
-<h5 id="2-3-迭代损失函数"><a href="#2-3-迭代损失函数" class="headerlink" title="2.3 迭代损失函数"></a>2.3 迭代损失函数</h5><p>$L(y, f(x))=(y-f(x))^{2}$<br>$L\left(y, f_{m}(x)\right)=\left[y-f_{m-1}(x)-T\left(x ; \theta_{m}\right)\right]^{2}$</p>
-<p>下面我们来一起看一下迭代过程中的损失函数，如果我们的损失函数呢，采用我们之前经常讲的平方损失函数的话，那么第m颗树的学习就变成了下面这个公式，我来解释一下，这里的y是label，这里的$f_{m-1}(x)$是上一轮迭代迭代完成之后，我们的函数变成的样子，也就是说我们第m颗树的学习，只需要去拟合上一轮我们迭代完成$f_{m-1}(x)$之后这个模型对于最终样本的偏差度我们把这个称为残差。</p>
-<p>举一个例子比如说我们要预测某人身高，那么在上一轮迭代的过程中呢，我们已经预测出了一米75，而这个label是1米80，那下一次我们第m个树的学习呢，只需要去拟合这5cm的差距，也就是说样本的label变成了5。而不是一米80。上面介绍了一个回归的例子，实际上对于我们的应用场景点击率过来也可以看成是一个回归问题。因为我们这里可以预估出他的点击倾向性，我们设定一个阈值，比如说点击倾向性大于等于了我们这个阈值，那么我们就认为是会点击，如果小于了我们设定的阈值我们就认为是不会点击。所以呢，同样可以让它去拟合这个label与这个点击倾向性之间的差，也就是残差。</p>
-<h5 id="2-4-提示树的算法流程"><a href="#2-4-提示树的算法流程" class="headerlink" title="2.4 提示树的算法流程"></a>2.4 提示树的算法流程</h5><p>初始化$f_0(x)=0$</p>
-<p>对m=1,2…M计算残差$r_m$,拟合$r_m$,得到$T_m$</p>
-<p>更新$f_m = f_{m-1} + T_m$</p>
-<p>下面我们来看一下提示树的算法流程。第一步初始化$f_0(x)=0$，对于第一颗树第二颗树直到第M个颗树，我们依次计算残差，并且用这颗树去拟合这个残差，并且得到相应这颗树。  比如说，我们第1轮的时候$f_0(x)=0$，所以说呢，残差还是label本身我们便得到了$T_1$，那么对于第2个树呢，我们首先计算残差，也就是label的减去$f_1$的值，我们去拟合这一个值得到$T_2$，以此类推，我们今天能够得到每一棵树，直到得到了M。那么我们每一轮训练完一棵树之后呢我们便更新这个公式。也就是说呢，$f_2$等于$f_1$加上$T_2$，这个时候呢，我们得到了f2，对于我们训练$T_3$的时候呢，首先呢，计算残差也就是label减去$f_2$，那么$T_3$的也便去拟合这个label得到了$T_3$，以此类推呢，我们这里f3也就得到了，最终呢，我们得到$f_M$，也便完成了整个提升树的训练，下面我们以一组具体的训练样本为例来详述一下提升树的构建流程。 </p>
-<p><img src="/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566823913657.png" alt="1566823913657"></p>
-<p>首先来看一下训练样本，这里的训练样本呢，只有一个特征x，只有一个输出的y，x的分布呢是1~10，label是一些浮点数，我们首先来回想一下决策处的构建过程，我们首先要找到最佳划分的特征，由于这里只有一个特征的，我们只需要找到x的最佳划分，也便是我们第1棵树的根节点特征，这样的训练数据就会被分为左右两颗子树，我们只需要分别计算左子树的label的平均值和右子树label的平均值。也便得到了$T_1$。</p>
-<p>我们首先来看一下，怎么来寻找最佳特征的划分？这里我们首先呢以1为划分点，我们看到了小于等于1的是一区域，大于1的是二区域，这里呢，将两个区域呢，分别变成了一区域[1]，二区域[2-10]，c1呢就是一区域所对应的label的平均值，也就是5.56，同样的c2是什么呢？C2是二区域[2-10]对应label的平均值，这里的是7.5，我们会得到一个倾向性的得分，这个倾向性的得分呢便是，一区域里所有的数据label与c1的差的平方和我们看到的只有一个数据，差的平方和是0。</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566823913657.png" alt="1566823913657"></p>
-<p><img src="/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1566824388831.png" alt="1566824388831"></p>
-<p>然后呢2区里所有的数据label与我们c2的差的平方的和也就得到了15.72。这样的，我们遍历了所有的分割点我们看到的123一直到9，我们都是可以分割的，这样呢，我们得到了对优的分割的应该是6，也就是说小于等于6的一组，大于6的是另外一组，那么可是我们得到了$T_1$，$T_1$是什么呢？在特征小于等于6的时候呢，它的值呢是6.24，也就是说，所有label的平均值，在特征大于6的时候呢，它的输出呢是8.91，也是这个区域所有label的平均值，这里呢，我们的呢，f1就等于f0+T1，由于我们初始化f0=0。所以呢，我们得到了f1，这个时候呢，我们只需要计算一下残差，也就是说，此时呢变成了label减去f1，我们看到呢上面讲过的，label是5.56，减去6.24等于-0.68。, 以此类推这里我们得到的残差。 </p>
-<p>我们继续再找到队友划分，再完成这一棵树的学习也就达到了72 t2呢，这里它是以单为最佳划分的，它的输出分别是哪？负的0.52以及呢0.22，这时呢，我们便得到了f2，f2=什么呢？等于f1+t2，f1呢是这里的t1，所以呢，我们的f2呢也就变成了一个单段的分段函数，分别是特征小于等于3，此时呢输出了便是6.24与负的0.52的和以及特征大于3到特征小于等于6，此时的输出是6.24与0.22的和以及第3部分也面试，特征的大于6，此时输出了也是八年级。9一与0.22的和，那么我们继续整个流程，直到我们训练完大m棵树，页面结束了，我们提升速度的学习好了，了解了提升术的学习方法，我们来一起了解一下梯度提升术的学习方法，当我们的损失函数是平方损失或者指数损失的时候，每一步的优化呢是不那么困难的，但对于一般的损失函数而言呢，每一步的优化并不是特别容易，所以呢，梯度提升数呢，只是将我们的盘差变为了什么呢？变为了损失函数的负7度，在当前模型的曲子，那么我们下一棵树呢，只要去拟合这个值便得到了t小m好了，本小节的内容到这里就全部结束了，本小姐。人员予以构建流程，那么下一小节我们将给大家介绍插队故事的数学原理与构建流程。</p>
-<h5 id="2-5-梯度提示树"><a href="#2-5-梯度提示树" class="headerlink" title="2.5 梯度提示树"></a>2.5 梯度提示树</h5><p>残差的数值改变</p>
-<script type="math/tex; mode=display">
-r_{m}=-\left[\frac{\partial L\left(y, f\left(x_{i}\right)\right)}{\partial f\left(x_{i}\right)}\right]_{f(x)-f_{m-1}(x)}</script><h3 id="三、xgboost数学原理介绍"><a href="#三、xgboost数学原理介绍" class="headerlink" title="三、xgboost数学原理介绍"></a>三、xgboost数学原理介绍</h3><p>开始本小节的课堂之前，我们首先来回顾一下，上一小节的内容，上一小节我们重点讲述了梯度提升数的数学原理与构建过程，那么本小节我们将带大家一起学习一下XGBOST的数学原理与构建流程，XGBOST的数学原理，陈天琪博士曾经公开过一份PPT，我也会在附录里提供给大家方便大家的学习。</p>
-<p>下面开始本小节的内容，我们首先来看一下XGBOST的函数表示。</p>
-<h5 id="3-1-XGBoost模型函数"><a href="#3-1-XGBoost模型函数" class="headerlink" title="3.1 XGBoost模型函数"></a>3.1 XGBoost模型函数</h5><p>$f_{M}(x)=\sum_{m=1}^{M} T\left(x ; \boldsymbol{\theta}_{m}\right)$<br>$f_{m}(x)=f_{m-1}(x)+T\left(x ; \theta_{m}\right)$<br>$\arg \min _{\theta_{m}} \sum_{i=1}^{N} L\left(y_{i}, f_{m-1}\left(x_{i}\right)+T\left(x_{i} ; \theta_{m}\right)\right)+\Omega\left(T_{m}\right)$</p>
-<p>同样呢，这里呢，也是有多棵树构成，我们知道多棵树构成的这种学习方法呢，也是使用我们前面讲述过的前项分布，同样呢，既然是<strong>前项分布算法</strong>，我们就需要优化出这个<strong>目标函数</strong>，这样呢，我们在每一次学习的过程中呢，就能够学习到一棵树，将这一棵树的参数学习好之后呢，我们再累加起来逐次迭代，这样呢，就能够学习到最终的M棵树。</p>
-<p>这里与我们前面讲述的不同的是呢，对于每一棵树都有一个正则化项，也就是说当我们学习第小m棵树的时候呢，会设定一个小m这棵树的正则化，它表示小m这棵树，它的参数的复杂程度，具体的公式后面我们会详细介绍。</p>
-<p>如果大家还记得上一节课我们在讲提升树时，对于小m这棵树，我们只需要你和label与$f_{m-1}$的残差即可构建出小m这个树，如果是梯度提升树的话，我们也只需要去拟合损失函数的负梯度，在当前的函数值，当前呢，指的是$f_{m-1}$。</p>
-<h5 id="3-2-优化目标的泰勒展开"><a href="#3-2-优化目标的泰勒展开" class="headerlink" title="3.2 优化目标的泰勒展开"></a>3.2 优化目标的泰勒展开</h5><p>目标函数：$\arg \min _{\theta_{m}} \sum_{i=1}^{N} L\left(y_{i}, f_{m-1}\left(x_{i}\right)+T\left(x_{i} ; \theta_{m}\right)\right)+\Omega\left(T_{m}\right)$</p>
-<p>泰勒展开公式：$f(x+\Delta x) \approx f(x)+f^{\prime}(x) \Delta x+1 / 2 f^{\prime \prime}(x) \Delta x^{2}$</p>
-<p>根据泰勒展开公式优化的目标函数：<br>$\min _{\theta_{m}} \sum_{i=1}^{N}\left[g_{i} T_{m}+0.5 * h_{i} T_{m}^{2}\right]+\Omega\left(T_{m}\right)$</p>
-<p>$g_{i}=\frac{\partial L\left(y_{i}, f_{m-1}\right)}{\partial f_{m-1}}, h_{i}=\frac{\partial^{2} L\left(y_{i}, f_{m-1}\right)}{\partial f_{m-1}}$</p>
-<p>但是呢XGBoost采用了另一种思路，我们来看一下，首先呢，我们先介绍一下泰勒公式，相信呢，大家对这个公式呢，都不是很陌生，泰勒公式的二阶段展开是这样的$f(x+\Delta x) \approx f(x)+f^{\prime}(x) \Delta x+1 / 2 f^{\prime \prime}(x) \Delta x^{2}$。我们的优化目标，可以把这一部分($y_{i}, f_{m-1}\left(x_{i}\right)$)看成x，加号后面的部分$T\left(x_{i} ; \theta_{m}\right)$看成$\Delta x$，那么我们便可以按照泰勒公式进行展开。展开之后呢，我们的目标函数得到的是什么呢？</p>
-<p>$\min _{\theta_{m}} \sum_{i=1}^{N}\left[g_{i} T_{m}+0.5 * h_{i} T_{m}^{2}\right]+\Omega\left(T_{m}\right)$</p>
-<p>第1部分显然呢是loss，在$f_{m-1}$, 这个函数下的loss，对于我们的优化目标来说呢，我们此时构建小m这棵树，那么log在$f_{m-1}$这个地方，它就变成了常数，常数呢对于我们的优化目标是不需要的，我们需要的是损失函数的导数在当前模型的值，以及损失函数的二阶导在当前模型的字，分别对应上面的函数的导数与函数的二阶导数，我们前面说过$\Delta x$呢，看成了这里的$T_{m}$。所以呢，我们便得到了优化目标。</p>
-<h5 id="3-3-定义模型复杂度"><a href="#3-3-定义模型复杂度" class="headerlink" title="3.3 定义模型复杂度"></a>3.3 定义模型复杂度</h5><p>$f(x)=\sum_{j=1}^{Q} c_{j} I\left(x \in R_{j}\right)$<br>$\Omega\left(T_{m}\right)=\partial Q+0.5 \beta \sum_{j=1}^{Q} c_{j}^{2}$</p>
-<p>下面我们来看一下正则化项部分是如何定义模型参数的复杂度。XGBoost里，所有的树呢，都是回归树，我们在讲决策树的时候曾经讲过回归树的模型呢，可以这样$f(x)=\sum_{j=1}^{Q} c_{j} I\left(x \in R_{j}\right)$进行表示，这里呢一共有Q个区域，每一个区域的输出值呢是c，我们讲过c呢，实际上是在该区域所有的样本对应的label的平均值。</p>
-<p>好了，我们把复杂度$\Omega\left(T_{m}\right)=\partial Q+0.5 \beta \sum_{j=1}^{Q} c_{j}^{2}$定义为所有的叶子结点的数目，以及呢，每一个叶子结点对应的输出的平方，当然了这里有两个正则化的系数。</p>
-<p>这种定义方式的让我们联想到了曾经讲述过的逻辑回归的正则化，非常像我们曾经讲过的，l1正则化与l2正则化，这里的0.5呢与我们前面的泰勒展开呢，相对应我们来看一下，泰勒展开里呢，也有一个0.5，所以呢，我们后面呢，把0.5呢从我们的智能化系数当中的提取出来，我们看到这里的优化目标呢，是从每一个训练样本的角度去进行考虑的，为了接下来我们在构建树的过程中呢，好展开我们的思路，这里呢，我们将优化目标进行一下转化。看一下是如何转化的。</p>
-<h5 id="3-4-目标转化"><a href="#3-4-目标转化" class="headerlink" title="3.4 目标转化"></a>3.4 目标转化</h5><script type="math/tex; mode=display">
-{\min _{\theta_{m}} \sum_{i=1}^{N}\left[g_{i} T_{m}+0.5 * h_{i} T_{m}^{2}\right]+\Omega\left(T_{m}\right)}</script><script type="math/tex; mode=display">
-{\min _{\theta_{m}} \sum_{i=1}^{N}\left[g_{i} T_{m}+0.5 * h_{i} T_{m}^{2}\right]+\partial Q+0.5 \beta \sum_{j=1}^{Q} c_{j}^{2}}</script><script type="math/tex; mode=display">
-{\min _{\theta_{m}} \sum_{j=1}^{Q}\left[\left(\sum_{i \in R_{j}} g_{i}\right) c_{j}+0.5\left(\sum_{i \in R_{j}} h_{i}+\beta\right) c_{j}^{2}\right]+\alpha Q}</script><p>1、本来优化目标函数：</p>
-<p>${\min _{\theta_{m}} \sum_{i=1}^{N}\left[g_{i} T_{m}+0.5 * h_{i} T_{m}^{2}\right]+\Omega\left(T_{m}\right)}$</p>
-<p>这是我们本来的优化目标，它是按照样本的维度N 。我们首先呢把正则化项$\Omega\left(T_{m}\right)$写入进来。</p>
-<p>2、目标函数：</p>
-<p>${\min _{\theta_{m}} \sum_{i=1}^{N}\left[g_{i} T_{m}+0.5 * h_{i} T_{m}^{2}\right]+\partial Q+0.5 \beta \sum_{j=1}^{Q} c_{j}^{2}}$</p>
-<p>3、被转化后的目标函数：${\min _{\theta_{m}} \sum_{j=1}^{Q}\left[\left(\sum_{i \in R_{j}} g_{i}\right) c_{j}+0.5\left(\sum_{i \in R_{j}} h_{i}+\beta\right) c_{j}^{2}\right]+\alpha Q}$。</p>
-<p>我来解释一下公式，之前的我们说过$T_m$每一个样本的输出呢，实际上也就是对应的区域$c_j$的输出，也就是这里的$c_j$。</p>
-<p>每一个样本都会对应到每一个叶子节点，这里假使我们小m这棵树呢，一共有10个叶子结点，那么很明显，我们所有样本的输出都会归结到这10个叶子结点。</p>
-<p>这里需要重点考虑一下损失函数的一阶导与二阶导。</p>
-<p>​    只需要将样本是属于这一个叶子节点的一阶导，放到这一个区域$c_j$的前面，比如说c1在一个区域，我们的一阶导呢是说我这个样本如果它属于c1这个区域。那么，我的这个样本呢，它对应的一阶导便是其中的一个系数，我们将这个系数累加起来也就是这一部分。</p>
-<p>​    同样的如果呢，如果这个样本是属于c1这个区域，我们将它的二阶导也累加起来当做它的区域。这里呢，合并了一下同类项，把我们的智能化系数呢也合并进来了。就变成了下面这个式子。</p>
-<p>​    就是说遍历所有的样本，变成了遍历所有的叶子节点，相信大家也应该能够理解了。</p>
-<p>可能这里大家对本次函数的一阶导二阶导的概念不是很清晰，我们以一个简单的例子来说一下，我们就以这个损失函数呢，是我们长距离的平方根式函数。那么它对于这个FM减1的一阶导应该是什么呢？应该就等于呢，也很简单，就等于那二位的WiFi，减去哪，FM点c，那前面还有一个符号，二跌倒是什么呢？二跌倒就是在这个的基础上呢，再对FM减1求一次等，很明显的就得到2，下面我们来一起看一下目标函数的最优解，我们这里定义了一下大j与大h，那么目标函数呢，就变成了如下这个样子，显然呢，这是一种ax的平方加bx的行驶。我们知道，但是这种形势下呢，如果a是大于0的话，他便是开口向上的抛物线，他的最小值的取代x=负的分母是二倍的a分子呢，是b的情况下，那么好了，这里同样是当我们的c呢取代，负两倍的这一部分，然后呢分子呢是大j的情况下，显然也就是当c等于这一部分的时候，整体的，我们的优化目标函数呢，将会取得最小值，最小值也变是这个式子，我们来一起看一下我们是如何使用目标函数的最小值，去选取我们的最优划分特征的。这是我们获得的目标函数的最小值。我们在cc布什里是依据如下这个公式来选取我们的最优化分特征的，这里呢，我简单解释一下，比如呢，我们这里以年龄这个特征为例，依据年龄呢以18岁痕迹，大于18岁的呢，挖到了左边，小于等于18岁的呢，挖掉了右边，那么这时呢，我们只需要将整体的目标函数的最小值分别减去左半部分目标函数的最小值，再减去右半部分目标函数的最小值，这里的鱿鱼多了一次化身的，会使燕子节点的数目增加1，所以呢，还需要减去一下郑德华的系数，我们遍历完所有的划分，比如说18岁为划分25岁为划分等等等等，得到的最大的收益便是该特征下最佳划分，那么我们遍历所有的特征。每个课堂对应的收益的最大值，也便是我们首先要放到根节点上的特征，进而呢不停的去构建我们的树，直到满足我们前面讲述过的停滞条件，我们来看一下caccabc，第1步呢，也是初始化f0，进而呢对于第1棵树以及之后的每一棵树呢，都应用我们刚才讲述过的，选择最优划分特征的方法呢，去构造树，对于构造完成的数量，我们将它并不是100%的放入到模型当中的，这里会有一个不长，这个不长的，在程序中的默认值是0.3，主要是为了防止过拟合，好了，这就是xz boss的模型的总体流程，那么本小节的内容到这里就全部结束了，本小节重点介绍了xx模型。与总体流程，那么下一小节我们将给大家介绍gbdt模型与逻辑回归模型的混合模型。</p>
-<h3 id="四、gbdt模型与逻辑回归LR模型的混合模型"><a href="#四、gbdt模型与逻辑回归LR模型的混合模型" class="headerlink" title="四、gbdt模型与逻辑回归LR模型的混合模型"></a>四、gbdt模型与逻辑回归LR模型的混合模型</h3><p>个性化推荐算法实战课程开始本小节的课程之前，我们首先来回顾一下上一小节的内容，三位小姐我们重点介绍了差距boss的模型，数学原理与构建流程，那么本小节，我们将重点介绍GB dt与lr的混合模型，下面开始本小节的课程，下面来看一下背景知识，本小节所讲述的GDP与lr模型的混合模型，是出自于当年Facebook所发表的一篇论文，他的题目呢？我贴在你这里，他的paper呢我也会付给大家，如果大家感兴趣的话可以读一下关于GDP与l2模型混合模型的构建思路，主要的原因是什么呢？是因为我们知道我们在构建逻辑，回归模型是需要繁琐的特征处理，如果大家还记得我们在讲逻辑回归模型的构建过程中的时候，我们。与特征的处理，要对特征进行分类，将特征呢分为连续特征与离散特征，对于连续特征，我们首先要统计它的分布，然后呢，按照区间段进行特征的离散化对于离散特征，我们需要统计它的值域，然后呢，进行我们的特征离散化，当然呢，这些特征处理完之后呢，我们还要进行组合特征的筛选，这个过程呢将非常的繁琐，而且呢组合特征需要手动来执行，那么我们并不能完全的发挥出组合特征的威力，所以呢，逻辑回归模型的训练呢是非常非常的繁复，而恰巧我们的树模型呢在连续特征处理时，是不需要进行这么繁琐的处理，我们只需要把连续特征输给数，然后呢数倍基于我们前面讲述的一系列的最优划分特征。去将最优的划分点给选取出来，也就相当于呢，进行了一系列的规则转化，最终呢，将所有的输出的落到某一叶子节点上，那么对于一旦特征呢，我们也是需要刚开始呢，将它进行零一编码，也就是弯号的编码编程，我们可以识别的零一特征，然后呢，在进行我们刚才说过的这一系列的操作，最终呢也是将某一样本的收入呢落到具体的某个燕子节点上，而我们的GDP模型呢，有很多棵树，每一棵树呢都是一样特征，转化到了某一个业主节点上进行输出，那么我们看到实际上在不同的数的输出当中的我们相当于把特征的变换成了一种新的特征，这一新的特征呢是经过我们数内部的结构去进行不断的筛选转化的。高危特征呢，我们再把它放到逻辑回归模型里去训练，得到我们的参数，这时呢，两者模型便能有效的结合，下面我们来一起看一下模型的结构，我们首先来看一下GB dt模型的第1棵树的结构，这里的树的深度呢是2，我们看到呢，他有四个燕子结顶，大家来看一下第2棵树的结构，同样呢，它的深度呢也是2也有4个叶子结点，但是呢，要么对于在数一当中的输出呢是落到了第2个一的节点，要么对于数2的输出呢是落到了第4个电子结点，此时呢，我们便可以进行高为特征的编码，第1个数的编码也就是0 100, 第2个书的编码也就是0001，大家这里对电的节点有概念吗？可以联想一下我们前面讲。绝色素的模型的输出输出的函数是你的小c，如果大家不进的话，我简单的写一下。这里的c也便是我们这里所说的燕子姐姐，由于这里的树的深度是2了，所以一共有4个区域，如果我们样本最终呢属于哪个区域，也就是我们这里我说的，你也没别的，所以呢，我们便将它对应的，落到第几个月的节点，这一位的编码程序，其余的编码成0，这样呢，我们便得到了高为特征，由于这里的我们一共有两棵树，所以呢，这里它都能围住，是吧，如果我们GB dt模型里数的数占多一点数的深度呢，也算深一点，那么懂得特征的维度呢，也会变得更高，这里我们得到了高危的转化特征之后呢，便可以用来训练我们的逻辑回归模型，这里需要训练的是w1到w8这8个参数好了，这边是我们的GDP。LI混合模型的网络结构，但是大家这里一定要注意一下这里的训练呢，不是联合训练，是我们的样本，首先训练得到数之后再将样本呢，通过数呢进行编码，得到我们的高为特征，用高为特征呢再去训练我们的lr模型，最终呢，我们在线上预测的时候呢，也是需要我们首先呢将数模型保存，然后呢，将lr模型的参数呢也保存样本过来之后呢，先通过数模型进行特征的转换，然后呢，再将转化完成的特征呢，与我们训练得到的参数呢，去得到我们最终的结果，下面我们来看一下gpdt模型与l2模型，混合模型的优缺点分析，首先来看一下优点，优点呢便是利用数模型的做特征转化，这样呢既可以节省了我们。为逻辑回归模型去手动构造特征的繁琐工程量，同样呢，又利用了数模型能够将特征的较好的处理，而不需要大量的手动工作量的特点，可谓是强强联合，但是呢，它同样也有缺点，它的缺点呢是两个模型的是分别训练的，并不是联合训练，并不是联合训练的，就没有统一的目标函数，没有统一的目标函数呢，理论的可解释性就不强，但是无论如何呢，这种尝试呢也是有创新性的，在我实际的工作经验中呢，发现l2与GDP的混合模型的效果是要比GB dt单独的模型以及l2单独的模型效果要更加好的，本小节的内容到这里就全部结束了，本小节重点讲述了GB dt与lr混合模型的相关制度。那么下一小节我们将带大家一起代码实战GDP模型的训练。</p>
-<h3 id="九、boosted-Tree学习笔记"><a href="#九、boosted-Tree学习笔记" class="headerlink" title="九、boosted Tree学习笔记"></a>九、boosted Tree学习笔记</h3><p>Introduction to Boosted Trees：<a href="https://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf" target="_blank" rel="noopener">https://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf</a></p>
-<p>boosted Tree中文学习笔记：<a href="https://zhuanlan.zhihu.com/p/26214650" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/26214650</a></p>
-<blockquote>
-<p>面试重点：</p>
-</blockquote>
-<ul>
-<li><p>支持向量机通俗导论（理解SVM的三层境界）<br>SVM:<a href="https://blog.csdn.net/v_JULY_v/article/details/7624837" target="_blank" rel="noopener">https://blog.csdn.net/v_JULY_v/article/details/7624837</a></p>
-</li>
-<li><p>XGBoost 手推（重点，逢场必问）</p>
-</li>
-</ul>
-<p>  通俗理解kaggle比赛大杀器xgboost <a href="https://blog.csdn.net/v_JULY_v/article/details/81410574" target="_blank" rel="noopener">https://blog.csdn.net/v_JULY_v/article/details/81410574</a></p>
-<p>  xgboost原理:<a href="https://www.cnblogs.com/harvey888/p/7203256.html" target="_blank" rel="noopener">https://www.cnblogs.com/harvey888/p/7203256.html</a></p>
-<p>  手推记录-XGboost:<a href="https://blog.csdn.net/u014472643/article/details/80658009" target="_blank" rel="noopener">https://blog.csdn.net/u014472643/article/details/80658009</a></p>
-<p>  30分钟看懂xgboost的基本原理：<a href="https://zhuanlan.zhihu.com/p/73725993" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/73725993</a></p>
-<p>  机器学习竞赛大杀器XGBoost—原理篇：<a href="https://zhuanlan.zhihu.com/p/31654000" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/31654000</a></p>
-<p>  面试记录-蚂蚁金服-算法工程师（共四面）通过:<a href="https://blog.csdn.net/u014472643/article/details/81979749" target="_blank" rel="noopener">https://blog.csdn.net/u014472643/article/details/81979749</a></p>
-<p>​        机器学习算法中 GBDT 和 XGBOOST 的区别有哪些？<a href="https://www.zhihu.com/question/41354392/answer/98658997" target="_blank" rel="noopener">https://www.zhihu.com/question/41354392/answer/98658997</a></p>
-<p>线性回归正则化 —— 岭回归与Lasso回归：</p>
-<p><a href="https://www.cnblogs.com/Belter/p/8536939.html" target="_blank" rel="noopener">https://www.cnblogs.com/Belter/p/8536939.html</a></p>
-<p>逻辑回归(logistics regression)：</p>
-<p><a href="https://blog.csdn.net/jk123vip/article/details/80591619" target="_blank" rel="noopener">https://blog.csdn.net/jk123vip/article/details/80591619</a></p>
-<p><a href="https://blog.csdn.net/weixin_39445556/article/details/83930186" target="_blank" rel="noopener">https://blog.csdn.net/weixin_39445556/article/details/83930186</a></p>
-<p><img src="/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/1568573502799.png" alt="1568573502799"></p>
-<p>树集成优点：</p>
-<p>1、不需要做数据归一化featureNormalize、幅度缩放scaling</p>
-<p>2、同一条路径下是不同条件的组合，可以完成非线性的切分（同一条路径下可以组合不同的feature）</p>
-<p>3、在工程上来说，树模型是可扩展的。假如加计算资源，可以加速他的计算。</p>
-<p>树模型的最优划分属性是可以并行去计算的，那么可以加速他的计算。</p>
-<p>FM模型   XdeepFM模型</p>
-
-          
+          [TOC]
+个性化推荐算法实践第09章浅层排序模型gbdt本章节重点介绍排序模型gbdt。分别介绍梯度提升树以及xgboost的数学原理。并介绍gbdt与LR模型的混合模型网络。最合结合公开数据集，代码实战训练gbdt模型以及gbdt与LR混合模型。
+gbdt通过多轮迭代,每轮迭代产生一个弱分类器，
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/01/个性化推荐算法实践第09章浅层排序模型gbdt/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
