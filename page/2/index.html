@@ -2355,31 +2355,45 @@ gbdt通过多轮迭代,每轮迭代产生一个弱分类器，
 <style type="text/css">
 
 .glyphicon-chevron-left:before{
-    content: "《"
+	/* content: "《" */
 }
 .glyphicon-chevron-right:before{
-    content: "》"
+	/* content: "》" */
+}
+
+.right-siders{
+   border-radius: 10px;
+   /*margin-top: 5px;*/
+   margin-bottom: 5px;
+}
+
+.my-carousel:hover{
+  margin-left: 5px;
+  //padding: 5px 1px;
+  border-radius: 5px;
+  transform: scale(1.1);
+  box-shadow: 10px 10px 15px 2px rgba(0,0,0,.12), 0 0 6px 0 rgba(104, 104, 105, 0.1);
 }
 
 @media (max-width: 767px){
-    .rights{
-        display: none;
-    }
-    .carousel{
-        width: 100% !important;
-        height: 100% !important;
-    }
-    .slide{
-        width: 100% !important;
-        height: 100% !important;
-    }
+	.rights{
+		display: none;
+	}
+	.carousel{
+		width: 100% !important;
+		height: 100% !important;
+	}
+	.slide{
+		width: 100% !important;
+		height: 100% !important;
+	}
 
 }
 
 .carousel{
-    width: 100%;
-    height: 100%;
-    position: relative;
+	width: 65%;
+	height: 100%;
+	position: relative;
 }
 
 .carousel-inner {
@@ -2466,7 +2480,7 @@ gbdt通过多轮迭代,每轮迭代产生一个弱分类器，
   top: 0;
   left: 0;
   bottom: 0;
-  width: 15%;
+  /*width: 5%;*/
   opacity: 0.5;
   filter: alpha(opacity=50);
   font-size: 20px;
@@ -2480,7 +2494,7 @@ gbdt通过多轮迭代,每轮迭代产生一个弱分类器，
   background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#80000000, endColorstr=#00000000, GradientType=1);
 }
 .carousel-control.right {
   left: auto;
@@ -2489,7 +2503,7 @@ gbdt通过多轮迭代,每轮迭代产生一个弱分类器，
   background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.5) 100%);
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.5) 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000000, endColorstr=#80000000, GradientType=1);
 }
 .carousel-control:hover,
 .carousel-control:focus {
@@ -2509,16 +2523,37 @@ gbdt通过多轮迭代,每轮迭代产生一个弱分类器，
   z-index: 5;
   display: inline-block;
 }
+/*
 .carousel-control .icon-prev,
 .carousel-control .glyphicon-chevron-left {
   left: 50%;
   margin-left: -10px;
 }
+*/
+
+.carousel-control .icon-prev,
+.carousel-control .glyphicon-chevron-left {
+  background: url('/images/icon-slides.png');
+  background-position-y: -20px;
+  left: 9px;
+}
+
+/*
 .carousel-control .icon-next,
 .carousel-control .glyphicon-chevron-right {
   right: 50%;
   margin-right: -10px;
 }
+*/
+
+.carousel-control .icon-next,
+.carousel-control .glyphicon-chevron-right {
+  background: url('/images/icon-slides.png');
+  background-position-x: -50px;
+  background-position-y: -20px;
+  right: 0px;
+}
+
 .carousel-control .icon-prev,
 .carousel-control .icon-next {
   width: 20px;
@@ -2526,15 +2561,17 @@ gbdt通过多轮迭代,每轮迭代产生一个弱分类器，
   line-height: 1;
   font-family: serif;
 }
+
 .carousel-control .icon-prev:before {
-  content: '\2039';
+  content: 2039;
 }
 .carousel-control .icon-next:before {
-  content: '\203a';
+  content: 203a;
 }
+
 .carousel-indicators {
   position: absolute;
-  bottom: 10px;
+  bottom: 2px;
   left: 50%;
   z-index: 15;
   width: 60%;
@@ -2545,20 +2582,18 @@ gbdt通过多轮迭代,每轮迭代产生一个弱分类器，
 }
 .carousel-indicators li {
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 1px;
+  width: 30px;
+  height: 3px;
+  margin: 5px;
   text-indent: -999px;
-  border: 1px solid #fff;
+  border: 1px solid #bbb;
   border-radius: 10px;
   cursor: pointer;
-  background-color: #000 \9;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, .24);
 }
 .carousel-indicators .active {
-  margin: 0;
-  width: 12px;
-  height: 12px;
+  width: 30px;
+  height: 3px;
   background-color: #fff;
 }
 .carousel-caption {
@@ -2592,7 +2627,7 @@ gbdt通过多轮迭代,每轮迭代产生一个弱分类器，
   }
   .carousel-control .glyphicon-chevron-right,
   .carousel-control .icon-next {
-    margin-right: -10px;
+   /* margin-right: -10px; */
   }
   .carousel-caption {
     left: 20%;
@@ -2600,63 +2635,90 @@ gbdt通过多轮迭代,每轮迭代产生一个弱分类器，
     padding-bottom: 30px;
   }
   .carousel-indicators {
-    bottom: 20px;
+    bottom: -10px;
   }
 }
 </style>
-<div width="100%" height="320px" style="border: 0px; overflow: hidden; border-radius: 10px;" scrolling="no">
+
+<div width="100%" height="320px" style="border: 0px; overflow: hidden; border-radius: 10px; margin-bottom: 25px;" scrolling="no">
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3500" style="float:left">
+
+      <!-- 轮播（Carousel）指标 -->
+      <ol class="carousel-indicators">
+      
+      
+        <li data-target="#myCarousel" data-slide-to="0"></li>
+        
+      
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        
+      
+      </ol>
+
+      <!-- 轮播（Carousel）项目 -->
+      <div class="carousel-inner" style="height: 280px; border-radius: 10px; width: 100%;">
+       
+       
+          
+          <a class="item active" href="/文章链接地址" target="_blank" style="height: 100%;">
             
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3500">
-        <!-- 轮播（Carousel）指标 -->
-        <ol class="carousel-indicators">
+            <img src="图片链接地址" class="nofancybox" style="width: 100%; height: 100%">
+          </a>
+          
+          
+      
+          
+            <a class="item" href="/文章链接地址" target="_blank" style="height: 100%;">
+              <img src="图片链接地址" class="nofancybox" style="width: 100%; height: 100%;">
+            </a>
         
-        
+      
+      </div>
 
-            <li data-target="#myCarousel" data-slide-to="0"></li>
-            
+      <!-- 轮播（Carousel）导航 -->
+      <a class="left carousel-control" data-target="#myCarousel" href="javascript:void(0);" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      </a>
+      <a class="right carousel-control" data-target="#myCarousel" href="javascript:void(0);" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      </a>
 
-        
+	</div>
 
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            
+	<div class="rights" style="width: 30%; height: 280px; margin-right: 0px;margin-left: 20px;float: left;">
+       <!-- 天气插件 -->
+       <iframe width="300px" scrolling="no" height="50px" frameborder="0" allowtransparency="true" src="//i.tianqi.com/index.php?c=code&id=12&color=%23&bdc=%23&icon=1&py=beijing&num=2&site=12"></iframe>
+    
+       <!-- r热门排行 -->
+       <div class="my-carousel">
+         <a href="/top/" target="_blank">
+            <img class="right-siders nofancybox" src="/images/hot.png" width="100%">
+         </a>
+       </div>
+    
+       <!-- 时光留影 -->
+       <div class="my-carousel">
+         <a href="/photos/" target="_blank">
+           <img class="right-siders nofancybox" src="/images/time.png">
+         </a>
+       </div>
 
-        
-        </ol>
-        <!-- 轮播（Carousel）项目 -->
-        <div class="carousel-inner" style="height: 280px; border-radius: 10px; width: 100%;">
-
-        
-         
-        
-            
-                <a class="item active" href="/文章链接地址" target="_blank" style="height: 100%;">
-                    <img src="图片链接地址" style="width: 100%; height: 100%">
-                </a>
-                
-                
-
-        
-        
-            
-                    <a class="item" href="/文章链接地址" target="_blank" style="height: 100%;">
-                        <img src="图片链接地址" style="width: 100%; height: 100%;">
-                    </a>
-            
-
-        
-
-     
-        </div>
-        <!-- 轮播（Carousel）导航 -->
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            
+      <!-- 小小胡同 -->
+      <div class="my-carousel">
+        <a href="/xiaohutong/" target="_blank">
+          <img class="right-siders nofancybox" src="/images/xiaohutong.png">
         </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-           
+      </div>
+
+      <!-- 推荐阅读 -->
+      <div class="my-carousel">
+        <a href="/books/" target="_blank">
+          <img class="right-siders nofancybox" src="/images/read.png">
         </a>
-    </div> 
+      </div>
+
+   </div>
 
 </div>
 
