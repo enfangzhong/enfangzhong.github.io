@@ -992,143 +992,19 @@ function setSidebarMarginTop (headerOffset) {
       
         
           
-            <p>[TOC]</p>
-<h1 id="个性化推荐算法实践第02章基于邻域的个性化召回算法LFM"><a href="#个性化推荐算法实践第02章基于邻域的个性化召回算法LFM" class="headerlink" title="个性化推荐算法实践第02章基于邻域的个性化召回算法LFM"></a>个性化推荐算法实践第02章基于邻域的个性化召回算法LFM</h1><p>本章节重点介绍一种基于邻域的个性化召回算法，LFM。从LFM算法的理论知识与数学原理进行介绍。并结合公开数据集，代码实战LFM算法。</p>
-<p>个性化召回算法LFM（latent factor model）算法综述</p>
-<ul>
-<li>包含了LFM背景，结合LFM的实例与求解方法。</li>
-<li>以及LFM算法的应用场景。</li>
-</ul>
-<p>LFM（latent factor model）理论知识与公式推导</p>
-<ul>
-<li>LFM在建模后如何定义损失函数</li>
-<li>如何迭代到模型收敛得到模型参数</li>
-</ul>
-<p>LFM（latent factor model）算法与CF算法的优缺点比较</p>
-<ul>
-<li>从理论的体系的完整度，离线训练复杂度</li>
-<li>在线推荐的可解释性</li>
-<li>完成LFM与CF算法的优缺点比较</li>
-</ul>
-<h3 id="个性化召回算法LFM（latent-factor-model）算法综述"><a href="#个性化召回算法LFM（latent-factor-model）算法综述" class="headerlink" title="个性化召回算法LFM（latent factor model）算法综述"></a>个性化召回算法LFM（latent factor model）算法综述</h3><p>对于基于邻域的机器学习算法来说，如果要给一个用户推荐商品，那么有两种方式。</p>
-<p>一种是基于物品的，另一种是基于用户的。</p>
-<p>基于物品的是，从该用户之前的购买商品中，推荐给他相似的商品。</p>
-<p>基于用户的是，找出于该用户相似的用户，然后推荐给他相似用户购买的商品。</p>
-<p>但是，推荐系统除了这两种之外，还有其他的方式。例如如果知道该用户的兴趣分类，可以给他推荐该类别的商品。</p>
-<p>为了实现这一功能，我们需要根据用户的行为数据得到用户对于不同分类的兴趣，以及不同商品的类别归属。</p>
-<p>LFM—隐语义模型，属于协同领域。</p>
-<ol>
-<li>LFM算法的背景<br>提到协同领域，很多人首先想到的就是item CF与user CF，那么这里说到的LFM与这两者又有什么区别呢？</li>
-</ol>
-<p>首先简单回忆一下item CF与user CF。</p>
-<p>item CF：主体是item，首先考虑的是item层面。也就是说，可以根据目标用户喜欢的物品，寻找和这些物品相似的物品，再推荐给用户。</p>
-<p>user CF：主体是user，首先考虑的是user层面。也就是说，可以先计算和目标用户兴趣相似的用户，之后再根据计算出来的用户喜欢的物品给目标用户推荐物品。</p>
-<p>那么LFM呢？</p>
-<p>LFM：先对所有的物品进行分类，再根据用户的兴趣分类给用户推荐该分类中的物品。</p>
-<p>那LFM具体的意义是什么呢？</p>
-<p>为了方便大家理解，这里通过item CF再进一步说明。</p>
-<p>item CF算法，是将item进行划分，这样一旦item贡献的次数越多，就会造成两个item越相近。举个例子来说，就是当你看你喜欢的电视节目的时候，为了不错过精彩的内容，你广告部分也会看；这时，后台就会统计，你看了<strong>电视节目，也看了</strong>广告。这样就可能分析出<strong>电视节目与</strong>广告比较接近。</p>
-<p>然而，事实上两者并不一样，如果我们知道两者属于不同的tag，我们不会将他们放到一起，进行降权处理。但是建立大量的tag体系就需要消耗大量的人力标注打标签，人力标注不适用。继而需要机器学习完成分类。在0-1搭建个性化推荐系统算法中显然是不切实际的。那么LFM算法就应运而生。</p>
-<p>LFM是根据用户对item的点击与否，来获取user与item之间的关系，item与item之间的关系。</p>
-<p>我的理解就是，LFM不仅会考虑item，也会考虑item。</p>
-<p>2、什么是LFM算法<br>LFM算法输入：user对item的点击矩阵</p>
-<p>LFM模型参数：每一个user的向量表示和每一个item的向量表示。</p>
-<p>方式：用user矩阵和item矩阵的矩阵乘 拟合 user对item的点击矩阵</p>
-<p>我们知道行向量乘以列向量是一个常数。完美情况下，user向量和item向量的相乘可以拟合点击矩阵的数值。我们可以看出本模型是从user对item的点击矩阵得到的user-item的向量。所以lfm也是矩阵分解的算法的一种。</p>
-<p>LFM算法举例</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第02章基于邻域的个性化召回算法LFM/1564628104175.png" alt="1564628104175"></p>
-<p>输入：user对item的点击矩阵（1代表点击、0代表未点击）</p>
-<p>user对item的点击矩阵</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>item1</th>
-<th>item2</th>
-<th>item3</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>user1</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>user2</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>user3</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>输出：</p>
-<p>​        user1:[0.123, 0.325, …, 0.623], …</p>
-<p>​        item1:[0.214, 0.034, …, 0.241], …</p>
-<p>user和item的向量维度是自定义的，用user与item作内积即可判断user对item的偏好</p>
-<p>图片左边是点击矩阵，user对item的行为矩阵（点击表示为1,没有点击表示为0）。图片右边是模型收敛得到的是use和item的向量。对于这个维度可以是之前设定的。维度可以理解为有哪一些特征会影响uers对item的喜好程度。特征例如：item title,是否含有图片，<strong>小清新的</strong>、<strong>吉他伴奏的</strong>、<strong>摇滚</strong>等等这些特征会影响用户的偏好。这里比如来说统计出来有7个特征。那么在模型设置的时候就可以把维度设置为7，得到的向量显然就是user1，Item1都会表示7维度的向量。那么将user1，item1的转置乘起来的话应该是一个常数。如果将每一个user和item的向量乘起来可以和点击矩阵的常数无限接近的话。那么这个模型的效果也就越好。</p>
-<p>3、 LFM算法的应用场景举例<br>（1）获取user的item推荐列表（计算用户toplike）</p>
-<p>模型得到了user和item的向量，针对于用户没有被展现的item，我们可以计算出他的一个用户对item的倾向性得分。取top即toplike，后直接完成用户对item的喜爱度列表，写入离线即可完成对在线的推荐。</p>
-<p>（2）获取item间的相似度列表（计算item的topsim）</p>
-<p>得到item的向量可以用很多表示距离的公式包括cos等等，计算出每一个item的相似度矩阵，该矩阵可以用于线上推荐。当用户点击item之后，给其推荐与该item的topsim item。</p>
-<p>（3）挖掘item间隐含topic挖掘（计算item的topic）</p>
-<p>根据得到的item向量，可以用聚类的方法，如K-means，层次聚类等等，取出一些隐含的类别。也就是一些隐含的topic，能将item分成不同的簇，推荐时按簇推荐</p>
-<h3 id="LFM（latent-factor-model）理论知识与公式推导"><a href="#LFM（latent-factor-model）理论知识与公式推导" class="headerlink" title="LFM（latent factor model）理论知识与公式推导"></a>LFM（latent factor model）理论知识与公式推导</h3><p>本小节主要从数学上重点介绍LFM，主要从建模方法、迭代、收敛等方面认识LFM算法</p>
-<p>（1）LFM建模公式</p>
-<script type="math/tex; mode=display">
-p(u, i)=p_{u}^{T} q_{i}=\sum_{f=1}^{F} p_{u f} q_{i f}</script><p>p(u,i)表示user-item对，如果user点击了item，那么p(u,i)=1，否则p(u,i)=0。模型的最终输出为user向量和item向量，即$p_u$和$q_i$。其中F表示维度，也就是上一小节阐述的user对item喜欢与否的影响因素的个数。</p>
-<p>那么具体如何得到$p_u$和$q_i$呢？<br>我们用机器学习中监督学习的思想解决。在F设定好之后，$p_{u}$和$q_{i}$可以用随机数进行初始化，初始化之后，如何进行迭代呢？</p>
-<p>这里采用的方法是梯度下降。分别从损失函数对user向量的偏导和损失函数对item向量的偏导，以及user向量对item向量的迭代来分别介绍。</p>
-<p>（2）损失函数</p>
-<p>LFM loss function</p>
-<script type="math/tex; mode=display">
-l o s s=\sum_{(u, i) \in D}\left(p(u, i)-p^{L F M}(u, i)\right)^{2}</script><p>解释公式：p(u,i)是训练样本的label，也就是说如果user点击了item，那么p(u,i)=1，否则p(u,i)=0。后面项是模型预估的user对item喜好程度，也就是前面所说的模型产出的参数p_{u}和q_{i}转置的乘积。这里的D是所有的训练样本的集合。</p>
-<p>可以看到如果模型预估的数值与label越接近的话，损失函数数值越小，反之则越大。这里为了防止过拟合，增加了正则化项。如下公式，前半部分是将模型对于user-item对的喜好程度，并进行展开，是前面建模公式中讲到的，得到如下：</p>
-<script type="math/tex; mode=display">
-\operatorname{loss}=\sum_{(u, i) \in D}\left(p(u, i)-\sum_{f=1}^{F} p_{u f} q_{i f}\right)^{2}+\partial\left|p_{u}\right|^{2}+\partial\left|q_{i}\right|^{2}</script><p>这里$\partial$是正则化系数，是用来平衡平方损失与正则化项，这里采用的是L2正则化，正则化目的是为了让模型更加简单化，防止由于$p_{u}$和$q_{i}$过度拟合训练样本中的数据使模型的参数过度复杂，造成泛化能力减弱。</p>
-<p>（3）LFM算法迭代</p>
-<p>损失函数对$p_{uf}$和$q_{if}$的偏导：<br>$\frac{\partial l o s s}{\partial p_{u f}}=-2\left(p(u, i)-p^{L E M}(u, i)\right) q_{i f}+2 \partial p_{u f}$</p>
-<p>$\frac{\partial l o s s}{\partial q_{i f}}=-2\left(p(u, i)-p^{L F M}(u, i)\right) p_{u f}+2 \partial q_{i f}$</p>
-<p>损失函数对$p_{uf}$和$q_{if}$的偏导之后，我们应用梯度下降的方法可以看到：</p>
-<p>$p_{u f}=p_{u f}-\beta \frac{\partial l o s s}{\partial p_{u f}}$</p>
-<p>$q_{i f}=q_{i f}-\beta \frac{\partial l o s s}{\partial q_{i f}}$</p>
-<p>其中，$\beta$是learning rate，即学习率。<br>编程时候也会按照上述思路来实现代码。</p>
-<p>（4）影响因素</p>
-<p>哪些参数的设定会影响最终的模型效果？</p>
-<p>1.负样本的选取</p>
-<p>比起正样本，负样本的数量是非常多的。因为，展现给用户的item比用户点击的item要多的多。我们要有一定的负采样规则，我们选取那些充分展现而用户没有点击的item作为负样本。</p>
-<p>那么什么叫做充分展现？</p>
-<p>充分展现是指，这个item在所有的用户中，已经有了比较高的展现次数。</p>
-<p>然后，我们就可以用user没有点击过的物品中，按照该item在所有用户中的展现次数做排序（来降序），取一定数目的item作为负样本。这个一定数目只要保证对该user来说，它的正负样本均衡就可以。比如，一个用户点击了100个item，那么同样也取100个负样本来保证正负样本的均衡。</p>
-<p>2.隐特征F、正则参数$\partial$、学习率（learning rate  $\beta$）</p>
-<p>以上是对模型比较重要的三个参数。</p>
-<p>其中正则参数$\partial$和学习率（learning rate  $\beta$）通常设置为0.01-0.05，隐特征个数F通常设置为10-32之间。</p>
-<p>当然你可以在实验过程中，根据具体数据分布来固定一些参数，对另一些参数做差异化实验。</p>
-<p>比如说我们固定了正则参数$\partial$和学习率（learning rate  $\beta$）都为0.01的情况下，我们来变隐特征F，将它从16-32-64等等取值来看最终的效果。上述的一些参数对模型的快速收敛和模型效果都是非常重要的。</p>
-<h3 id="LFM（latent-factor-model）算法与CF算法的优缺点比较"><a href="#LFM（latent-factor-model）算法与CF算法的优缺点比较" class="headerlink" title="LFM（latent factor model）算法与CF算法的优缺点比较"></a>LFM（latent factor model）算法与CF算法的优缺点比较</h3><p>对于用户比较多的系统，用item CF比user CF更加具有可行性。</p>
-<p>1.理论基础</p>
-<p>LFM是比较传统的监督学习的打法，根据训练样本的label设定损失函数，利用最优化的方法使损失函数最小化。只不过这里的特征是隐特征，不像其他模型中的特征那样直观。</p>
-<p>item CF是基于公式间求解相似度矩阵，相对来说，缺少了学习的过程。</p>
-<p>所以，从理论基础的完备性上，LFM相对更好。</p>
-<p>2.离线计算空间、时间复杂度</p>
-<p>空间复杂度方面：item CF需要存储item sim表，需要的空间复杂度=物品数的平方；而LFM只需要存储user向量和item向量，所以空间复杂度=物品数目<em>隐类数+用户数目</em>隐类数。</p>
-<p>相比较而言，显然LFM的空间复杂度更低。</p>
-<p>时间复杂度方面：假设有M个用户，他们的平均点击序列长度为K，那么计算item相似度矩阵的时间复杂度=M<em>K</em>K；假设有D个样本，迭代N次，F是隐类的个数，那么训练LFM模型所需要的时间复杂度=D<em>F</em>N。由于LFM需要迭代，所以在耗时上略高于item CF，但是它们的耗时处于同一数量级。</p>
-<p>3.在线推荐与推荐解释</p>
-<p>item CF可以将item sim矩阵写入redis或者内存，线上基于用户实时点击去推荐，可以做到较好的响应用户的实时行为。</p>
-<p>LFM由于得到user和item向量，在计算用户的toplike物品的时候，如果推荐系统的物品总量很大，那么就需要将每一个item做向量的点乘运算，复杂度是比较高的，离线计算相对来说比较耗时。得到用户的toplike物品表之后，也是写入redis或者内存之中，线上用户访问系统的时候，直接推荐计算好的toplike列表。但是这样就不能对用户的实时行为进行感知。现在像facebook也推出了一些向量召回的引擎，可以做到在线实时召回，但是依然也不能够在用户有了新行为之后立刻重新训练LFM模型得到新的向量。</p>
-<p>所以，这这一方面，LFM效果略差。</p>
+          [TOC]
+个性化推荐算法实践第02章基于邻域的个性化召回算法LFM本章节重点介绍一种基于邻域的个性化召回算法，LFM。从LFM算法的理论知识与数学原理进行介绍。并结合公开数据集，代码实战LFM算法。
+个性化召回算法LFM（latent factor model）算法综述
 
-          
+包含了LFM背景，结合L
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/01/个性化推荐算法实践第02章基于邻域的个性化召回算法LFM/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1309,279 +1185,18 @@ l o s s=\sum_{(u, i) \in D}\left(p(u, i)-p^{L F M}(u, i)\right)^{2}</script><p>�
       
         
           
-            <p>[TOC]</p>
-<h1 id="个性化推荐算法实践第01章个性化推荐算法综述"><a href="#个性化推荐算法实践第01章个性化推荐算法综述" class="headerlink" title="个性化推荐算法实践第01章个性化推荐算法综述"></a>个性化推荐算法实践第01章个性化推荐算法综述</h1><h2 id="第01部分个性化推荐算法综述"><a href="#第01部分个性化推荐算法综述" class="headerlink" title="第01部分个性化推荐算法综述"></a>第01部分个性化推荐算法综述</h2><p>个性化推荐算法综述部分，主要介绍个性化推荐算法综述，本课程内容大纲以及本课程所需要准备的编程环境与基础知识。</p>
-<h3 id="个性化推荐算法综述"><a href="#个性化推荐算法综述" class="headerlink" title="个性化推荐算法综述"></a>个性化推荐算法综述</h3><p>介绍本课程的主要内容与需要准备的知识，并介绍个性化推荐在工业界的落地场景与架构</p>
-<h4 id="1、什么是推荐系统？"><a href="#1、什么是推荐系统？" class="headerlink" title="1、什么是推荐系统？"></a>1、什么是推荐系统？</h4><p>在介绍推荐算法之前需要先介绍一下什么是信息过载。</p>
-<p>信息过载就是信息的数量远超于人手工可以遍历的数量。比如，当你没有目的性的去逛超市，你不可能把所有的商品都看一遍都有什么。同样，无论是去书店看书，还是在电影网站上搜索电影，这些物品的量级对于没有目的性、需求性的用户而言都是信息过载。</p>
-<p>那么什么是推荐系统呢？</p>
-<p>就是当用户的目的不明确、且该服务对于用户而言构成了信息过载；但该系统基于一定的策略规则，将物品进行了排序，并将前面的物品展示给了用户，这样的系统就可以称之为推荐系统。</p>
-<p>举例说明，在网站购物过程中，无论是天猫或者京东这样的平台，如果我们有明确的需求去搜索框里检索。如希望买啤酒，那么检索结果就是很多种类的啤酒；如果没有明确的需求，就会有猜你喜欢等等模块，这些模块就是推荐系统基于一定的规则策略计算出来的，这些规则策略就是个性化推荐算法。</p>
-<h4 id="2、个性化推荐算法在系统中所起到的作用"><a href="#2、个性化推荐算法在系统中所起到的作用" class="headerlink" title="2、个性化推荐算法在系统中所起到的作用"></a>2、个性化推荐算法在系统中所起到的作用</h4><ul>
-<li>推荐系统在工业界落地较成功的三大产品：电商、信息流、地图基于位置服务的（LBS）的推荐</li>
-</ul>
-<p>推荐系统如今在工业界中落地较为成功的有三类产品，分别是电商、地图、基于LBS的推荐。电商中，用户需要面对数以十万计的新闻与短视频，地图中用户需要面对数以百万计的餐馆等等；但是用户首先看到的都不会是全部的内容，只会是几个或者几十个新闻、短视频、餐馆等等，决定从物品海洋里选择哪些展现给用户的就是个性化推荐算法。</p>
-<p>如果推荐的精确，也就是说该推荐系统推荐的恰好是用户想要的、或者是促进了用户的需求，那么就会推动用户在该电商上进行消费、停留、阅读等等。所以，在推荐系统中最为重要的就是个性化推荐算法。</p>
-<h4 id="3、如何衡量个性化推荐算法在产品中起到的作用"><a href="#3、如何衡量个性化推荐算法在产品中起到的作用" class="headerlink" title="3、如何衡量个性化推荐算法在产品中起到的作用"></a>3、如何衡量个性化推荐算法在产品中起到的作用</h4><p>分为线上和线下两个部分。其中线下部分主要依托于模型本身的评估指标，比如个性化召回算法中模型的准确率等等；在线上，基于业务本身的核心指标，比如基于信息流产品中的平均阅读时长等等。</p>
-<ul>
-<li><p>信息流中的点击率 ctr 与停留时长 dwell time</p>
-</li>
-<li><p>电商中的<em>GMV</em>(Gross Merchandise Volume,网站成交金额)</p>
-</li>
-</ul>
-<h4 id="4、推荐算法介绍"><a href="#4、推荐算法介绍" class="headerlink" title="4、推荐算法介绍"></a>4、推荐算法介绍</h4><p>包括：个性化召回算法、个性化排序算法</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/1563154737612.png" alt="1563154737612"></p>
-<h4 id="5、评估指标："><a href="#5、评估指标：" class="headerlink" title="5、评估指标："></a>5、评估指标：</h4><p>包括：在线评估指标和离线评估指标</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/1563154861816.png" alt="1563154861816"></p>
-<h3 id="个性化召回"><a href="#个性化召回" class="headerlink" title="个性化召回"></a>个性化召回</h3><h4 id="1、什么是个性化召回？"><a href="#1、什么是个性化召回？" class="headerlink" title="1、什么是个性化召回？"></a>1、什么是个性化召回？</h4><ul>
-<li><p>在item全集中选取一部分作为候选集。</p>
-<p>这里就存在一个问题，就是说为什么要选取一部分作为作为候选集，而不是全部？其原因在于：1.不同的用户不会喜欢所有类型的item；2.基于服务性能的考虑，如果选择了全部的item作为候选集，对于后续的排序就将耗费大量的时间，对于整体推荐的后端，服务响应时间将会是灾难性的。</p>
-</li>
-<li><p>根据用户的属性行为上下文等信息从物品全集中选取其感兴趣的物品作为候选集。</p>
-</li>
-</ul>
-<p>下面举例说明：</p>
-<p>如果某个推荐系统中，物品全集是如下左图中9个item，这里有两个用户A和B，他们分别对不同的item感兴趣。这里拿信息流产品举例，如果user A对体育类新闻感兴趣，user B对娱乐类新闻感兴趣，那就按照简单的类别召回，得到结果如下右图所示。</p>
-<p>在候选集{a,b,c,….,g,h,i}中为User A,User B选取一部分item作为候选集。</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/1563155318297.png" alt="1563155318297"></p>
-<h4 id="2、召回的重要作用"><a href="#2、召回的重要作用" class="headerlink" title="2、召回的重要作用"></a>2、召回的重要作用</h4><p>1、召回决定了最终推荐结果的天花板</p>
-<p>为什么这么说呢？这里先看一下推荐系统的整体架构，工业中的个性化推荐系统中的策略部分的架构主要由一下三部分构成：召回、排序、以及最后的策略调整部分，其中召回部分包括各路个性化召回之后将所有的item merge进入rank部分，rank只是调整召回完item的展现顺序，rank完之后还有一些策略的调整，比如信息流场景中的控制相同作者的数目等等，所以可以看到个性化召回的候选集是多么的重要，因为最终展现给用户的就是从这个候选集中选出来的。那么就可能会有疑问，为什么不能将所有的item进行排序？这是为了保证后端响应时间。</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/1563155445050.png" alt="1563155445050"></p>
-<p>与用户离的最近的是端，在移动互联网的时代主要的流量集中在了移动app也可以是网站前端。连接接前后端的是WEB API层。WEB层主要给APP端提供API服务，解析端上发来的请求，调用后端rpc服务。得到的结果投全到端上。web api层尽量不做策略业务逻辑，但是会做一些诸如log写实时信息队列，或写分布式存储这样的事情来方便后续的数据分析和模型训练。</p>
-<p>最后是后端的RPC服务。个性化推荐算法主要发挥作用的部分。</p>
-<p>RPC服务的三大策略部分。</p>
-<ul>
-<li>第一：个性化召回，基于用户的行为，通过算法模型来为用户精准推荐。或基于用户画像的标签推荐同类型的item。举个栗子，如果某个用户过往经常点击体育类的item，那么用户画像就给她标上体育的lable。那么有较新的体育类新闻，会优先推荐给改用户。召回决定了最终推荐结果的天花板，因为这一步决定了候选集。</li>
-<li>第二部分：排序部分。第一部分召回了用户感兴趣的物品集合后，我们需要决策 出展现给用户的顺序。好的顺序可以让用户在列表的开始找到自己的所需，完成转化。因为用户的每一次下拉都是有成本的，如何不能在最初的几屏里，显示用户的所需，用户就很可能流失掉。结合刚才召回所举的例子，给用户召回了体育类的item，不同的item可能会有不同的浏览人数，评论人数，发布时间，不同的字数，不同的时长，不同的发布时间等等，同样该用户也有体育类的细分的倾向性。</li>
-<li>第三部分：策略调整部分，基于业务场景的策略调整部分。由于召回和排序大多数是基于模型来做的，所以基于业务场景的策略调整部分可以增加一些规则来fit业务场景。比如在信息流场景中，我们不希望给用户一直连续推荐同一个作者的新闻，我们可以加一些打散的策略。</li>
-</ul>
-<p>2、个性化召回解析</p>
-<p>个性化召回算法分为哪几大类？</p>
-<ul>
-<li><p>基于用户行为的（也就是用户基于推荐系统推荐给他的item点击或者没点。）</p>
-<p>​    CF(基于邻域的算法：user CF  item CF)、矩阵分解、基于图的推荐（graph-based model）——基于图的随机游走算法：PersonalRank</p>
-</li>
-</ul>
-<p>这一类的个性化召回算法总体来说就是推荐结果的可解释性较强，比较通俗易懂，但是缺少一些新颖性。</p>
-<ul>
-<li><p>基于user profile的</p>
-<p>经过用户的自然属性，也就是说经过用户的偏好统计，那么基于这个统计的类别去召回。推荐效果不错，但是可扩展性较差。也就是说一旦用户被标上了某一个类别或者某几个类别的标签之后，很难迁移到其余的一些标签。</p>
-<p>基于用户的偏好的统计的类别类召回。效果不错，可扩展性比较差。</p>
-</li>
-</ul>
-<ul>
-<li><p>隐语义模型Latent Factorization Model(LFM)</p>
-<p>新颖性、创新性十足，但是可解释性不是那么强。</p>
-</li>
-</ul>
-<p>  3、工业界个性化召回架构</p>
-<p>  <img src="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/1563156562109.png" alt="1563156562109"></p>
-<p>  整体的召回架构可以分为两大类：</p>
-<p>  第一大类是离线模型。根据用户行为基于离线的model file算出推荐结果，这些推荐结果可以是用户喜欢哪些item集合，也可以是item之间的相似度文件 ，计算出具有某种lable的item的排序。然后离线计算好的排序的文件写入KV存储。在用户访问服务的时候，Recall部分直接从KV中读取。因为我们直接存储的是item ID,我们读取到的item id的时候还需要去Detail Server中得到每个item id的详情，然后将详情拼接好传给rank。(在线的server recall部分直接调用这个结果，拿到ID之后访问detail server得到详情，再往rank部分传递)</p>
-<p>  第二大类是深度学习模型，如果采用深度学习的一些model，这是需要将model file算出来的item embedding的向量也需要离线存入KV中，但是用户在访问我们的KV的时候，在线访问深度学习模型服务（recall server）的User embedding。同时去将user embedding层的向量和item embedding层的向量做最近邻计算，并得到召回。</p>
-<h3 id="第02部分-个性化召回算法协同过滤理论部分"><a href="#第02部分-个性化召回算法协同过滤理论部分" class="headerlink" title="第02部分 个性化召回算法协同过滤理论部分"></a>第02部分 个性化召回算法协同过滤理论部分</h3><p>本章节主要讲解itemcf与usercf的基础理论部分与理论公式升级部分，并详细介绍itemcf与usercf的优缺点分析</p>
-<h4 id="Item-Collaborative-Filtering-Item-CF"><a href="#Item-Collaborative-Filtering-Item-CF" class="headerlink" title="Item Collaborative Filtering(Item CF)"></a><strong>Item Collaborative Filtering</strong>(Item CF)</h4><p>背景</p>
-<ul>
-<li>信息过载，用户需求不明确</li>
-<li>强依赖于用户行为</li>
-</ul>
-<p>工业界主流落地场景</p>
-<ul>
-<li>信息流</li>
-<li>电商</li>
-<li>o2oLBS</li>
-</ul>
-<p>含义：给用户推荐他之前喜欢的物品相似的物品</p>
-<p>如何衡量相似</p>
-<ul>
-<li>基于用户行为，如果喜欢2个物品的用户重合度越高，那么2个物品也就越相似。</li>
-</ul>
-<p>如何衡量喜欢</p>
-<ul>
-<li>看用户是否真实点击，在电商场景下，更看重实际转化（实际消费购买）；信息流场景下，更看重真实的点击（基于一定时长下的停留）</li>
-</ul>
-<p><img src="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/1563200876660.png" alt="1563200876660"></p>
-<ul>
-<li>物品之间相似度公式：</li>
-</ul>
-<p>$s_{i j}=\frac{|u(i) \cap u(j)|}{\sqrt{|u(i)| \cup|u(j)|}}$</p>
-<p>u(i)表示喜欢物品i的用户数，$|u(i) \cap u(j)|$表示同时喜欢物品i和物品j的用户数</p>
-<p>根据用户行为计算出用户相似度矩阵：</p>
-<ul>
-<li>分子：u(i)表示对item (i)有过行为的用户集合 ,u(j)表示对item (j)有过行为的用户集合 ，分子表示user的重合程度，重合度越高，越相似。</li>
-<li>分母：归一化（举例：对item(i)有过行为的用户2个，对item(j)有过行为的用户3个$\sqrt{2} \sqrt{3}=\sqrt{6}$,物理意义：惩罚的热门物品与其他物品的相似度，因为热门物品对应的user倒排会非常长造成了与很多物品都有重合，如果分母除以一个很大的数，将相似度的数值趋于0。</li>
-</ul>
-<ul>
-<li>用户u对物品j的兴趣公式： </li>
-</ul>
-<p>$p_{u j}=\sum_{i \in N(u) \cap s(j, k)} s_{i j} * r_{u i}$</p>
-<p>N(u) 表示用户喜欢的物品集合，$s(j, k) $表示和物品j最相似的k个物品的集合。$s_{ij}$表示物品i和j的相似度.</p>
-<p>表示用户u对物品i的兴趣。</p>
-<p>$r_{ui}$表示user对 i的行为得分，$s_{ij}$表示物品的相似度得分</p>
-<p>$p_{uj}$对user进行item(j)的推荐，根据item(i)来完成推荐的，item(i)是user行为过的物品并且取与item(i)最相似的top k个(一般50个），</p>
-<p>Item CF在工业界落地公式升级1：</p>
-<p>理论意义：针对于活跃用户应该被降低在相似度公式中的贡献度。</p>
-<p>如果在某电商系统中，如果某User A是批发商，他购买了很多物品，可能有啤酒，书刊等，这都不能真实的表现他的兴趣。还有一名User B,他只买了啤酒和书刊，这能完全表现他的兴趣。如果我们在计算啤酒和书刊的相似度的时候，如果按照之前相似度公式User A和User B对啤酒和书刊的相似度贡献是一样的。这样子显然是不合理的。我们需要降低User A在相似度计算过程中的贡献度。</p>
-<p>$s_{i j}=\frac{\sum_{u \in u(i) \cap u(j)} \frac{1}{\log (1+|N(u)|)}}{\sqrt{|u(i)||u(j)|}}$</p>
-<p>u(i)表示喜欢物品i的用户数，$|u(i) \cap u(j)|$表示同时喜欢物品i和物品j的用户数</p>
-<p>与之前的相似度计算公式公式相比，分母部门没有发生任何变化。那么我们重点看分子部分。之前的相似度计算公式中每个重合用户对相似度的贡献是一样的，都是1.但是升级后的公式，我们发现每个用户对相似度的贡献变成了不一样。N(u)表示用户u所行为过的item的总数。如果一个用户行为过的item的总数越多，那么他的相似度就越低。这样子是符合常理的认知的。</p>
-<p>分子：N(u)表示用户u所行为过的item总数，如果用户行为过的总数越多，对相似度贡献越低。</p>
-<p>Item CF在工业界落地公式升级2：</p>
-<p>理论意义：用户在不同时间对item的操作应给予时间衰减惩罚。</p>
-<p>因为在很多场景中，用户的兴趣随时间是有变化的。如在信息流场景中，可能30前看过的短视频，30天后就不一定喜欢了。因为在做物品相似度矩阵计算的时候，就假定了用户的行为可以反映用户的兴趣。所以需要给予时间衰减降权。</p>
-<p>$s_{i j}=\frac{\sum_{u \in u(i) \cap u(j)} {f(\Delta t)}}{\sqrt{|u(i)||u(j)|}}$</p>
-<p>$f(\Delta t)=\frac{1}{1+\alpha \Delta t}$的物理意义就是说如果item i与item j被行为时间的差异越小，那么就越逼近于1.如果他们item i与item j被行为时间的差异越大，那么这个贡献就越低。</p>
-<p>与之前的相似度计算公式相比，分母部门没有发生任何变化。那么我们重点看分子部分。每个用户对相似度的贡献也发生了变化。这里的变化主要由$\Delta t$决定的。$\Delta t$是指用户item i与 item j所行为的时间的差异。</p>
-<h4 id="User-Collaborative-Filtering-User-CF"><a href="#User-Collaborative-Filtering-User-CF" class="headerlink" title="User Collaborative Filtering(User CF)"></a><strong>User Collaborative Filtering</strong>(User CF)</h4><p>意义：给用户推荐相似兴趣用户感兴趣的物品。</p>
-<p>举个栗子：在我们读书的时候是否经常问学长学姐该读什么样的书或者下载什么样的论文？学长学姐就会给你推荐。在这个栗子中学长学姐和你就属于具有相同爱好的用户群体，因为你们具有相同的研究领域。</p>
-<p>那么所以基于用户的协同过滤的算法有两个步骤：</p>
-<p>1、找到相似兴趣用户的集合</p>
-<p>那么问题来了，如何评价相似兴趣用户集合？区别于很多传统做法，这里主要采用基于用户行为重合度的方法，举例来说，如果两个用户的行为具有很高的重合度，那么他们具有很高的相似性。那么他们可以称为相似兴趣用户集合。</p>
-<p>2、推荐相似用户行为过，而该用户并没有行为过的item。举个栗子，如果我们发现两个用户A、B都非常喜欢足球相关的视频，行为重合度极高。而用户B经常点击天下足球相关的视频，用户A并没有行为，那么我们可以推荐天下足球相关的视频给用户A。</p>
-<p>栗子：</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/1563200935981.png" alt="1563200935981"></p>
-<p>User A 可以给User D 推荐b</p>
-<p>基于用户的协同过滤算法的步骤</p>
-<p>1、计算相似用户的相似度矩阵</p>
-<p>相似度公式</p>
-<p>$s_{u v}=\frac{|N(u) \cap N(v)|}{\sqrt{|N(u) | N(v)|}}$</p>
-<p>N(u)表示用户u有过行为item的集合。N(v)表示用户v有过行为item的集合。</p>
-<p>分子是item的重合程度。显然重合程度越高，user越相似。</p>
-<p>分母做了一个归一化，物理意义上解释了惩罚了操作过多的用户与其他用户的相似程度。因为操作过多的用户对应的item的序列会非常的长，造成了与很多的用户都有相似。分母除以一个很大的数之后呢，就能把相似度得分的数值趋于0.在得到用户相似度矩阵过后，我们根据用户的行为点击，来完成相似用户的item推荐。</p>
-<p>下面来看公式</p>
-<p>$p_{u i}=\sum_{v \in s(u, k) \cap u(i)} S_{u v} {r}_{v i}$</p>
-<p>${r}_{v i}$表示用户v对item i的行为得分。在前面介绍item cf公式的时候，我们提到过对于不同的行为，我们对用户的行为得分定义不同。我们这里将行为得分归一化为1.</p>
-<p>$S_{u v} $表示user u与uer v的相似度得分。这里根据用户v来完成对用户u的推荐。所以这里要介绍用户v。用户v是用户u的前TOP k个的相似用户。并且用户v行为过的物品 item i,用户user u 没有行为。那么我们便得到了用户u对item i的推荐度得分。</p>
-<p>工业界落地时公式升级1:</p>
-<p>理论意义：降低那些异常活跃物品对与用户相似度的贡献</p>
-<p>举个栗子解释：</p>
-<p>如果某个电商系统中，User (A) 与User(B)同时购买了《新华字典》，User (A) 与User(C)同时购买了《机器学习》，并且他们都只有这一本书重合，User (A) 与User(B)、User (A) 与User(C)的重合度都是1，显然不合理，因为购买《新华字典》并不能十分准确的反映用户的兴趣，也许是给家里孩子买，换言之《新华字典》的用户倒排会非常的长，而购买《机器学习》的用户大概率可以反映他们的兴趣，因为这本书的购书群体很窄，因此我们需要降低那些很多人购买的在重合度中的贡献。</p>
-<p>$s_{u v}=\frac{\sum_{i \in N(u) \cap N(v)} \frac{1}{\log (1+|u(i)|)}}{\sqrt{|N(u)||N(v)|}}$</p>
-<p>分子：基础版本的相似度计算公式当中重合的每一item对整体的贡献都是相同的。在升级版中贡献变得不同的。u(i)表示对item(i)有过行为的用户集合，如果一个item被更多的用户行为过，那么它在重合度的贡献越低。这也符合我们的认知。</p>
-<p>公式升级2（工业界）<br>理论意义，不同用户对同一item行为的时间段不同应该给予时间惩罚<br>（因为很多用户不同时间段，兴趣是发生变化的，比如，2个用户都曾经点击过足球类短视频，一个用户是近期点击，另一个用户是在好几个月之前欧洲杯比赛期间，也许在目前时间节点，已经不再喜欢足球类短视频了，我们在计算用户相似度矩阵的时候，假定了用户行为可以反映出用户的兴趣，所以我们要给予时间衰减降权）</p>
-<p>$s_{u v}=\frac{\sum_{i \in N(u) \cap N(v)} f\left(\Delta t_{i}\right)}{\sqrt{|N(u) | N(v)|}}$</p>
-<p>$f\left(\Delta t_{i}\right)=\frac{1}{1+\alpha\left|t_{u i}-t_{v i}\right|}$</p>
-<p>与基础版本的用户相似度矩阵计算公式，分母没有发生任何变化。</p>
-<p>分子：每一个重合的item的贡献度得分都变得不同,它们的贡献度得分由函数$f\left(\Delta t_{i}\right)$决定。函数$f\left(\Delta t_{i}\right)$具体的得分是2个用户对同一item操作时间的差，如果$\left|t_{u i}-t_{v i}\right|$越短的话,$f\left(\Delta t_{i}\right)$的得分越高;如果$\left|t_{u i}-t_{v i}\right|$越长的话,$f\left(\Delta t_{i}\right)$的得分越低。相应的在重合度贡献中也就越低。</p>
-<h4 id="Itemcf-VS-Usercf"><a href="#Itemcf-VS-Usercf" class="headerlink" title="Itemcf  VS  Usercf"></a>Itemcf  VS  Usercf</h4><p>优缺点比较：</p>
-<p>推荐实时性 </p>
-<ul>
-<li><p>User cf用户有了新的行为，不会对结果造成很快的变化，因为User cf是基于相似度矩阵来完成推荐的，User本身的行为并不能造成自己的推荐结果发生改变。</p>
-</li>
-<li><p>Item cf用户一旦有了新的行为，推荐结果立刻发生改变，因为Item cf是基于相似度矩阵来完成推荐的，所以点击了物品，会立马推荐出相似的物品。</p>
-</li>
-</ul>
-<p>新用户/新物品的推荐</p>
-<ul>
-<li><p>User cf新用户的到来是不能立即推荐的，需要等用户有了一定的行为并且得到了与其他用户相似度矩阵之后才可以完成推荐，新用户一旦被用户点击，User cf可以通过相似度用户矩阵将该物品推荐给相似的用户。</p>
-</li>
-<li><p>Item cf新用户一旦完成了Item点击，便可以推荐该Item相似的其余Item，新物品的到来，由于此时新物品 并没有与其他物品在相似度矩阵中出现，所以Item cf并不能将新物品及时地推荐出去。</p>
-</li>
-</ul>
-<p>推荐理由的可解释性</p>
-<ul>
-<li><p>User cf由于是通过用户相似度矩阵来完成推荐的，结果会略显难以解释。</p>
-</li>
-<li><p>Item cf通过用户历史点击行为完成的推荐，所以推荐结果更加令人信服。</p>
-</li>
-</ul>
-<p>Item cf  VS  User cf适用场景<br>性能层面考量</p>
-<ul>
-<li><p>User cf通过计算用户相似度矩阵，所以它并不适合用户很多的场合。因为相似度矩阵计算起来代价非常大。</p>
-</li>
-<li><p>Item cf需要计算物品的相似度矩阵，所以Item cf适用于物品数远小于用户数场合。由于实战中用户量往往远大于物品的数量级，所以实战中更倾向于Item cf。</p>
-</li>
-</ul>
-<p>个性化层面考量</p>
-<ul>
-<li><p>User cf适用于物品及时推荐下发且个性化需求不太强烈的领域。</p>
-</li>
-<li><p>Item  cf适用于长尾物品丰富并且个性化需要强烈的领域。由于真实的推荐系统中，各种个性化召回算法组合，会有一些召回方法解决新物品及时下发问题，而我们需要个性化程度强烈，所以从个性化层面考虑，更倾向于在落地实战中采用Item cf。</p>
-</li>
-</ul>
-<p>ItemCF的优势：</p>
-<p>（1）计算性能高，通常用户数量远大于物品数量。</p>
-<p>（2）可预先计算保留，物品并不善变。</p>
-<p>ItemCF存在的问题：<br>物品冷启动问题：当平台中物品数据较少或缺失时，无法精确计算物品相似度，解决办法：</p>
-<p>（1）文本分析，通过分析物品的介绍文本，计算相似度。<br>（2）主题模型，通过主题模型分析物品文本主题得出主题相似度。<br>（3）打标签，对物品打标签求得相似度。<br>（4）推荐排行榜单。</p>
-<h3 id="第03部分-个性化召回算法协同过滤代码实战部分"><a href="#第03部分-个性化召回算法协同过滤代码实战部分" class="headerlink" title="第03部分 个性化召回算法协同过滤代码实战部分"></a>第03部分 个性化召回算法协同过滤代码实战部分</h3><p>本章节结合具体的示例数据介绍itemcf与usercf基础部分的代码实战与升级部分的代码实战</p>
-<h4 id="3-1-数据集介绍与公共信息抽取函数代码实战"><a href="#3-1-数据集介绍与公共信息抽取函数代码实战" class="headerlink" title="3-1 数据集介绍与公共信息抽取函数代码实战"></a>3-1 数据集介绍与公共信息抽取函数代码实战</h4><p>本次代码实战的使用的2个数据集</p>
-<p>rating.txt     用户对item的打分文件</p>
-<blockquote>
-<p>userId</p>
-<p>movieId</p>
-<p>rating:  userId对movieId的打分</p>
-<p>timestamp：userId对movieId行为的时间戳</p>
-</blockquote>
-<p>movies.txt   item的info文件</p>
-<blockquote>
-<p>movidId</p>
-<p>title:item的标题</p>
-<p>genres:item的分类</p>
-</blockquote>
-<p>在item CF和 User CF实战当中我们都需要得到user的点击序列，所以我们下面写一下公共的信息抽取函数。</p>
-<p> 本文使用PyCharm为代码编写平台。</p>
-<p>1、数据集准备：</p>
-<p>本实例使用MovieLens 数据集（下载地址：<a href="http://files.grouplens.org/datasets/movielens/ml-latest-small.zip中的ratings.csv（用户ID对电影ID的评分）以及movies.csv（电影类别明细）。如下：" target="_blank" rel="noopener">http://files.grouplens.org/datasets/movielens/ml-latest-small.zip中的ratings.csv（用户ID对电影ID的评分）以及movies.csv（电影类别明细）。如下：</a></p>
-<p><img src="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/1563266020865.png" alt="1563266020865"></p>
-<p><img src="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/1563266060785.png" alt="1563266060785"></p>
-<p>​      ratings.csv                                                                    movies.csv</p>
-<p>2、项目结构</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/1563266157632.png" alt="1563266157632"></p>
-<p>  data文件夹用于存储电影评分数据，production文件夹用于存放推荐代码，util文件夹用于存放用于读取数据的工具文件。</p>
-<p>3、reader.py：用于读取用户的点击序列（即每个用户对那些电影进行过评分）以及电影信息（id，名称，类别）。</p>
-<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># _*_ encoding: utf-8 _*_</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">@File    :   reader.py    </span><br><span class="line">@Contact :   anfrank@gmail.com</span><br><span class="line">@License :   (C)Copyright 2019-2020</span><br><span class="line"></span><br><span class="line">@Modify Time      @Author    @Version    @Desciption</span><br><span class="line">------------      -------    --------    -----------</span><br><span class="line">2019/7/16 13:38   anfrank      1.0          None</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line"># import lib</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 获得用户的点击序列</span><br><span class="line">def get_user_click(rating_file):</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">        get user click list[userid,itemid]</span><br><span class="line">        :param rating_file:input file</span><br><span class="line">        :return:输出是一个dict key:userid value:[itemid1,itemid2]</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    # 如果路径不存在，返回空数据</span><br><span class="line">    if not os.path.exists(rating_file):</span><br><span class="line">        return &#123;&#125;</span><br><span class="line">    # 打开文件</span><br><span class="line">    fp = open(rating_file)</span><br><span class="line">    num = 0</span><br><span class="line">    # 用于传回的数据</span><br><span class="line">    user_click = &#123;&#125;</span><br><span class="line">    # 循环数据</span><br><span class="line">    for line in fp:</span><br><span class="line">        # 第一行是表头，需要跳过处理</span><br><span class="line">        if num == 0:</span><br><span class="line">            num += 1</span><br><span class="line">            continue</span><br><span class="line">        # 根据逗号提取每个项目</span><br><span class="line">        item = line.strip().split(&apos;,&apos;)</span><br><span class="line">        # print(item)</span><br><span class="line"></span><br><span class="line">        if len(item) &lt; 4:</span><br><span class="line">            continue</span><br><span class="line">        [userid, itemid, rating, timestamp] = item</span><br><span class="line"></span><br><span class="line">        if float(rating) &lt; 3.0:  # 如果评分低于3分，则视为该用户不喜欢该电影</span><br><span class="line">            continue</span><br><span class="line">        # 将单一用户的点击序列添加至返回数据</span><br><span class="line">        if userid not in user_click:</span><br><span class="line">            user_click[userid] = []</span><br><span class="line">        user_click[userid].append(itemid)</span><br><span class="line">    fp.close()</span><br><span class="line">    return user_click</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 获取电影信息数据</span><br><span class="line">def get_item_info(item_file):</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    get item info[title,genres]</span><br><span class="line">    :param item_file: input iteminfo file</span><br><span class="line">    :return: a dict,key itemid,value:[title,genres]</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    # 若路径不存在则返回空</span><br><span class="line">    if not os.path.exists(item_file):</span><br><span class="line">        return &#123;&#125;</span><br><span class="line">    num = 0</span><br><span class="line">    item_info = &#123;&#125;</span><br><span class="line">    # fp = open(item_file, &apos;r&apos;, encoding=&apos;UTF-8&apos;)</span><br><span class="line">    fp = open(item_file,&apos;r&apos;,encoding=&apos;UTF-8&apos;)</span><br><span class="line">    for line in fp:</span><br><span class="line">        # 第一行是表头，需要跳过处理</span><br><span class="line">        if num == 0:</span><br><span class="line">            num += 1</span><br><span class="line">            continue</span><br><span class="line">        # 根据逗号提取每个项目</span><br><span class="line">        item = line.strip().split(&apos;,&apos;)</span><br><span class="line">        if len(item) &lt; 3:  # 若单行小于三项过滤（去除问题行）</span><br><span class="line">            continue</span><br><span class="line"></span><br><span class="line">        if len(item) == 3:</span><br><span class="line">            [itemid, title, genres] = item</span><br><span class="line">        # 这个elif语句是由于，有的电影名称中含有逗号，因此造成项数过多，需要另行处理</span><br><span class="line">        elif len(item) &gt; 3:</span><br><span class="line">            itemid = item[0]</span><br><span class="line">            genres = item[-1]  # 获取最后一项</span><br><span class="line">            title = &quot;,&quot;.join(item[1:-1])  # 第一个到最后一个的拼接成为电影名称</span><br><span class="line">        # 将电影信息数据返回</span><br><span class="line">        if itemid not in item_info:</span><br><span class="line">            item_info[itemid] = [title, genres]</span><br><span class="line">    fp.close()</span><br><span class="line">    return item_info</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 测试上述方法</span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line"></span><br><span class="line">    # f = open(&quot;../data/ml-1m/ratings.dat&quot;)</span><br><span class="line">    user_click = get_user_click(&quot;../data/ml-latest-small/ratings.csv&quot;)</span><br><span class="line">    print(&quot;输出user_click字典的用户数量：&quot;)</span><br><span class="line">    print(len(user_click))</span><br><span class="line">    print(&quot;输出user_click字典的key为1点击了的item：&quot;)</span><br><span class="line">    print(user_click[&apos;1&apos;])</span><br><span class="line"></span><br><span class="line">    item_info = get_item_info(&quot;../data/ml-latest-small/movies.csv&quot;)</span><br><span class="line">    print(&quot;输出item_info字典的item数量：&quot;)</span><br><span class="line">    print(len(item_info))</span><br><span class="line">    print(&quot;输出item_info字典的key为1的item名称&quot;)</span><br><span class="line">    print(item_info[&apos;1&apos;])</span><br></pre></td></tr></table></figure></div>
-<h4 id="3-2-itemcf基础部分代码实战"><a href="#3-2-itemcf基础部分代码实战" class="headerlink" title="3-2  itemcf基础部分代码实战"></a>3-2  itemcf基础部分代码实战</h4><p>三、参考资料<br>1、<a href="https://www.imooc.com/learn/1029" target="_blank" rel="noopener">https://www.imooc.com/learn/1029</a></p>
-<p>2、<a href="https://www.imooc.com/learn/990" target="_blank" rel="noopener">https://www.imooc.com/learn/990</a></p>
-<p>3、<a href="https://study.163.com/course/introduction/1004092024.htm" target="_blank" rel="noopener">https://study.163.com/course/introduction/1004092024.htm</a></p>
-<p>4、<a href="https://blog.csdn.net/yimingsilence/article/details/54934302" target="_blank" rel="noopener">https://blog.csdn.net/yimingsilence/article/details/54934302</a></p>
-<p>5、<a href="https://blog.csdn.net/xiaokang123456kao/article/details/74735992" target="_blank" rel="noopener">https://blog.csdn.net/xiaokang123456kao/article/details/74735992</a></p>
-<p>6、项亮. 推荐系统实践[M]. 人民邮电出版社, 2012.</p>
-<h3 id="第04部分-个性化推荐召回算法的离线在线评估方法"><a href="#第04部分-个性化推荐召回算法的离线在线评估方法" class="headerlink" title="第04部分 个性化推荐召回算法的离线在线评估方法"></a>第04部分 个性化推荐召回算法的离线在线评估方法</h3><p>从离线在线两个方面，带大家详细了解如何评估个性化推荐算法对个性化推荐系统的影响。</p>
-<h4 id="1、业务指标"><a href="#1、业务指标" class="headerlink" title="1、业务指标"></a>1、业务指标</h4><p>信息流更关注：</p>
-<ul>
-<li><p>点击率：总点击次数/总展现次数</p>
-</li>
-<li><p>平均阅读时长（两个小指标）：</p>
-<p>​            推荐精准度：总阅读时长/click uv</p>
-<p>​            推荐算法对整体趋势的影响：阅读总时长/show uv</p>
-</li>
-</ul>
-<p>电商推荐中更关注转化率：</p>
-<ul>
-<li>转化率：总得成交次数/总的展现次数</li>
-<li>还有总的成交额度（ GMV）</li>
-</ul>
-<h4 id="2、-item推荐覆盖率"><a href="#2、-item推荐覆盖率" class="headerlink" title="2、 item推荐覆盖率"></a>2、 item推荐覆盖率</h4><p>如果我们无休止的去剥削用得的点击历史，会发现推荐的item呈现长尾，很多item无法得到充分的展现。所以我们要利用一些发现算法保证item的覆盖率。</p>
-<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">覆盖率：去重后推荐的所有item的id数/库里面所有的itemid</span><br></pre></td></tr></table></figure></div>
-<p>如何在个性化召回算法中从离线和在线两个方面来评价算法的好坏呢？</p>
-<h4 id="3、offline评价方法"><a href="#3、offline评价方法" class="headerlink" title="3、offline评价方法"></a>3、offline评价方法</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">评测模型推荐结果在测试集上的表现</span><br></pre></td></tr></table></figure></div>
-<p>如果在推荐系统中，某种算法给用户A推荐的物品（a、b、d）。又得到，在测试集中，用户A有过物品a,b,f,m的展现。这个时候我们发现推荐出来的真实结果和测试上的结果重合为物品（a、b）。这个集合就是我们评价的分母。</p>
-<p>我们又发现用户a在测试集上点击了物品（a、f）,那么推荐的真实物品结果（a、b、d）,与用户在测试集上点击（a、f）也有重合,重合的为a，这个重合就是他的分母。点击率：总点击次数/总展现次数。综上，整体的点击率表现为1/2。</p>
-<p><img src="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/1564489139051.png" alt="1564489139051"></p>
-<h4 id="4、-online评价方法"><a href="#4、-online评价方法" class="headerlink" title="4、 online评价方法"></a>4、 online评价方法</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">定义指标：</span><br><span class="line">      信息流中：点击率、平均阅读时长、覆盖率</span><br><span class="line"></span><br><span class="line">      生产环境中A/B test，分离出一部分流量对比</span><br></pre></td></tr></table></figure></div>
-<h3 id="第05部分总结"><a href="#第05部分总结" class="headerlink" title="第05部分总结"></a>第05部分总结</h3><p>推荐引擎主体架构，工业界推荐系统落地</p>
-<ul>
-<li>推荐引擎主体架构主要分为match召回、Rank排序、以及strategy策略调整部分。并对Match在工业界的几种落地架构进行了深入剖析。对工业界电商、信息流、地图基于位置服务的（LBS）的推荐进行了详细介绍。</li>
-</ul>
-<p>CF算法的落地实战</p>
-<ul>
-<li>item cf</li>
-<li>user cf</li>
-<li>item cf和user cf不同场景下的优劣对比</li>
-<li>借助demo数据，实现itemCF与user CF</li>
-</ul>
-<p>推荐系统在不同业务下的评价指标</p>
-<ul>
-<li>分别从offline评价方法和online评价方法两个方面展示了，如何在新增一个召回算法来评价改算法的性能。</li>
-</ul>
-<h3 id="第06部分预习参考资料："><a href="#第06部分预习参考资料：" class="headerlink" title="第06部分预习参考资料："></a>第06部分预习参考资料：</h3><p>recall:矩阵分解、graph、content based 、item2vec(用DNN来将user和item分别embedding成隐语义向量做向量召回)</p>
-<blockquote>
-<p> <a href="https://www.jianshu.com/p/7b6bb28c1753" target="_blank" rel="noopener">推荐系统系列之隐语义模型</a></p>
-<p><a href="https://www.cnblogs.com/LHWorldBlog/p/9170834.html" target="_blank" rel="noopener">【机器学习】—隐语义模型</a><br><a href="https://www.cnblogs.com/rongyux/p/6864233.html" target="_blank" rel="noopener">DNN个性化推荐模型</a><br> <a href="https://blog.csdn.net/kingzone_2008/article/details/81129717" target="_blank" rel="noopener">DNN论文分享 - Item2vec: Neural Item Embedding for Collaborative Filtering</a><br> <a href="https://www.jianshu.com/p/6c977a9a53de" target="_blank" rel="noopener">万物皆Embedding，从经典的word2vec到深度学习基本操作item2vec</a></p>
-</blockquote>
-
-          
+          [TOC]
+个性化推荐算法实践第01章个性化推荐算法综述第01部分个性化推荐算法综述个性化推荐算法综述部分，主要介绍个性化推荐算法综述，本课程内容大纲以及本课程所需要准备的编程环境与基础知识。
+个性化推荐算法综述介绍本课程的主要内容与需要准备的知识，并介绍个性化推荐在工业界的落地场景与架构
+1、什么
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1762,60 +1377,18 @@ l o s s=\sum_{(u, i) \in D}\left(p(u, i)-p^{L F M}(u, i)\right)^{2}</script><p>�
       
         
           
-            <h1 id="程序员的浪漫爱心表白源码"><a href="#程序员的浪漫爱心表白源码" class="headerlink" title="程序员的浪漫爱心表白源码"></a>程序员的浪漫爱心表白源码</h1><hr>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>我们程序员在追求爱情方面也是非常浪漫的，某位同学利用自己所学的HTML5知识自制的HTML5爱心表白动画，画面非常温馨甜蜜，这样的创意很容易打动女孩，如果你是单身的程序员，也赶紧来制作自己的爱心表白动画吧。</p>
-<blockquote>
-<p>表白源码下载地址：<a href="https://github.com/enfangzhong/loveSource" target="_blank" rel="noopener">https://github.com/enfangzhong/loveSource</a></p>
-<p>个人博客展示：<a href="https://enfangzhong.github.io/">https://enfangzhong.github.io/</a></p>
-</blockquote>
-<h2 id="在线演示"><a href="#在线演示" class="headerlink" title="在线演示"></a>在线演示</h2><ul>
-<li><p>在我们rep中，我就展示了loveheart和love-ppt两个开源的表白动画。其他我就不一一全部上线演示了。</p>
-</li>
-<li><p>赶紧star吧。</p>
-</li>
-</ul>
-<blockquote>
-<p>loveheart演示地址：<a href="https://enfangzhong.github.io/love/">https://enfangzhong.github.io/love/</a></p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-f7b6477973f86e1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<blockquote>
-<p>love-ppt演示地址：<a href="https://enfangzhong.github.io/loveshow/">https://enfangzhong.github.io/loveshow/</a></p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-773f036e969807a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="https://upload-images.jianshu.io/upload_images/13821160-d23105c858bf3da4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h2 id="12套表白源码展示"><a href="#12套表白源码展示" class="headerlink" title="12套表白源码展示"></a>12套表白源码展示</h2><p><img src="https://upload-images.jianshu.io/upload_images/13821160-88080f6f0e22fd4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<blockquote>
-<p>表白网页款式01源码</p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-40576803f072c1a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<blockquote>
-<p>表白网页款式02源码</p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-a56318467e45b8b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>……….<br>……….<br>……….</p>
-<blockquote>
-<p>表白网页款式06源码</p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-957555f77dfd686c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<blockquote>
-<p>表白网页款式07源码</p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-a23e93d0d508b27a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<blockquote>
-<p>表白网页款式08源码</p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-b6f8c34f46f3bf41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>……….<br>……….<br>……….</p>
-<blockquote>
-<p>表白网页款式11源码</p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-745db3e4898218ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<blockquote>
-<p>表白网页款式12源码</p>
-</blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-624163a77b9bc234.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>祝天下有情人终成眷属！show the love line with your Mrs.Right</p>
+          程序员的浪漫爱心表白源码
+简介我们程序员在追求爱情方面也是非常浪漫的，某位同学利用自己所学的HTML5知识自制的HTML5爱心表白动画，画面非常温馨甜蜜，这样的创意很容易打动女孩，如果你是单身的程序员，也赶紧来制作自己的爱心表白动画吧。
 
-          
+表白源码下载地址：https://github.com/en
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/13/Hexo个人博客_程序员的浪漫爱心表白源码/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1996,28 +1569,16 @@ l o s s=\sum_{(u, i) \in D}\left(p(u, i)-p^{L F M}(u, i)\right)^{2}</script><p>�
       
         
           
-            <h1 id="机器学习笔记-02决策树与随机森林"><a href="#机器学习笔记-02决策树与随机森林" class="headerlink" title="机器学习笔记_02决策树与随机森林"></a>机器学习笔记_02决策树与随机森林</h1><p>[TOC]</p>
-<h1 id="从LR到决策树"><a href="#从LR到决策树" class="headerlink" title="从LR到决策树"></a>从LR到决策树</h1><h2 id="1、总体流程与核心问题"><a href="#1、总体流程与核心问题" class="headerlink" title="1、总体流程与核心问题"></a>1、总体流程与核心问题</h2><p>首先，在了解树模型之前，自然想到线性模型和树模型有什么区别呢？其中最重要的是，树形模型是一个一个特征进行处理，之前线性模型是所有特征给予权重相加得到一个新的值。决策树与逻辑回归的分类区别也在于此，逻辑回归是将所有特征通过sigmoid函数变换为概率后，通过大于某一概率阈值的划分为一类，小于某一概率阈值的为另一类；而决策树是对每一个特征做一个划分。另外逻辑回归只能找到线性分割（输入特征x与logit之间是线性的，除非对x进行多维映射），而决策树可以找到非线性分割。</p>
-<p><strong>而树形模型更加接近人的思维方式，可以产生可视化的分类规则，产生的模型具有可解释性（可以抽取规则）。</strong>树模型拟合出来的函数其实是分区间的阶梯函数。</p>
-<p><strong>决策树学习：采用自顶向下的递归的方法，基本思想是以信息熵为度量构造一棵熵值下降最快的树，到叶子节点处熵值为0（叶节点中的实例都属于一类）。</strong></p>
-<p>  其次，需要了解几个重要的基本概念：根节点（最重要的特征）；父节点与子节点是一对，先有父节点，才会有子节点；叶节点（最终标签）。</p>
-<h2 id="2、熵、信息增益、信息增益率"><a href="#2、熵、信息增益、信息增益率" class="headerlink" title="2、熵、信息增益、信息增益率"></a>2、熵、信息增益、信息增益率</h2><h3 id="信息熵-Information-Entropy"><a href="#信息熵-Information-Entropy" class="headerlink" title="信息熵(Information Entropy)"></a>信息熵(Information Entropy)</h3><p>　　信息熵是用来评估样本集合的纯度的一个参数，就是说，给出一个样本集合，这个样本集合中的样本可能属于好多不同的类别，也可能只属于一个类别，那么如果属于好多不同的类别的话，我们就说这个样本是不纯的，如果只属于一个类别，那么，我们就说这个样本是纯洁的。<br>　　而信息熵这个东西就是来计算一个样本集合中的数据是纯洁的还是不纯洁的。下面上公式：<br>　　 $Ent(D)=-\sum_{k=1}^{\left|y\right|}p_{k}log_{2}p_{k}$<br>　　下面解释一下公式的意思，其实很好理解，计算一个集合的纯度，就是把集合中每一个类别所占的比例$p_k$（k从1到 $\left | y \right |$，其中 $\left | y \right |$ 表示类别的个数）乘上它的对数，然后加到一起，然后经过计算之后，可以得到一个数据集的信息熵，然后根据信息熵，可以判断这个数据集是否纯粹。信息熵越小的话，表明这个数据集越纯粹。信息熵的最小值为0，此时数据集D中只含有一个类别。</p>
-<h3 id="信息增益-Information-Gain"><a href="#信息增益-Information-Gain" class="headerlink" title="信息增益(Information Gain)"></a>信息增益(Information Gain)</h3><p>　　下面来介绍信息增益，所谓的信息增益，是要针对于具体的属性来讲的，比如说，数据集D中含有两个类别，分别是好人和坏人，那么，随便选择一个属性吧，比如说性别，性别这个属性中包含两个值，男人和女人，如果用男人和女人来划分数据集D的话，会得到两个集合，分别是$D_{man}$和$D_{woman}$。划分后的两个集合中各自有 好人和坏人，所以可以分别计算划分后两个集合的纯度，计算之后，把这两个集合的信息熵求加权平均$\frac{D_{man}}{D} Ent(D_{man})+\frac{D_{woman}}{D} Ent(D_{woman})$，跟之前没有划分的时候的信息熵$Ent(D)$相比较，用后者减去前者，得到的就是属性-性别对样本集D划分所得到的信息增益。可以通俗理解为，信息增益就是纯度提升值，用属性对原数据集进行划分后，得到的信息熵的差就是纯度的提升值。信息增益的公式如下： </p>
-<p>$Gain(D,a)=Ent(D)-\sum_{v=1}^{V}\frac{\left | D^{v} \right |}{\left | D \right |}Ent(D^{v})$　　<br>　　先解释一下上式中的参数，D是数据集，a是选择的属性，a中一共有V个取值，用这个V取值去划分数据集D，分别得到数据集$D_1$到$D_V$，分别求这V个数据集的信息熵，并将其求加权平均。两者的差得到的就是信息增益。<br>　　那么这个信息增益有什么用呢？有用，可以根据信息增益值的大小来判断是否要用这个属性a去划分数据集D，如果得到的信息增益比较大，那么就说明这个属性是用来划分数据集D比较好的属性，否则则认为该属性不适合用来划分数据集D。这样有助于去构建决策树。<br>　　著名的<strong>算法ID3</strong>就是<strong>采用信息增益</strong>来作为判断是否用该属性划分数据集的标准。</p>
-<h3 id="信息增益率-Information-Gain-Ratio"><a href="#信息增益率-Information-Gain-Ratio" class="headerlink" title="信息增益率(Information Gain Ratio)"></a>信息增益率(Information Gain Ratio)</h3><p>　　为什么要提出信息增益率这种评判划分属性的方法？信息增益不是就很好吗？其实不然，用信息增益作为评判划分属性的方法其实是有一定的缺陷的，书上说，信息增益准则对那些属性的取值比较多的属性有所偏好，也就是说，采用信息增益作为判定方法，会倾向于去选择属性取值比较多的属性。那么，选择取值多的属性为什么就不好了呢？举个比较极端的例子，如果将身份证号作为一个属性，那么，其实每个人的身份证号都是不相同的，也就是说，有多少个人，就有多少种取值，它的取值很多吧，让我们继续看，如果用身份证号这个属性去划分原数据集D，那么，原数据集D中有多少个样本，就会被划分为多少个子集，每个子集只有一个人，这种极端情况下，因为一个人只可能属于一种类别，好人，或者坏人，那么此时每个子集的信息熵就是0了，就是说此时每个子集都特别纯。这样的话，会导致信息增益公式的第二项$\sum_{v=1}^{V}\frac{\left | D^{v} \right |}{\left | D \right |}Ent(D^{v})$整体为0，这样导致的结果是，信息增益计算出来的特别大，然后决策树会用身份证号这个属性来划分原数据集D，其实这种划分毫无意义。因此，为了改变这种不良偏好带来的不利影响，提出了采用信息增益率作为评判划分属性的方法。<br>　　公式如下：<br>　　 $Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}$<br>　　其中$IV(a)$的计算方式如下：<br>　　 $IV(a)=-\sum_{v=1}^{V}\frac{\left | D^v \right |}{\left | D \right |}log_2\frac{\left | D^v \right |}{\left | D \right |}$<br>　　$IV(a)$被称为是的“固有值”，这个$IV(a)$的公式是不是很熟悉啊，简直和信息熵的计算公式一毛一样，就是看属性a的纯度，如果a只含有少量的取值的话，那么a的纯度就比较高，否则的话，a的取值越多，a的纯度越低，$IV(a)$的值也就越大，因此，最后得到的信息增益率就越低。<br>　　采用信息增益率可以解决ID3算法中存在的问题(ID3会对那些属性的取值比较多的属性有所偏好，如西瓜的颜色有10种)，因此将采用信息增益率作为判定划分属性好坏的方法称为C4.5。<br>　　需要注意的是，<em>增益率准则对属性取值较少的时候会有偏好</em>，为了解决这个问题，C4.5并不是直接选择增益率最大的属性作为划分属性，而是之前先通过一遍筛选，先把信息增益低于平均水平的属性剔除掉，之后从剩下的属性中选择信息增益率最高的，这样的话，相当于两方面都得到了兼顾。 （结合信息增益与信息增益率使用）</p>
-<p>采用信息增益率可以解决ID3算法中存在的问题，因此将采用信息增益率作为判定划分属性好坏的方法称为C4.5。需要注意的是，增益率准则对属性取值较少的时候会有偏好，为了解决这个问题，C4.5并不是直接选择增益率最大的属性作为划分属性，而是之前先通过一遍筛选，先把信息增益低于平均水平的属性剔除掉，之后从剩下的属性中选择信息增益率最高的，这样的话，相当于两方面都得到了兼顾。 </p>
-<h3 id="基尼指数-gini-index-CART中使用"><a href="#基尼指数-gini-index-CART中使用" class="headerlink" title="基尼指数(gini index):CART中使用"></a>基尼指数(gini index):CART中使用</h3><p>定义：</p>
-<ul>
-<li>是一种不等性度量；</li>
-<li>通常用来度量收入不平衡，可以用来度量任何不均匀分布；</li>
-<li>是介于0~1之间的数，0-完全相等，1-完全不相等；</li>
-<li>总体内包含的类别越杂乱，基尼指数就越大</li>
-</ul>
-<h4 id="基尼不纯度指标"><a href="#基尼不纯度指标" class="headerlink" title="基尼不纯度指标"></a>基尼不纯度指标</h4><p>在CART算法中, 基尼不纯度表示一个随机选中的样本在子集中被分错的可能性。基尼不纯度为这个样本被选中的概率乘以它被分错的概率。当一个节点中所有样本都是一个类时，基尼不纯度为零。<br>假设y的可能取值为{1, 2, …, m},令fifi是样本被赋予i的概率，则基尼指数可以通过如下计算： </p>
-<p>$\begin{aligned} \operatorname{Gini}(D) &amp;=\sum_{k=1}^{|\mathcal{Y}|} \sum_{k^{\prime} \neq k} p_{k} p_{k^{\prime}} \\ &amp;=1-\sum_{k=1}^{|\mathcal{Y}|} p_{k}^{2} \end{aligned}$</p>
-<p>反映了从D中随机抽取两个样例，其类别标签不一致的概率。</p>
-
-          
+          机器学习笔记_02决策树与随机森林[TOC]
+从LR到决策树1、总体流程与核心问题首先，在了解树模型之前，自然想到线性模型和树模型有什么区别呢？其中最重要的是，树形模型是一个一个特征进行处理，之前线性模型是所有特征给予权重相加得到一个新的值。决策树与逻辑回归的分类区别也在于此，逻辑回归是将所有特征通
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/13/机器学习笔记_02决策树与随机森林/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2198,129 +1759,23 @@ l o s s=\sum_{(u, i) \in D}\left(p(u, i)-p^{L F M}(u, i)\right)^{2}</script><p>�
       
         
           
-            <h1 id="机器学习笔记-01线性回归和逻辑回归"><a href="#机器学习笔记-01线性回归和逻辑回归" class="headerlink" title="机器学习笔记_01线性回归和逻辑回归"></a>机器学习笔记_01线性回归和逻辑回归</h1><p>[TOC]</p>
-<h3 id="一、什么是机器学习"><a href="#一、什么是机器学习" class="headerlink" title="一、什么是机器学习"></a>一、什么是机器学习</h3><p>利用大量的数据样本，使得计算机通过不断的学习获得一个模型，用来对新的未知数据做预测。</p>
-<ul>
-<li><strong>有监督学习（分类、回归）</strong></li>
-</ul>
-<p>同时将数据样本和标签输入给模型，模型学习到数据和标签的映射关系，从而对新数据进行预测。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-35506d38cbd5e8cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<ul>
-<li><p><strong>无监督学习（聚类）</strong><br>只有数据，没有标签，模型通过总结规律，从数据中挖掘出信息。<br><img src="https://upload-images.jianshu.io/upload_images/13821160-2d6b2857e3cd1378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</li>
-<li><p><strong>强化学习</strong><br>强化学习会在没有任何标签的情况下，通过先尝试做出一些行为得到一个结果，通过这个结果是对还是错的反馈，调整之前的行为，就这样不断的调整，算法能够学习到在什么样的情况下选择什么样的行为可以得到最好的结果。</p>
-</li>
-</ul>
-<p>就好比你有一只还没有训练好的小狗，每当它把屋子弄乱后，就减少美味食物的数量（惩罚），每次表现不错时，就加倍美味食物的数量（奖励），那么小狗最终会学到一个知识，就是把客厅弄乱是不好的行为。</p>
-<p>【David Silve强化学习课程】：</p>
-<ul>
-<li>推荐David Silver的Reinforcement Learning Course</li>
-<li>课件链接：<a href="https://github.com/enfangzhong/DavidSilverRLPPT" target="_blank" rel="noopener">https://github.com/enfangzhong/DavidSilverRLPPT</a></li>
-</ul>
-<ul>
-<li><strong>机器学习基本术语与概念</strong><br><img src="https://upload-images.jianshu.io/upload_images/13821160-4ab12fca72407710.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
-</ul>
-<h3 id="二、线性回归"><a href="#二、线性回归" class="headerlink" title="二、线性回归"></a>二、线性回归</h3><p>利用大量的样本$D=\left(x_{i}, y_{i}\right)_{i=1}^{N}$，通过有监督的学习，学习到由x到y的映射f，利用该映射关系对未知的数据进行预估，因为y为连续值，所以是回归问题。<br><img src="https://upload-images.jianshu.io/upload_images/13821160-c7abfa8040768809.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<ul>
-<li><p><strong>单变量情况</strong><br><img src="https://upload-images.jianshu.io/upload_images/13821160-b0faa2b1aace28ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-</li>
-<li><p><strong>多变量情况</strong></p>
-</li>
-</ul>
-<p>二维空间的直线，转化为高维空间的平面<br><img src="https://upload-images.jianshu.io/upload_images/13821160-0d11e9c8317bd70c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h4 id="2-1-线性回归的表达式"><a href="#2-1-线性回归的表达式" class="headerlink" title="2.1 线性回归的表达式"></a>2.1 线性回归的表达式</h4><p>机器学习是数据驱动的算法，数据驱动=数据+模型，模型就是输入到输出的映射关系。</p>
-<p><strong>模型=假设函数（不同的学习方式）+优化</strong></p>
-<h5 id="1-假设函数"><a href="#1-假设函数" class="headerlink" title="1. 假设函数"></a><strong>1. 假设函数</strong></h5><p>线性回归的假设函数（$\theta_{0}$表示截距项，$x_0=1$,方便矩阵表达）：</p>
-<p>$f(x)=\theta_{0} x_{0}+\theta_{1} x_{1}+\theta_{2} x_{2} \ldots+\theta_{n} x_{n}$<br>向量形式（θ,x都是列向量）：<br>$f(x)=\theta^{T} x$<br><img src="https://upload-images.jianshu.io/upload_images/13821160-f8f5cbafb89b3e1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h5 id="2-优化方法"><a href="#2-优化方法" class="headerlink" title="2. 优化方法"></a><strong>2. 优化方法</strong></h5><p>监督学习的优化方法=损失函数+对损失函数的优化</p>
-<h5 id="3-损失函数"><a href="#3-损失函数" class="headerlink" title="3. 损失函数"></a><strong>3. 损失函数</strong></h5><p><strong>如何衡量已有的参数$\theta$的好坏？</strong></p>
-<p>利用损失函数来衡量，损失函数度量预测值和标准答案的偏差，不同的参数有不同的偏差，所以要通过最小化损失函数，也就是最小化偏差来得到最好的参数。<br>映射函数:<br>$h_{\theta}(x)$<br>损失函数：<br>$J\left(\theta_{0}, \theta_{1}, \ldots, \theta_{n}\right)=\frac{1}{2 m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}$</p>
-<p>解释：因为有m个样本，所以要平均，分母的2是为了求导方便</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-d443068c17710143.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>最小化损失函数（ loss function）：凸函数</p>
-<h5 id="4-损失函数的优化"><a href="#4-损失函数的优化" class="headerlink" title="4. 损失函数的优化"></a><strong>4. 损失函数的优化</strong></h5><p>损失函数如右图所示，是一个凸函数，我们的目标是达到最低点，也就是使得损失函数最小。<br><img src="https://upload-images.jianshu.io/upload_images/13821160-292b6853d5dc92f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>多元情况下容易出现局部极值</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-c63f4eea68c08364.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>求极值的数学思想，对公式求导=0即可得到极值，但是工业上计算量很大，公式很复杂，所以从计算机的角度来讲，求极值是利用<strong>梯度下降</strong>法。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-7443d50d51ca57ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>① 初始位置选取很重要</p>
-<p>② 复梯度方向更新，二维情况下，函数变换最快的方向是斜率方向，多维情况下就成为梯度，梯度表示函数值增大的最快的方向，所以要在负梯度方向上进行迭代。</p>
-<p>③ θ的更新公式如上图，每个参数 $\theta_1,\theta_2…$ 都是分别更新的</p>
-<p><strong>高维情况：梯度方向就是垂直于登高线的方向</strong></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-8d5ce93c1c479b77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>参数更新示例：<br><img src="https://upload-images.jianshu.io/upload_images/13821160-de69bf224159c8b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>对每个theta都进行更新：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-6bd3d85040ae207c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><strong>学习率：</strong></p>
-<p>① 学习率太大，会跳过最低点，可能不收敛<br>② 学习率太小收敛速度过慢<br><img src="https://upload-images.jianshu.io/upload_images/13821160-eb31e7887213a716.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h5 id="5-过拟合和欠拟合（underfitting-vs-overfitting）"><a href="#5-过拟合和欠拟合（underfitting-vs-overfitting）" class="headerlink" title="5. 过拟合和欠拟合（underfitting vs overfitting）"></a><strong>5. 过拟合和欠拟合（underfitting vs overfitting）</strong></h5><p><img src="https://upload-images.jianshu.io/upload_images/13821160-badb385bdff9b674.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><strong>过拟合的原因：</strong><br>① 如果我们有很多的特征或模型很复杂，则假设函数曲线可以对训练样本拟合的非常好$\left(J(\theta)=\frac{1}{2 m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2} \approx 0\right)$，学习能力太强了，但是丧失了一般性。从而导致对新给的待预测样本，预测效果差.<br>② 眼见不一定为实，训练样本中肯定存在噪声点，如果全都学习的话肯定会将噪声也学习进去。</p>
-<p><strong>过拟合造成什么结果：</strong></p>
-<p>过拟合是给参数的自由空间太大了，可以通过简单的方式让参数变化太快，并未学习到底层的规律，模型抖动太大，很不稳定，variance变大，对新数据没有泛化能力。</p>
-<p>所有的模型都可能存在过拟合的风险：</p>
-<ul>
-<li>更多的参数，更复杂的模型，意味着有更强的能力， 但也更可能无法无天</li>
-<li>眼见不一定为实，你看到的内容不一定是全部真实的数据分布，死记硬背不太好</li>
-</ul>
-<h5 id="6-利用正则化解决过拟合问题"><a href="#6-利用正则化解决过拟合问题" class="headerlink" title="6. 利用正则化解决过拟合问题"></a><strong>6. 利用正则化解决过拟合问题</strong></h5><p>正则化的作用：</p>
-<p>① 控制参数变化幅度，对变化大的参数惩罚，不让模型“无法无天”</p>
-<p>② 限制参数搜索空间</p>
-<p>添加正则化的损失函数<br>$J\left(\theta_{0}, \theta_{1}, \ldots, \theta_{n}\right)=\frac{1}{2 m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}-y^{(i)}\right)^{2}+\frac{\lambda}{2 m} \sum_{j=1}^{n} \theta_{j}^{2}\right.$</p>
-<p>m：样本有m个<br>n：n个参数，对n个参数进行惩罚<br>λ：对误差的惩罚程度，λ 越大对误差的惩罚越大，容易出现过拟合，λ越小，对误差的惩罚越小，对误差的容忍度越大，泛化能力好。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-178c1c611a9baa50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h5 id="7-线性回归代码实例"><a href="#7-线性回归代码实例" class="headerlink" title="7. 线性回归代码实例"></a><strong>7. 线性回归代码实例</strong></h5><p><img src="https://upload-images.jianshu.io/upload_images/13821160-a9ce7b446e79d84e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h3 id="三、逻辑回归"><a href="#三、逻辑回归" class="headerlink" title="三、逻辑回归"></a>三、逻辑回归</h3><p>监督学习，解决二分类问题。</p>
-<p>分类的本质：在空间中找到一个决策边界来完成分类的决策</p>
-<p>逻辑回归：线性回归可以预测连续值，但是不能解决分类问题，我们需要根据预测的结果判定其属于正类还是负类。所以逻辑回归就是将线性回归的$(-\infty,+\infty)$结果，通过sigmoid函数映射到(0,1) 之间。<br>线性回归决策函数：$h_{\theta}(x)=\theta^{T} x$</p>
-<p><strong>sigmoid函数：</strong><br>$g(z)=\frac{1}{1+e^{-z}}$</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-94308262a2bd4d59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>① 可以对$(-\infty,+\infty)$结果，映射到(0,1) 之间，作为概率。</p>
-<p>② $x<0,$ sigmoid(x)$<\frac{1}{2}="" ;="" x="">0,$ sigmoid $(x)&gt;\frac{1}{2}$，可以将$ \frac{1}{2} $作为决策边界。</0,$></p>
-<p>③ 数学特性好，求导容易：$g^{\prime}(z)=g(z) \cdot(1-g(z))$</p>
-<h5 id="逻辑回归的决策函数"><a href="#逻辑回归的决策函数" class="headerlink" title="逻辑回归的决策函数"></a><strong>逻辑回归的决策函数</strong></h5><p>将线性回归决策函数通过sigmoid函数，获得逻辑回归的决策函数：$h_{\theta}(x)=g\left(\theta_{0}+\theta_{1} x_{1}+\theta_{2} x_{2}\right)=\frac{1}{1+e^{-\theta^T {x}}}$</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-88532ed9a1685b87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h4 id="3-1-逻辑回归的损失函数"><a href="#3-1-逻辑回归的损失函数" class="headerlink" title="3.1 逻辑回归的损失函数"></a>3.1 逻辑回归的损失函数</h4><p>线性回归的损失函数为平方损失函数，如果将其用于逻辑回归的损失函数，则其数学特性不好，有很多局部极小值，难以用梯度下降法求最优。<br>$J(\theta)=\frac{1}{m} \sum_{i=1}^{m} \frac{1}{2}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}$</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-cdf9addb70bd5a96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-0b6d1fe731b0b756.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><strong>逻辑回归损失函数：对数损失函数</strong></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-21d98340590f161d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>解释：如果一个样本为正样本，那么我们希望将其预测为正样本的概率p越大越好，也就是决策函数的值越大越好，则logp越大越好，逻辑回归的决策函数值就是样本为正的概率；</p>
-<p>如果一个样本为负样本，那么我们希望将其预测为负样本的概率越大越好，也就是(1-p)越大越好，即log(1-p)越大越好。</p>
-<p><strong>为什么要用log：</strong></p>
-<p>样本集中有很多样本，要求其概率连乘，概率为(0,1)间的数，连乘越来越小，利用log变换将其变为连加，不会溢出，不会超出计算精度。</p>
-<p><strong>逻辑回归损失函数：</strong><br><img src="https://upload-images.jianshu.io/upload_images/13821160-6344d206b32e3ff8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-0a3c7f18d7da5746.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>$\frac{\partial J(\theta)}{\partial \theta_{j}}=\frac{1}{m}\left[\sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right) x_{j}^{(i)}\right]$</p>
-<h4 id="3-2-逻辑回归实现多分类"><a href="#3-2-逻辑回归实现多分类" class="headerlink" title="3.2 逻辑回归实现多分类"></a>3.2 逻辑回归实现多分类</h4><p><img src="https://upload-images.jianshu.io/upload_images/13821160-e1a911c78ec981b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<ul>
-<li><p>一对一(one vs one)<br>一对一分类，每两个类之间构建一个分类器，共需要$\frac{N(N-1)}{2} $ 个分类器</p>
-</li>
-<li><p>一对多（one vs rest）<br>一对多分类器，每个分类器判断是三角形还是不是三角形，共需要N个分类器。</p>
-</li>
-</ul>
-<h4 id="3-3-逻辑回归代码实现"><a href="#3-3-逻辑回归代码实现" class="headerlink" title="3.3 逻辑回归代码实现"></a>3.3 逻辑回归代码实现</h4><p><img src="https://upload-images.jianshu.io/upload_images/13821160-effbaad8b507c739.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-98a0baf55abffa97.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-9be3cbfb874309d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-fba5c8c8fbba9422.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-d23d01f413a344d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>四、LR的特点<br>可解释性高，工业中可控度高。<br><img src="https://upload-images.jianshu.io/upload_images/13821160-2740c90b17518171.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13821160-686751f431a93f56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h3 id="五、-为什么逻辑回归比线性回归好"><a href="#五、-为什么逻辑回归比线性回归好" class="headerlink" title="五、 为什么逻辑回归比线性回归好"></a>五、 为什么逻辑回归比线性回归好</h3><p>虽然逻辑回归能够用于分类，不过其本质还是线性回归。它仅在线性回归的基础上，在特征到结果的映射中加入了一层sigmoid函数（非线性）映射，即先把特征线性求和，然后使用sigmoid函数来预测。</p>
-<p>这主要是由于线性回归在整个实数域内敏感度一致，而分类范围，需要在[0,1]之内。而逻辑回归就是一种减小预测范围，将预测值限定为[0,1]间的一种回归模型，其回归方程与回归曲线如下图所示。逻辑曲线在z=0时，十分敏感，在z&gt;&gt;0或z&lt;&lt;0处，都不敏感，将预测值限定为(0,1)。</p>
-<p>LR在线性回归的实数范围输出值上施加sigmoid函数将值收敛到0~1范围, 其目标函数也因此从差平方和函数变为对数损失函数, 以提供最优化所需导数（sigmoid函数是softmax函数的二元特例, 其导数均为函数值的f*(1-f)形式）。请注意, LR往往是解决二元0/1分类问题的, 只是它和线性回归耦合太紧, 不自觉也冠了个回归的名字(马甲无处不在). 若要求多元分类,就要把sigmoid换成大名鼎鼎的softmax了。</p>
-<p>首先逻辑回归和线性回归首先都是广义的线性回归，其次经典线性模型的优化目标函数是最小二乘，而逻辑回归则是似然函数，另外线性回归在整个实数域范围内进行预测，敏感度一致，而分类范围，需要在[0,1]。逻辑回归就是一种减小预测范围，将预测值限定为[0,1]间的一种回归模型，因而对于这类问题来说，逻辑回归的鲁棒性比线性回归的要好。</p>
-<p>逻辑回归的模型本质上是一个线性回归模型，逻辑回归都是以线性回归为理论支持的。但线性回归模型无法做到sigmoid的非线性形式，sigmoid可以轻松处理0/1分类问题。</p>
-<h3 id="六、-LR和SVM的关系"><a href="#六、-LR和SVM的关系" class="headerlink" title="六、 LR和SVM的关系"></a>六、 LR和SVM的关系</h3><p>1、LR和SVM都可以处理分类问题，且一般都用于处理线性二分类问题（在改进的情况下可以处理多分类问题）</p>
-<p>2、两个方法都可以增加不同的正则化项，如l1、l2等等。所以在很多实验中，两种算法的结果是很接近的。</p>
-<p>区别：</p>
-<p>1、LR是参数模型，SVM是非参数模型。</p>
-<p>2、从目标函数来看，区别在于逻辑回归采用的是logistical loss，SVM采用的是hinge loss，这两个损失函数的目的都是增加对分类影响较大的数据点的权重，减少与分类关系较小的数据点的权重。</p>
-<p>3、SVM的处理方法是只考虑support vectors，也就是和分类最相关的少数点，去学习分类器。而逻辑回归通过非线性映射，大大减小了离分类平面较远的点的权重，相对提升了与分类最相关的数据点的权重。</p>
-<p>4、逻辑回归相对来说模型更简单，好理解，特别是大规模线性分类时比较方便。而SVM的理解和优化相对来说复杂一些，SVM转化为对偶问题后,分类只需要计算与少数几个支持向量的距离,这个在进行复杂核函数计算时优势很明显,能够大大简化模型和计算。</p>
-<p>5、logic 能做的 svm能做，但可能在准确率上有问题，svm能做的logic有的做不了。</p>
-<p>博客中的PPT笔记地址：<a href="https://github.com/enfangzhong/ML_Material" target="_blank" rel="noopener">https://github.com/enfangzhong/ML_Material</a><br>（感谢七月在线机器学习课程。仅供学习交流,严禁用于商业用途）</p>
+          机器学习笔记_01线性回归和逻辑回归[TOC]
+一、什么是机器学习利用大量的数据样本，使得计算机通过不断的学习获得一个模型，用来对新的未知数据做预测。
 
-          
+有监督学习（分类、回归）
+
+同时将数据样本和标签输入给模型，模型学习到数据和标签的映射关系，从而对新数据进行预测。
+
+
+无监督学习（聚类）只有数据
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/10/机器学习笔记_01线性回归和逻辑回归/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2501,22 +1956,15 @@ l o s s=\sum_{(u, i) \in D}\left(p(u, i)-p^{L F M}(u, i)\right)^{2}</script><p>�
       
         
           
-            <h2 id="内连接、左外连接、右外连接、交叉连接区别"><a href="#内连接、左外连接、右外连接、交叉连接区别" class="headerlink" title="内连接、左外连接、右外连接、交叉连接区别"></a>内连接、左外连接、右外连接、交叉连接区别</h2><p>在之前，我对MSSQL中的内连接和外连接所得出的数据集不是很清楚。这几天重新温习了一下SQL的书本，现在的思路应该是很清楚了，现在把自己的理解发出来给大家温习下。希望和我一样对SQL的连接语句不太理解的朋友能够有所帮助。（发这么菜的教程，各位大大们别笑话偶了，呵:D ） 有两个表A和表B。表A结构如下： Aid：int；标识种子，主键，自增ID Aname：varchar 数据情况，即用select * from A出来的记录情况如下图1所示：</p>
-<p><img src="/2018/10/17/SQL内连接、左外连接、右外连接、交叉连接区别/20181017111507739.png" alt=""><br>图1:A表数据</p>
-<p>表B结构如下： Bid：int；标识种子，主键，自增ID Bnameid：int 数据情况，即用select * from B出来的记录情况如下图2所示：<br> <img src="/2018/10/17/SQL内连接、左外连接、右外连接、交叉连接区别/20181017111601913.png" alt=""></p>
-<p>图2:B表数据</p>
-<p>为了把Bid和Aid加以区分，不让大家有误解，所以把Bid的起始种子设置为100。有SQL基本知识的人都知道，两个表要做连接，就必须有个连接字段，从上表中的数据可以看出，在A表中的Aid和B表中的Bnameid就是两个连接字段。下图3说明了连接的所有记录集之间的关系：<br> <img src="/2018/10/17/SQL内连接、左外连接、右外连接、交叉连接区别/20181017111618065.png" alt=""><br>图3:连接关系图 </p>
-<p>现在我们对内连接和外连接一一讲解。 1.内连接：利用内连接可获取两表的公共部分的记录，即图3的记录集C 语句如下：Select <em> from A JOIN B ON A.Aid=B.Bnameid 运行结果如下图4所示：其实select </em> from A,B where A.Aid=B.Bnameid与Select * from A JOIN B ON A.Aid=B.Bnameid的运行结果是一样的。<br> <img src="/2018/10/17/SQL内连接、左外连接、右外连接、交叉连接区别/20181017111637904.png" alt=""><br>图4:内连接数据</p>
-<p> 2.外连接：外连接分为两种，一种是左连接（Left JOIN）和右连接（Right JOIN）<br> (1)左连接（Left JOIN）：即图3公共部分记录集C＋表A记录集A1。<br> 语句如下：select * from A Left JOIN B ON A.Aid=B.Bnameid<br>运行结果如下图5所示：<br> <img src="/2018/10/17/SQL内连接、左外连接、右外连接、交叉连接区别/20181017111658117.png" alt=""></p>
-<p>图5:左连接数据</p>
-<p>说明：在语句中，A在B的左边，并且是Left Join，所以其运算方式为：A左连接B的记录=图3公共部分记录集C＋表A记录集A1<br>在图3中即记录集C中的存在的Aid为：2 3 6 7 8<br>图1中即表A所有记录集A中存在的Aid为：1 2 3 4 5 6 7 8 9<br>表A记录集A1中存在的Aid=(图1中即A表中所有Aid)-(图3中即记录集C中存在的Aid)，最终得出为：1 4 5 9<br>由此得出图5中A左连接B的记录=图3公共部分记录集C＋表A记录集A1, 最终得出的结果图5中可以看出Bnameid及Bid非NULL的记录都为图3公共部分记录集C中的记录；Bnameid及Bid为NULL的Aid为1 4 5 9的四笔记录就是表A记录集A1中存在的Aid。</p>
-<p>(2)右连接（Right JOIN）：即图3公共部分记录集C＋表B记录集B1。</p>
-<p>语句如下：select * from A Right JOIN B ON A.Aid=B.Bnameid   运行结果如下图6所示：<br> <img src="/2018/10/17/SQL内连接、左外连接、右外连接、交叉连接区别/20181017111728233.png" alt=""><br>图6:右连接数据 </p>
-<p>说明： 在语句中，A在B的左边，并且是Right Join，所以其运算方式为：A右连接B的记录=图3公共部分记录集C＋表B记录集B1<br>在图3中即记录集C中的存在的Aid为：2 3 6 7 8<br>图2中即表B所有记录集B中存在的Bnameid为：2 3 6 7 8 11<br>表B记录集B1中存在的Bnameid=(图2中即B表中所有Bnameid)-(图3中即记录集C中存在的Aid)，最终得出为：11<br>由此得出图6中A右连接B的记录=图3公共部分记录集C＋表B记录集B1, 最终得出的结果图6中可以看出Aid及Aname非NULL的记录都为图3公共部分记录集C中的记录；Aid及Aname为NULL的Aid为11的记录就是表B记录集B1中存在的Bnameid。    </p>
-<p>交叉连接：两张表联合没有条件情况下，条数 = 图1 * 图2</p>
-<p>交叉连接不带WHERE子句，它返回被连接的两个表所有数据行的笛卡尔积，返回结果集合中的数据行数等于第一个表中符合查询条件的数据行数乘以第二个表中符合查询条件的数据行数。</p>
-
-          
+          内连接、左外连接、右外连接、交叉连接区别在之前，我对MSSQL中的内连接和外连接所得出的数据集不是很清楚。这几天重新温习了一下SQL的书本，现在的思路应该是很清楚了，现在把自己的理解发出来给大家温习下。希望和我一样对SQL的连接语句不太理解的朋友能够有所帮助。（发这么菜的教程，各位大大们别笑话偶了，
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/10/17/SQL内连接、左外连接、右外连接、交叉连接区别/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
