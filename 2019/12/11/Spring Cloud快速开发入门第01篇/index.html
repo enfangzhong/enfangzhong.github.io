@@ -134,7 +134,7 @@
   </script>
 
   <meta name="description" content="0.学习目标 了解系统架构的演变 了解RPC与Http的区别 知道什么是SpringCloud 独立搭建Eureka注册中心 独立配置Robbin负载均衡  1.系统架构演变随着互联网的发展，网站应用的规模不断扩大。需求的激增，带来的是技术上的压力。系统架构也因此不断的演进、升级、迭代。从单一应用，到垂直拆分，到分布式服务，到SOA，以及现在火热的微服务架构，还有在Google带领下来势汹涌的Se">
-<meta name="keywords" content="Spring Cloud,微服务">
+<meta name="keywords" content="微服务,Spring Cloud">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Cloud快速开发入门第01篇">
 <meta property="og:url" content="http://enfangzhong.github.io/2019/12/11/Spring Cloud快速开发入门第01篇/index.html">
@@ -1307,9 +1307,9 @@ function setSidebarMarginTop (headerOffset) {
       
         <div class="post-tags">
           
-            <a href="/tags/Spring-Cloud/" rel="tag"><i class="fa fa-tag"></i> Spring Cloud</a>
-          
             <a href="/tags/微服务/" rel="tag"><i class="fa fa-tag"></i> 微服务</a>
+          
+            <a href="/tags/Spring-Cloud/" rel="tag"><i class="fa fa-tag"></i> Spring Cloud</a>
           
         </div>
       
@@ -2208,6 +2208,14 @@ setInterval("createtime()",250);
       }, 100);
    }
 
+
+$(document).ready(function(){
+    $('.vemoji-btn').text('😀');
+    $("#vcomments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+})
 
   </script>
 

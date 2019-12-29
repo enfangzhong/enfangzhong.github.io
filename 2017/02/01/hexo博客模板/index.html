@@ -672,8 +672,8 @@ function setSidebarMarginTop (headerOffset) {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/26/Hexo个人博客_hexo+github搭建个人博客及美化更新/" rel="prev" title="hexo+github搭建个人博客及美化">
-                hexo+github搭建个人博客及美化 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/26/Hexo个人博客_主题优化篇/" rel="prev" title="Hexo个人博客_主题优化篇">
+                Hexo个人博客_主题优化篇 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1548,6 +1548,14 @@ setInterval("createtime()",250);
       }, 100);
    }
 
+
+$(document).ready(function(){
+    $('.vemoji-btn').text('😀');
+    $("#vcomments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+})
 
   </script>
 

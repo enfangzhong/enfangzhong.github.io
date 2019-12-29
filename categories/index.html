@@ -147,8 +147,6 @@
 <meta name="twitter:description" content="你若晴天，我便安好。">
 
 
-  
-
 
   <link rel="alternate" href="/atom.xml" title="AnFrank's Blog" type="application/atom+xml">
 
@@ -1424,6 +1422,14 @@ setInterval("createtime()",250);
       }, 100);
    }
 
+
+$(document).ready(function(){
+    $('.vemoji-btn').text('😀');
+    $("#vcomments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+})
 
   </script>
 
