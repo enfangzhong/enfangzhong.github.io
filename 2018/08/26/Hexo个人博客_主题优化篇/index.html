@@ -667,8 +667,8 @@ function setSidebarMarginTop (headerOffset) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/01/hexo博客模板/" rel="next" title="hexo博客写文章模板">
-                <i class="fa fa-chevron-left"></i> hexo博客写文章模板
+              <a href="/2018/08/26/Hexo个人博客_hexo+github搭建个人博客及美化更新/" rel="next" title="hexo+github搭建个人博客及美化">
+                <i class="fa fa-chevron-left"></i> hexo+github搭建个人博客及美化
               </a>
             
           </div>
@@ -677,8 +677,8 @@ function setSidebarMarginTop (headerOffset) {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/26/Hexo个人博客_hexo+github搭建个人博客及美化更新/" rel="prev" title="hexo+github搭建个人博客及美化">
-                hexo+github搭建个人博客及美化 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/27/Hexo个人博客_markdown的使用方法/" rel="prev" title="markdown的使用方法">
+                markdown的使用方法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1527,7 +1527,6 @@ setInterval("createtime()",250);
 
   <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
   <script src="/js/src/Valine.min.js"></script>
-  // <script src="/js/src/valine1.3.4.js"></script>
 
   <!-- https://deserts.io/diy-a-comment-system/ -->
   <script type="text/javascript">
@@ -1543,14 +1542,17 @@ setInterval("createtime()",250);
   });
 
 
-  // if(window.location.hash){
-  //       var checkExist = setInterval(function() {
-  //          if ($(window.location.hash).length) {
-  //             $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
-  //             clearInterval(checkExist);
-  //          }
-  //       }, 100);
-  //   }
+
+  <!--点击邮件中的链接跳转至相应评论-->
+  if(window.location.hash){
+      var checkExist = setInterval(function() {
+         if ($(window.location.hash).length) {
+            $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+            clearInterval(checkExist);
+         }
+      }, 100);
+   }
+
 
   </script>
 
