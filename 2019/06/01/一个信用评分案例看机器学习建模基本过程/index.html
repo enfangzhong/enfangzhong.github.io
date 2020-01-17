@@ -1,0 +1,2409 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+
+  <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+  
+
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/favicon-32x32-next.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "9494e80d"
+    });
+  daovoice('update');
+  </script>
+
+  <meta name="description" content="[TOC] machine learning for credit scoring一个信用评分案例看机器学习建模基本过程Banks play a crucial role in market economies. They decide who can get finance and on what terms and can make or break investment decisions.">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个信用评分案例看机器学习建模基本过程">
+<meta property="og:url" content="http://enfangzhong.github.io/2019/06/01/一个信用评分案例看机器学习建模基本过程/index.html">
+<meta property="og:site_name" content="AnFrank&#39;s Blog">
+<meta property="og:description" content="[TOC] machine learning for credit scoring一个信用评分案例看机器学习建模基本过程Banks play a crucial role in market economies. They decide who can get finance and on what terms and can make or break investment decisions.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/一个信用评分案例看机器学习建模基本过程/output_11_1.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/一个信用评分案例看机器学习建模基本过程/output_57_1.png">
+<meta property="og:image" content="http://enfangzhong.github.io/2019/06/01/一个信用评分案例看机器学习建模基本过程/output_57_2.png">
+<meta property="og:updated_time" content="2020-01-14T08:49:58.933Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个信用评分案例看机器学习建模基本过程">
+<meta name="twitter:description" content="[TOC] machine learning for credit scoring一个信用评分案例看机器学习建模基本过程Banks play a crucial role in market economies. They decide who can get finance and on what terms and can make or break investment decisions.">
+<meta name="twitter:image" content="http://enfangzhong.github.io/2019/06/01/一个信用评分案例看机器学习建模基本过程/output_11_1.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="AnFrank's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://enfangzhong.github.io/2019/06/01/一个信用评分案例看机器学习建模基本过程/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>一个信用评分案例看机器学习建模基本过程 | AnFrank's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+
+
+<a href="https://github.com/enfangzhong" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><script>
+ function GetRandomNum(Min,Max)
+  {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return(Min + Math.round(Rand * Range));
+  }
+function setSidebarMarginTop (headerOffset) {
+    return $('#sidebar').css({ 'margin-top': headerOffset });
+  }
+ function getHeaderOffset () {
+    return $('.header-inner').height() + CONFIG.sidebar.offset;
+  }
+  window.onload=function(){
+    var subtitle = "世界真的很小，好像一转身，就不知道会遇见谁。W世界真的很大，好像一转身，就不知道谁会消失。W成熟是给你陌生人看的，逗比是给朋友看的，幼稚是给喜欢的人看的。w";
+     var mytitle = subtitle.split("W");
+     var max = mytitle.length-1;
+     var index = GetRandomNum(0,max);
+     var text = mytitle[index];
+     $("#helloTitle").html(text);
+     var headOffset = getHeaderOffset();
+     setSidebarMarginTop(headOffset);
+     //动态subtitle设置
+  }
+</script>
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">AnFrank's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  
+    <p style="color:#black;font-size:18px;font-family:STXingkai" id="helloTitle" class="site-subtitle"></p>
+  
+
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+    <a href="/schedule/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>微言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comments"></i> <br>留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-love">
+    <a href="/love/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>love</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-loveshow">
+    <a href="/loveshow/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>loveshow</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+
+  
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://enfangzhong.github.io/2019/06/01/一个信用评分案例看机器学习建模基本过程/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="AnFrank">
+      <meta itemprop="description" content="你若晴天，我便安好。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AnFrank's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一个信用评分案例看机器学习建模基本过程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-01 10:03:11" itemprop="dateCreated datePublished" datetime="2019-06-01T10:03:11+08:00">2019-06-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-01-14 16:49:58" itemprop="dateModified" datetime="2020-01-14T16:49:58+08:00">2020-01-14</time>
+              
+            
+          </span>
+
+
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/01/一个信用评分案例看机器学习建模基本过程/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/06/01/一个信用评分案例看机器学习建模基本过程/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-divider">|</span>
+<span title="post.wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span>文章字数： 4,779</span>
+
+<span class="post-meta-divider">|</span>
+<span title="post.min2read"><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span>阅读时长： 22分钟</span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h2 id="machine-learning-for-credit-scoring"><a href="#machine-learning-for-credit-scoring" class="headerlink" title="machine learning for credit scoring"></a>machine learning for credit scoring</h2><h3 id="一个信用评分案例看机器学习建模基本过程"><a href="#一个信用评分案例看机器学习建模基本过程" class="headerlink" title="一个信用评分案例看机器学习建模基本过程"></a>一个信用评分案例看机器学习建模基本过程</h3><p>Banks play a crucial role in market economies. They decide who can get finance and on what terms and can make or break investment decisions. For markets and society to function, individuals and companies need access to credit. </p>
+<p>Credit scoring algorithms, which make a guess at the probability of default, are the method banks use to determine whether or not a loan should be granted. This competition requires participants to improve on the state of the art in credit scoring, by predicting the probability that somebody will experience financial distress in the next two years. <a href="https://www.kaggle.com/c/GiveMeSomeCredit" target="_blank" rel="noopener">Dataset</a></p>
+<p>Attribute Information:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Variable Name</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SeriousDlqin2yrs</td>
+<td>Person experienced 90 days past due delinquency or worse</td>
+<td>Y/N</td>
+</tr>
+<tr>
+<td>RevolvingUtilizationOfUnsecuredLines</td>
+<td>Total balance on credit divided by the sum of credit limits</td>
+<td>percentage</td>
+</tr>
+<tr>
+<td>age</td>
+<td>Age of borrower in years</td>
+<td>integer</td>
+</tr>
+<tr>
+<td>NumberOfTime30-59DaysPastDueNotWorse</td>
+<td>Number of times borrower has been 30-59 days past due</td>
+<td>integer</td>
+</tr>
+<tr>
+<td>DebtRatio</td>
+<td>Monthly debt payments</td>
+<td>percentage</td>
+</tr>
+<tr>
+<td>MonthlyIncome</td>
+<td>Monthly income</td>
+<td>real</td>
+</tr>
+<tr>
+<td>NumberOfOpenCreditLinesAndLoans</td>
+<td>Number of Open loans</td>
+<td>integer</td>
+</tr>
+<tr>
+<td>NumberOfTimes90DaysLate</td>
+<td>Number of times borrower has been 90 days or more past due.</td>
+<td>integer</td>
+</tr>
+<tr>
+<td>NumberRealEstateLoansOrLines</td>
+<td>Number of mortgage and real estate loans</td>
+<td>integer</td>
+</tr>
+<tr>
+<td>NumberOfTime60-89DaysPastDueNotWorse</td>
+<td>Number of times borrower has been 60-89 days past due</td>
+<td>integer</td>
+</tr>
+<tr>
+<td>NumberOfDependents</td>
+<td>Number of dependents in family</td>
+<td>integer</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Read-the-data-into-Pandas-将数据读进pandas"><a href="#Read-the-data-into-Pandas-将数据读进pandas" class="headerlink" title="Read the data into Pandas 将数据读进pandas"></a>Read the data into Pandas 将数据读进pandas</h3><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">pd.set_option(<span class="string">'display.max_columns'</span>, <span class="number">500</span>)</span><br><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"><span class="keyword">with</span> zipfile.ZipFile(<span class="string">'KaggleCredit2.csv.zip'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> z:</span><br><span class="line">    f = z.open(<span class="string">'KaggleCredit2.csv'</span>)</span><br><span class="line">    data = pd.read_csv(f, index_col=<span class="number">0</span>)</span><br><span class="line">data.head()</span><br></pre></td></tr></table></figure></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SeriousDlqin2yrs</th>
+      <th>RevolvingUtilizationOfUnsecuredLines</th>
+      <th>age</th>
+      <th>NumberOfTime30-59DaysPastDueNotWorse</th>
+      <th>DebtRatio</th>
+      <th>MonthlyIncome</th>
+      <th>NumberOfOpenCreditLinesAndLoans</th>
+      <th>NumberOfTimes90DaysLate</th>
+      <th>NumberRealEstateLoansOrLines</th>
+      <th>NumberOfTime60-89DaysPastDueNotWorse</th>
+      <th>NumberOfDependents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0.766127</td>
+      <td>45.0</td>
+      <td>2.0</td>
+      <td>0.802982</td>
+      <td>9120.0</td>
+      <td>13.0</td>
+      <td>0.0</td>
+      <td>6.0</td>
+      <td>0.0</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0.957151</td>
+      <td>40.0</td>
+      <td>0.0</td>
+      <td>0.121876</td>
+      <td>2600.0</td>
+      <td>4.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0.658180</td>
+      <td>38.0</td>
+      <td>1.0</td>
+      <td>0.085113</td>
+      <td>3042.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0.233810</td>
+      <td>30.0</td>
+      <td>0.0</td>
+      <td>0.036050</td>
+      <td>3300.0</td>
+      <td>5.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0.907239</td>
+      <td>49.0</td>
+      <td>1.0</td>
+      <td>0.024926</td>
+      <td>63588.0</td>
+      <td>7.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.shape</span><br></pre></td></tr></table></figure></div>
+<pre><code>(112915, 11)
+</code></pre><h3 id="去除异常值-Drop-na"><a href="#去除异常值-Drop-na" class="headerlink" title="去除异常值 Drop na"></a>去除异常值 Drop na</h3><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.isnull().sum(axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
+<pre><code>SeriousDlqin2yrs                           0
+RevolvingUtilizationOfUnsecuredLines       0
+age                                     4267
+NumberOfTime30-59DaysPastDueNotWorse       0
+DebtRatio                                  0
+MonthlyIncome                              0
+NumberOfOpenCreditLinesAndLoans            0
+NumberOfTimes90DaysLate                    0
+NumberRealEstateLoansOrLines               0
+NumberOfTime60-89DaysPastDueNotWorse       0
+NumberOfDependents                      4267
+dtype: int64
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data.dropna(inplace=<span class="keyword">True</span>)</span><br><span class="line">data.shape</span><br></pre></td></tr></table></figure></div>
+<pre><code>(108648, 11)
+</code></pre><h3 id="创建X-和-y-Create-X-and-y"><a href="#创建X-和-y-Create-X-and-y" class="headerlink" title="创建X 和 y Create X and y"></a>创建X 和 y Create X and y</h3><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">y = data[<span class="string">'SeriousDlqin2yrs'</span>]</span><br><span class="line">X = data.drop(<span class="string">'SeriousDlqin2yrs'</span>, axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y.mean()</span><br></pre></td></tr></table></figure></div>
+<pre><code>0.06742876076872101
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.countplot(x=<span class="string">'SeriousDlqin2yrs'</span>,data=data)</span><br></pre></td></tr></table></figure></div>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x24081eb9828&gt;
+</code></pre><p><img src="/2019/06/01/一个信用评分案例看机器学习建模基本过程/output_11_1.png" alt="png"></p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#从样本中可以看出：label为1的样本偏少，可见样本失衡</span></span><br></pre></td></tr></table></figure></div>
+<h3 id="练习1：数据集准备"><a href="#练习1：数据集准备" class="headerlink" title="练习1：数据集准备"></a>练习1：数据集准备</h3><p>把数据切分成训练集和测试集</p>
+<h4 id="切分数据集"><a href="#切分数据集" class="headerlink" title="切分数据集"></a>切分数据集</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Added version check for recent scikit-learn 0.18 checks</span></span><br><span class="line"><span class="keyword">from</span> distutils.version <span class="keyword">import</span> LooseVersion <span class="keyword">as</span> Version</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> __version__ <span class="keyword">as</span> sklearn_version</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> Version(sklearn_version) &lt; <span class="string">'0.18'</span>:</span><br><span class="line">    <span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(</span><br><span class="line">    X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
+<h4 id="对连续值特征做幅度缩放"><a href="#对连续值特征做幅度缩放" class="headerlink" title="对连续值特征做幅度缩放"></a>对连续值特征做幅度缩放</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"></span><br><span class="line">stdsc=StandardScaler()</span><br><span class="line">X_train_std=stdsc.fit_transform(X_train)</span><br><span class="line">X_test_std=stdsc.transform(X_test)</span><br></pre></td></tr></table></figure></div>
+<h3 id="练习2"><a href="#练习2" class="headerlink" title="练习2"></a>练习2</h3><p>使用logistic regression/决策树/SVM/KNN…等sklearn分类算法进行分类，尝试查sklearn API了解模型参数含义，调整不同的参数。</p>
+<h4 id="logistic-regression"><a href="#logistic-regression" class="headerlink" title="logistic regression"></a>logistic regression</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line">lr = LogisticRegression(penalty=<span class="string">'l1'</span>,C=<span class="number">1000.0</span>, random_state=<span class="number">0</span>)</span><br><span class="line">lr.fit(X_train_std, y_train)</span><br><span class="line">lr</span><br></pre></td></tr></table></figure></div>
+<pre><code>LogisticRegression(C=1000.0, class_weight=None, dual=False,
+          fit_intercept=True, intercept_scaling=1, max_iter=100,
+          multi_class=&#39;ovr&#39;, n_jobs=1, penalty=&#39;l1&#39;, random_state=0,
+          solver=&#39;liblinear&#39;, tol=0.0001, verbose=0, warm_start=False)
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LogisticRegression(C=<span class="number">1000.0</span>, class_weight=<span class="keyword">None</span>, dual=<span class="keyword">False</span>,</span><br><span class="line">          fit_intercept=<span class="keyword">True</span>, intercept_scaling=<span class="number">1</span>, max_iter=<span class="number">100</span>,</span><br><span class="line">          multi_class=<span class="string">'ovr'</span>, n_jobs=<span class="number">1</span>, penalty=<span class="string">'l1'</span>, random_state=<span class="number">0</span>,</span><br><span class="line">          solver=<span class="string">'liblinear'</span>, tol=<span class="number">0.0001</span>, verbose=<span class="number">0</span>, warm_start=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure></div>
+<pre><code>LogisticRegression(C=1000.0, class_weight=None, dual=False,
+          fit_intercept=True, intercept_scaling=1, max_iter=100,
+          multi_class=&#39;ovr&#39;, n_jobs=1, penalty=&#39;l1&#39;, random_state=0,
+          solver=&#39;liblinear&#39;, tol=0.0001, verbose=0, warm_start=False)
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'训练集准确度：%f'</span>%lr.score(X_train_std,y_train))</span><br></pre></td></tr></table></figure></div>
+<pre><code>训练集准确度：0.933126
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##### 逻辑回归模型的系数</span></span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">feat_labels=data.columns[<span class="number">1</span>:]</span><br><span class="line">coefs=lr.coef_</span><br><span class="line">indices=np.argsort(coefs[<span class="number">0</span>])[::<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> range(X_train.shape[<span class="number">1</span>]):</span><br><span class="line">    print(<span class="string">'%2d) %-*s %f'</span>%(f,<span class="number">30</span>,feat_labels[indices[f]],coefs[<span class="number">0</span>,indices[f]]))</span><br></pre></td></tr></table></figure></div>
+<pre><code> 0) NumberOfTime30-59DaysPastDueNotWorse 1.728754
+ 1) NumberOfTimes90DaysLate        1.689046
+ 2) DebtRatio                      0.312098
+ 3) NumberOfDependents             0.116383
+ 4) RevolvingUtilizationOfUnsecuredLines -0.014289
+ 5) NumberOfOpenCreditLinesAndLoans -0.091911
+ 6) MonthlyIncome                  -0.115234
+ 7) NumberRealEstateLoansOrLines   -0.196422
+ 8) age                            -0.364305
+ 9) NumberOfTime60-89DaysPastDueNotWorse -3.247876
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#我的理解是权重绝对值大的特征标签比较重要</span></span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#### 决策树</span></span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br><span class="line"></span><br><span class="line">tree = DecisionTreeClassifier(criterion=<span class="string">'entropy'</span>, max_depth=<span class="number">3</span>, random_state=<span class="number">0</span>)</span><br><span class="line">tree.fit(X_train_std, y_train)</span><br></pre></td></tr></table></figure></div>
+<pre><code>DecisionTreeClassifier(class_weight=None, criterion=&#39;entropy&#39;, max_depth=3,
+            max_features=None, max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, presort=False, random_state=0,
+            splitter=&#39;best&#39;)
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DecisionTreeClassifier(class_weight=<span class="keyword">None</span>, criterion=<span class="string">'entropy'</span>, max_depth=<span class="number">3</span>,</span><br><span class="line">            max_features=<span class="keyword">None</span>, max_leaf_nodes=<span class="keyword">None</span>,</span><br><span class="line">            min_impurity_split=<span class="number">1e-07</span>, min_samples_leaf=<span class="number">1</span>,</span><br><span class="line">            min_samples_split=<span class="number">2</span>, min_weight_fraction_leaf=<span class="number">0.0</span>,</span><br><span class="line">            presort=<span class="keyword">False</span>, random_state=<span class="number">0</span>, splitter=<span class="string">'best'</span>)</span><br></pre></td></tr></table></figure></div>
+<pre><code>DecisionTreeClassifier(class_weight=None, criterion=&#39;entropy&#39;, max_depth=3,
+            max_features=None, max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=1e-07,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, presort=False, random_state=0,
+            splitter=&#39;best&#39;)
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'训练集准确度：%f'</span>%tree.score(X_train_std,y_train))</span><br></pre></td></tr></table></figure></div>
+<pre><code>训练集准确度：0.934217
+</code></pre><h4 id="SVM-支持向量机"><a href="#SVM-支持向量机" class="headerlink" title="SVM(支持向量机)"></a>SVM(支持向量机)</h4><p>太耗时间了，只取了“NumberOfTime60-89DaysPastDueNotWorse”这一项特征标签</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X_train_std=pd.DataFrame(X_train_std,columns=feat_labels)</span><br><span class="line">X_test_std=pd.DataFrame(X_test_std,columns=feat_labels)</span><br><span class="line"></span><br><span class="line">X_train_std[[<span class="string">'NumberOfTime60-89DaysPastDueNotWorse'</span>]].head()</span><br></pre></td></tr></table></figure></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NumberOfTime60-89DaysPastDueNotWorse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.054381</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.054381</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.054381</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.054381</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.054381</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</span><br><span class="line"></span><br><span class="line">svm = SVC()</span><br><span class="line">svm.fit(X_train_std[[<span class="string">'NumberOfTime60-89DaysPastDueNotWorse'</span>]], y_train)</span><br></pre></td></tr></table></figure></div>
+<pre><code>SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=&#39;ovr&#39;, degree=3, gamma=&#39;auto&#39;, kernel=&#39;rbf&#39;,
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SVC(C=<span class="number">1.0</span>, cache_size=<span class="number">200</span>, class_weight=<span class="keyword">None</span>, coef0=<span class="number">0.0</span>,</span><br><span class="line">  decision_function_shape=<span class="keyword">None</span>, degree=<span class="number">3</span>, gamma=<span class="string">'auto'</span>, kernel=<span class="string">'rbf'</span>,</span><br><span class="line">  max_iter=<span class="number">-1</span>, probability=<span class="keyword">False</span>, random_state=<span class="keyword">None</span>, shrinking=<span class="keyword">True</span>,</span><br><span class="line">  tol=<span class="number">0.001</span>, verbose=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure></div>
+<pre><code>SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=None, degree=3, gamma=&#39;auto&#39;, kernel=&#39;rbf&#39;,
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'训练集准确度：%f'</span>%svm.score(X_train_std[[<span class="string">'NumberOfTime60-89DaysPastDueNotWorse'</span>]],y_train))</span><br></pre></td></tr></table></figure></div>
+<pre><code>训练集准确度：0.932876
+</code></pre><h4 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"></span><br><span class="line">knn = KNeighborsClassifier(n_neighbors=<span class="number">5</span>, p=<span class="number">2</span>, metric=<span class="string">'minkowski'</span>)</span><br><span class="line">knn.fit(X_train, y_train)</span><br></pre></td></tr></table></figure></div>
+<pre><code>KNeighborsClassifier(algorithm=&#39;auto&#39;, leaf_size=30, metric=&#39;minkowski&#39;,
+           metric_params=None, n_jobs=1, n_neighbors=5, p=2,
+           weights=&#39;uniform&#39;)
+</code></pre><h3 id="练习3"><a href="#练习3" class="headerlink" title="练习3"></a>练习3</h3><p>在测试集上进行预测，计算准确度</p>
+<h4 id="logistic-regression-1"><a href="#logistic-regression-1" class="headerlink" title="logistic regression"></a>logistic regression</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_pred_lr=lr.predict(X_test)</span><br><span class="line">print(<span class="string">'错误分类数: %d'</span> % (y_test != y_pred_lr).sum())</span><br><span class="line">print(<span class="string">'测试集准确度：%f'</span>%lr.score(X_test_std,y_test))</span><br></pre></td></tr></table></figure></div>
+<pre><code>错误分类数: 2171
+测试集准确度：0.933886
+</code></pre><h4 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_pred_tree=tree.predict(X_test)</span><br><span class="line">print(<span class="string">'错误分类数: %d'</span> % (y_test != y_pred_tree).sum())</span><br><span class="line">print(<span class="string">'测试集准确度：%f'</span>%tree.score(X_test_std,y_test))</span><br></pre></td></tr></table></figure></div>
+<pre><code>错误分类数: 2498
+测试集准确度：0.935021
+</code></pre><h4 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_pred_svm=svm.predict(X_test[[<span class="string">'DebtRatio'</span>]])</span><br><span class="line">print(<span class="string">'错误分类数: %d'</span> % (y_test != y_pred_svm).sum())</span><br><span class="line">print(<span class="string">'测试集准确度：%f'</span>%svm.score(X_test_std[[<span class="string">'NumberOfTime60-89DaysPastDueNotWorse'</span>]],y_test))</span><br></pre></td></tr></table></figure></div>
+<pre><code>错误分类数: 4619
+测试集准确度：0.934100
+</code></pre><h4 id="KNN-1"><a href="#KNN-1" class="headerlink" title="KNN"></a>KNN</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_pred_knn=knn.predict(X_test)</span><br><span class="line">print(<span class="string">'错误分类数: %d'</span> % (y_test != y_pred_knn).sum())</span><br><span class="line">print(<span class="string">'测试集准确度：%f'</span>%knn.score(X_test,y_test))</span><br></pre></td></tr></table></figure></div>
+<pre><code>错误分类数: 2213
+测试集准确度：0.932106
+</code></pre><h3 id="练习4"><a href="#练习4" class="headerlink" title="练习4"></a>练习4</h3><p>查看sklearn的官方说明，了解分类问题的评估标准，并对此例进行评估。</p>
+<h4 id="y的类别"><a href="#y的类别" class="headerlink" title="y的类别"></a>y的类别</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class_names=np.unique(data[<span class="string">'SeriousDlqin2yrs'</span>].values)</span><br><span class="line">class_names</span><br></pre></td></tr></table></figure></div>
+<pre><code>array([0, 1], dtype=int64)
+</code></pre><h4 id="4种方法的confusion-matrix"><a href="#4种方法的confusion-matrix" class="headerlink" title="4种方法的confusion matrix"></a>4种方法的confusion matrix</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line"></span><br><span class="line">cnf_matrix_lr=confusion_matrix(y_test, y_pred_lr)</span><br><span class="line">cnf_matrix_lr</span><br></pre></td></tr></table></figure></div>
+<pre><code>array([[30424,     0],
+       [ 2171,     0]], dtype=int64)
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cnf_matrix_tree=confusion_matrix(y_test, y_pred_tree)</span><br><span class="line">cnf_matrix_tree</span><br></pre></td></tr></table></figure></div>
+<pre><code>array([[29346,  1078],
+       [ 1420,   751]], dtype=int64)
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cnf_matrix_svm=confusion_matrix(y_test, y_pred_svm)</span><br><span class="line">cnf_matrix_svm</span><br></pre></td></tr></table></figure></div>
+<pre><code>array([[27661,  2763],
+       [ 1856,   315]], dtype=int64)
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cnf_matrix_knn=confusion_matrix(y_test, y_pred_knn)</span><br><span class="line">cnf_matrix_knn</span><br></pre></td></tr></table></figure></div>
+<pre><code>array([[30351,    73],
+       [ 2140,    31]], dtype=int64)
+</code></pre><h4 id="一个绘制混淆矩阵的函数"><a href="#一个绘制混淆矩阵的函数" class="headerlink" title="一个绘制混淆矩阵的函数"></a>一个绘制混淆矩阵的函数</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_confusion_matrix</span><span class="params">(cm, classes,</span></span></span><br><span class="line"><span class="function"><span class="params">                          normalize=False,</span></span></span><br><span class="line"><span class="function"><span class="params">                          title=<span class="string">'Confusion matrix'</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                          cmap=plt.cm.Blues)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    This function prints and plots the confusion matrix.</span></span><br><span class="line"><span class="string">    Normalization can be applied by setting `normalize=True`.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> normalize:</span><br><span class="line">        cm = cm.astype(<span class="string">'float'</span>) / cm.sum(axis=<span class="number">1</span>)[:, np.newaxis]</span><br><span class="line">        print(<span class="string">"Normalized confusion matrix"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'Confusion matrix, without normalization'</span>)</span><br><span class="line"></span><br><span class="line">    print(cm)</span><br><span class="line"></span><br><span class="line">    plt.imshow(cm, interpolation=<span class="string">'nearest'</span>, cmap=cmap)</span><br><span class="line">    plt.title(title)</span><br><span class="line">    plt.colorbar()</span><br><span class="line">    tick_marks = np.arange(len(classes))</span><br><span class="line">    plt.xticks(tick_marks, classes, rotation=<span class="number">45</span>)</span><br><span class="line">    plt.yticks(tick_marks, classes)</span><br><span class="line"></span><br><span class="line">    fmt = <span class="string">'.2f'</span> <span class="keyword">if</span> normalize <span class="keyword">else</span> <span class="string">'d'</span></span><br><span class="line">    thresh = cm.max() / <span class="number">2.</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> itertools.product(range(cm.shape[<span class="number">0</span>]), range(cm.shape[<span class="number">1</span>])):</span><br><span class="line">        plt.text(j, i, format(cm[i, j], fmt),</span><br><span class="line">                 horizontalalignment=<span class="string">"center"</span>,</span><br><span class="line">                 color=<span class="string">"white"</span> <span class="keyword">if</span> cm[i, j] &gt; thresh <span class="keyword">else</span> <span class="string">"black"</span>)</span><br><span class="line"></span><br><span class="line">    plt.tight_layout()</span><br><span class="line">    plt.ylabel(<span class="string">'True label'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'Predicted label'</span>)</span><br></pre></td></tr></table></figure></div>
+<h4 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h4><p>以logistic regression 为例</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">np.set_printoptions(precision=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot non-normalized confusion matrix</span></span><br><span class="line">plt.figure()</span><br><span class="line">plot_confusion_matrix(cnf_matrix_lr, classes=class_names,</span><br><span class="line">                      title=<span class="string">'Confusion matrix, without normalization'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot normalized confusion matrix</span></span><br><span class="line">plt.figure()</span><br><span class="line">plot_confusion_matrix(cnf_matrix_lr, classes=class_names, normalize=<span class="keyword">True</span>,</span><br><span class="line">                      title=<span class="string">'Normalized confusion matrix'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<pre><code>Confusion matrix, without normalization
+[[30424     0]
+ [ 2171     0]]
+Normalized confusion matrix
+[[1. 0.]
+ [1. 0.]]
+</code></pre><p><img src="/2019/06/01/一个信用评分案例看机器学习建模基本过程/output_57_1.png" alt="png"></p>
+<p><img src="/2019/06/01/一个信用评分案例看机器学习建模基本过程/output_57_2.png" alt="png"></p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#可见，真实标签为“0”的分类准确率很高。 </span></span><br><span class="line"><span class="comment">#真实标签为“1”的分类准确率很低。</span></span><br></pre></td></tr></table></figure></div>
+<h3 id="练习5"><a href="#练习5" class="headerlink" title="练习5"></a>练习5</h3><p>银行通常会有更严格的要求，因为fraud带来的后果通常比较严重，一般我们会调整模型的标准。<br><br>比如在logistic regression当中，一般我们的概率判定边界为0.5，但是我们可以把阈值设定低一些，来提高模型的“敏感度”，试试看把阈值设定为0.3，再看看这时的评估指标(主要是准确率和召回率)。</p>
+<p>tips:sklearn的很多分类模型，predict_prob可以拿到预估的概率，可以根据它和设定的阈值大小去判断最终结果(分类类别)</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line">lr = LogisticRegression(penalty=<span class="string">'l2'</span>,C=<span class="number">1000.0</span>, random_state=<span class="number">0</span>,class_weight=&#123;<span class="number">1</span>:<span class="number">0.3</span>,<span class="number">0</span>:<span class="number">0.7</span>&#125;)</span><br><span class="line">lr.fit(X_train, y_train)</span><br><span class="line">lr</span><br></pre></td></tr></table></figure></div>
+<pre><code>LogisticRegression(C=1000.0, class_weight={1: 0.3, 0: 0.7}, dual=False,
+          fit_intercept=True, intercept_scaling=1, max_iter=100,
+          multi_class=&#39;ovr&#39;, n_jobs=1, penalty=&#39;l2&#39;, random_state=0,
+          solver=&#39;liblinear&#39;, tol=0.0001, verbose=0, warm_start=False)
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_pred_lr=lr.predict(X_test)</span><br><span class="line">print(<span class="string">'错误分类数: %d'</span> % (y_test != y_pred_lr).sum())</span><br><span class="line">print(<span class="string">'训练集准确度：%f'</span>%lr.score(X_test,y_test))</span><br></pre></td></tr></table></figure></div>
+<pre><code>错误分类数: 2169
+训练集准确度：0.933456
+</code></pre><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line"></span><br><span class="line">cnf_matrix_lr=confusion_matrix(y_test, y_pred_lr)</span><br><span class="line">cnf_matrix_lr</span><br></pre></td></tr></table></figure></div>
+<pre><code>array([[30410,    14],
+       [ 2155,    16]], dtype=int64)
+</code></pre><h3 id="练习6：特征选择、重新建模"><a href="#练习6：特征选择、重新建模" class="headerlink" title="练习6：特征选择、重新建模"></a>练习6：特征选择、重新建模</h3><p>尝试对不同特征的重要度进行排序，通过特征选择的方式，对特征进行筛选。并重新建模，观察此时的模型准确率等评估指标。</p>
+<h4 id="用随机森林的方法进行特征筛选"><a href="#用随机森林的方法进行特征筛选" class="headerlink" title="用随机森林的方法进行特征筛选"></a>用随机森林的方法进行特征筛选</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line">feat_labels = data.columns[<span class="number">1</span>:]</span><br><span class="line">forest=RandomForestClassifier(n_estimators=<span class="number">10000</span>,random_state=<span class="number">0</span>,n_jobs=<span class="number">-1</span>)</span><br><span class="line">forest.fit(X_train,y_train)</span><br><span class="line">importances=forest.feature_importances_</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">feat_labels=data.columns[<span class="number">1</span>:]</span><br><span class="line">indices=np.argsort(importances)[::<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> range(X_train.shape[<span class="number">1</span>]):</span><br><span class="line">    print(<span class="string">'%2d) %-*s %f'</span>%(f,<span class="number">30</span>,feat_labels[indices[f]],importances[indices[f]]))</span><br></pre></td></tr></table></figure></div>
+<p> 0) NumberOfDependents             0.188808<br> 1) NumberOfTime60-89DaysPastDueNotWorse 0.173198<br> 2) NumberRealEstateLoansOrLines   0.165334<br> 3) NumberOfTimes90DaysLate        0.122311<br> 4) NumberOfOpenCreditLinesAndLoans 0.089278<br> 5) MonthlyIncome                  0.087939<br> 6) DebtRatio                      0.051493<br> 7) NumberOfTime30-59DaysPastDueNotWorse 0.045888<br> 8) age                            0.043824<br> 9) RevolvingUtilizationOfUnsecuredLines 0.031928</p>
+<h4 id="选取4个特征，建立逻辑回归模型"><a href="#选取4个特征，建立逻辑回归模型" class="headerlink" title="选取4个特征，建立逻辑回归模型"></a>选取4个特征，建立逻辑回归模型</h4><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train_4feat=X_train_std[[<span class="string">'NumberOfDependents'</span>,<span class="string">'NumberOfTime60-89DaysPastDueNotWorse'</span>,<span class="string">'NumberRealEstateLoansOrLines'</span>,<span class="string">'NumberOfTimes90DaysLate'</span>]]</span><br><span class="line">X_test_4feat=X_test_std[[<span class="string">'NumberOfDependents'</span>,<span class="string">'NumberOfTime60-89DaysPastDueNotWorse'</span>,<span class="string">'NumberRealEstateLoansOrLines'</span>,<span class="string">'NumberOfTimes90DaysLate'</span>]]</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line">lr = LogisticRegression(penalty=<span class="string">'l1'</span>,C=<span class="number">1000.0</span>, random_state=<span class="number">0</span>)</span><br><span class="line">lr.fit(X_train_4feat, y_train)</span><br><span class="line">lr</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LogisticRegression(C=<span class="number">1000.0</span>, class_weight=<span class="keyword">None</span>, dual=<span class="keyword">False</span>,</span><br><span class="line">          fit_intercept=<span class="keyword">True</span>, intercept_scaling=<span class="number">1</span>, max_iter=<span class="number">100</span>,</span><br><span class="line">          multi_class=<span class="string">'ovr'</span>, n_jobs=<span class="number">1</span>, penalty=<span class="string">'l1'</span>, random_state=<span class="number">0</span>,</span><br><span class="line">          solver=<span class="string">'liblinear'</span>, tol=<span class="number">0.0001</span>, verbose=<span class="number">0</span>, warm_start=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'训练集准确度：%f'</span>%lr.score(X_train_4feat,y_train))</span><br></pre></td></tr></table></figure></div>
+<p>训练集准确度：0.933086</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_pred_lr=lr.predict(X_test_4feat)</span><br><span class="line">print(<span class="string">'错误分类数: %d'</span> % (y_test != y_pred_lr).sum())</span><br><span class="line">print(<span class="string">'测试集准确度：%f'</span>%lr.score(X_test_4feat,y_test))</span><br></pre></td></tr></table></figure></div>
+<p>错误分类数: 2161<br>测试集准确度：0.933701</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cnf_matrix_lr=confusion_matrix(y_test, y_pred_lr)</span><br><span class="line">cnf_matrix_lr</span><br></pre></td></tr></table></figure></div>
+<p>array([[30381,    43],<br>       [ 2118,    53]])</p>
+<p>从最后的结果看,虽然经过特征选择和模型参数调整，但依然未能解决混淆矩阵指标太差的问题。</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">一个完整机器学习项目流程总结</span><br><span class="line"><span class="number">1.</span> 实际问题抽象成数学问题</span><br><span class="line">这里的抽象成数学问题，指的我们明确我们可以获得什么样的数据，目标是一个分类还是回归或者是聚类的问题，如果都不是的话，如果划归为其中的某类问题。</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 获取数据</span><br><span class="line">获取数据包括获取原始数据以及从原始数据中经过特征工程从原始数据中提取训练、测试数据。机器学习比赛中原始数据都是直接提供的，但是实际问题需要自己获得原始数据。“ 数据决定机器学习结果的上限，而算法只是尽可能的逼近这个上限”，可见数据在机器学习中的作用。总的来说数据要有具有“代表性”，对于分类问题，数据偏斜不能过于严重，不同类别的数据数量不要有数个数量级的差距。不仅如此还要对评估数据的量级，样本数量、特征数量，估算训练模型对内存的消耗。如果数据量太大可以考虑减少训练样本、降维或者使用分布式机器学习系统。</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> 特征工程</span><br><span class="line">特征工程包括从原始数据中特征构建、特征提取、特征选择。特征工程做的好能发挥原始数据的最大效力，往往能够使得算法的效果和性能得到显著的提升，有时能使简单的模型的效果比复杂的模型效果好。数据挖掘的大部分时间就花在特征工程上面，是机器学习非常基础而又必备的步骤。数据预处理、数据清洗、筛选显著特征、摒弃非显著特征等等都非常重要。</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span> 训练模型、诊断、调优</span><br><span class="line">模型诊断中至关重要的是判断过拟合、欠拟合，常见的方法是绘制学习曲线，交叉验证。通过增加训练的数据量、降低模型复杂度来降低过拟合的风险，提高特征的数量和质量、增加模型复杂来防止欠拟合。诊断后的模型需要进行进一步调优，调优后的新模型需要重新诊断，这是一个反复迭代不断逼近的过程，需要不断的尝试，进而达到最优的状态。</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span> 模型验证、误差分析</span><br><span class="line">通过测试数据，验证模型的有效性，观察误差样本，分析误差产生的原因，往往能使得我们找到提升算法性能的突破点。误差分析主要是分析出误差来源与数据、特征、算法。</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span> 模型融合</span><br><span class="line">提升算法的准确度主要方法是模型的前端（特征工程、清洗、预处理、采样）和后端的模型融合。在机器学习比赛中模型融合非常常见，基本都能使得效果有一定的提升。</span><br><span class="line"></span><br><span class="line"><span class="number">7.</span> 上线运行</span><br><span class="line">这一部分内容主要跟工程实现的相关性比较大。工程上是结果导向，模型在线上运行的效果直接决定模型的成败。 不单纯包括其准确程度、误差等情况，还包括其运行的速度(时间复杂度)、资源消耗程度（空间复杂度）、稳定性是否可接受。</span><br><span class="line"></span><br><span class="line">值得注意的是，以上流程只是一个指导性的机器学习流程经验，并不是每个项目都包含完整的流程。</span><br><span class="line"></span><br><span class="line">该博文主要参考资料： </span><br><span class="line">[<span class="number">1</span>] 机器学习项目流程； </span><br><span class="line">[<span class="number">2</span>] 一个完整机器学习项目的流程。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">机器学习项目流程</span><br><span class="line"></span><br><span class="line">   在微博上看到七月算法寒老师总结的完整机器的学习项目的工作流程，结合天池比赛的经历写的。现在机器学习应用非常流行，了解机器学习项目的流程，能帮助我们更好的使用机器学习工具来处理实际问题。</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 理解实际问题，抽象为机器学习能处理的数学问题</span><br><span class="line"></span><br><span class="line">        理解实际业务场景问题是机器学习的第一步，机器学习中特征工程和模型训练都是非常费时的，深入理解要处理的问题，能避免走很多弯路。理解问题，包括明确可以获得的数据，机器学习的目标是分类、回归还是聚类。如果都不是的话，考虑将它们转变为机器学习问题。参考机器学习分类能帮助从问题提炼出一个合适的机器学习方法。</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 获取数据</span><br><span class="line">       获取数据包括获取原始数据以及从原始数据中经过特征工程从原始数据中提取训练、测试数据。机器学习比赛中原始数据都是直接提供的，但是实际问题需要自己获得原始数据。“ 数据决定机器学习结果的上限，而算法只是尽可能的逼近这个上限”，可见数据在机器学习中的作用。总的来说数据要有具有“代表性”，对于分类问题，数据偏斜不能过于严重，不同类别的数据数量不要有数个数量级的差距。不仅如此还要对评估数据的量级，样本数量、特征数量，估算训练模型对内存的消耗。如果数据量太大可以考虑减少训练样本、降维或者使用分布式机器学习系统。</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> 特征工程</span><br><span class="line"></span><br><span class="line">       特征工程是非常能体现一个机器学习者的功底的。特征工程包括从原始数据中特征构建、特征提取、特征选择，非常有讲究。深入理解实际业务场景下的问题，丰富的机器学习经验能帮助我们更好的处理特征工程。特征工程做的好能发挥原始数据的最大效力，往往能够使得算法的效果和性能得到显著的提升，有时能使简单的模型的效果比复杂的模型效果好。数据挖掘的大部分时间就花在特征工程上面，是机器学习非常基础而又必备的步骤。数据预处理、数据清洗、筛选显著特征、摒弃非显著特征等等都非常重要，建议深入学习。</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span> 模型训练、诊断、调优</span><br><span class="line"></span><br><span class="line">        现在有很多的机器学习算法的工具包，例如sklearn，使用非常方便，真正考验水平的根据对算法的理解调节参数，使模型达到最优。当然，能自己实现算法的是最牛的。模型诊断中至关重要的是判断过拟合、欠拟合，常见的方法是绘制学习曲线，交叉验证。通过增加训练的数据量、降低模型复杂度来降低过拟合的风险，提高特征的数量和质量、增加模型复杂来防止欠拟合。诊断后的模型需要进行进一步调优，调优后的新模型需要重新诊断，这是一个反复迭代不断逼近的过程，需要不断的尝试，进而达到最优的状态。</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span> 模型验证、误差分析</span><br><span class="line"></span><br><span class="line">        模型验证和误差分析也是机器学习中非常重要的一步，通过测试数据，验证模型的有效性，观察误差样本，分析误差产生的原因，往往能使得我们找到提升算法性能的突破点。误差分析主要是分析出误差来源与数据、特征、算法。</span><br><span class="line"></span><br><span class="line"><span class="number">6</span> . 模型融合</span><br><span class="line"></span><br><span class="line">       一般来说实际中，成熟的机器算法也就那么些，提升算法的准确度主要方法是模型的前端（特征工程、清洗、预处理、采样）和后端的模型融合。在机器学习比赛中模型融合非常常见，基本都能使得效果有一定的提升。这篇博客中提到了模型融合的方法，主要包括一人一票的统一融合，线性融合和堆融合。</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">参考：http://ask.julyedu.com/question/<span class="number">7013</span></span><br></pre></td></tr></table></figure></div>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="AnFrank 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="AnFrank 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AnFrank</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://enfangzhong.github.io/2019/06/01/一个信用评分案例看机器学习建模基本过程/" title="一个信用评分案例看机器学习建模基本过程">http://enfangzhong.github.io/2019/06/01/一个信用评分案例看机器学习建模基本过程/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/13/Hexo个人博客_程序员的浪漫爱心表白源码/" rel="next" title="程序员的浪漫爱心表白源码">
+                <i class="fa fa-chevron-left"></i> 程序员的浪漫爱心表白源码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/01/个性化推荐算法实践第01章个性化推荐算法综述/" rel="prev" title="个性化推荐算法实践第01章个性化推荐算法综述">
+                个性化推荐算法实践第01章个性化推荐算法综述 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="AnFrank">
+            
+              <p class="site-author-name" itemprop="name">AnFrank</p>
+              <p class="site-description motion-element" itemprop="description">你若晴天，我便安好。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/enfangzhong" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://blog.csdn.net/qintian888" target="_blank" title="CSDN"><i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/5604852325" target="_blank" title="weibo"><i class="fa fa-fw fa-weibo"></i>weibo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/anfrankit" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/enfangzhong" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:enfangzhong@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lruihao.cn/" title="博采众长" target="_blank">博采众长</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.leridy.pw/" title="乐余地" target="_blank">乐余地</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tmy123.com/" title="同盟源" target="_blank">同盟源</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yremp.live" title="Yremp" target="_blank">Yremp</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          <marquee>
+	<a href="/links">
+	<font size="4" face="STXingkai">
+		<font color="#FF0000">欢</font>
+		<font color="#E80017">迎</font>
+		<font color="#D1002E">点</font>
+		<font color="#BA0045">我</font>
+		<font color="#A3005C">互</font>
+		<font color="#A00073">换</font>
+		<font color="#A0008A">友</font>
+		<font color="#A000A1">链</font>
+		<font color="#A000B8">哦</font>
+		<font color="#A000CF">~</font>
+		<font color="#A000E6">~</font>
+	</font>
+	</a>
+</marquee>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#machine-learning-for-credit-scoring"><span class="nav-text">machine learning for credit scoring</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个信用评分案例看机器学习建模基本过程"><span class="nav-text">一个信用评分案例看机器学习建模基本过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Read-the-data-into-Pandas-将数据读进pandas"><span class="nav-text">Read the data into Pandas 将数据读进pandas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#去除异常值-Drop-na"><span class="nav-text">去除异常值 Drop na</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建X-和-y-Create-X-and-y"><span class="nav-text">创建X 和 y Create X and y</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#练习1：数据集准备"><span class="nav-text">练习1：数据集准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#切分数据集"><span class="nav-text">切分数据集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对连续值特征做幅度缩放"><span class="nav-text">对连续值特征做幅度缩放</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#练习2"><span class="nav-text">练习2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#logistic-regression"><span class="nav-text">logistic regression</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SVM-支持向量机"><span class="nav-text">SVM(支持向量机)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#KNN"><span class="nav-text">KNN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#练习3"><span class="nav-text">练习3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#logistic-regression-1"><span class="nav-text">logistic regression</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#决策树"><span class="nav-text">决策树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SVM"><span class="nav-text">SVM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#KNN-1"><span class="nav-text">KNN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#练习4"><span class="nav-text">练习4</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#y的类别"><span class="nav-text">y的类别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4种方法的confusion-matrix"><span class="nav-text">4种方法的confusion matrix</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一个绘制混淆矩阵的函数"><span class="nav-text">一个绘制混淆矩阵的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可视化"><span class="nav-text">可视化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#练习5"><span class="nav-text">练习5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#练习6：特征选择、重新建模"><span class="nav-text">练习6：特征选择、重新建模</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用随机森林的方法进行特征筛选"><span class="nav-text">用随机森林的方法进行特征筛选</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选取4个特征，建立逻辑回归模型"><span class="nav-text">选取4个特征，建立逻辑回归模型</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+
+      
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java虚拟机/">Java虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Boot/">Spring Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/">Spring Cloud</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java编程思想/">java编程思想</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rabbitmq/">rabbitmq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/写作标签/">写作标签</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客/">博客</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/咖啡/">咖啡</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工作流/">工作流</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐算法/">推荐算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/标签云/">标签云</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息中间件/">消息中间件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深入理解Java虚拟机/">深入理解Java虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/秋招/">秋招</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自定义友链页面/">自定义友链页面</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/茶叶/">茶叶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/音乐播放器/">音乐播放器</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+  <!-- canvas粒子时钟 -->
+  <!-- canvas粒子时钟 https://www.cnblogs.com/xiaohuochai/p/6368039.html
+  https://www.html5tricks.com/html5-canvas-dance-time.html
+ -->
+<div id="">
+  <canvas id="canvas" style="width:60%;">
+</canvas></div>
+<script>
+(function(){
+  var WINDOW_WIDTH = 820;
+  		var WINDOW_HEIGHT = 250;
+  		var RADIUS = 7; //球半径
+  		var NUMBER_GAP = 10; //数字之间的间隙
+  		var u=0.65; //碰撞能量损耗系数
+  		var context; //Canvas绘制上下文
+  		var balls = []; //存储彩色的小球
+  		const colors = ["#33B5E5","#0099CC","#AA66CC","#9933CC","#99CC00","#669900","#FFBB33","#FF8800","#FF4444","#CC0000"]; //彩色小球的颜色
+  		var currentNums = []; //屏幕显示的8个字符
+  		var digit =
+                  [
+                      [
+                          [0,0,1,1,1,0,0],
+                          [0,1,1,0,1,1,0],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [0,1,1,0,1,1,0],
+                          [0,0,1,1,1,0,0]
+                      ],//0
+                      [
+                          [0,0,0,1,1,0,0],
+                          [0,1,1,1,1,0,0],
+                          [0,0,0,1,1,0,0],
+                          [0,0,0,1,1,0,0],
+                          [0,0,0,1,1,0,0],
+                          [0,0,0,1,1,0,0],
+                          [0,0,0,1,1,0,0],
+                          [0,0,0,1,1,0,0],
+                          [0,0,0,1,1,0,0],
+                          [1,1,1,1,1,1,1]
+                      ],//1
+                      [
+                          [0,1,1,1,1,1,0],
+                          [1,1,0,0,0,1,1],
+                          [0,0,0,0,0,1,1],
+                          [0,0,0,0,1,1,0],
+                          [0,0,0,1,1,0,0],
+                          [0,0,1,1,0,0,0],
+                          [0,1,1,0,0,0,0],
+                          [1,1,0,0,0,0,0],
+                          [1,1,0,0,0,1,1],
+                          [1,1,1,1,1,1,1]
+                      ],//2
+                      [
+                          [1,1,1,1,1,1,1],
+                          [0,0,0,0,0,1,1],
+                          [0,0,0,0,1,1,0],
+                          [0,0,0,1,1,0,0],
+                          [0,0,1,1,1,0,0],
+                          [0,0,0,0,1,1,0],
+                          [0,0,0,0,0,1,1],
+                          [0,0,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [0,1,1,1,1,1,0]
+                      ],//3
+                      [
+                          [0,0,0,0,1,1,0],
+                          [0,0,0,1,1,1,0],
+                          [0,0,1,1,1,1,0],
+                          [0,1,1,0,1,1,0],
+                          [1,1,0,0,1,1,0],
+                          [1,1,1,1,1,1,1],
+                          [0,0,0,0,1,1,0],
+                          [0,0,0,0,1,1,0],
+                          [0,0,0,0,1,1,0],
+                          [0,0,0,1,1,1,1]
+                      ],//4
+                      [
+                          [1,1,1,1,1,1,1],
+                          [1,1,0,0,0,0,0],
+                          [1,1,0,0,0,0,0],
+                          [1,1,1,1,1,1,0],
+                          [0,0,0,0,0,1,1],
+                          [0,0,0,0,0,1,1],
+                          [0,0,0,0,0,1,1],
+                          [0,0,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [0,1,1,1,1,1,0]
+                      ],//5
+                      [
+                          [0,0,0,0,1,1,0],
+                          [0,0,1,1,0,0,0],
+                          [0,1,1,0,0,0,0],
+                          [1,1,0,0,0,0,0],
+                          [1,1,0,1,1,1,0],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [0,1,1,1,1,1,0]
+                      ],//6
+                      [
+                          [1,1,1,1,1,1,1],
+                          [1,1,0,0,0,1,1],
+                          [0,0,0,0,1,1,0],
+                          [0,0,0,0,1,1,0],
+                          [0,0,0,1,1,0,0],
+                          [0,0,0,1,1,0,0],
+                          [0,0,1,1,0,0,0],
+                          [0,0,1,1,0,0,0],
+                          [0,0,1,1,0,0,0],
+                          [0,0,1,1,0,0,0]
+                      ],//7
+                      [
+                          [0,1,1,1,1,1,0],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [0,1,1,1,1,1,0],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [0,1,1,1,1,1,0]
+                      ],//8
+                      [
+                          [0,1,1,1,1,1,0],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [1,1,0,0,0,1,1],
+                          [0,1,1,1,0,1,1],
+                          [0,0,0,0,0,1,1],
+                          [0,0,0,0,0,1,1],
+                          [0,0,0,0,1,1,0],
+                          [0,0,0,1,1,0,0],
+                          [0,1,1,0,0,0,0]
+                      ],//9
+                      [
+                          [0,0,0,0],
+                          [0,0,0,0],
+                          [0,1,1,0],
+                          [0,1,1,0],
+                          [0,0,0,0],
+                          [0,0,0,0],
+                          [0,1,1,0],
+                          [0,1,1,0],
+                          [0,0,0,0],
+                          [0,0,0,0]
+                      ]//:
+                  ];
+
+  		function drawDatetime(cxt){
+  			var nums = [];
+
+  			context.fillStyle="#005eac"
+  			var date = new Date();
+  			var offsetX = 70, offsetY = 30;
+  			var hours = date.getHours();
+  			var num1 = Math.floor(hours/10);
+  			var num2 = hours%10;
+  			nums.push({num: num1});
+  			nums.push({num: num2});
+  			nums.push({num: 10}); //冒号
+  			var minutes = date.getMinutes();
+  			var num1 = Math.floor(minutes/10);
+  			var num2 = minutes%10;
+  			nums.push({num: num1});
+  			nums.push({num: num2});
+  			nums.push({num: 10}); //冒号
+  			var seconds = date.getSeconds();
+  			var num1 = Math.floor(seconds/10);
+  			var num2 = seconds%10;
+  			nums.push({num: num1});
+  			nums.push({num: num2});
+
+  			for(var x = 0;x<nums.length;x++){
+  				nums[x].offsetX = offsetX;
+  				offsetX = drawSingleNumber(offsetX,offsetY, nums[x].num,cxt);
+  				//两个数字连一块，应该间隔一些距离
+  				if(x<nums.length-1){
+  					if((nums[x].num!=10) &&(nums[x+1].num!=10)){
+  						offsetX+=NUMBER_GAP;
+  					}
+  				}
+  			}
+
+  			//说明这是初始化
+  			if(currentNums.length ==0){
+  				currentNums = nums;
+  			}else{
+  				//进行比较
+  				for(var index = 0;index<currentNums.length;index++){
+  					if(currentNums[index].num!=nums[index].num){
+  						//不一样时，添加彩色小球
+  						addBalls(nums[index]);
+  						currentNums[index].num=nums[index].num;
+  					}
+  				}
+  			}
+  			renderBalls(cxt);
+  			updateBalls();
+
+  			return date;
+  		}
+
+  		function addBalls (item) {
+  			var num = item.num;
+  			var numMatrix = digit[num];
+  			for(var y = 0;y<numMatrix.length;y++){
+  				for(var x = 0;x<numMatrix[y].length;x++){
+  					if(numMatrix[y][x]==1){
+  						var ball={
+  							offsetX:item.offsetX+RADIUS+RADIUS*2*x,
+  							offsetY:30+RADIUS+RADIUS*2*y,
+  							color:colors[Math.floor(Math.random()*colors.length)],
+  							g:1.5+Math.random(),
+  							vx:Math.pow(-1, Math.ceil(Math.random()*10))*4+Math.random(),
+  							vy:-5
+  						}
+  						balls.push(ball);
+  					}
+  				}
+  			}
+  		}
+
+  		function renderBalls(cxt){
+  			for(var index = 0;index<balls.length;index++){
+  				cxt.beginPath();
+  				cxt.fillStyle=balls[index].color;
+  				cxt.arc(balls[index].offsetX, balls[index].offsetY, RADIUS, 0, 2*Math.PI);
+  				cxt.fill();
+  			}
+  		}
+
+  		function updateBalls () {
+  			var i =0;
+  			for(var index = 0;index<balls.length;index++){
+  				var ball = balls[index];
+  				ball.offsetX += ball.vx;
+  				ball.offsetY += ball.vy;
+  				ball.vy+=ball.g;
+  				if(ball.offsetY > (WINDOW_HEIGHT-RADIUS)){
+  					ball.offsetY= WINDOW_HEIGHT-RADIUS;
+  					ball.vy=-ball.vy*u;
+  				}
+  				if(ball.offsetX>RADIUS&&ball.offsetX<(WINDOW_WIDTH-RADIUS)){
+
+  					balls[i]=balls[index];
+  					i++;
+  				}
+  			}
+  			//去除出边界的球
+  			for(;i<balls.length;i++){
+  				balls.pop();
+  			}
+  		}
+  		function drawSingleNumber(offsetX, offsetY, num, cxt){
+  			var numMatrix = digit[num];
+  			for(var y = 0;y<numMatrix.length;y++){
+  				for(var x = 0;x<numMatrix[y].length;x++){
+  					if(numMatrix[y][x]==1){
+  						cxt.beginPath();
+  						cxt.arc(offsetX+RADIUS+RADIUS*2*x,offsetY+RADIUS+RADIUS*2*y,RADIUS,0,2*Math.PI);
+  						cxt.fill();
+  					}
+  				}
+  			}
+  			cxt.beginPath();
+  			offsetX += numMatrix[0].length*RADIUS*2;
+  			return offsetX;
+  		}
+
+  		var canvas = document.getElementById("canvas");
+  		canvas.width=WINDOW_WIDTH;
+  		canvas.height=WINDOW_HEIGHT;
+  		context = canvas.getContext("2d");
+
+  		//记录当前绘制的时刻
+  		var currentDate = new Date();
+
+  		setInterval(function(){
+  			//清空整个Canvas，重新绘制内容
+  			context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+  			drawDatetime(context);
+  		}, 50)
+})();
+</script>
+
+
+
+
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnFrank</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">GitHub</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!--
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.3.0</div>
+-->
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://github.com/enfangzhong">Enfang</a> v6.3.0</div>
+
+
+
+
+
+<font color="MediumPurple" face="STLiti">
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共160.5k字|</span>
+</div>
+</font>
+
+<font color="MediumPurple" face="STLiti"><span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span></font>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("05/28/2018 20:01:01");//此处为建站时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "我在此等候你："+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+
+
+<div class="weixin-box">
+  <div class="weixin-menu">
+    <div class="weixin-hover">
+      <div class="weixin-description">微信扫一扫，联系博主</div>
+    </div>
+  </div>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      我的第<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>位朋友
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      经历<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次回眸才与你相遇
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  // <script src="/js/src/Valine.min.js"></script>
+  <script src="/js/src/valine1.3.4"></script>
+
+  <!-- https://deserts.io/diy-a-comment-system/ -->
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: '944727327@qq.com', //博主邮箱
+        el: '#comments' ,
+        appId: 'SACSC0biGE5t01ErmVSxYvVt-gzGzoHsz',
+        appKey: 'td1GAOLqHNMnQ4BtJENstUVW',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+        placeholder: 'ヾﾉ≧∀≦)o既然来了，就留下点痕迹吧？',
+  });
+
+
+
+  <!--点击邮件中的链接跳转至相应评论-->
+  if(window.location.hash){
+      var checkExist = setInterval(function() {
+         if ($(window.location.hash).length) {
+            $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+            clearInterval(checkExist);
+         }
+      }, 100);
+   }
+
+
+$(document).ready(function(){
+    $('.vemoji-btn').text('😀');
+    $("#vcomments").on('click', 'span.vat',function(){
+        $(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+        $('textarea#veditor').focus();
+    })
+})
+
+  </script>
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+<!--知乎卡片链接-->
+<script type="text/javascript" src="/js/src/linkcard.js"></script>
+
+</body>
+</html>
