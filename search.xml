@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[设计模式]]></title>
-    <url>%2F2020%2F01%2F16%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%2F</url>
-    <content type="text"><![CDATA[设计模式]]></content>
+    <title><![CDATA[图解设计模式]]></title>
+    <url>%2F2020%2F01%2F16%2F%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[图解设计模式]]></content>
       <categories>
         <category>设计模式</category>
       </categories>
@@ -20,8 +20,8 @@
         <category>生活</category>
       </categories>
       <tags>
-        <tag>咖啡</tag>
         <tag>生活</tag>
+        <tag>咖啡</tag>
       </tags>
   </entry>
   <entry>
@@ -33,8 +33,8 @@
         <category>生活</category>
       </categories>
       <tags>
-        <tag>生活</tag>
         <tag>茶叶</tag>
+        <tag>生活</tag>
       </tags>
   </entry>
   <entry>
